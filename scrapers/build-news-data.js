@@ -17,10 +17,13 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
 const HTML_PATH = 'gabarit.html';   // le MODÈLE, jamais servi : les pages en sont tirées
-// Le XML vit sous api/ et NON à la racine : Vercel sert le système de fichiers
-// avant les réécritures, donc un /feed.xml statique court-circuiterait la
-// fonction api/feed.js qui compte les lectures. api/ n'est pas servi tel quel.
-const FEED_PATH = 'api/feed-data.xml';
+// Le XML vit À LA RACINE et il est servi tel quel (9 nov. 2026). Avant, il vivait sous api/ et
+// une fonction api/feed.js le servait, pour compter les lectures et vérifier un abonnement —
+// la mécanique de DossierQuébec. Sur DossierBC il n'y a pas d'abonnement, et cette fonction
+// servait l'avis « flux réservé aux abonné·e·s » de DossierQuébec, en français, avec un lien vers
+// dossierquebec.ca. Un fichier statique ne peut pas se tromper de site. Vercel sert le système de
+// fichiers avant les réécritures : /feed.xml arrive donc directement ici.
+const FEED_PATH = 'feed.xml';
 const SITE = 'https://dossierbc.ca';
 const START_MARKER = '/* NEWS_DATA_START';
 const END_MARKER = '/* NEWS_DATA_END */';

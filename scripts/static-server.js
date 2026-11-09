@@ -21,13 +21,8 @@ const MIME = {
 // /votes sert votes.html, /promesses sert promesses.html. Sans ça, tester en
 // local les pages de section donne un 404 alors que la prod fonctionne.
 async function lire(path) {
-  // En production, /feed.xml est réécrit vers la fonction api/feed.js (qui compte
-  // les lectures) et le XML vit dans api/feed-data.xml. On reproduit la même URL
-  // en local — sans le comptage — sinon /feed.xml donnerait un 404 ici alors que
-  // la prod fonctionne.
-  if (path === '/feed.xml') {
-    return { data: await readFile(join(ROOT, 'api', 'feed-data.xml')), ext: '.xml' };
-  }
+  // Depuis le 9 nov. 2026, /feed.xml est un vrai fichier à la racine : plus de réécriture, plus de
+  // fonction, rien de spécial à reproduire ici. Il est servi comme sitemap.xml ou robots.txt.
   const p = join(ROOT, decodeURIComponent(path));
   // Un chemin qui finit par « / » désigne un dossier : Vercel y sert index.html.
   // Sans ce cas, /quebec/ donnait un 404 en local alors que la prod aurait
