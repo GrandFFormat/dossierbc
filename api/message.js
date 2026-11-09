@@ -1,4 +1,4 @@
-// « Nous écrire » et « Signaler une erreur » — pour « Mes dossiers » et tous les volets municipaux.
+// « Nous écrire » et « Signaler une erreur » de DossierBC, depuis « Mon dossier ».
 //
 //   POST /api/message
 //   Authorization: Bearer <jeton de session Supabase>   (obligatoire : il faut être connecté)
@@ -16,9 +16,17 @@
 // (une adresse, ou plusieurs séparées par des virgules).
 
 const SUJETS = { idee: 'Idée', suggestion: 'Suggestion', probleme: 'Problème sur le site', erreur: 'Erreur dans une donnée' };
-const VILLES = { quebec: 'Québec', montreal: 'Montréal', levis: 'Lévis', longueuil: 'Longueuil', laval: 'Laval' };
+// Aucune ville de la Colombie-Britannique n'est couverte : il n'y a pas de volet municipal ici, donc
+// pas de liste de villes et pas de fiche de décision à mettre dans le courriel. La liste du Québec
+// (Québec, Montréal, Lévis, Longueuil, Laval) n'a rien à faire sur DossierBC.
+const VILLES = {};
 const PAR_JOUR = 5;
-const SITE = 'https://dossierquebec.ca';
+const SITE = 'https://dossierbc.ca';
+// La table `messages_utilisateurs` est PARTAGÉE avec DossierQuébec (un seul projet Supabase pour
+// toute la famille) et n'a pas de colonne qui dise de quel site vient la ligne. Le message est donc
+// préfixé, comme le fichier le fait déjà pour « [Suggestion] » : c'est visible dans la table ET dans
+// le courriel, sans toucher au schéma.
+const MARQUE = '[DossierBC]';
 
 const NUMERO = /^[\p{L}\p{N} ._\-/]{1,80}$/u;
 const PAGE = /^\/[\w\-./?=&%+~]{0,299}$/;
@@ -53,16 +61,14 @@ async function estLectureSeule(id) {
 async function envoyerCourriel(m) {
   const { RESEND_API_KEY, DIGEST_FROM, MESSAGES_A } = process.env;
   if (!RESEND_API_KEY || !DIGEST_FROM || !MESSAGES_A) return false;
-  const lieu = [VILLES[m.ville], m.numero].filter(Boolean).join(' ');
-  const sujet = `[DossierQuébec] ${SUJETS[m.sujet]}${lieu ? ` — ${lieu}` : ''}`;
+  const sujet = `${MARQUE} ${SUJETS[m.sujet]}`;
   const ligne = (etiquette, valeur) => (valeur ? `<tr><td style="padding:2px 12px 2px 0;vertical-align:top">${etiquette}</td><td style="padding:2px 0">${valeur}</td></tr>` : '');
-  const fiche = m.ville && m.numero ? `${SITE}/${m.ville}/decisions-de-la-ville-de-${m.ville}?q=${encodeURIComponent(m.numero)}` : null;
   const html = `<div style="font-family:Arial,sans-serif;max-width:560px;color:#16191D;line-height:1.5">
     <p style="white-space:pre-wrap;margin:0 0 16px;font-size:15px">${echapper(m.message)}</p>
     <table style="font-size:13px;color:#5B6570;border-collapse:collapse">
+      ${ligne('Site', `<a href="${SITE}/">dossierbc.ca</a>`)}
       ${ligne('De', `${echapper(m.email)}`)}
       ${ligne('Sujet', SUJETS[m.sujet])}
-      ${ligne('Décision', fiche ? `<a href="${echapper(fiche)}">${echapper(lieu)}</a>` : '')}
       ${ligne('Page', m.page ? `<a href="${echapper(SITE + m.page)}">${echapper(m.page)}</a>` : '')}
     </table>
     <p style="font-size:12px;color:#5B6570;margin-top:16px">Répondre à ce courriel écrit directement à la personne. Le message est aussi dans Supabase, table messages_utilisateurs.</p>
@@ -119,9 +125,12 @@ export default async function handler(req, res) {
 
   const m = { user_id: id, email, abonne: false, sujet, message, ville, numero, page };
   const courrielEnvoye = await envoyerCourriel(m);
+  // Dans la table partagée, la ligne doit dire d'où elle vient. Le courriel, lui, le dit déjà dans
+  // son sujet et dans sa ligne « Site » : pas besoin de l'alourdir.
+  const garde = `${MARQUE} ${message}`;
   let insertion = await supabase('/rest/v1/messages_utilisateurs', {
     methode: 'POST',
-    corps: { ...m, courriel_envoye: courrielEnvoye },
+    corps: { ...m, message: garde, courriel_envoye: courrielEnvoye },
     entetes: { Prefer: 'return=minimal' },
   });
   // Tant que la contrainte de la table ne connaît pas « suggestion » (scripts/supabase-schema-messages.sql),
@@ -129,7 +138,7 @@ export default async function handler(req, res) {
   if (!insertion.ok && sujet === 'suggestion') {
     insertion = await supabase('/rest/v1/messages_utilisateurs', {
       methode: 'POST',
-      corps: { ...m, sujet: 'idee', message: `[Suggestion] ${message}`, courriel_envoye: courrielEnvoye },
+      corps: { ...m, sujet: 'idee', message: `${MARQUE} [Suggestion] ${message}`, courriel_envoye: courrielEnvoye },
       entetes: { Prefer: 'return=minimal' },
     });
   }
