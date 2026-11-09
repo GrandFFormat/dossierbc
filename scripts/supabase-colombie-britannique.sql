@@ -206,3 +206,47 @@ create trigger refus_lecture_seule_bc_follows before insert or update or delete 
 drop trigger if exists refus_lecture_seule_bc_dossiers_suivis on public.bc_dossiers_suivis;
 create trigger refus_lecture_seule_bc_dossiers_suivis before insert or update or delete on public.bc_dossiers_suivis
   for each row execute function public.refus_lecture_seule();
+
+-- ---------------------------------------------------------------------------------------------
+-- 6. La campagne de pétition par projet de loi (9 nov. 2026)
+--
+-- Le panneau d'admin de « Mon dossier » affiche « demandes / seuil » et deux boutons :
+-- « Resend » monte le seuil au palier suivant (1 000 → 5 000 → 25 000) et pose
+-- escalation_pending ; « Reset » efface la campagne. Même mécanique qu'au Québec
+-- (dossierquebec/scripts/supabase-schema-campaign.sql), mais sur une table PRÉFIXÉE : avant
+-- cette section, le site écrivait dans public.bill_campaign, la table de DossierQuébec, où un
+-- identifiant de la C.-B. (4302249) se serait mêlé aux projets de Données Québec.
+--
+-- last_count et terminal_notified ne servent à rien pour l'instant : ils appartiennent au
+-- digest aux deux semaines, que DossierBC n'a pas encore. Ils sont là pour que le jour où le
+-- digest du Québec est porté ici, il n'y ait aucune migration à faire.
+-- ---------------------------------------------------------------------------------------------
+create table if not exists public.bc_bill_campaign (
+  bill_id bigint primary key,
+  last_count int not null default 0,
+  threshold int not null default 1000,
+  escalation_pending boolean not null default false,
+  terminal_notified boolean not null default false,
+  updated_at timestamptz not null default now()
+);
+alter table public.bc_bill_campaign enable row level security;
+
+-- Le service_role (sauvegarde du dimanche, et un futur digest) : « contourner la RLS »
+-- n'accorde pas les privilèges de base, il faut les donner.
+grant select, insert, update, delete on public.bc_bill_campaign to service_role;
+
+-- Les admins (table public.admins, partagée par toute la famille Dossier) lisent et agissent.
+-- Personne d'autre n'y touche : aucun GRANT à anon ni à authenticated.
+drop policy if exists "bc admins read campaign" on public.bc_bill_campaign;
+drop policy if exists "bc admins write campaign" on public.bc_bill_campaign;
+drop policy if exists "bc admins update campaign" on public.bc_bill_campaign;
+drop policy if exists "bc admins delete campaign" on public.bc_bill_campaign;
+create policy "bc admins read campaign" on public.bc_bill_campaign for select
+  using (exists (select 1 from public.admins a where a.user_id = auth.uid()));
+create policy "bc admins write campaign" on public.bc_bill_campaign for insert
+  with check (exists (select 1 from public.admins a where a.user_id = auth.uid()));
+create policy "bc admins update campaign" on public.bc_bill_campaign for update
+  using (exists (select 1 from public.admins a where a.user_id = auth.uid()));
+create policy "bc admins delete campaign" on public.bc_bill_campaign for delete
+  using (exists (select 1 from public.admins a where a.user_id = auth.uid()));
+grant select, insert, update, delete on public.bc_bill_campaign to authenticated;
