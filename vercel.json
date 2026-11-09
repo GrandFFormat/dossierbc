@@ -4,17 +4,6 @@
   "buildCommand": "echo \"Rien a construire : les pages sont deja fabriquees et commitees.\"",
   "outputDirectory": ".",
   "ignoreCommand": "sh scripts/vercel-deployer.sh",
-  "functions": {
-    "api/feed.js": {
-      "includeFiles": "api/feed-data.xml"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/feed.xml",
-      "destination": "/api/feed"
-    }
-  ],
   "headers": [
     {
       "source": "/data/(.*)",
