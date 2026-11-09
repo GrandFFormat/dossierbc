@@ -182,7 +182,20 @@ create trigger bc_limite_suivis before insert on public.bc_dossiers_suivis
 
 
 -- ---------------------------------------------------------------------------------------------
--- 4. Comptes de consultation (bibliothèque) : lecture seule sur les trois tables
+-- 4. La sauvegarde du dimanche
+--
+-- Documents/sauvegardes-supabase/sauvegarde-du-dimanche.cjs lit TOUTES les tables avec le rôle
+-- service_role et en fait une copie JSON. Sans ce GRANT, il ne voit pas la table et la saute en
+-- silence : la copie dit « 0 table non lue » alors que trois manquent. Le même oubli avait eu lieu
+-- le 2 nov. 2026 sur on_bill_flags et les sk_*.
+-- ---------------------------------------------------------------------------------------------
+grant select on public.bc_bill_flags to service_role;
+grant select on public.bc_follows to service_role;
+grant select on public.bc_dossiers_suivis to service_role;
+
+
+-- ---------------------------------------------------------------------------------------------
+-- 5. Comptes de consultation (bibliothèque) : lecture seule sur les trois tables
 -- ---------------------------------------------------------------------------------------------
 drop trigger if exists refus_lecture_seule_bc_bill_flags on public.bc_bill_flags;
 create trigger refus_lecture_seule_bc_bill_flags before insert or update or delete on public.bc_bill_flags
