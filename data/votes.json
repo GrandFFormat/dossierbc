@@ -2,7 +2,7 @@
   "legislature": 43,
   "source": "https://api.lims.leg.bc.ca/pdms/votes-and-proceedings/43rd2nd",
   "pageOfficielle": "https://www.leg.bc.ca/parliamentary-business/overview/43rd-parliament",
-  "scrapedAt": "2026-11-09T11:34:37.267Z",
+  "scrapedAt": "2026-11-09T23:47:18.353Z",
   "note": "Votes nominatifs (divisions) lus dans les procès-verbaux de l'Assemblée législative de la Colombie-Britannique. La plupart des décisions se prennent de vive voix : l'absence de vote nominatif ne veut pas dire « unanime ». La présidence ne vote pas, sauf pour départager une égalité.",
   "noteControle": "L'Assemblée ne publie pas de compte des divisions d'une session. Trois contrôles tiennent sur ce qu'elle publie : le total annoncé par chaque tableau, le rattachement de chaque nom à une seule personne, et le nombre de votants comparé au nombre de sièges. Les écarts sont listés dans votesNonPublies.",
   "seancesPubliees": 109,
