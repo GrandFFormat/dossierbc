@@ -2318,20 +2318,24 @@ async function checkIsAdmin(){
 // Paliers de pétition (le seuil monte via le bouton admin « Resend »).
 const PETITION_TIERS = [1000, 5000, 25000];
 
+// La campagne vit dans bc_bill_campaign — PRÉFIXÉE, comme tout le reste du site
+// (scripts/supabase-colombie-britannique.sql, section 6). Avant le 9 nov. 2026, ce panneau
+// lisait et écrivait dans `bill_campaign`, la table de DossierQuébec : un identifiant de la
+// C.-B. (4302249) s'y mêlait aux projets de Données Québec, et les envois de DQ parcourent
+// cette table. Même raison que pour bc_bill_flags.
 async function renderAdminFlagCounts(){
-  if(!document.getElementById('adminFlagCounts')) return;   // vue absente de cette page
   const container = document.getElementById('adminFlagCounts');
-  if(!container) return;
+  if(!container) return;   // vue absente de cette page
   const isAdmin = await checkIsAdmin();
   if(!isAdmin){ container.innerHTML = ''; return; }
   // La page du compte ne charge aucun projet : sans les titres, ce panneau n'affichait que
-  // des « #27053 ». Admins seulement, donc jamais payé par un visiteur ordinaire.
+  // des « #4302249 ». Admins seulement, donc jamais payé par un visiteur ordinaire.
   await chargerChallenges();
 
   const { data, error } = await supabaseClient.from('bc_bill_flags').select('bill_id');
   if(error){ console.error('renderAdminFlagCounts failed:', error); container.innerHTML = ''; return; }
-  // État de campagne (seuil courant + escalade en attente) — table bill_campaign.
-  const { data: campData } = await supabaseClient.from('bill_campaign').select('bill_id, threshold, escalation_pending');
+  // État de campagne (seuil courant + escalade en attente) — table bc_bill_campaign.
+  const { data: campData } = await supabaseClient.from('bc_bill_campaign').select('bill_id, threshold, escalation_pending');
   const camp = {}; for(const r of (campData || [])) camp[r.bill_id] = r;
 
   const isEn = currentLang === 'en';
@@ -2355,33 +2359,35 @@ async function renderAdminFlagCounts(){
 
   container.innerHTML = `
     <div class="account-box">
-      <div class="account-note" style="margin-bottom:10px;"><b>${isEn ? 'Explanation requests (admin only)' : "Demandes d'explications (réservé aux admins)"}</b> — ${isEn ? 'Resend raises the petition threshold and queues an escalation email in the next digest; Reset clears the campaign.' : "Resend monte le seuil de pétition et met un courriel d'escalade dans le prochain digest ; Reset remet la campagne à zéro."}</div>
+      <div class="account-note" style="margin-bottom:10px;"><b>${isEn ? 'Explanation requests (admin only)' : "Demandes d'explications (réservé aux admins)"}</b> — ${isEn ? 'Resend raises the petition threshold and records the escalation; Reset clears the campaign. No email goes out from this site yet.' : "Resend monte le seuil de pétition et enregistre l'escalade ; Reset remet la campagne à zéro. Aucun courriel ne part encore de ce site."}</div>
       ${rowsHtml}
     </div>
   `;
 }
 
 // Escalade (bouton admin) : monte le seuil de pétition au palier suivant et pose
-// escalation_pending → le prochain digest aux 2 semaines annonce « le parrain a
-// répondu mais insuffisant, on continue jusqu'à X ». Mutation via la RLS admin.
+// escalation_pending. Au Québec, le digest aux 2 semaines lit ce drapeau et annonce « le parrain
+// a répondu mais insuffisant, on continue jusqu'à X ». DossierBC n'a pas encore de digest
+// (api/weekly-digest.js n'existe pas ici) : le seuil et l'escalade sont ENREGISTRÉS, rien n'est
+// envoyé. Le jour où le digest arrive, il n'y a rien à changer ici. Mutation via la RLS admin.
 async function adminResend(billId){
-  const { data } = await supabaseClient.from('bill_campaign').select('threshold').eq('bill_id', billId).maybeSingle();
+  const { data } = await supabaseClient.from('bc_bill_campaign').select('threshold').eq('bill_id', billId).maybeSingle();
   const cur = data ? data.threshold : PETITION_TIERS[0];
   const next = PETITION_TIERS.find(t => t > cur) ?? cur;
-  if(next === cur && !confirm('Seuil déjà au maximum. Renvoyer quand même un courriel d\'escalade au prochain digest ?')) return;
-  const { error } = await supabaseClient.from('bill_campaign').upsert(
+  if(next === cur && !confirm('Seuil déjà au maximum. Poser quand même une escalade en attente ?')) return;
+  const { error } = await supabaseClient.from('bc_bill_campaign').upsert(
     { bill_id: billId, threshold: next, escalation_pending: true, updated_at: new Date().toISOString() },
     { onConflict: 'bill_id' }
   );
   if(error){ alert('Erreur : ' + error.message); return; }
-  alert(`Escalade posée (seuil ${cur} → ${next}). Le prochain digest l'annoncera.`);
+  alert(`Escalade posée (seuil ${cur} → ${next}). Enregistrée ; aucun courriel ne part tant que ce site n'a pas de digest.`);
   renderAdminFlagCounts();
 }
 
 // Reset (bouton admin) : efface la campagne de ce projet — repart à zéro.
 async function adminReset(billId){
   if(!confirm('Réinitialiser la campagne de ce projet (repart à zéro) ?')) return;
-  const { error } = await supabaseClient.from('bill_campaign').delete().eq('bill_id', billId);
+  const { error } = await supabaseClient.from('bc_bill_campaign').delete().eq('bill_id', billId);
   if(error){ alert('Erreur : ' + error.message); return; }
   renderAdminFlagCounts();
 }
