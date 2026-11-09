@@ -21,6 +21,23 @@
 # Sans ce secret, tout tourne quand même. Les résumés en langage clair ne sont de toute façon pas
 # activés pour l'instant (Martin, 9 nov. 2026) : les 102 projets portent leur mention « pas encore
 # de résumé ».
+#
+# INDEXATION PAR GITHUB (9 nov. 2026). Ce fichier est arrivé dans le COMMIT INITIAL du dépôt
+# (b4440d0). Les deux poussées suivantes n'ont touché aucun fichier de .github/workflows/, et
+# l'onglet Actions du dépôt est resté vide : « No workflows found », zéro exécution, et l'adresse
+# directe du workflow répond « This workflow does not exist ». Les réglages ne sont pas en cause
+# (Actions permissions = « Allow all actions », l'onglet est visible). GitHub n'enregistre un
+# workflow qu'en traitant une poussée dont le diff touche .github/workflows/ : celle qui crée la
+# branche par défaut d'un dépôt vide ne compte pas toujours. Toucher ce fichier dans un nouveau
+# commit suffit donc à le faire exister. Si l'onglet Actions reste vide après la prochaine
+# poussée, renommer le fichier (même contenu) : un chemin neuf sous .github/workflows/ ne laisse
+# plus aucune ambiguïté.
+#
+# LE 18 NOVEMBRE 2026 : l'Assemblée publie les 93 député·e·s de la 44e dès réception des résultats
+# certifiés. Le site sait les prendre tout seul (scrapers/calendrier.js lit l'avis sur l'accueil de
+# l'Assemblée, scrapers/election.js attend ce signal). Mais le 18 est un MERCREDI : le passage du
+# lundi 16 est trop tôt et celui du 23 arriverait cinq jours après. Ce jour-là, lancer le robot à
+# la main avec « Run workflow », ou le laisser attendre le lundi suivant.
 
 name: Rafraîchissement des données (une fois par semaine)
 
