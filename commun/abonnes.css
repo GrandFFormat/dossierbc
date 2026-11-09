@@ -1,0 +1,757 @@
+/* Espace abonnés — commun à tous les volets municipaux et aux pages « Mes dossiers » et
+   « Abonnement ». Dans un volet, les couleurs viennent de ses variables (--accent, --ligne…) ;
+   les valeurs de repli servent aux pages communes. */
+
+/* Dans l'en-tête d'un volet (nav .outils) : Mes dossiers, en pastille, puis Abonnement. */
+.ab-mes-dossiers {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; text-decoration: none; white-space: nowrap;
+  color: var(--entete-encre, #16191D); background: var(--carte, #fff);
+  border: 1px solid var(--ligne-forte, #C2CAD2); border-radius: 999px; padding: 5px 12px;
+}
+.ab-mes-dossiers:hover { border-color: var(--accent, #0B8A4B); color: var(--accent, #0B8A4B); }
+nav > .ab-mes-dossiers { margin-left: auto; } /* volet sans groupe .outils */
+.ab-mes-dossiers + .ab-lien-abonnement + .taille-texte { margin-left: 0; }
+header nav a.ab-lien-abonnement, .ab-lien-abonnement {
+  font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap;
+  color: var(--entete-doux, #5B6570); padding: 5px 6px; border: 0; border-radius: 0;
+}
+header nav a.ab-lien-abonnement:hover { color: var(--accent, #0B8A4B); }
+.ab-compte {
+  min-width: 18px; padding: 0 5px; border-radius: 999px; font-size: 11px; line-height: 18px; text-align: center;
+  background: var(--accent, #0B8A4B); color: #fff;
+}
+
+/* La ligne des pastilles d'une fiche ne la déplie pas : curseur normal, et l'étoile à droite. */
+.pliante > summary .ab-meta-inerte { cursor: default; }
+.ab-etoile {
+  margin-left: auto; font: inherit; font-size: 12.5px; font-weight: 700; line-height: 1.4; cursor: pointer; white-space: nowrap;
+  color: var(--encre, #16191D); background: var(--carte, #fff);
+  border: 1px solid var(--ligne-forte, #C2CAD2); border-radius: 999px; padding: 2px 10px;
+}
+.ab-etoile span { color: var(--vedette, #F5B301); font-size: 14px; }
+.ab-etoile:hover { border-color: var(--vedette, #F5B301); }
+.ab-etoile.actif { border-color: var(--vedette, #F5B301); background: var(--fond-2, #F4F6F8); }
+.ab-etoile:focus-visible { outline: 2px solid var(--accent, #0B8A4B); outline-offset: 2px; }
+.ab-boutons { margin-left: auto; display: inline-flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; }
+.ab-boutons .ab-etoile { margin-left: 0; }
+/* Le bouton de projet porte le NOM du projet (« Projet : Stations d'épuration de Saint-Nicolas
+   et de Desjardins ») : en « nowrap », comme les autres étoiles, il mesurait jusqu'à 450 px et
+   faisait glisser toute la page de côté sur un téléphone (Lévis, 19 sept. 2026). Il passe à la
+   ligne, et reste dans la largeur de la fiche. */
+.ab-projet { white-space: normal; text-align: left; max-width: 100%; overflow-wrap: anywhere; }
+.ab-projet span { color: var(--accent, #0B8A4B); }
+.ab-projet.actif { border-color: var(--accent, #0B8A4B); }
+.ab-final {
+  font-size: 12px; font-weight: 700; white-space: nowrap; cursor: help;
+  color: var(--doux, #5B6570); border: 1px dashed var(--ligne-forte, #C2CAD2); border-radius: 999px; padding: 2px 9px;
+}
+.ab-etoile:disabled { opacity: .5; cursor: default; }
+
+.ab-fiche { margin-top: 12px; }
+.ab-fiche:empty { display: none; }
+.ab-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.ab-suivre {
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  color: var(--encre, #16191D); background: var(--carte, #fff);
+  border: 1px solid var(--ligne-forte, #C2CAD2); border-radius: 999px; padding: 5px 12px;
+}
+.ab-suivre:hover { border-color: var(--accent, #0B8A4B); }
+.ab-suivre.actif { border-color: var(--accent, #0B8A4B); color: var(--accent-encre, #076338); background: var(--accent-fond, #E6F6EC); }
+
+.ab-connexion { border: 1px solid var(--ligne, #DDE2E7); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 14px; }
+.ab-connexion p { margin: 0 0 8px; }
+.ab-form { display: flex; flex-wrap: wrap; gap: 8px; }
+.ab-form input {
+  flex: 1 1 220px; font: inherit; font-size: 14px; padding: 7px 10px;
+  border: 1px solid var(--ligne-forte, #C2CAD2); border-radius: 6px; background: var(--fond, #fff); color: var(--encre, #16191D);
+}
+
+.ab-bouton {
+  display: inline-block; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-decoration: none;
+  color: #fff; background: var(--accent, #0B8A4B); border: 0; border-radius: 6px; padding: 8px 14px;
+}
+.ab-bouton:hover { filter: brightness(1.08); }
+.ab-bouton:disabled { opacity: .6; cursor: default; }
+
+.ab-detail {
+  border: 1px solid var(--ligne, #DDE2E7); border-left: 4px solid var(--accent, #0B8A4B);
+  border-radius: 8px; padding: 12px 14px; margin-top: 4px; font-size: 14px; line-height: 1.5;
+  background: var(--carte, #fff);
+}
+.ab-detail.ab-verrou { border-left-color: var(--vedette, #F5B301); }
+.ab-detail-titre { font-weight: 800; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+.ab-etiquette {
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 999px; background: var(--fond-2, #F4F6F8); color: var(--doux, #5B6570);
+}
+.ab-phrase { margin: 0 0 8px; }
+.ab-apercu { margin: 0 0 8px; color: var(--doux, #5B6570); }
+.ab-detail ul { margin: 0 0 8px; padding-left: 18px; }
+.ab-detail li { margin: 0 0 4px; }
+.ab-note { font-size: 12.5px; color: var(--doux, #5B6570); margin: 6px 0 0; }
+/* Demander un détail de l'argent manquant */
+/* Discret, dans le ton de « Signaler une erreur dans cette fiche » : une ligne grise et un lien. */
+.ab-demande { margin-top: 6px; font-size: 12.5px; color: var(--doux, #5B6570); }
+.ab-demande p { margin: 0; padding: 0; background: none; border-radius: 0; } /* un volet stylise « details p » */
+.ab-demande .ab-demande-etat { color: var(--doux, #5B6570); }
+.ab-demande .ab-demande-etat strong { color: var(--encre, #16191D); }
+.ab-demande-lien {
+  font: inherit; font-size: 12.5px; background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--doux, #5B6570); text-decoration: underline; text-underline-offset: 2px;
+}
+.ab-demande-lien:hover { color: var(--encre, #16191D); }
+.ab-demande-lien:disabled { opacity: .6; cursor: default; }
+/* La même fonction, fermée, pour qui n'est pas abonné : on la voit, on ne peut pas s'en servir. */
+.ab-demande-verrou { color: var(--doux, #5B6570); }
+.ab-demande-verrou-nom { color: var(--doux, #5B6570); opacity: .85; }
+.ab-demande-verrou .ab-lien { font-size: 12.5px; }
+.ab-bouton-second { font-size: 13px; padding: 6px 12px; color: var(--accent-encre, #076338); background: var(--accent-fond, #E6F6EC); border: 1px solid var(--accent, #0B8A4B); }
+.ab-demande-message:not(:empty) { margin-left: 8px; }
+
+/* Nous écrire / Signaler une erreur */
+.ab-signaler { margin-top: 10px; }
+.ab-signaler-lien {
+  font: inherit; font-size: 12.5px; background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--doux, #5B6570); text-decoration: underline; text-underline-offset: 2px;
+}
+.ab-signaler-lien:hover { color: var(--encre, #16191D); }
+.ab-signaler .ab-message-boite { border: 1px solid var(--ligne, #DDE2E7); border-radius: 8px; padding: 10px 12px; }
+.ab-message { display: grid; gap: 10px; font-size: 14px; }
+.ab-message label { display: grid; gap: 4px; font-weight: 600; }
+.ab-message select, .ab-message textarea {
+  font: inherit; font-size: 14px; font-weight: 400; padding: 7px 10px;
+  border: 1px solid var(--ligne-forte, #C2CAD2); border-radius: 6px; background: var(--fond, #fff); color: var(--encre, #16191D);
+}
+.ab-message select { justify-self: start; }
+.ab-message textarea { resize: vertical; min-height: 96px; }
+.ab-message p { margin: 0; padding: 0; background: none; border-radius: 0; } /* un volet stylise « details p » */
+.ab-message .ab-etat:empty { display: none; }
+.ab-merci { margin: 0; padding: 0; background: none; font-size: 14px; font-weight: 600; color: var(--accent-encre, #076338); }
+
+/* ---------- pages communes ---------- */
+.ab-page {
+  --fond: #F7F8FA; --carte: #FFFFFF; --encre: #16191D; --doux: #5B6570; --ligne: #DDE2E7; --ligne-forte: #C2CAD2;
+  --accent: #0B8A4B; --accent-fond: #E6F6EC; --accent-encre: #076338; --fond-2: #EEF1F4; --vedette: #F5B301;
+  margin: 0; background: var(--fond); color: var(--encre);
+  font-family: 'Archivo', system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="clair"]) .ab-page {
+    --fond: #0E1116; --carte: #161B22; --encre: #E6EAEE; --doux: #9AA5B1; --ligne: #262D36; --ligne-forte: #36404B;
+    --accent: #3DD68C; --accent-fond: #0F2A1D; --accent-encre: #7BE7B2; --fond-2: #1C232C;
+  }
+}
+:root[data-theme="sombre"] .ab-page {
+  --fond: #0E1116; --carte: #161B22; --encre: #E6EAEE; --doux: #9AA5B1; --ligne: #262D36; --ligne-forte: #36404B;
+  --accent: #3DD68C; --accent-fond: #0F2A1D; --accent-encre: #7BE7B2; --fond-2: #1C232C;
+}
+.ab-page .ab-contenu { max-width: 860px; margin: 0 auto; padding: 22px 22px 80px; }
+/* En-tête des pages communes : même organisation que les volets — le logo (celui du volet d'où
+   l'on vient) et le choix de la ville, puis les onglets à gauche et les outils à droite. */
+.ab-page .ab-haut { padding: 14px 0 0; border-bottom: 1px solid var(--ligne); margin-bottom: 22px; }
+.ab-page .ab-haut-ligne { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding-bottom: 10px; }
+.ab-page .ab-marque { font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--encre); text-decoration: none; }
+.ab-page .ab-marque span { color: var(--accent); }
+/* Le menu des villes, en haut à droite de chaque page — volets (dans .titre-ligne) et pages
+   communes (dans .ab-haut-ligne). Les couleurs viennent de la page ; valeurs de repli sinon. */
+/* margin-top/bottom à zéro : le style des volets donne une marge à tous les <details> (les fiches). */
+.ab-villes { margin: 0 0 0 auto; position: relative; font-size: 13.5px; }
+.ab-villes > summary {
+  list-style: none; cursor: pointer; white-space: nowrap; font-weight: 600; line-height: 1.5;
+  color: var(--encre, #16191D); background: var(--carte, #fff);
+  border: 1px solid var(--ligne-forte, #C2CAD2); border-radius: 999px; padding: 5px 12px;
+}
+.ab-villes > summary::-webkit-details-marker { display: none; }
+.ab-villes > summary::after { content: " ▾"; color: var(--doux, #5B6570); }
+.ab-villes[open] > summary::after { content: " ▴"; }
+.ab-villes > summary:hover { border-color: var(--accent, #0B8A4B); }
+.ab-villes > summary:focus-visible { outline: 2px solid var(--accent, #0B8A4B); outline-offset: 2px; }
+.ab-villes-menu {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; min-width: 220px;
+  list-style: none; margin: 0; padding: 6px; background: var(--carte, #fff);
+  border: 1px solid var(--ligne, #DDE2E7); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+}
+.ab-villes-menu li { margin: 0; }
+.ab-villes-menu a { display: block; padding: 8px 10px; border: 0; border-radius: 6px; font-size: 13.5px; color: var(--encre, #16191D); text-decoration: none; font-weight: 600; }
+.ab-villes-menu a:hover { background: var(--fond-2, #F4F6F8); }
+.ab-villes-menu a[aria-current] { color: var(--accent-encre, var(--accent, #076338)); background: var(--accent-fond, var(--fond-2, #E6F6EC)); }
+/* Volets sur cellulaire : le menu passe dans la ligne des outils, à la place d'« Abonnement ». */
+.ab-villes-mobile { display: none; }
+@media (max-width: 620px) {
+  .titre-ligne > .ab-villes { display: none; }
+  nav .outils .ab-lien-abonnement { display: none; }
+  /* Toute la ligne à la même hauteur (32 px), et assez étroite pour un écran de 320 px ; si
+     elle ne tient quand même pas, elle passe à la ligne plutôt que de déborder. */
+  nav .outils { flex-wrap: wrap; gap: 6px; }
+  /* En flex : un <details> en bloc ajoute une ligne de texte sous son résumé, ce qui le décalait
+     de quelques pixels vers le bas par rapport aux autres pastilles. */
+  nav .outils .ab-villes-mobile { display: flex; align-items: center; margin-left: 0; font-size: 13px; }
+  nav .outils .ab-mes-dossiers,
+  nav .outils .ab-villes-mobile > summary {
+    box-sizing: border-box; height: 32px; display: inline-flex; align-items: center;
+    padding: 0 10px; font-size: 13px; line-height: 1;
+  }
+  nav .outils .taille-texte { box-sizing: border-box; height: 32px; padding: 2px; }
+  nav .outils .taille-texte button { height: 26px; width: 30px; }
+  nav .outils .bascule-theme { width: 32px; height: 32px; }
+}
+/* Pastille de langue EN / FR (commun/langue.js), collée au menu des villes. */
+.ab-langue {
+  display: inline-flex; align-items: center; margin-left: 6px; white-space: nowrap; text-decoration: none;
+  font-size: 13px; font-weight: 800; letter-spacing: .04em; line-height: 1.5;
+  color: var(--encre, #16191D); background: var(--carte, #fff);
+  border: 1px solid var(--ligne-forte, #C2CAD2); border-radius: 999px; padding: 5px 10px;
+}
+.ab-langue:hover { border-color: var(--accent, #0B8A4B); color: var(--accent, #0B8A4B); }
+.ab-langue:focus-visible { outline: 2px solid var(--accent, #0B8A4B); outline-offset: 2px; }
+.ab-langue-seule { margin-left: auto; }
+.ab-langue-mobile { display: none; }
+@media (max-width: 620px) {
+  .titre-ligne > .ab-langue { display: none; }
+  nav .ab-langue-mobile { display: inline-flex; box-sizing: border-box; height: 28px; padding: 0 9px; margin-left: 4px; font-size: 12px; }
+}
+/* Anglais choisi : la page reste cachée le temps de traduire l'en-tête (au plus 1,5 s, voir le
+   script en ligne de chaque page), pour ne pas montrer le français une fraction de seconde. */
+html.dvq-en:not(.dvq-pret) body { visibility: hidden; }
+.ab-villes-dq { border-top: 1px solid var(--ligne, #DDE2E7); margin-top: 4px; padding-top: 4px; }
+.ab-villes-dq span { color: var(--doux, #5B6570); font-weight: 400; }
+.ab-page .ab-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.ab-page .ab-onglets { display: flex; flex-wrap: wrap; gap: 3px; }
+.ab-page .ab-onglets a {
+  font-size: 14px; font-weight: 600; text-decoration: none; color: var(--doux);
+  padding: 9px 14px; border-bottom: 3px solid transparent;
+}
+.ab-page .ab-onglets a:hover { color: var(--encre); }
+.ab-page .ab-onglets a[aria-current="page"] { color: var(--encre); border-bottom-color: var(--accent); font-weight: 700; }
+.ab-page .ab-outils { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.ab-page .ab-taille {
+  display: inline-flex; align-items: center; gap: 2px; padding: 2px;
+  border: 1px solid var(--ligne-forte); border-radius: 100px; background: var(--carte);
+}
+.ab-page .ab-taille button {
+  font: inherit; font-size: 13px; font-weight: 700; line-height: 1; width: 32px; height: 28px;
+  border: 0; border-radius: 100px; background: transparent; color: var(--encre); cursor: pointer;
+}
+.ab-page .ab-taille button:hover:not(:disabled) { background: var(--fond-2); }
+.ab-page .ab-taille button:disabled { color: var(--ligne-forte); cursor: default; }
+.ab-page .ab-taille span { font-size: 12px; color: var(--doux); min-width: 36px; text-align: center; }
+/* Le thème : une lune en clair (où l'on va), un soleil en sombre — comme dans les volets. */
+.ab-page .ab-theme {
+  width: 38px; height: 38px; flex: none; cursor: pointer; position: relative;
+  background: transparent; border: 1px solid transparent; border-radius: 100px;
+}
+.ab-page .ab-theme:hover { border-color: var(--ligne-forte); background: var(--fond-2); }
+.ab-page .ab-theme::before {
+  content: ''; position: absolute; inset: 0; margin: auto; width: 17px; height: 17px; border-radius: 100px; background: var(--doux);
+}
+.ab-page .ab-theme::after {
+  content: ''; position: absolute; inset: 0; margin: auto; width: 15px; height: 15px; border-radius: 100px;
+  background: var(--fond); transform: translate(5px, -4px);
+}
+.ab-page .ab-theme:hover::after { background: var(--fond-2); }
+.ab-page .ab-theme[aria-pressed="true"]::before {
+  width: 14px; height: 14px; background: var(--vedette);
+  box-shadow: 0 -9px 0 -5.5px var(--vedette), 0 9px 0 -5.5px var(--vedette), -9px 0 0 -5.5px var(--vedette), 9px 0 0 -5.5px var(--vedette);
+}
+.ab-page .ab-theme[aria-pressed="true"]::after { display: none; }
+@media (max-width: 620px) {
+  .ab-page .ab-onglets a { padding: 8px 9px; font-size: 13.5px; }
+  .ab-page .ab-outils { flex-basis: 100%; justify-content: space-between; padding: 4px 0 10px; }
+  .ab-page .ab-taille span { display: none; }
+}
+.ab-page h1 { font-size: 30px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -.02em; }
+.ab-page h2 { font-size: 19px; margin: 28px 0 10px; }
+.ab-page .ab-chapeau { color: var(--doux); margin: 0 0 24px; max-width: 64ch; }
+.ab-page .ab-carte { background: var(--carte); border: 1px solid var(--ligne); border-radius: 10px; padding: 20px 22px; margin-bottom: 24px; }
+/* De l'air (Martin, 14 sept.) : les boîtes de Mes dossiers bien séparées, le texte moins tassé. */
+.ab-page .ab-carte > h2:first-child { margin-bottom: 12px; }
+.ab-page .ab-carte .ab-note { line-height: 1.55; }
+.ab-page .ab-carte .ab-form + .ab-note { margin-top: 10px; }
+#compte .ab-note { margin: 0 0 18px; }
+@media (max-width: 560px) { .ab-page .ab-carte { padding: 18px 16px; margin-bottom: 20px; } }
+/* Les projets suivis restent une liste : plus serrés entre eux. */
+.ab-page .ab-carte.ab-dossier { margin-bottom: 14px; }
+.ab-page .ab-carte h3 { font-size: 16px; margin: 0 0 4px; }
+.ab-page .ab-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: 13px; color: var(--doux); margin-bottom: 6px; }
+.ab-page .ab-parcours { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
+.ab-page .ab-liens { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 10px; font-size: 14px; }
+.ab-page .ab-liens a, .ab-page .ab-lien { color: var(--accent-encre); font-weight: 600; }
+.ab-page .ab-lien-bouton { font: inherit; font-size: 14px; font-weight: 600; background: none; border: 0; padding: 0; cursor: pointer; color: var(--accent-encre); text-decoration: underline; }
+.ab-page .ab-grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.ab-page .ab-prix { font-size: 26px; font-weight: 800; }
+.ab-page .ab-vide { color: var(--doux); }
+
+/* Un dossier suivi : cliquable, il s'ouvre sur place. */
+.ab-page details.ab-dossier { padding: 0; }
+.ab-page details.ab-dossier > summary { list-style: none; cursor: pointer; padding: 16px 44px 16px 18px; position: relative; border-radius: 10px; }
+.ab-page details.ab-dossier > summary::-webkit-details-marker { display: none; }
+.ab-page details.ab-dossier > summary::after {
+  content: "+"; position: absolute; right: 18px; top: 16px; font-size: 20px; line-height: 1; color: var(--doux);
+}
+.ab-page details.ab-dossier[open] > summary::after { content: "−"; }
+.ab-page details.ab-dossier > summary:hover { background: var(--fond-2); }
+.ab-page details.ab-dossier > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ab-page details.ab-dossier[open] > summary { border-bottom: 1px solid var(--ligne); border-radius: 10px 10px 0 0; }
+.ab-page .ab-dossier-corps { padding: 14px 18px 16px; }
+.ab-page .ab-bloc { margin-bottom: 14px; font-size: 14.5px; }
+.ab-page .ab-bloc ul { margin: 0; padding-left: 18px; }
+.ab-page .ab-bloc li { margin: 0 0 4px; }
+.ab-page .ab-en-cours { background: var(--accent-fond); color: var(--accent-encre); }
+.ab-page .ab-type-projet { background: var(--accent); color: #fff; }
+.ab-page .ab-liste-projet { list-style: none; padding: 0; margin: 0; }
+.ab-page .ab-ligne-projet { padding: 10px 0; border-top: 1px solid var(--ligne); }
+.ab-page .ab-ligne-projet:first-child { border-top: 0; }
+.ab-page .ab-ligne-projet .ab-liens { margin-top: 4px; }
+.ab-page .ab-pourquoi { margin-top: 26px; border-left: 4px solid var(--vedette); }
+.ab-page .ab-alertes { border-left: 4px solid var(--accent); }
+.ab-page .ab-ouverts { border-left: 4px solid var(--accent); }
+/* Boîtes repliables de Mes dossiers (mots-clés, organismes, export, agenda) : fermées au départ,
+   le titre et un compteur visibles ; elles restent ouvertes si la page se redessine. */
+.ab-page details.ab-pliable > summary {
+  list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px;
+  position: relative; padding-right: 30px;
+}
+.ab-page details.ab-pliable > summary::-webkit-details-marker { display: none; }
+.ab-page details.ab-pliable > summary::after {
+  content: "▾"; position: absolute; right: 2px; top: 50%; transform: translateY(-50%);
+  font-size: 24px; color: var(--doux); transition: transform .15s;
+}
+.ab-page details.ab-pliable[open] > summary::after { transform: translateY(-50%) rotate(180deg); }
+.ab-page details.ab-pliable > summary h2 { margin: 0; }
+.ab-page details.ab-pliable > summary:hover h2 { color: var(--accent-encre); }
+.ab-page details.ab-pliable > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+.ab-page .ab-pliable-corps { margin-top: 14px; }
+/* Les mises en garde qu'on ne doit pas manquer (agenda des conseils) : gras, italique et
+   soulignées, sans surlignage (essayé, pas joli). */
+.ab-page .ab-mise-en-garde { font-weight: 700; font-style: italic; color: var(--encre); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.ab-page .ab-h2-precision { font-weight: 400; color: var(--doux); font-size: .85em; }
+.ab-page details.ab-section-agenda { margin: 0 0 10px; border: 1px solid var(--ligne); border-radius: 8px; padding: 0 12px; }
+.ab-page details.ab-section-agenda > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px;
+  font-weight: 800; font-size: 15px; padding: 10px 24px 10px 0; position: relative;
+}
+.ab-page details.ab-section-agenda > summary::-webkit-details-marker { display: none; }
+.ab-page details.ab-section-agenda > summary::after { content: "▾"; position: absolute; right: 2px; color: var(--doux); transition: transform .15s; }
+.ab-page details.ab-section-agenda[open] > summary::after { transform: rotate(180deg); }
+.ab-page details.ab-section-agenda > summary:hover { color: var(--accent-encre); }
+.ab-page details.ab-section-agenda[open] { padding-bottom: 6px; }
+.ab-page .ab-pastilles { align-items: center; gap: 5px 8px; }
+.ab-page .ab-pastille-theme { font-size: 11px; font-weight: 700; letter-spacing: .02em; color: #fff; padding: 2px 9px; border-radius: 999px; }
+.ab-page .ab-numero { font-family: ui-monospace, Consolas, monospace; font-size: 12px; font-weight: 700; color: var(--encre); }
+.ab-page .ab-choix-instance { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 14px; font-weight: 700; font-size: 14px; }
+.ab-page .ab-choix-instance select {
+  font: inherit; font-size: 14px; font-weight: 600; padding: 7px 10px; max-width: 100%;
+  border: 1px solid var(--ligne-forte); border-radius: 6px; background: var(--carte); color: var(--encre);
+}
+.ab-page details.ab-ouvert { border-top: 1px solid var(--ligne); }
+.ab-page details.ab-ouvert > summary { list-style: none; cursor: pointer; padding: 10px 26px 10px 0; position: relative; }
+.ab-page details.ab-ouvert > summary::-webkit-details-marker { display: none; }
+.ab-page details.ab-ouvert > summary::after { content: "+"; position: absolute; right: 4px; top: 10px; font-size: 18px; color: var(--doux); }
+.ab-page details.ab-ouvert[open] > summary::after { content: "−"; }
+.ab-page details.ab-ouvert > summary:hover .ab-ouvert-phrase { color: var(--accent-encre); }
+.ab-page .ab-ouvert-phrase { font-size: 15px; }
+.ab-page .ab-ouvert-corps { padding: 0 0 12px; font-size: 14.5px; }
+.ab-page .ab-ouvert-corps ul { margin: 0 0 6px; padding-left: 18px; }
+.ab-page .ab-ouvert-corps li { margin: 0 0 4px; }
+.ab-page .ab-interrupteur { display: flex; align-items: center; gap: 10px; font-weight: 700; cursor: pointer; }
+.ab-page .ab-interrupteur input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+.ab-page .ab-alertes .ab-liens { align-items: center; }
+.ab-page .ab-lien-bouton.ab-lien-doux { color: var(--doux); font-weight: 500; }
+.ab-page .ab-lien-bouton.ab-lien-doux:hover { color: var(--encre); }
+.ab-page .ab-alertes #alertes-etat { flex-basis: 100%; }
+.ab-page .ab-organismes { border-left: 4px solid var(--accent); }
+.ab-page .ab-export { border-left: 4px solid var(--accent); }
+.ab-page .ab-suggestions { border-left: 4px solid var(--accent); }
+.ab-page .ab-export-grille { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.ab-page .ab-champ { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin: 0; padding: 0; border: 0; min-width: 0; }
+.ab-page .ab-champ > span, .ab-page .ab-champ > legend { font-weight: 700; font-size: 15px; padding: 0; }
+.ab-page .ab-champ > legend { margin-bottom: 6px; }
+.ab-page .ab-champ em { font-style: normal; font-weight: 400; color: var(--doux); }
+.ab-page .ab-champ select, .ab-page .ab-champ input[type="text"] {
+  font: inherit; font-size: 14px; padding: 8px 10px; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box;
+  border: 1px solid var(--ligne-forte); border-radius: 6px; background: var(--carte); color: var(--encre);
+}
+.ab-page .ab-case { display: flex; align-items: flex-start; gap: 8px; font-size: 14.5px; line-height: 1.45; margin: 0 0 6px; }
+.ab-page .ab-case input { width: 17px; height: 17px; margin-top: 2px; flex: none; accent-color: var(--accent); }
+.ab-page .ab-case-filtre { margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--ligne); }
+.ab-page .ab-case .ab-doux { color: var(--doux); font-size: 13px; }
+.ab-page .ab-export-compte { font-weight: 800; font-size: 16px; margin: 18px 0 0; }
+/* Un organisme suivi : même menu dépliant que les sections de l'agenda (ab-section-agenda), avec
+   le « × » pour ne plus le suivre avant la flèche. */
+#org-liste { margin-top: 12px; }
+.ab-page details.ab-organisme > summary { flex-wrap: wrap; }
+.ab-page .ab-organisme-nom { min-width: 0; overflow-wrap: anywhere; }
+.ab-page details.ab-organisme > summary .ab-mot-retirer { margin-left: auto; }
+.ab-page .ab-detail-org { margin-top: 8px; }
+.ab-page .ab-mots { border-left: 4px solid var(--accent); }
+.ab-page .ab-astuce { font-size: 15px; line-height: 1.55; margin: 12px 0 0; padding: 10px 12px; background: var(--fond-2); border-radius: 8px; }
+.ab-page .ab-mots-liste { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.ab-page .ab-mot { display: inline-flex; align-items: center; gap: 8px; padding: 3px 4px 3px 12px; background: var(--carte); border: 1px solid var(--ligne-forte); border-radius: 999px; font-size: 14px; }
+.ab-page .ab-mot-texte { font-weight: 700; }
+.ab-page .ab-mot-retirer { font: inherit; font-size: 16px; line-height: 1; width: 24px; height: 24px; border: 0; border-radius: 50%; background: transparent; color: var(--doux); cursor: pointer; }
+.ab-page .ab-mot-retirer:hover { background: var(--fond-2); color: var(--encre); }
+.ab-page .ab-pourquoi-deux { margin-top: 26px; }
+.ab-page .ab-pourquoi-deux .ab-pourquoi { margin-top: 0; }
+.ab-page .ab-pourquoi-deux .ab-carte { margin-bottom: 0; }
+.ab-page .ab-pourquoi-deux .ab-carte > ul { margin: 6px 0 12px; padding-left: 18px; font-size: 14.5px; }
+.ab-page .ab-pourquoi-deux .ab-carte li { margin: 0 0 6px; }
+.ab-page .ab-pourquoi-deux > .ab-note { margin-top: 10px; }
+.ab-page .ab-pourquoi ul { margin: 0 0 14px; padding-left: 18px; }
+.ab-page .ab-pourquoi li { margin: 0 0 6px; }
+.ab-page .ab-sous-titre { font-size: 15px; margin: 18px 0 8px; color: var(--doux); text-transform: uppercase; letter-spacing: .05em; }
+.ab-page .ab-suggestion { display: flex; flex-direction: column; margin-bottom: 0; }
+/* Les cartes de la grille n'ont pas de marge : l'espace avant « Nous écrire » vient de la section. */
+.ab-page #suggestions:not(:empty) { margin-bottom: 32px; }
+.ab-page #suggestions .ab-grille { gap: 16px; }
+.ab-page .ab-suggestion .ab-liens { margin-top: auto; padding-top: 10px; align-items: center; }
+.ab-page .ab-derniere { font-size: 14px; margin: 0; }
+
+/* Un projet ouvert : chiffres, récapitulatif, graphiques. */
+.ab-page .ab-tuiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 16px; }
+.ab-page .ab-tuile { background: var(--fond-2); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; }
+.ab-page .ab-tuile strong { font-size: 24px; line-height: 1.1; letter-spacing: -.02em; }
+.ab-page .ab-tuile span { font-size: 12.5px; color: var(--doux); }
+.ab-page .ab-tuile-attente { background: var(--accent-fond); }
+.ab-page .ab-tuile-attente strong { color: var(--accent-encre); }
+
+.ab-page .ab-recap { border: 1px solid var(--ligne); border-left: 4px solid var(--accent); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
+.ab-page .ab-en-bref { font-size: 15.5px; margin: 0 0 14px; }
+/* Le même encadré, quand la ville explique pourquoi son récapitulatif manque : en gris
+   plutôt qu'en couleur d'accent, parce qu'il annonce une absence, pas un contenu. */
+.ab-page .ab-recap-attente { border-left-color: var(--ligne-forte); background: var(--fond-2); }
+/* Le surligneur : ce qu'une ville désigne comme devant sauter aux yeux dans son texte. Fond
+   jaune en clair, ambre sourd en sombre — un jaune vif sur fond noir éblouit. */
+.ab-page mark.ab-marque { background: #FFF1A8; color: inherit; padding: 0 2px; border-radius: 3px; }
+:root[data-theme="dark"] .ab-page mark.ab-marque { background: #4A3C0F; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ab-page mark.ab-marque { background: #4A3C0F; }
+}
+
+/* La phrase qui dit ce qui va se passer : surlignée, pas séparée. Dans un encadré déjà gris,
+   un filet ne la détache pas — une bande de couleur, oui. */
+.ab-page .ab-attente-ligne {
+  margin: 12px 0 0; padding: 10px 12px; border-radius: 6px;
+  background: var(--accent-fond); color: var(--accent-encre);
+  font-size: 14.5px; line-height: 1.55; font-weight: 600;
+}
+
+/* Ce qui manque aux projets d'une ville, dit une fois en tête de sa liste. */
+.ab-page .ab-legende-ville { margin: 0 0 12px; line-height: 1.55; border-left: 3px solid var(--ligne-forte); padding-left: 10px; }
+.ab-page .ab-recap-attente .ab-en-bref { font-size: 14.5px; margin: 0; color: var(--doux); }
+.ab-page .ab-chrono { list-style: none; margin: 0 0 12px; padding: 0 0 0 18px; border-left: 2px solid var(--ligne-forte); }
+.ab-page .ab-chrono > li { position: relative; padding: 0 0 14px 4px; }
+.ab-page .ab-chrono > li::before {
+  content: ""; position: absolute; left: -25px; top: 5px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--carte); border: 2px solid var(--accent);
+}
+.ab-page .ab-chrono > li:last-child { padding-bottom: 2px; }
+.ab-page .ab-chrono > li:last-child::before { background: var(--accent); }
+.ab-page .ab-chrono-periode { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--doux); }
+.ab-page .ab-chrono-titre { font-weight: 800; font-size: 15px; margin: 1px 0 2px; }
+.ab-page .ab-chrono > li > p { margin: 0 0 4px; font-size: 14.5px; }
+.ab-page .ab-refs { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.ab-page .ab-refs-dessous { display: flex; margin-top: 4px; }
+.ab-page .ab-ref {
+  display: inline-flex; align-items: center; gap: 3px; cursor: pointer;
+  font-size: 11.5px; font-weight: 600; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; line-height: 1.5;
+  color: var(--accent-encre); background: var(--accent-fond); border: 1px solid transparent; border-radius: 4px; padding: 1px 6px;
+}
+.ab-page .ab-ref span { font-size: 10px; transition: transform .15s; }
+.ab-page .ab-ref:hover { border-color: var(--accent); }
+.ab-page .ab-ref:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.ab-page .ab-ref[aria-expanded="true"] { background: var(--accent); color: #fff; }
+.ab-page .ab-ref[aria-expanded="true"] span { transform: rotate(180deg); }
+.ab-page .ab-ref-panneau {
+  margin: 8px 0 4px; padding: 10px 12px; font-size: 14px;
+  background: var(--carte); border: 1px solid var(--ligne); border-left: 3px solid var(--accent); border-radius: 6px;
+}
+.ab-page .ab-ref-panneau ul { margin: 6px 0 0; padding-left: 18px; }
+.ab-page .ab-ref-panneau li { margin: 0 0 4px; }
+.ab-page .ab-ref-panneau p { margin: 6px 0 0; }
+.ab-page .ab-ref-panneau .ab-liens { margin-top: 8px; }
+.ab-page .ab-ref-sous { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--doux); margin-top: 10px; }
+.ab-page .ab-surveiller { background: var(--fond-2); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; }
+.ab-page .ab-surveiller ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+.ab-page .ab-surveiller > ul > li { margin: 0 0 6px; }
+
+.ab-page .ab-graphiques { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px 24px; }
+.ab-page .ab-mois { display: flex; align-items: flex-end; gap: 4px; height: 130px; padding-top: 4px; }
+.ab-page .ab-mois-col { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; min-width: 0; }
+.ab-page .ab-mois-barre { width: 100%; max-width: 28px; min-height: 2px; background: var(--accent); border-radius: 3px 3px 0 0; }
+.ab-page .ab-mois-n { font-size: 11px; color: var(--doux); line-height: 1.4; }
+.ab-page .ab-mois-nom { font-size: 11px; color: var(--doux); border-top: 1px solid var(--ligne); width: 100%; text-align: center; padding-top: 2px; }
+.ab-page .ab-barres { list-style: none; margin: 0; padding: 0; }
+.ab-page .ab-barres li { display: grid; grid-template-columns: minmax(90px, 40%) 1fr 28px; align-items: center; gap: 8px; font-size: 13.5px; margin: 0 0 6px; }
+.ab-page .ab-barre-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ab-page .ab-barre { height: 10px; background: var(--fond-2); border-radius: 5px; overflow: hidden; }
+.ab-page .ab-barre span { display: block; height: 100%; border-radius: 5px; }
+.ab-page .ab-barre-n { text-align: right; color: var(--doux); font-variant-numeric: tabular-nums; }
+
+/* Retour en haut (pages communes), comme .haut dans les volets. */
+.ab-page .ab-retour-haut {
+  position: fixed; right: 18px; bottom: 18px; z-index: 20;
+  width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--ligne-forte);
+  background: var(--carte); color: var(--encre); font: inherit; font-size: 20px; line-height: 1; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .18); opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity .18s, transform .18s;
+}
+.ab-page .ab-retour-haut.visible { opacity: 1; transform: none; pointer-events: auto; }
+.ab-page .ab-retour-haut:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Page Abonnement : le travail derrière le site. */
+.ab-page .ab-travail .ab-tuile strong { font-size: 26px; }
+.ab-page .ab-travail .ab-mois-n { font-size: 10px; }
+.ab-page .ab-chemin { list-style: none; counter-reset: etape; margin: 0; padding: 0; font-size: 14px; }
+.ab-page .ab-chemin li { counter-increment: etape; position: relative; padding: 0 0 10px 34px; }
+.ab-page .ab-chemin li::before {
+  content: counter(etape); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 12px; font-weight: 800; color: #fff; background: var(--accent);
+}
+.ab-page .ab-chemin li:not(:last-child)::after {
+  content: ""; position: absolute; left: 10px; top: 25px; bottom: 2px; width: 2px; background: var(--ligne-forte);
+}
+
+.ab-page details.ab-toutes { margin: 4px 0 12px; }
+.ab-page details.ab-toutes > summary { cursor: pointer; font-weight: 800; font-size: 14.5px; padding: 6px 0; }
+.ab-page details.ab-toutes[open] > summary { margin-bottom: 4px; }
+
+/* ---------- Page Abonnement : de la couleur (main.ab-abo seulement) ----------
+   Six teintes moyennes, lisibles sur fond clair comme sombre ; les fonds teintés sont mélangés à
+   la couleur de la carte (color-mix), donc ils suivent le thème. Les chiffres et les pastilles
+   mélangent la teinte à l'encre pour garder le contraste. */
+.ab-abo {
+  --c-vert: var(--accent); --c-bleu: #3B82F6; --c-violet: #8B5CF6; --c-orange: #EA580C; --c-jaune: #D99A06; --c-rose: #DB2777;
+}
+.ab-abo .ab-av-vert, .ab-abo .ab-offre-gratuit { --c: var(--c-vert); }
+.ab-abo .ab-av-bleu { --c: var(--c-bleu); }
+.ab-abo .ab-av-violet { --c: var(--c-violet); }
+.ab-abo .ab-av-orange { --c: var(--c-orange); }
+.ab-abo .ab-av-jaune, .ab-abo .ab-offre-payant { --c: var(--c-jaune); }
+.ab-abo .ab-av-rose { --c: var(--c-rose); }
+
+/* Les deux offres */
+.ab-abo .ab-offre { border-top: 5px solid var(--c); }
+.ab-abo .ab-offre-payant {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c-jaune) 12%, var(--carte)) 0, var(--carte) 180px);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--c-jaune) 16%, transparent);
+}
+.ab-abo .ab-offre-tete { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.ab-abo .ab-offre-tete h3 { margin: 0; font-size: 17px; }
+.ab-abo .ab-pastille-offre {
+  font-weight: 800; font-size: 13px; white-space: nowrap; padding: 3px 11px; border-radius: 999px;
+  color: color-mix(in srgb, var(--c) 55%, var(--encre));
+  background: color-mix(in srgb, var(--c) 18%, var(--carte)); border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+}
+.ab-abo ul.ab-coches { list-style: none; margin: 0; padding: 0; }
+.ab-abo ul.ab-coches li { position: relative; padding-left: 28px; margin: 0 0 9px; }
+.ab-abo ul.ab-coches li::before {
+  content: "✓"; position: absolute; left: 0; top: 3px; width: 19px; height: 19px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 11px; font-weight: 900; color: #fff; background: var(--c-vert);
+}
+.ab-abo ul.ab-avantages { list-style: none; margin: 0 0 6px; padding: 0; display: grid; gap: 10px; }
+.ab-abo ul.ab-avantages li {
+  display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start; padding: 10px 12px; border-radius: 10px;
+  background: color-mix(in srgb, var(--c) 9%, var(--carte)); border-left: 3px solid var(--c);
+}
+.ab-abo ul.ab-avantages .ab-icone {
+  width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; line-height: 1;
+  background: color-mix(in srgb, var(--c) 22%, var(--carte));
+}
+.ab-abo .ab-prix { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin: 18px 0 2px; }
+.ab-abo .ab-prix-montant { font-size: 40px; font-weight: 900; letter-spacing: -.03em; line-height: 1; color: color-mix(in srgb, var(--c-orange) 80%, var(--encre)); }
+
+/* Le travail derrière le site */
+.ab-abo .ab-travail { border-top: 5px solid var(--c-bleu); }
+.ab-abo .ab-tuile { --c: var(--c-vert); background: color-mix(in srgb, var(--c) 11%, var(--carte)); border-left: 4px solid var(--c); }
+.ab-abo .ab-tuile:nth-child(6n+2) { --c: var(--c-bleu); }
+.ab-abo .ab-tuile:nth-child(6n+3) { --c: var(--c-violet); }
+.ab-abo .ab-tuile:nth-child(6n+4) { --c: var(--c-orange); }
+.ab-abo .ab-tuile:nth-child(6n+5) { --c: var(--c-rose); }
+.ab-abo .ab-tuile:nth-child(6n) { --c: var(--c-jaune); }
+.ab-abo .ab-tuile strong { color: color-mix(in srgb, var(--c) 70%, var(--encre)); }
+.ab-abo .ab-mois-barre { background: linear-gradient(180deg, var(--c-violet), var(--c-bleu)); }
+.ab-abo .ab-chemin li:nth-child(1)::before { background: var(--c-bleu); }
+.ab-abo .ab-chemin li:nth-child(2)::before { background: var(--c-violet); }
+.ab-abo .ab-chemin li:nth-child(3)::before { background: var(--c-rose); }
+.ab-abo .ab-chemin li:nth-child(4)::before { background: var(--c-orange); }
+.ab-abo .ab-chemin li:nth-child(5)::before { background: var(--c-jaune); }
+.ab-abo .ab-chemin li:nth-child(6)::before { background: var(--c-vert); }
+
+/* Le haut de la page (21 sept. 2026) : la promesse, deux boutons, trois raisons. */
+.ab-abo .ab-hero { margin: 4px 0 30px; }
+.ab-abo .ab-hero-sur { margin: 0 0 6px; font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-encre); }
+.ab-abo .ab-hero h1 { font-size: clamp(28px, 5.4vw, 42px); line-height: 1.08; letter-spacing: -.03em; margin: 0 0 12px; max-width: 18ch; }
+.ab-abo .ab-hero-sous { font-size: 18px; line-height: 1.5; color: var(--doux); margin: 0 0 18px; max-width: 58ch; }
+.ab-abo .ab-hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 22px; }
+.ab-page .ab-bouton-grand { font-size: 16px; padding: 11px 18px; border-radius: 8px; }
+.ab-abo ul.ab-promesses { list-style: none; margin: 0 0 14px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.ab-abo ul.ab-promesses li {
+  --c: var(--c-bleu); padding: 12px 14px; border-radius: 10px; font-size: 14.5px; line-height: 1.5;
+  background: color-mix(in srgb, var(--c) 9%, var(--carte)); border-top: 3px solid var(--c);
+}
+.ab-abo ul.ab-promesses li:nth-child(2) { --c: var(--c-violet); }
+.ab-abo ul.ab-promesses li:nth-child(3) { --c: var(--c-vert); }
+.ab-abo .ab-avis-dissolution { margin: 0; padding: 9px 12px; border-left: 3px solid var(--vedette); border-radius: 6px; background: var(--fond-2); }
+.ab-abo .ab-groupe { margin: 16px 0 8px; font-size: 14px; font-weight: 800; }
+.ab-abo .ab-offre-payant .ab-note + .ab-groupe { margin-top: 4px; }
+.ab-abo .ab-cta-bas { text-align: center; border-top: 5px solid var(--c-orange); background: color-mix(in srgb, var(--c-orange) 7%, var(--carte)); }
+.ab-abo .ab-cta-titre { margin: 0 0 12px; font-size: 21px; font-weight: 800; letter-spacing: -.01em; }
+.ab-abo .ab-cta-bas .ab-note { margin: 10px 0 0; }
+#inclus { scroll-margin-top: 16px; }
+
+/* Deux discours, un abonnement : <html data-contexte="assemblee|villes"> (script du <head> de
+   abonnement.html). Chaque contexte cache ce qui est à l'autre et met le sien en premier. */
+[data-contexte="assemblee"] .ab-abo .pour-villes,
+[data-contexte="villes"] .ab-abo .pour-assemblee { display: none !important; }
+.ab-abo .ab-blocs-offre { display: flex; flex-direction: column; }
+[data-contexte="villes"] .ab-abo .ab-bloc-villes { order: -1; }
+[data-contexte="villes"] .ab-abo .ab-bloc-villes .ab-groupe { margin-top: 4px; }
+[data-contexte="villes"] .ab-abo .ab-bloc-assemblee .ab-groupe { margin-top: 16px; }
+.ab-abo ul.ab-coches { display: flex; flex-direction: column; }
+[data-contexte="villes"] .ab-abo ul.ab-coches .li-assemblee { order: 1; }
+.ab-abo ul.ab-coches .li-compte { order: 2; }
+
+/* Offrir et liste d'attente */
+.ab-abo .ab-offrir { border-top: 5px solid var(--c-violet); background: color-mix(in srgb, var(--c-violet) 8%, var(--carte)); }
+.ab-abo .ab-attente { border-top: 5px solid var(--c-vert); background: color-mix(in srgb, var(--c-vert) 8%, var(--carte)); }
+.ab-abo h3 .ab-icone { margin-right: 2px; }
+
+/* Mots-clés : pistes quand un mot ne donne rien */
+.ab-page .ab-pistes { margin: 10px 0 4px; padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--vedette); background: var(--fond-2); font-size: 14px; }
+.ab-page .ab-pistes p { margin: 0 0 8px; }
+.ab-page .ab-pistes ul { margin: 0; padding-left: 18px; }
+.ab-page .ab-pistes li { margin: 0 0 4px; }
+.ab-page .ab-pistes-choix { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.ab-page .ab-piste {
+  font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; padding: 5px 12px; border-radius: 999px;
+  color: var(--encre); background: var(--carte); border: 1px solid var(--ligne-forte);
+}
+.ab-page .ab-piste span { font-weight: 400; color: var(--doux); margin-left: 4px; }
+.ab-page .ab-piste:hover { border-color: var(--accent); }
+.ab-page .ab-piste:disabled { opacity: .6; cursor: default; }
+
+.ab-page .ab-vers-ecrire { margin: 12px 0 0; font-size: 14px; color: var(--doux); }
+
+/* Retour de Stripe dans Mes dossiers, et l'abonnement actif sur la page Abonnement */
+.ab-page .ab-merci { border-left: 5px solid var(--accent); background: var(--accent-fond, #E6F6EC); color: var(--encre); margin-bottom: 16px; }
+.ab-abo .ab-payer h3 { margin-top: 0; }
+
+/* Le compte rendu du mois : formulaire (accueil des volets) et boîte de Mes dossiers */
+.ab-infolettre { margin: 36px 0 8px; padding: 22px 22px 16px; border-radius: 12px; border: 1px solid var(--ligne, #DDE2E7); border-top: 5px solid #0B8A4B; background: var(--carte, #fff); }
+.ab-infolettre h2 { margin: 0 0 8px; font-size: 21px; }
+.ab-infolettre p { margin: 0 0 12px; line-height: 1.55; }
+.ab-infolettre .ab-form { margin: 4px 0 8px; }
+.ab-infolettre-villes { border: 0; padding: 0; margin: 0 0 10px; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.ab-infolettre-villes legend { font-weight: 600; margin-bottom: 6px; }
+.ab-pot-de-miel { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; opacity: 0; }
+.ab-infolettre-boite .ab-case { display: inline-flex; margin-right: 18px; }
+
+/* « Des projets à suivre » : une ville par menu dépliant, dans sa couleur (--ville, posée par mes-dossiers.html) */
+.ab-page details.ab-ville-projets { --ville: var(--accent); margin: 0 0 12px; padding: 12px 16px; border: 1px solid color-mix(in srgb, var(--ville) 30%, var(--ligne, #DDE2E7)); border-left: 6px solid var(--ville); border-radius: 12px; background: color-mix(in srgb, var(--ville) 8%, var(--carte, #fff)); }
+.ab-page details.ab-ville-projets[open] { background: color-mix(in srgb, var(--ville) 5%, var(--carte, #fff)); }
+.ab-page details.ab-pliable > summary h3 { margin: 0; font-size: 19px; }
+.ab-page details.ab-ville-projets > summary h3 { color: var(--ville); }
+.ab-page details.ab-ville-projets > summary:hover h3 { color: var(--ville); text-decoration: underline; text-underline-offset: 3px; }
+.ab-page details.ab-ville-projets > summary .ab-etiquette { background: var(--ville); border-color: var(--ville); color: #fff; }
+.ab-page details.ab-ville-projets > summary::after { color: var(--ville); }
+.ab-page details.ab-ville-projets .ab-grille { margin-top: 4px; }
+.ab-page details.ab-ville-projets .ab-suggestion { border-top: 4px solid var(--ville); }
+.ab-page details.ab-ville-projets .ab-suggestion .ab-type-projet { background: color-mix(in srgb, var(--ville) 15%, var(--carte, #fff)); color: var(--ville); border-color: color-mix(in srgb, var(--ville) 40%, transparent); }
+.ab-page details.ab-ville-projets .ab-suggestion .ab-bouton { background: var(--ville); border-color: var(--ville); }
+
+/* Les courriels : une ligne par sorte (compte rendu du mois, conseil, arrondissement) */
+.ab-courriel { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--ligne, #DDE2E7); }
+.ab-courriel:first-of-type { border-top: 0; }
+.ab-courriel input[type="checkbox"] { margin-top: 4px; width: 18px; height: 18px; flex: none; accent-color: var(--accent); }
+.ab-courriel-texte { display: block; }
+.ab-courriel-nom { font-weight: 700; }
+.ab-courriel-rythme { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px; background: var(--fond-2, #EEF1F4); color: var(--doux); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.ab-courriel-quoi { display: block; margin-top: 3px; font-size: 14px; line-height: 1.5; color: var(--doux); }
+.ab-courriel-arr { padding-left: 28px; }
+.ab-arr-suivis { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ab-arr-puce { display: inline-flex; align-items: center; gap: 4px; padding: 3px 6px 3px 10px; border-radius: 999px; background: var(--accent-fond, #E6F6EC); color: var(--accent-encre, #076338); border: 1px solid var(--accent, #0B8A4B); font-size: 13px; font-weight: 600; }
+.ab-arr-retirer { border: 0; background: none; color: inherit; font-size: 16px; line-height: 1; cursor: pointer; padding: 0 2px; }
+.ab-arr-choix { display: block; margin-top: 8px; max-width: 320px; width: 100%; }
+
+.ab-courriel-verrou { opacity: .75; }
+.ab-courriel-cadenas { width: 18px; margin-top: 2px; flex: none; text-align: center; }
+.ab-courriel .ab-liens { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; align-items: center; }
+
+
+/* mtl-courriels-zones */
+.ab-mtl-blocs { display: flex; flex-direction: column; gap: 14px; margin: 8px 0 4px; }
+.ab-zone { margin: 0; padding: 12px 14px 10px; border: 1px solid var(--ligne, #DDE2E7); border-radius: 10px; background: var(--fond-2, #F4F6F8); }
+.ab-zone legend { padding: 0 6px; font-weight: 700; font-size: 14px; color: var(--encre, #16191D); }
+.ab-zone-aide { margin: 0 0 8px; font-size: 13px; color: var(--doux, #5B6570); line-height: 1.45; }
+.ab-zone-cases { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+.ab-langue { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+.ab-langue input { width: 18px; height: 18px; accent-color: var(--accent, #0B8A4B); }
+.ab-zone-ville .ab-courriel,
+.ab-zone-arr .ab-courriel { border-top-color: transparent; padding-top: 6px; }
+.ab-zone-arr .ab-arr-suivis { margin-top: 4px; }
+.ab-zone-arr .ab-arr-choix { margin-top: 8px; }
+
+/* ---------- comptes de consultation (bibliothèques) ---------- */
+/* Un abonnement « lecture seule » reste ouvert sur les postes publics d'une bibliothèque. Toute
+   commande qui ÉCRIT disparaît : suivre un projet, ajouter une alerte, demander un détail de
+   l'argent, exporter, écrire à Martin, changer les infolettres, se déconnecter du poste.
+
+   Ce masquage n'est qu'une politesse — il évite des boutons qui échouent. La PROTECTION, elle,
+   vit dans Postgres (déclencheurs refus_lecture_seule) et dans les points d'API. Un usager de
+   neuf ans qui ouvre la console ne contourne rien en retirant cette classe. */
+.dq-consultation .ab-etoile,
+.dq-consultation .ab-demande,
+.dq-consultation .ab-signaler,
+.dq-consultation .ab-message-boite,
+.dq-consultation .ab-export,
+.dq-consultation .ab-mots,
+.dq-consultation .ab-organismes,
+.dq-consultation .ab-infolettre-boite,
+.dq-consultation #deconnexion,
+.dq-consultation .follow-btn { display: none !important; }
+
+/* Le bandeau qui dit où l'on est. Sans lui, quelqu'un cherche les boutons disparus. */
+.ab-consultation-avis {
+  margin: 0 0 14px; padding: 10px 14px; border-radius: 10px;
+  background: var(--accent-fond, #E6F6EC); border: 1px solid var(--accent, #0B8A4B);
+  font-size: 13px; line-height: 1.5;
+}
+
+/* ---------- offrir un abonnement ---------- */
+/* Plusieurs champs empilés, là où .ab-form est une simple rangée « champ + bouton ». */
+.ab-form-cadeau { flex-direction: column; align-items: stretch; gap: 12px; max-width: 460px; }
+.ab-form-cadeau .ab-champ { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; }
+.ab-form-cadeau .ab-champ input { flex: none; font-weight: 400; }
+.ab-form-cadeau input:disabled { opacity: .45; }
+.ab-durees { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; }
+.ab-durees legend { font-size: 13px; font-weight: 600; margin-bottom: 4px; padding: 0; }
+.ab-durees label, .ab-case { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+.ab-form-cadeau .ab-durees input, .ab-form-cadeau .ab-case input { flex: none; width: 17px; height: 17px; accent-color: var(--accent, #0B8A4B); }
+.ab-form-cadeau .ab-bouton { align-self: flex-start; }
+
+/* La fleur de lys à droite du logo de chaque volet : un lien vers DossierQuébec, l'Assemblée
+   nationale (Martin, 27 sept. 2026). La forme vient de l'image choisie par Martin
+   (commun/fleur-de-lys.png, utilisée comme masque) ; la couleur est celle du volet (--accent). */
+.titre-ligne .lien-dq {
+  display: inline-block; flex: none; width: 24px; height: 24px; margin-left: -4px; /* à peu près la hauteur des lettres du logo (27 px) */
+  background-color: var(--accent);
+  -webkit-mask: url(/commun/fleur-de-lys.png) center / contain no-repeat;
+  mask: url(/commun/fleur-de-lys.png) center / contain no-repeat;
+  transition: transform .7s ease-in-out;
+}
+/* Comme la feuille d'érable de DQ : elle se retourne toutes les 20 secondes (commun/abonnes.js). */
+.titre-ligne .lien-dq.retournee { transform: rotateY(180deg); }
+.titre-ligne .lien-dq:hover, .titre-ligne .lien-dq:focus-visible { transform: scale(1.15); }
+.titre-ligne .lien-dq.retournee:hover, .titre-ligne .lien-dq.retournee:focus-visible { transform: rotateY(180deg) scale(1.15); }
+@media (prefers-reduced-motion: reduce) { .titre-ligne .lien-dq { transition: none; } }
+@media (max-width: 620px) { .titre-ligne .lien-dq { width: 19px; height: 19px; } }
+
+/* « Bientôt exclusif aux abonné·e·s » à côté du Détail de l'argent (Martin, 21 oct. 2026) : même pastille pointillée que « Bientôt » sur /abonnement. */
+
+.ab-bientot-abonne { display: inline-block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; padding: 1px 8px; border: 2px dashed #131313; color: #131313; background: transparent; vertical-align: middle; }
+
+/* Pastille « Réparé » des projets suivis, jusqu’au 31 déc. 2026 (réparation du 29 oct.). */
+.ab-page .ab-repare { background: #FFD24D; color: #131313; border-color: #131313; }
+/* « Représentez votre ville » dans le menu des villes (6 nov. 2026). */
+.ab-villes-rtv a { color: var(--accent, #1F9D55); font-weight: 700; }

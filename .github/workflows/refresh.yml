@@ -1,0 +1,114 @@
+# Rafraîchissement automatique des données de DossierBC.
+#
+# Une fois par SEMAINE, le lundi matin, en un seul lot : relance tous les scrapers + builds
+# (npm run refresh), puis, s'il y a un changement, committe et pousse. Le push sur `master`
+# déclenche le redéploiement automatique du site sur Vercel — donc un nouveau projet de loi ou un
+# nouveau vote apparu dans la semaine se retrouve en ligne sans intervention.
+#
+# POURQUOI UNE FOIS PAR SEMAINE et non par jour, comme le Québec : l'Assemblée législative de la
+# Colombie-Britannique ne siège pas. La 43e a été dissoute le 22 septembre 2026, la 44e est ouverte
+# depuis le 26 octobre mais n'a ni session, ni député·e, ni ministre. Rien ne bouge d'un jour à
+# l'autre, et chaque passage coûte un redéploiement Vercel. Quand la Chambre siégera de nouveau,
+# passer au quotidien : il suffit de changer le cron.
+#
+# leg.bc.ca, dyn.leg.bc.ca et api.lims.leg.bc.ca n'imposent pas de crawl-delay : le passage est
+# court. Le robot s'identifie honnêtement et s'arrête si une source répond autre chose que la page
+# attendue — il ne contourne rien.
+#
+# Clé API des résumés IA : elle vivra dans le dépôt sous
+#   Settings > Secrets and variables > Actions > New repository secret
+#   Nom : ANTHROPIC_API_KEY
+# Sans ce secret, tout tourne quand même. Les résumés en langage clair ne sont de toute façon pas
+# activés pour l'instant (Martin, 9 nov. 2026) : les 102 projets portent leur mention « pas encore
+# de résumé ».
+
+name: Rafraîchissement des données (une fois par semaine)
+
+on:
+  schedule:
+    # La Colombie-Britannique est à UTC−8 l'hiver (UTC−7 l'été). 15:00 UTC = 7 h ou 8 h à Victoria,
+    # le LUNDI : la semaine commence avec des données fraîches.
+    - cron: '0 15 * * 1'
+  workflow_dispatch: {} # permet aussi de lancer à la main (bouton « Run workflow »)
+
+# Nécessaire pour que le job puisse committer et pousser les données mises à jour.
+permissions:
+  contents: write
+
+# Deux exécutions de CE workflow ne doivent pas se marcher dessus.
+concurrency:
+  group: refresh-assemblee-bc
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    # Filet de sécurité : un job ne doit jamais s'emballer (par défaut GitHub le laisserait tourner
+    # jusqu'à 6 h). Le rafraîchissement complet de la C.-B. prend quelques minutes ; 60 min laisse
+    # une marge large même si une source est lente.
+    timeout-minutes: 60
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v5
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      # --omit=dev : les scrapers n'utilisent que les dependencies. Aucun scraper n'a besoin d'un
+      # navigateur — les images de la marque sont rastérisées à la main (scripts/fabriquer-images.mjs).
+      - name: Installer les dépendances
+        run: npm ci --omit=dev
+
+      - name: Rafraîchir toutes les données
+        id: refresh
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npm run refresh
+
+      # Rafraîchissement tolérant : `npm run refresh` sort 0 même si un scraper a échoué (il expose
+      # `builds_ok`/`failed` via $GITHUB_OUTPUT). On sort != 0 UNIQUEMENT si un build/garde-fou a
+      # cassé — auquel cas l'étape ci-dessus a déjà échoué et le commit est sauté. Sinon on committe
+      # les données fraîches des sources qui ont fonctionné.
+      - name: Committer et pousser s'il y a des changements
+        id: publication
+        run: |
+          git config user.name "dossier-bc-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Aucun changement — rien à committer."
+          else
+            # Le sitemap est daté par scripts/build-section-pages.js : seules les pages dont le HTML
+            # a vraiment changé prennent la date du jour. Le dater ici avancerait TOUTES les dates à
+            # chaque passage (les horodatages des données changent toujours) — et Google finit par
+            # ignorer un lastmod faux.
+            TODAY=$(date -u +%Y-%m-%d)
+            git commit -m "Rafraîchissement auto des données ($TODAY)"
+            # Quelqu'un a pu pousser pendant les scrapers : on se remet à jour avant de réessayer.
+            for essai in 1 2 3; do
+              git pull --rebase && git push && break
+              [ "$essai" = 3 ] && { echo "::error::Push refusé trois fois — rien n'est publié aujourd'hui."; exit 1; }
+              echo "Push refusé (essai $essai) — nouvel essai dans $((essai * 10)) s."
+              sleep $((essai * 10))
+            done
+          fi
+
+      # Après le commit : si un ou des scrapers ont échoué, on marque quand même le run en échec
+      # pour être alerté qu'une source est tombée. Le !cancelled() fait que l'étape parle aussi
+      # quand le commit a été sauté ou la poussée refusée — dans ce cas, rien n'a été publié, et il
+      # ne faut pas écrire le contraire : on lit l'issue de l'étape de poussée.
+      - name: Alerter si des scrapers ont échoué
+        if: ${{ !cancelled() && steps.refresh.outputs.failed != '' }}
+        env:
+          FAILED: ${{ steps.refresh.outputs.failed }}
+          PUBLICATION: ${{ steps.publication.outcome }}
+        run: |
+          echo "::warning::Scrapers en échec (données de la veille conservées) : $FAILED"
+          if [ "$PUBLICATION" = "success" ]; then
+            echo "Le reste des données a été publié. Vérifier la ou les sources en panne."
+          else
+            echo "Rien n'a été publié ce matin : la poussée n'a pas abouti. Voir l'étape plus haut."
+          fi
+          exit 1

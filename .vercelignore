@@ -1,0 +1,25 @@
+# Ce qui vit dans le dépôt mais n'a rien à faire sur le site servi.
+#
+# Le MODÈLE dont les onze pages sont tirées par scripts/build-section-pages.js. Lui-même ne doit
+# pas être servi : il ferait doublon avec index.html aux yeux de Google.
+gabarit.html
+
+# Fichiers de travail : dans le dépôt, jamais servis. Aucune page ni aucune fonction api/ ne lit
+# de .md, de .log, de .cmd ni de .sql — et les .sql décrivent les tables du site.
+**/*.md
+**/*.log
+**/*.cmd
+**/*.sql
+
+# L'outillage : scrapers, builds, workflows. Sauf le script que Vercel lance lui-même pour décider
+# s'il redéploie (vercel.json → ignoreCommand).
+/scrapers
+/scripts/*
+!/scripts/vercel-deployer.sh
+/.github
+
+# Le cahier de design et la page qui fabrique l'image de partage : des outils pour qui construit,
+# pas des pages. Servie, cover-bc.html serait un faux accueil indexable.
+/design
+/CHARTE-DOSSIER.md
+/contexte-pour-claude-code.md

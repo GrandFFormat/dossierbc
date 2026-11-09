@@ -1,0 +1,2712 @@
+/* La feuille de style de DossierQuébec.
+ *
+ * ⚠️ POUR COPIER CE SITE, LIRE CECI D'ABORD (CHARTE-DOSSIER.md à la racine dit le reste).
+ *
+ *   Cette feuille est en DEUX COUCHES. Tout ce qui précède le bloc « REFONTE BRUTALISTE —
+ *   FONDATION » (cherchez ce titre ; ligne 697 au 24 sept. 2026) est l'ANCIEN design — gélules
+ *   arrondies, cartes à filet de 1 px, ombres douces — encore là parce que les pages s'y
+ *   appuient, mais il NE GAGNE PLUS. Le design réel commence à ce bloc et à sa première règle,
+ *   *{border-radius:0 !important}.
+ *   Qui lit par le début apprend le mauvais design : c'est arrivé à deux sites frères.
+ *
+ *   La PALETTE, c'est le bloc :root juste en dessous et son jumeau html[data-theme="dark"] :
+ *   un autre site change ces deux blocs (au minimum --gold, --gold-bg, --gold-soft) et rien
+ *   d'autre. Tout le reste — polices, formes, grille, meubles, noms de classes — se copie tel
+ *   quel. « Pour la couleur, chacun sa palette ; pour le design, ça pardonne moins. »
+ *
+ * Elle vivait en ligne dans index.html, donc recopiée à l identique dans les six pages de la
+ * racine : 94 ko téléchargés six fois, jamais mis en cache. Ici, le navigateur la prend une
+ * seule fois et la garde pour toutes les pages.
+ *
+ * Le garde-fou qui vérifie sa santé (commentaires et accolades équilibrés, aucune variable
+ * orpheline) a suivi : il lit maintenant CE fichier, dans scripts/build-section-pages.js. Il
+ * a déjà attrapé deux pannes silencieuses — une feuille cassée ne lève aucune erreur, elle
+ * avale simplement tout ce qui suit.
+ */
+  :root{
+    /* Refonte néo-brutaliste (handoff « design_handoff_dossierquebec ») :
+       crème + noir + bleu Québec + jaune d'accent, zéro coin arrondi,
+       ombres dures décalées. */
+    --ink:#131313;
+    --ink-2:#131313;
+    --paper:#F2F0EA;
+    --paper-2:#FDFCF9;
+    --card:#FFFFFF;
+    --line:#131313;
+    --slate:#555550;
+    --line-soft:#E5E2DA;   /* filets discrets */
+    /* Texte posé sur une surface qui reste CLAIRE dans les deux thèmes (le jaune
+       d'accent ne bascule pas). Ne jamais remplacer par --ink : en sombre, --ink
+       s'éclaircit et le texte deviendrait illisible sur le jaune. */
+    --sur-clair:#131313;
+    /* Son pendant : texte posé sur une surface qui reste SOMBRE dans les deux
+       thèmes (blocs bleus, pastilles noires). Ne jamais remplacer par --card. */
+    --sur-fonce:#FFFFFF;   /* filets discrets : separateurs, bordures internes */
+    --gold:#0E4FC1; /* accent bleu Québec (variable au nom historique « gold ») */
+    --gold-soft:#D6E4FF;
+    /* Le bleu sert à deux choses : la couleur du TEXTE des liens, et le fond des
+       BLOCS pleins. En thème sombre ces deux usages divergent — le texte doit
+       s'éclaircir pour rester lisible sur fond foncé, le bloc doit rester
+       profond pour garder son texte blanc. D'où deux jetons. */
+    --gold-bg:#0E4FC1;
+    /* Les teintes dérivées de l'accent. Elles vivent SUR un bloc d'accent (bande bleue, bouton
+       principal), qui reste bleu dans les deux thèmes : elles ne basculent donc pas. Un site
+       qui change d'accent change ces trois-là avec --gold et --gold-bg, et rien n'est en dur
+       ailleurs dans la feuille. */
+    --gold-hover:#08307A;   /* l'accent au survol d'un bloc plein */
+    --gold-pale:#A9C6FF;    /* texte secondaire posé sur un bloc d'accent */
+    --gold-paler:#D6E4FF;   /* texte courant posé sur un bloc d'accent */
+    /* Même raisonnement pour le noir : là où il sert de SURFACE sous du texte
+       jaune (pastilles actives, onglet courant), il doit rester sombre dans les
+       deux thèmes — sinon le jaune se retrouve sur du clair. */
+    --ink-bg:#131313;
+    --yellow:#FFD24D;
+    --green:#1E6A3C;
+    --green-soft:#BFE8CD;
+    --red:#C22B1D;
+    --red-soft:#F6C9C2;
+    --radius:0;
+    --h-ctrl:36px;   /* hauteur commune des contrôles de l'en-tête */
+    --shadow:6px 6px 0 #131313;
+    --shadow-lg:8px 8px 0 #131313;
+    --shadow-sm:4px 4px 0 #131313;
+    color-scheme:light;
+  }
+
+  /* ---------- THÈME SOMBRE ----------
+     Posé par un attribut data-theme sur <html>, jamais par prefers-color-scheme :
+     tant qu'on teste, le visiteur ordinaire ne doit voir aucun changement.
+
+     Deux partis pris qui méritent d'être écrits, parce qu'ils ne vont pas de soi
+     dans une refonte brutaliste :
+
+     1. LES OMBRES RESTENT NOIRES. Le réflexe est de les inverser en clair, mais
+        une ombre claire sur fond sombre n'est plus une ombre : c'est une lueur.
+        On garde donc la règle physique — l'ombre est plus foncée que la surface
+        sur laquelle elle tombe — dans les deux thèmes. C'est pour ça que --paper
+        est un gris chaud et non du noir : il faut de la place SOUS lui.
+
+     2. LES BORDURES S'INVERSENT, elles. Le trait franc est la signature du style ;
+        en sombre il devient clair, sinon les cartes n'ont plus de contour.
+
+     Le jaune ne bouge pas : c'est la couleur d'accent identitaire du site. Le
+     bleu, le vert et le rouge sont éclaircis, sinon ils passent sous le seuil de
+     lisibilité sur fond foncé. */
+  html[data-theme="dark"]{
+    --ink:#F3F1EA;
+    --ink-2:#F3F1EA;
+    --paper:#1A1815;
+    --paper-2:#221F1A;
+    --card:#272420;
+    --line:#F3F1EA;
+    --line-soft:#3D3931;
+    --slate:#A9A498;
+    --gold:#7BA9FF;
+    --gold-bg:#0E4FC1;   /* identique au clair : un bloc bleu saturé se tient très bien sur fond sombre, et l'éclaircir faisait passer son texte sous le seuil de lisibilité */
+    --gold-hover:#08307A; --gold-pale:#A9C6FF; --gold-paler:#D6E4FF;   /* posées sur le bloc bleu, qui ne bascule pas : identiques au clair */
+    --ink-bg:#0E0D0B;
+    --gold-soft:#1C2C4C;
+    --yellow:#FFD24D;
+    --green:#5FCB8A;
+    --green-soft:#153A22;
+    --red:#FF8172;
+    --red-soft:#411D18;
+    --shadow:6px 6px 0 #000000;
+    --shadow-lg:8px 8px 0 #000000;
+    --shadow-sm:4px 4px 0 #000000;
+    color-scheme:dark;
+  }
+
+  /* La bande jaune reste jaune dans les deux thèmes. Plutôt que de corriger
+     chaque descendant un par un, on y REDÉFINIT les jetons : tout ce qu'elle
+     contient hérite alors des valeurs du mode clair, ce qui est la vérité de
+     cette surface. Un futur élément ajouté dedans sera correct sans rien faire.
+
+     ⚠️ Rétablir la palette COMPLÈTE, pas quelques jetons : une redéfinition
+     partielle laisse passer les autres. Premier essai, j'avais oublié --gold —
+     le bleu éclairci du thème sombre se retrouvait sur les cartes blanches de la
+     bande, illisible. */
+  html[data-theme="dark"] .band-yellow{
+    color:var(--sur-clair);
+    --ink:#131313; --ink-2:#131313; --line:#131313; --line-soft:#E5E2DA;
+    --slate:#555550; --card:#FFFFFF; --paper:#F2F0EA; --paper-2:#FDFCF9;
+    --gold:#0E4FC1; --gold-soft:#D6E4FF;
+    --green:#1E6A3C; --green-soft:#BFE8CD; --red:#C22B1D; --red-soft:#F6C9C2;
+  }
+  /* Le symétrique : la bande bleue reste un bloc SOMBRE dans les deux thèmes,
+     donc tout ce qu'elle contient garde une encre claire. */
+  html[data-theme="dark"] .band-blue{
+    color:var(--sur-fonce);
+    --ink:#FFFFFF; --ink-2:#FFFFFF; --card:#FFFFFF; --line:#FFFFFF;
+    --slate:#C6D6F7; --gold:#A9C6FF;
+  }
+  /* Petites surfaces jaunes ponctuelles (survols, cellule loupe) : elles ne
+     déclarent pas de couleur de texte, elles l'héritent — donc on la force. */
+  html[data-theme="dark"] .bill-share-btn:hover,
+  html[data-theme="dark"] .ch-share button:hover,
+  html[data-theme="dark"] .font-size-ctrl button:hover,
+  html[data-theme="dark"] .lang-toggle:hover,
+  html[data-theme="dark"] .sort-toggle:hover,
+  html[data-theme="dark"] .filter-hamburger:hover,
+  html[data-theme="dark"] .qf-btn:hover:not(.active),
+  html[data-theme="dark"] nav.tabs a:hover:not(.active),
+  html[data-theme="dark"] .brutal-search .bs-icon{ color:var(--sur-clair); }
+  html[data-theme="dark"] ::selection{ background:var(--yellow); color:var(--sur-clair); }
+  /* Pastilles « adopté » : leur texte est un vert foncé figé, illisible une fois
+     le fond passé au vert foncé. On prend le vert clair du thème. */
+  html[data-theme="dark"] .status-sanctionne,
+  html[data-theme="dark"] .result-badge.adopte,
+  html[data-theme="dark"] .lex-badge.cat-votes,
+  html[data-theme="dark"] .roadmap-status.now{ color:var(--green); }
+  /* Survol du bouton principal : fond bleu nuit figé, donc texte clair figé. */
+  html[data-theme="dark"] .hero-cta:hover{ color:#F3F1EA; }
+  ::selection{background:var(--yellow);}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .app{max-width:1280px;margin:0 auto;padding:0 28px 80px;}
+
+  /* ---------- HEADER ---------- */
+  header.top{
+    padding:36px 28px 0;
+    max-width:1280px;
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    flex-wrap:wrap;
+    border-bottom:1px solid var(--line);
+    padding-bottom:22px;
+  }
+  .brand{display:flex;align-items:center;gap:14px;}
+  .brand-text{cursor:pointer;}
+  .brand-mark{
+    width:40px;height:40px;flex:none;
+    border-radius:50%;
+    position:relative;
+    perspective:220px;
+    cursor:pointer;
+  }
+  .brand-mark svg{position:absolute;inset:0;}
+  /* Logo à deux faces qui flippe : avant = Québec (cercle bleu poudre + dossier
+     blanc), arrière = Canada (cercle rouge + dossier blanc). Indique qu'on peut
+     sauter au site fédéral en cliquant. */
+  .flip-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 0.7s ease-in-out;}
+  .flip-face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+  .flip-back{transform:rotateY(180deg);}
+  .brand-text .brand-title{
+    font-family:'Archivo',sans-serif;
+    font-weight:600;
+    font-size:22px;
+    letter-spacing:-0.01em;
+    margin:0;
+    line-height:1.05;
+  }
+  .brand-text p{margin:2px 0 0; font-size:12.5px; color:var(--slate); letter-spacing:0.02em;}
+  .top-meta{display:flex; gap:28px; align-items:baseline; flex-wrap:wrap;}
+  .top-meta .stat{text-align:right;}
+  .top-meta .stat b{
+    display:block; font-family:'Archivo Narrow',sans-serif; font-size:20px; font-weight:600;
+  }
+  .top-meta .stat span{font-size:11px; color:var(--slate); text-transform:uppercase; letter-spacing:0.06em;}
+
+  /* ---------- NAV TABS ---------- */
+  nav.tabs{
+    max-width:1280px;margin:0 auto; padding:0;
+    display:flex; gap:2px; margin-top:0;
+    border-bottom:1px solid var(--line);
+    overflow-x:auto;
+  }
+  nav.tabs::-webkit-scrollbar{height:32px; width:32px;}
+  nav.tabs::-webkit-scrollbar-track{background:transparent;}
+  nav.tabs::-webkit-scrollbar-thumb{background:#c1c1c1; border-radius:16px; border:8px solid var(--paper);}
+  nav.tabs::-webkit-scrollbar-thumb:hover{background:#a8a8a8;}
+  nav.tabs{scrollbar-width:auto;}
+  /* Des liens depuis le chantier SEO (c'étaient des <button>) : on neutralise ce qu'un lien a
+     de plus qu'un bouton, pour que rien ne bouge à l'écran. */
+  nav.tabs a{text-decoration:none; line-height:normal; display:inline-block;}
+  nav.tabs a{
+    font-family:'Archivo',sans-serif;
+    font-size:13.5px; font-weight:600;
+    letter-spacing:0.01em;
+    background:none;border:none;
+    padding:16px 18px 14px;
+    color:var(--slate);
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    white-space:nowrap;
+  }
+  nav.tabs a .n{
+    font-family:'Archivo Narrow',sans-serif; font-weight:500; font-size:11px;
+    color:var(--slate); margin-right:6px;
+  }
+  nav.tabs a.active{color:var(--ink); border-bottom-color:var(--gold);}
+  nav.tabs a:hover{color:var(--ink);}
+
+  nav.tabs .close-menu{display:none;}
+
+  /* ---------- BARRE COLLANTE (une seule rangée) ---------- */
+  /* Logo | onglets | contrôles sur UNE rangée (maquette), collée en haut.
+     Au scroll (.compact via le petit script), on ajoute juste une ombre.
+     Sur mobile (≤640px), le nav devient le panneau plein écran du hamburger. */
+  #dq-topbar{
+    position:sticky; top:0; z-index:90;
+    background:var(--paper);
+    transition:box-shadow 0.22s ease;
+  }
+  #dq-topbar.compact{box-shadow:0 6px 16px rgb(19 19 19 / 12%);}
+  #dq-topbar header.top{border-bottom:none; padding-top:12px; padding-bottom:12px;}
+  #dq-topbar nav.tabs{
+    border-bottom:none; max-width:none; margin:0; padding:0;
+    flex:1 1 auto; min-width:0; justify-content:center; overflow-x:auto;
+  }
+  .header-ctrls{display:flex; align-items:center; gap:8px; flex:none;}
+  /* La barre collante couvre le haut des cibles de saut : on réserve sa hauteur. */
+  .view, [id^="sec-"]{scroll-margin-top:70px;}
+  @media (max-width:640px){
+    #dq-topbar header.top{padding:12px 18px;}
+  }
+
+  .view{display:none; padding-top:30px;}
+  .view.active{display:block;}
+
+  /* ---------- INTRO BANNER ---------- */
+  .intro-toggle-row{display:flex; justify-content:flex-end; margin-bottom:8px;}
+  .quick-nav{
+    display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+    margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid var(--line);
+  }
+  .quick-nav-label{font-family:'Archivo Narrow',sans-serif; font-size:11px; color:var(--slate); text-transform:uppercase; letter-spacing:0.03em; margin-right:4px;}
+  .quick-nav a{
+    font-family:'Archivo',sans-serif; font-size:12.5px; font-weight:600; color:var(--ink);
+    background:var(--paper-2); border:1px solid var(--line); border-radius:20px;
+    padding:6px 13px; cursor:pointer; text-decoration:none;
+  }
+  .quick-nav a:hover{border-color:var(--gold); color:var(--gold);}
+
+  .intro-compact{
+    display:none; justify-content:space-between; align-items:center; gap:12px;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:12px 16px; margin-bottom:24px; cursor:pointer; font-size:12.5px; color:var(--slate);
+  }
+  .intro-compact.open{display:flex;}
+  .intro-compact:hover{border-color:var(--gold);}
+  #introBlock.collapsed{display:none;}
+
+  .mission-box{
+    background:var(--card); border:1.5px solid var(--gold); border-radius:var(--radius);
+    padding:22px 24px; margin-bottom:28px;
+  }
+  .mission-box h2{font-family:'Archivo',sans-serif; font-weight:500; font-size:19px; margin:20px 0 10px; color:var(--ink);}
+  .mission-box .compare{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;}
+  @media (max-width:640px){.mission-box .compare{grid-template-columns:1fr;}}
+  .mission-box .compare-col{background:var(--paper-2); border-radius:var(--radius); padding:14px 16px;}
+  .mission-box .compare-col .tag{font-family:'Archivo Narrow',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--slate); display:block; margin-bottom:8px;}
+  .mission-box .compare-col ul{margin:0; padding-left:18px; font-size:12.5px; line-height:1.7; color:var(--ink);}
+
+  .banner{
+    background:var(--ink); color:var(--paper-2);
+    border-radius:var(--radius);
+    padding:22px 24px;
+    margin-bottom:28px;
+    display:flex; gap:20px; justify-content:space-between; align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .banner h2{font-family:'Archivo',sans-serif; font-weight:500; font-size:19px; margin:0 0 6px;}
+  .banner p{margin:0; font-size:13.5px; line-height:1.55; color:#C9CEDD; max-width:640px;}
+  .banner .badge{
+    font-family:'Archivo Narrow',sans-serif; font-size:10.5px; letter-spacing:0.04em;
+    text-transform:uppercase; background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    padding:5px 10px; border-radius:20px; color:#E4C77D; flex:none;
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:16px; gap:16px; flex-wrap:wrap;}
+  .snooze-pill, .bd-back{
+    font-family:'Archivo Narrow',sans-serif; font-weight:600; font-size:11px; color:var(--slate);
+    background:var(--paper-2); border:1px solid var(--line); border-radius:20px;
+    padding:6px 12px; cursor:pointer; flex:none; user-select:none; height:fit-content;
+  }
+  .snooze-pill:hover, .bd-back:hover{border-color:var(--gold); color:var(--gold);}
+  .snooze-pill.snoozed{background:var(--ink); color:var(--paper-2); border-color:var(--ink);}
+  [id^="body-"].collapsed{display:none;}
+  .section-head h2{font-family:'Archivo',sans-serif; font-size:20px; font-weight:600; margin:20px 0 0;}
+  .section-head .sub{font-size:12.5px; color:var(--slate); margin-top:4px;}
+  .toolbar{display:flex; gap:10px; flex-wrap:wrap;}
+  .toolbar input, .toolbar select{
+    font-family:'Archivo',sans-serif; font-size:13px;
+    border:1px solid var(--line); background:var(--card);
+    padding:9px 12px; border-radius:var(--radius); color:var(--ink);
+  }
+  .toolbar input{min-width:200px;}
+
+  /* ---------- HEMICYCLE (signature element) ---------- */
+  .hemicycle-wrap{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px; margin-bottom:28px; display:flex; gap:28px; align-items:center; flex-wrap:wrap;
+  }
+  .hemicycle-wrap svg{flex:none; width:100%; max-width:420px; height:auto;}
+  .hemicycle-legend{display:flex; flex-direction:column; gap:10px; font-size:13px;}
+  .hemicycle-legend .row{display:flex; align-items:center; gap:8px;}
+  .hemicycle-legend .dot{width:10px;height:10px;border-radius:50%;}
+  .hemicycle-legend b{font-family:'Archivo Narrow',sans-serif; font-size:12.5px;}
+
+  /* ---------- MINISTER GRID ---------- */
+  /* min(270px,100%) : sur un écran très étroit (320 px), une colonne de 270 px
+     minimum débordait de la page. Le min() la laisse rétrécir quand il le faut. */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(270px,100%),1fr)); gap:14px;}
+  .m-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px; position:relative;
+  }
+  .m-card .top-row{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .m-card .avatar, .depute-card .avatar{
+    width:40px;height:40px;border-radius:50%;
+    background:var(--gold-soft); color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    flex:none; text-decoration:none; transition:background 0.15s;
+  }
+  .m-card .avatar:hover, .depute-card .avatar:hover{background:var(--gold-bg); color:var(--sur-fonce);}
+  .m-card .avatar svg, .depute-card .avatar svg{width:18px; height:18px;}
+  .m-card h3{font-size:15px; font-family:'Archivo',sans-serif; font-weight:600; margin:10px 0 2px;}
+  .m-card .role{font-size:12.5px; color:var(--slate); line-height:1.4; min-height:34px;}
+  .m-card .meta-row{display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:1px dashed var(--line);}
+  .m-card .party{font-size:11px; font-family:'Archivo Narrow',sans-serif; color:var(--slate); text-transform:uppercase; letter-spacing:0.04em;}
+  .follow-btn{
+    font-family:'Archivo',sans-serif; font-size:11.5px; font-weight:600;
+    border:1px solid var(--line); background:var(--paper-2); color:var(--ink);
+    padding:6px 10px; border-radius:20px; cursor:pointer;
+  }
+  .follow-btn.on{background:var(--ink); color:var(--paper-2); border-color:var(--ink);}
+  .bill-follow-row{display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap; margin-top:12px;}
+  .follow-hint{font-size:11px; color:var(--slate); text-align:right;}
+  /* Partage du projet (bouton natif ou repli 𝕏/FB/copier) */
+  .bill-share-row{display:flex; align-items:center; justify-content:flex-end; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  .bill-share-label{font-family:'Archivo Narrow',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--slate);}
+  .bill-share-btn{
+    border:2px solid var(--ink); background:var(--card); color:var(--ink);
+    font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:12px;
+    text-transform:uppercase; letter-spacing:0.03em; padding:6px 12px; cursor:pointer;
+  }
+  .bill-share-btn:hover{background:var(--yellow);}
+  .bill-share-btn.ic{padding:6px 10px; min-width:34px;}
+  /* Lien copié : le bouton se remplit un instant. min-width déjà fixé plus
+     haut, donc le passage de ⧉ à ✓ ne décale rien autour. */
+  .bill-share-btn.copie, .ch-share button.copie{background:var(--ink-bg); color:var(--yellow);}
+  .vp-note{font-size:10.5px; color:var(--slate); background:var(--paper-2); border-radius:20px; padding:4px 9px; font-family:'Archivo Narrow',sans-serif;}
+
+  /* ---------- BILLS ---------- */
+  .bill{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px; margin-bottom:20px; cursor:pointer;
+  }
+  .bill .head{display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap;}
+  .bill .head > div:first-child{flex:1 1 0; min-width:0;}
+  .bill .num{font-family:'Archivo Narrow',sans-serif; font-size:12px; color:var(--gold); font-weight:600;}
+  .bill h3{font-family:'Archivo',sans-serif; font-size:16px; font-weight:600; margin:4px 0 8px; max-width:640px; line-height:1.35;}
+  .bill .meta, .vote-card .meta{font-size:12px; color:var(--slate); margin-top:2px;}
+  .bill .last-activity{
+    font-family:'Archivo Narrow',sans-serif; font-size:11px; color:var(--gold);
+    margin:2px 0 6px; text-transform:uppercase; letter-spacing:0.02em;
+  }
+  .bill .last-activity b{color:var(--gold); font-weight:600;}
+  .bill .expand-hint, .vote-card .expand-hint{font-family:'Archivo Narrow',sans-serif; font-size:10.5px; color:var(--gold); margin-top:10px; text-transform:uppercase; letter-spacing:0.03em;}
+  .vote-card .expand-hint{margin-top:18px;}
+  .bill-summary{
+    display:none; margin-top:14px; padding-top:14px; border-top:1px dashed var(--line);
+  }
+  .bill-summary.open{display:block;}
+  .bill-summary p{font-size:13px; line-height:1.65; color:var(--ink); margin:0 0 12px;}
+  .bill-summary .src-note{font-size:11px; color:var(--slate); margin:0 0 12px;}
+  .bill-more{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:12.5px;
+    background:var(--ink); color:var(--paper-2); text-decoration:none;
+    padding:8px 14px; border-radius:var(--radius);
+  }
+  .status-pill{
+    font-family:'Archivo Narrow',sans-serif; font-size:10.5px; text-transform:uppercase; letter-spacing:0.04em;
+    padding:5px 10px; border-radius:20px; white-space:nowrap; flex:none;
+  }
+  .status-sanctionne{background:var(--green-soft); color:var(--green);}
+  .status-encours{background:var(--gold-soft); color:var(--gold);}
+  .status-glace{background:var(--paper); color:var(--slate); border:1px solid var(--line);}
+
+  .stepper{display:flex; gap:4px; margin-top:14px;}
+  .stepper .step{flex:1; height:6px; background:var(--line); border-radius:2px; position:relative;}
+  .stepper .step.done{background:var(--gold-bg);}
+  .stepper .step.current{background:var(--ink);}
+  .stepper-labels{display:flex; gap:4px; margin-top:6px;}
+  .stepper-labels span{flex:1; font-size:9.5px; color:var(--slate); text-align:center; line-height:1.2;}
+
+  .vote-inline-block{margin-top:12px; padding-top:12px; border-top:1px dashed var(--line);}
+  .vote-inline-date{font-family:'Archivo Narrow',sans-serif; font-size:11px; color:var(--slate); text-transform:uppercase; letter-spacing:0.02em; margin-bottom:6px;}
+
+  /* ---------- VOTES TAB ---------- */
+  .vote-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px; cursor:pointer;}
+  .vote-card .head{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .vote-card h3{font-family:'Archivo',sans-serif; font-size:15.5px; font-weight:600; margin:2px 0 10px; max-width:600px;}
+  .bar{height:22px; border-radius:3px; background:var(--paper); display:flex; overflow:hidden; border:1px solid var(--line); margin-top:8px;}
+  .bar .seg{height:100%;}
+  .bar .seg.pour{background:var(--green);}
+  .bar .seg.contre{background:var(--red);}
+  .bar .seg.abst{background:var(--slate); opacity:0.5;}
+  .tally{display:flex; flex-direction:column; gap:14px; margin-top:10px; font-family:'Archivo Narrow',sans-serif; font-size:12px;}
+  .tally b{font-size:14px;}
+  .tally-row{display:flex; align-items:center; flex-wrap:wrap; gap:8px;}
+  .tally-row .tally-label{flex:none;}
+  .tally-breakdown{display:flex; flex-wrap:wrap; gap:2px 10px; color:var(--slate);}
+  .tally-plus{
+    font-family:'Archivo Narrow',sans-serif; font-size:11px; font-weight:600; color:var(--card);
+    background:var(--ink); border:none; border-radius:50%; width:18px; height:18px;
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:none;
+  }
+  .tally-plus:hover{opacity:0.7;}
+
+  .nominal-detail{display:none; margin-top:10px; padding-top:10px; border-top:1px dashed var(--line);}
+  .nominal-detail.open{display:block;}
+
+  /* Section « Votes enregistrés » dans une carte de projet de loi : liste
+     compacte par défaut, un seul + en haut qui bascule vers le détail nominatif. */
+  .votes-section{margin-top:12px; padding-top:12px; border-top:1px dashed var(--line);}
+  .votes-title{display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-family:'Archivo Narrow',sans-serif; font-size:12px; font-weight:600; color:var(--ink); margin-bottom:8px;}
+  .votes-title .votes-hint{font-weight:400; color:var(--slate); font-size:11px;}
+  .vote-compact-row{font-family:'Archivo Narrow',sans-serif; font-size:12px; color:var(--ink); padding:3px 0; line-height:1.5;}
+  .nominal-party-group{margin-bottom:10px;}
+  .nominal-party-group:last-child{margin-bottom:0;}
+  .nominal-party-header{font-family:'Archivo Narrow',sans-serif; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px;}
+  .nominal-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:6px;}
+  .nominal-row{
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:7px 10px; font-size:12px;
+  }
+
+  .depute-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px; position:relative;
+  }
+  .depute-card .top-row{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .depute-card h3{font-family:'Archivo',sans-serif; font-size:14.5px; font-weight:600; margin:9px 0 2px;}
+  .depute-card .meta{font-size:12px; color:var(--slate); min-height:17px;}
+  .depute-card .meta-row{display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:10px; border-top:1px dashed var(--line);}
+  .depute-party{
+    font-family:'Archivo Narrow',sans-serif; font-size:10.5px; font-weight:600; text-transform:uppercase;
+    padding:5px 10px; border-radius:20px; flex:none;
+  }
+  .depute-email{
+    font-family:'Archivo Narrow',sans-serif; font-size:10.5px; color:var(--slate);
+    text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    max-width:150px;
+  }
+  .depute-email:hover{color:var(--ink); text-decoration:underline;}
+  .party-filters{display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+  .party-chip{
+    font-family:'Archivo Narrow',sans-serif; font-weight:600; font-size:11px;
+    padding:8px 12px; border-radius:20px; cursor:pointer; border:1.5px solid transparent;
+    background:var(--card); user-select:none;
+  }
+  .party-chip.active{color:var(--card) !important;}
+
+  .status-filters, .step-filters{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-top:10px;}
+  .step-filters{margin-top:6px;}
+  .status-chip, .step-chip{
+    font-family:'Archivo Narrow',sans-serif; font-weight:600; font-size:11px;
+    padding:7px 12px; border-radius:20px; cursor:pointer; user-select:none;
+    border:1.5px solid var(--line); background:var(--card); color:var(--slate);
+  }
+  .step-chip{font-size:10.5px; padding:5px 10px; text-transform:none; font-weight:500;}
+  .status-chip.active{background:var(--ink); border-color:var(--ink); color:var(--card);}
+  .step-chip.active{background:var(--ink); border-color:var(--ink); color:var(--card);}
+  .filter-hamburger{display:none;}
+  .sort-toggle{
+    font-family:'Archivo Narrow',sans-serif; font-size:11px; font-weight:600;
+    padding:8px 14px; border-radius:var(--radius); cursor:pointer;
+    border:1px solid var(--line); background:var(--card); color:var(--ink);
+    white-space:nowrap;
+  }
+  .sort-toggle:hover{border-color:var(--ink);}
+
+  .no-results{font-size:13px; color:var(--slate); padding:20px 0;}
+
+  .lexique-item{padding:16px 0; border-bottom:1px solid var(--line);}
+  .lexique-item:last-child{border-bottom:none;}
+  .lexique-item dt{font-family:'Archivo',sans-serif; font-size:15.5px; font-weight:600; margin-bottom:5px;}
+  .news-item{display:flex; gap:16px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .news-item:last-child{border-bottom:none;}
+  .news-date{flex:none; width:90px; font-family:'Archivo Narrow',sans-serif; font-size:11px; color:var(--gold); padding-top:2px;}
+  .news-body p{margin:0; font-size:13.5px; line-height:1.55; color:var(--ink);}
+  /* Plusieurs événements sous une même date : on les sépare légèrement. */
+  .news-body p + p{margin-top:7px;}
+  .calendar-box{
+    background:var(--ink); color:var(--paper-2); border-radius:var(--radius);
+    padding:20px 22px; margin-bottom:26px;
+  }
+  .calendar-box h3{font-family:'Archivo',sans-serif; font-size:16px; font-weight:600; margin:0 0 10px;}
+  .calendar-box p{font-size:12.5px; line-height:1.65; color:#C9CEDD; margin:0 0 8px;}
+  .calendar-box .status{font-family:'Archivo Narrow',sans-serif; font-size:11.5px; color:#E4C77D; margin-bottom:12px;}
+
+  .promesse-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px; margin-bottom:14px;
+  }
+  .promesse-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;}
+  @media (max-width:640px){.promesse-grid{grid-template-columns:1fr;}}
+  .promesse-col{background:var(--paper-2); border-radius:var(--radius); padding:14px 16px;}
+  .promesse-col .tag{font-family:'Archivo Narrow',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--gold); display:block; margin-bottom:8px;}
+  .promesse-col p{font-size:13px; line-height:1.55; color:var(--ink); margin:0 0 8px;}
+  .promesse-col a{font-size:11.5px; color:var(--slate); text-decoration:underline;}
+
+  .role-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px 18px; margin-bottom:10px; display:flex; justify-content:space-between; gap:14px; align-items:flex-start; flex-wrap:wrap;
+  }
+  .role-card h3{font-family:'Archivo',sans-serif; font-size:15px; font-weight:600; margin:0 0 3px;}
+  .role-card .role{font-size:11.5px; color:var(--gold); font-family:'Archivo Narrow',sans-serif; text-transform:uppercase; letter-spacing:0.02em; margin-bottom:6px;}
+  .role-card p{font-size:12.5px; color:var(--slate); line-height:1.55; margin:0; max-width:520px;}
+  .role-badge{
+    font-family:'Archivo Narrow',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:0.03em;
+    background:var(--gold-soft); color:var(--gold); padding:4px 9px; border-radius:20px; flex:none;
+  }
+  .role-group-title{font-family:'Archivo',sans-serif; font-size:14px; font-weight:600; margin:24px 0 10px; color:var(--slate);}
+  .petition-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px; margin-bottom:12px;
+  }
+  .petition-card h3{font-family:'Archivo',sans-serif; font-size:15.5px; font-weight:600; margin:0 0 8px; max-width:600px; line-height:1.4;}
+  .petition-meta{display:flex; gap:18px; flex-wrap:wrap; font-size:12px; color:var(--slate); margin-bottom:12px;}
+  .petition-meta b{color:var(--ink); font-family:'Archivo Narrow',sans-serif;}
+  .petition-progress{height:8px; background:var(--paper-2); border-radius:4px; overflow:hidden; margin-bottom:8px;}
+  .petition-progress .fill{height:100%; background:var(--gold-bg);}
+  .petition-count{font-family:'Archivo Narrow',sans-serif; font-size:12.5px; color:var(--gold); font-weight:600;}
+
+  .role-group-title:first-child{margin-top:0;}
+
+  .lexique-item dd{font-size:13px; line-height:1.65; color:var(--ink); margin:0; max-width:680px;}
+
+  .info-box{
+    border:1px dashed var(--line); border-radius:var(--radius); padding:14px 16px;
+    background:var(--paper-2); font-size:12.5px; color:var(--slate); line-height:1.55; margin-top:14px;
+  }
+  .info-box b{color:var(--ink);}
+  .account-box{
+    border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px;
+    background:var(--card); margin-bottom:20px;
+  }
+  .account-box .account-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+  .account-box input[type="email"], .account-box input[type="text"]{
+    font-family:'Archivo',sans-serif; font-size:13px; border:1px solid var(--line);
+    background:var(--paper); padding:9px 12px; border-radius:var(--radius); color:var(--ink);
+    flex:1 1 220px; min-width:180px;
+  }
+  .account-box .account-btn{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:12.5px;
+    background:var(--ink); color:var(--card); border:none; cursor:pointer;
+    padding:9px 16px; border-radius:var(--radius); flex:none;
+  }
+  .account-box .account-btn:hover{background:var(--gold-bg);}
+  .account-box .account-btn:disabled{background:var(--slate); cursor:default; opacity:0.7;}
+  .account-box .account-note{font-size:12px; color:var(--slate); margin-top:8px;}
+  .account-box .account-email{font-weight:600; color:var(--ink);}
+
+  .issue-form{display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;}
+  .issue-form input{flex:1; min-width:220px;}
+  .issue-form button{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:13px;
+    background:var(--ink); color:var(--paper-2); border:none; border-radius:var(--radius);
+    padding:10px 18px; cursor:pointer;
+  }
+  .issue-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:10px; display:flex; gap:16px; align-items:flex-start;}
+  .vote-btn{
+    flex:none; display:flex; flex-direction:column; align-items:center; gap:2px;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:9px 15px; cursor:pointer; font-family:'Archivo Narrow',sans-serif; user-select:none;
+  }
+  .vote-btn.voted{background:var(--ink); color:var(--paper-2); border-color:var(--ink);}
+  .vote-btn .count{font-size:17px; font-weight:600; line-height:1;}
+  .vote-btn .label{font-size:9px; text-transform:uppercase; opacity:0.7; margin-top:3px;}
+  .issue-body h3{font-family:'Archivo',sans-serif; font-size:15px; font-weight:600; margin:2px 0 4px;}
+  .issue-body .meta{font-size:11.5px; color:var(--slate);}
+
+  .roadmap-item{display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--line);}
+  .roadmap-item:last-child{border-bottom:none;}
+  .roadmap-status{flex:none; width:120px; font-family:'Archivo Narrow',sans-serif; font-size:10.5px; text-transform:uppercase; letter-spacing:0.03em; padding-top:2px;}
+  .roadmap-status.now{color:var(--green);}
+  .roadmap-status.next{color:var(--gold);}
+  .roadmap-status.later{color:var(--slate);}
+  .roadmap-body h4{font-family:'Archivo',sans-serif; font-size:14.5px; font-weight:600; margin:0 0 4px; display:flex; align-items:center; gap:8px;}
+  .roadmap-plus{
+    font-family:'Archivo Narrow',sans-serif; font-size:11px; font-weight:600; color:var(--card);
+    background:var(--ink); border:none; border-radius:50%; width:18px; height:18px;
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:none;
+  }
+  .roadmap-recap{display:none; margin-top:10px; padding:12px 14px; background:var(--paper-2); border-radius:var(--radius); border:1px dashed var(--line);}
+  .roadmap-recap.open{display:block;}
+  .roadmap-recap p{font-size:12.5px; line-height:1.6; color:var(--ink); margin:0 0 10px; max-width:640px;}
+  .roadmap-recap-table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  .compare-table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:14px;}
+  .compare-table{border-collapse:collapse; width:100%; min-width:560px; font-size:13px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  .compare-table th, .compare-table td{text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .compare-table th{font-family:'Archivo Narrow',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:0.03em; color:var(--slate); background:var(--paper-2);}
+  .compare-table td:first-child{font-weight:600; color:var(--slate); white-space:nowrap;}
+  .roadmap-recap table{border-collapse:collapse; width:100%; min-width:520px; font-size:12px;}
+  .roadmap-recap th, .roadmap-recap td{text-align:left; padding:6px 10px; border-bottom:1px solid var(--line);}
+  .roadmap-recap th{font-family:'Archivo Narrow',sans-serif; font-size:10.5px; text-transform:uppercase; color:var(--slate);}
+  .roadmap-body p{font-size:12.5px; color:var(--slate); line-height:1.6; margin:0; max-width:640px;}
+
+  footer{
+    max-width:1280px;margin:40px auto 0; padding:20px 28px 0; border-top:1px solid var(--line);
+    font-size:11.5px; color:var(--slate); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  .footer-right-group{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  .footer-gh{display:inline-flex; align-items:center; gap:5px; color:var(--slate); text-decoration:none;}
+  .footer-gh:hover{color:var(--ink);}
+  .footer-coffee{cursor:pointer;}
+  /* « et moi » — porte d'entrée discrète vers la page cachée de la BD (view-bd). */
+  .footer-etmoi{cursor:pointer; color:var(--gold); margin-left:4px;}
+  .footer-etmoi:hover{text-decoration:underline;}
+  /* ⚠️ Ne PAS renommer cette classe « back-to-top ». Sous ce nom générique,
+     Brave Shields et les listes anti-nuisances de uBlock la masquent d'office
+     (display:none injecté, invisible depuis document.styleSheets) : le bouton
+     disparaissait pour tout utilisateur de Brave. Vérifié en isolant la cause :
+     la classe seule déclenche le filtre, l'id backToTop n'y est pour rien. */
+  .dq-remonter{
+    position:fixed; right:24px; bottom:24px; z-index:50;
+    width:46px; height:46px; border-radius:50%; border:none;
+    background:var(--ink); color:var(--card); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,0.25);
+    opacity:0; visibility:hidden; transform:translateY(8px);
+    transition:opacity 0.25s ease, transform 0.25s ease, visibility 0.25s, background 0.2s ease;
+  }
+  .dq-remonter.visible{opacity:1; visibility:visible; transform:translateY(0);}
+  .dq-remonter:hover{background:var(--gold-bg);}
+  @media (max-width:640px){
+    .dq-remonter{right:16px; bottom:16px; width:42px; height:42px;}
+  }
+  a{color:inherit;}
+
+  /* ================================================================
+     REFONTE BRUTALISTE — FONDATION (Phase 1)
+     Handoff « design_handoff_dossierquebec » : crème var(--paper), noir
+     var(--ink), bleu Québec #0E4FC1, jaune #FFD24D, Archivo/Archivo
+     Narrow, bordures épaisses, ombres dures, AUCUN coin arrondi.
+     Couche d'overrides chargée après les styles historiques ; les
+     phases suivantes raffinent chaque vue.
+     ================================================================ */
+  *{border-radius:0 !important;} /* tout est carré — spec du handoff */
+
+  /* ---------- TICKER ---------- */
+  .ticker{background:var(--ink); color:var(--paper); overflow:hidden; border-bottom:3px solid var(--ink);}
+  .ticker-track{display:flex; white-space:nowrap; width:max-content; animation:dqTicker 26s linear infinite;}
+  .ticker:hover .ticker-track{animation-play-state:paused;}
+  .ticker-text{
+    font-family:'Archivo Narrow',sans-serif; font-size:13px; font-weight:600;
+    letter-spacing:0.08em; text-transform:uppercase; padding:8px 0;
+  }
+  @keyframes dqTicker{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+  }
+
+  /* ---------- HEADER ---------- */
+  #dq-topbar{border-bottom:3px solid var(--ink);}
+  header.top{align-items:center; column-gap:16px;} /* 16 et non 24 : voir nav.tabs plus bas */
+  .brand-text .brand-title{
+    font-family:'Archivo',sans-serif; font-weight:900; font-size:24px;
+    letter-spacing:-0.03em; text-transform:uppercase;
+  }
+  .brand-blue{color:var(--gold);}
+  /* Feuille d'érable → passerelle DossierCanada : jaune, flippe en rouge /20s */
+  .maple-flip{
+    display:inline-flex; align-items:center; margin-left:12px; flex:none;
+    color:var(--yellow); cursor:pointer;
+    transition:transform 0.7s ease-in-out, color 0.7s ease-in-out;
+    transform-style:preserve-3d;
+  }
+  .maple-flip svg{width:26px; height:26px; display:block;}
+  .maple-flip.is-red{color:#D52B1E; transform:rotateY(180deg);}
+  .maple-flip:hover{transform:scale(1.12);}
+  .maple-flip.is-red:hover{transform:rotateY(180deg) scale(1.12);}
+  /* Hôtel de ville — même gabarit que la feuille, sans le flip : une seule
+     couleur suffit à le distinguer, et un pictogramme qui bouge tout seul à côté
+     d'un autre qui bouge tout seul, c'est un de trop. */
+  /* Passerelle vers le volet municipal : pastille ronde « VDQ ». Même diamètre
+     que la feuille d'érable voisine (26 px) pour que les deux jetons s'alignent.
+     ⚠️ Le !important n'est pas de la paresse : plus bas, « *{border-radius:0
+     !important} » carre TOUT le site (règle du style brutaliste). Cette pastille
+     est l'exception assumée — le rond est justement ce qui la fait lire comme un
+     jeton plutôt que comme un bouton de plus dans l'en-tête. Sans !important
+     elle redevient carrée en silence. */
+  /* Bouton « Villes » : pastille bleue élargie en bouton, qui ouvre la liste
+     des volets municipaux. <details>/<summary> natifs : clavier, lecteur d'écran et
+     fermeture au clic hors du menu sans une ligne de JavaScript de plus. Une ville de
+     plus, c'est une ligne de plus dans la liste. */
+  .villes-menu{position:relative; flex:none; margin-left:12px;}
+  .villes-menu summary{list-style:none;}
+  .villes-menu summary::-webkit-details-marker{display:none;}
+  .city-flip{
+    display:inline-flex; align-items:center; justify-content:center; gap:5px;
+    height:26px; padding:0 11px; border-radius:13px !important;
+    background:var(--gold); color:var(--card);
+    font-family:'Archivo',sans-serif; font-weight:900; font-size:10px;
+    letter-spacing:0.04em; text-transform:uppercase; text-decoration:none; cursor:pointer;
+    transition:transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+  }
+  .city-flip::after{content:""; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:5px solid currentColor; opacity:.85;}
+  /* Au survol et menu ouvert : jaune, comme les autres contrôles de l'en-tête.
+     Le bleu étant désormais la couleur de repos, rester bleu au survol aurait
+     supprimé tout retour visuel. Texte en --sur-clair : le jaune ne bascule pas
+     en thème sombre, le texte ne doit pas basculer non plus. */
+  .city-flip:hover, .villes-menu[open] .city-flip{transform:scale(1.06); background:var(--yellow); color:var(--sur-clair);}
+  .villes-menu ul{
+    position:absolute; top:calc(100% + 8px); left:0; z-index:60; margin:0; padding:6px;
+    list-style:none; min-width:180px;
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,.14);
+  }
+  .villes-menu li a{
+    display:block; padding:8px 12px; border-radius:7px; text-decoration:none;
+    color:var(--ink); font-family:'Archivo',sans-serif; font-weight:700; font-size:14px;
+  }
+  /* ⚠️ --bg et --muted venaient de la feuille du volet municipal et N'EXISTENT PAS
+     dans la palette de DossierQuébec : le fond de survol ne s'affichait pas du
+     tout, et la légende grise tombait sur la couleur héritée. Remplacés par leurs
+     équivalents d'ici (--paper-2, --slate). */
+  .villes-menu li a:hover, .villes-menu li a:focus-visible{background:var(--paper-2); color:var(--gold);}
+  .villes-menu li a small{display:block; font-weight:400; font-size:11px; color:var(--slate); letter-spacing:.02em;}
+  @media (prefers-reduced-motion: reduce){ .maple-flip{transition:color 0.3s ease;} }
+  .brand-text p{display:none;} /* la devise devient le H1 du hero (Phase 2) */
+  .top-meta{display:none;}     /* les stats migrent dans la bande du hero (Phase 2) */
+  .font-size-ctrl{border:none; background:transparent; padding:0; gap:8px;}
+  .font-size-ctrl button{
+    width:30px; height:30px; padding:0; border:2px solid var(--ink);
+    background:var(--paper); font-weight:700; font-size:12px;
+  }
+  .font-size-ctrl button:hover{background:var(--yellow);}
+  .font-size-ctrl #fontPct{color:var(--ink); font-weight:700;}
+  .lang-toggle{
+    border:2px solid var(--ink); background:var(--paper); font-weight:700;
+    text-transform:uppercase; padding:5px 12px; font-size:13px;
+  }
+  .lang-toggle:hover{background:var(--yellow);}
+  /* Bascule de thème. L'icône est DESSINÉE EN CSS plutôt qu'écrite en caractère :
+     un « ☾ » est un glyphe de police, donc rendu différemment d'une plateforme à
+     l'autre — et souvent en emoji coloré sur Android. Ici, une lune est un disque
+     plus un second disque couleur du fond décalé par-dessus ; un soleil est un
+     disque avec huit rayons en box-shadow. Zéro requête, zéro balise, identique
+     partout. (Même procédé que le volet municipal, pour que les deux se
+     ressemblent.)
+     Deux variables locales portent les couleurs, ce qui évite de réécrire les
+     huit rayons à chaque état. */
+  .theme-toggle{
+    position:relative; width:34px; height:32px; flex:none; cursor:pointer;
+    border:2px solid var(--ink); background:var(--paper);
+    --icone:var(--ink); --derriere:var(--paper);
+  }
+  .theme-toggle:hover{background:var(--yellow); --icone:var(--sur-clair); --derriere:var(--yellow);}
+  .theme-toggle:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+  /* Thème clair : on montre la LUNE, parce qu'elle dit où l'on va. */
+  .theme-toggle::before{
+    content:''; position:absolute; inset:0; margin:auto;
+    width:15px; height:15px; border-radius:100px; background:var(--icone);
+  }
+  .theme-toggle::after{
+    content:''; position:absolute; inset:0; margin:auto;
+    width:13px; height:13px; border-radius:100px; background:var(--derriere);
+    transform:translate(4px,-3.5px);
+  }
+  /* Thème sombre : un SOLEIL — le disque seul, avec ses rayons. */
+  html[data-theme="dark"] .theme-toggle{--icone:var(--yellow); --derriere:var(--paper);}
+  html[data-theme="dark"] .theme-toggle:hover{--icone:var(--sur-clair); --derriere:var(--yellow);}
+  html[data-theme="dark"] .theme-toggle::before{
+    width:12px; height:12px;
+    box-shadow:
+      0 -8px 0 -4.5px var(--icone), 0 8px 0 -4.5px var(--icone),
+      -8px 0 0 -4.5px var(--icone), 8px 0 0 -4.5px var(--icone),
+      5.7px -5.7px 0 -4.5px var(--icone), -5.7px 5.7px 0 -4.5px var(--icone),
+      5.7px 5.7px 0 -4.5px var(--icone), -5.7px -5.7px 0 -4.5px var(--icone);
+  }
+  html[data-theme="dark"] .theme-toggle::after{display:none;}
+  .hamburger{border:2px solid var(--ink); background:var(--paper);}
+
+  /* ---------- NAV : pilules carrées ---------- */
+  nav.tabs{gap:4px; border-bottom:none; align-items:center;} /* 24 sept. 2026 : resserré (8 → 4, et 12 → 10 dans les pilules) pour que l'en-tête tienne en français dans la colonne de 1 280 px — il lui en fallait 1 317 depuis l'onglet « Mon dossier » */
+  nav.tabs a{
+    font-family:'Archivo Narrow',sans-serif; font-size:13.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--ink);
+    padding:6px 8px; border:2px solid transparent; border-bottom:2px solid transparent;   /* 10 → 8 le 30 oct. 2026 : « Archives » remplace « Votes », plus long de 26 px */
+    white-space:nowrap;
+  }
+  nav.tabs a .n{display:none;} /* fini la numérotation 01/02/03 */
+  nav.tabs a.active{
+    color:var(--card); background:var(--ink); border-color:var(--ink); border-bottom-color:var(--ink);
+  }
+  nav.tabs a:hover:not(.active){background:var(--yellow); border-color:var(--sur-clair); color:var(--sur-clair);}
+
+  /* ---------- TITRES DE SECTION ---------- */
+  .section-head h2, .view h2{
+    font-family:'Archivo',sans-serif; font-weight:900;
+    text-transform:uppercase; letter-spacing:-0.02em;
+  }
+
+  /* ---------- FOOTER : bande noire pleine largeur ---------- */
+  footer{
+    max-width:none; margin:40px 0 0; padding:34px 0;
+    display:block; /* le flex vit dans .footer-inner */
+    background:var(--ink); color:#B8B4AA; border-top:none;
+    font-family:'Archivo Narrow',sans-serif; font-size:13px;
+    text-transform:uppercase; letter-spacing:0.05em;
+  }
+  /* Contenu du footer ALIGNÉ sur la colonne centrale (même gabarit que .app) */
+  .footer-inner{
+    max-width:1280px; margin:0 auto; padding:0 28px;
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:10px;
+  }
+  .footer-gh{color:var(--paper); font-weight:700;}
+  .footer-gh:hover{color:var(--yellow);}
+  .footer-etmoi{color:var(--yellow);}
+  .app{padding-bottom:0;}
+  .dq-remonter{border:3px solid var(--ink); box-shadow:var(--shadow-sm); background:var(--yellow); color:var(--sur-clair);}
+  .dq-remonter:hover{background:var(--ink-bg); color:var(--yellow);}
+
+  /* ---------- PHASE 2 : APERÇU ---------- */
+  /* Bande pleine largeur qui « déborde » du conteneur .app tout en gardant le
+     contenu aligné sur lui.
+
+     ⚠️ --vw, et non 100vw. L'unité vw se trompe ici DEUX fois :
+     1) elle inclut la barre de défilement — 8 px de débordement horizontal sur
+        desktop, même sans zoom ;
+     2) elle ne suit pas le `zoom` CSS que le bouton A+ applique sur <body> :
+        à 120 %, 100vw vaut toujours la largeur de la fenêtre mais est ensuite
+        RENDU 1,2 fois plus grand, d'où 41 px de débordement de chaque côté
+        (page qui glisse de côté sur téléphone).
+     --vw est publié par majMetriquesMiseEnPage() : largeur RÉELLEMENT
+     disponible, barre de défilement retirée et zoom pris en compte. */
+  .bleed{margin-inline:calc(50% - var(--vw,100vw)/2); padding-inline:max(28px, calc(var(--vw,100vw)/2 - 50%));}
+
+  .hero-poster{padding:44px 0 40px;}
+  .hero-h1{
+    margin:0; font-family:'Archivo',sans-serif; font-weight:900;
+    text-transform:uppercase; letter-spacing:-0.02em; line-height:0.92;
+    font-size:clamp(42px, 7vw, 92px);
+  }
+  .hero-h1 span{display:block;}
+  .hero-outline{color:transparent; -webkit-text-stroke:3px var(--ink);}
+  .hero-blue{color:var(--gold); -webkit-text-stroke:0;}
+  .hero-row{display:flex; align-items:stretch; gap:16px; margin-top:40px; flex-wrap:wrap;}
+  .hero-manifesto{
+    flex:1; min-width:min(300px,100%); border:3px solid var(--ink); background:var(--card);
+    padding:20px 24px; box-shadow:var(--shadow);
+  }
+  .hero-manifesto p{margin:0; font-size:17px; line-height:1.45; font-weight:500;}
+  .hero-cta{
+    display:flex; align-items:center; justify-content:center;
+    background:var(--gold-bg); color:var(--sur-fonce); border:3px solid var(--ink);
+    padding:20px 30px; font-weight:800; font-size:17px; text-transform:uppercase;
+    letter-spacing:0.02em; box-shadow:var(--shadow); cursor:pointer;
+  }
+  .hero-cta:hover{background:var(--gold-hover); color:var(--card);}
+
+  .stat-band{background:var(--card); border-block:3px solid var(--ink); display:grid; grid-template-columns:repeat(3,1fr); padding-block:0;}
+  .stat-cell{display:flex; flex-direction:column; padding:26px 28px; border-right:3px solid var(--ink);}
+  .stat-cell:last-child{border-right:none;}
+  .stat-cell b{font-family:'Archivo',sans-serif; font-size:54px; font-weight:900; letter-spacing:-0.03em; line-height:1;}
+  .stat-cell span{
+    font-family:'Archivo Narrow',sans-serif; font-size:13px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.08em; margin-top:8px;
+  }
+
+  .band{padding-top:46px; padding-bottom:50px; border-bottom:3px solid var(--ink);}
+  .band-yellow{background:var(--yellow); border-top:3px solid var(--ink);}
+  /* CTA dans une bande jaune : noir sur jaune pour ressortir. */
+  .diss-cta{
+    display:inline-flex; align-items:center; margin-top:8px;
+    background:var(--ink-bg); color:var(--yellow); border:3px solid var(--ink);
+    font-family:'Archivo',sans-serif; font-weight:800; font-size:15px;
+    text-transform:uppercase; letter-spacing:0.03em; padding:14px 22px;
+    box-shadow:var(--shadow-sm); cursor:pointer; text-decoration:none;
+  }
+  .diss-cta:hover{background:var(--card); color:var(--ink);}
+
+  /* ---------- PROMESSES (promesse | action, côte à côte) ---------- */
+  .prom-card{border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow); padding:20px 24px; margin-bottom:16px;}
+  .prom-top{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px;}
+  .prom-theme{font-family:'Archivo Narrow',sans-serif; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--slate);}
+  .prom-draft{
+    font-family:'Archivo Narrow',sans-serif; font-size:11px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em; border:2px solid var(--ink);
+    background:var(--yellow); color:var(--sur-clair); padding:2px 8px;
+  }
+  .prom-quote{font-size:17px; font-weight:600; line-height:1.4; margin:0 0 16px;}
+  .prom-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:760px){ .prom-grid{grid-template-columns:1fr;} }
+  .prom-col{border:2px solid var(--ink); background:var(--paper); padding:14px 16px;}
+  .prom-col .lbl{
+    font-family:'Archivo Narrow',sans-serif; font-size:11.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--gold); margin-bottom:8px; display:block;
+  }
+  .prom-col .lbl.att{color:var(--slate);}
+  .prom-col p{font-size:13.5px; line-height:1.5; margin:0 0 6px;}
+  .prom-col a{font-size:12px; color:var(--ink); text-decoration:underline;}
+  .prom-none{font-size:13.5px; color:var(--slate); line-height:1.5;}
+  .prom-srctype{font-family:'Archivo Narrow',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:var(--slate);}
+  .prom-filters{display:flex; flex-direction:column; gap:10px; margin:18px 0 6px;}
+  .prom-filter-row{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .prom-filter-lbl{
+    font-family:'Archivo Narrow',sans-serif; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--slate);
+    min-width:74px; flex:none;
+  }
+  /* Pastille de sujet sur la carte (cliquable pour filtrer). */
+  .prom-theme-pill{
+    font-family:'Archivo Narrow',sans-serif; font-size:11.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em; border:2px solid var(--ink);
+    background:var(--paper); color:var(--ink); padding:3px 10px; cursor:pointer;
+  }
+  .prom-theme-pill:hover{filter:brightness(0.88);}
+  /* Bouton de filtre sélectionné qui garde sa couleur : ombre dure + trait épais. */
+  .qf-btn.qf-sel{box-shadow:var(--shadow-sm); outline:3px solid var(--ink); outline-offset:2px;}
+  .band-white{background:var(--card);}
+  .band-blue{background:var(--gold-bg); color:var(--sur-fonce); border-top:3px solid var(--ink);}
+  #band-challenged{margin-top:30px;}
+  /* Cartes challengées : grille 3 colonnes compacte, fidèle à la maquette */
+  .ch-more{
+    flex:none; border:3px solid var(--ink); background:var(--card); color:var(--ink);
+    padding:10px 18px; font-weight:800; font-size:14px; text-transform:uppercase;
+    letter-spacing:0.02em; box-shadow:var(--shadow-sm); cursor:pointer;
+  }
+  .ch-more:hover{background:var(--ink-bg); color:var(--yellow);}
+  #challengedList.ch-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
+  .ch-card{
+    background:var(--card); border:3px solid var(--ink); box-shadow:var(--shadow);
+    padding:22px 24px; display:flex; flex-direction:column; cursor:pointer;
+  }
+  .ch-top{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px;}
+  .ch-num{font-family:'Archivo',sans-serif; font-weight:900; font-size:15px; color:var(--gold);}
+  .ch-badge{
+    background:var(--ink-bg); color:var(--yellow);
+    font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700;
+    padding:4px 10px; text-transform:uppercase; white-space:nowrap;
+  }
+  .ch-title{font-size:17px; font-weight:700; line-height:1.3; margin-bottom:10px;}
+  .ch-petition{
+    font-family:'Archivo Narrow',sans-serif; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--gold); margin-bottom:8px;
+  }
+  .ch-stage{
+    font-family:'Archivo Narrow',sans-serif; font-size:13px; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--slate);
+    margin-top:auto; padding-top:12px; border-top:2px solid var(--ink);
+  }
+  .ch-demand{
+    margin-top:14px; border:3px solid var(--ink); background:var(--gold-bg); color:var(--sur-fonce);
+    font-family:'Archivo',sans-serif; font-weight:800; font-size:13px;
+    text-transform:uppercase; letter-spacing:0.03em; padding:10px 14px;
+    cursor:pointer; box-shadow:var(--shadow-sm);
+  }
+  .ch-demand:hover{background:var(--gold-hover);}
+  .ch-demand.on, .ch-demand:disabled{background:var(--ink-bg); color:var(--yellow); cursor:default; box-shadow:none;}
+  .ch-share{display:flex; align-items:center; gap:6px; margin-top:10px;}
+  .ch-share span{
+    font-family:'Archivo Narrow',sans-serif; font-size:11.5px; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.03em; color:var(--slate); margin-right:2px;
+  }
+  .ch-share button{
+    border:2px solid var(--ink); background:var(--card); color:var(--ink);
+    font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:11.5px;
+    padding:5px 9px; cursor:pointer; text-transform:uppercase;
+  }
+  .ch-share button:hover{background:var(--yellow);}
+  /* Pagination « Voir plus » : cartes cachées puis glissées en douceur */
+  .ch-card.ch-hidden{display:none;}
+  .ch-reveal{animation:chSlideIn 0.35s ease both;}
+  @keyframes chSlideIn{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:none;}}
+  @media (prefers-reduced-motion: reduce){ .ch-reveal{animation:none;} }
+  @media (max-width:980px){ #challengedList.ch-grid{grid-template-columns:repeat(2, 1fr);} }
+  @media (max-width:640px){ #challengedList.ch-grid{grid-template-columns:1fr;} }
+  .band .section-head h2{font-size:clamp(26px, 3.4vw, 42px);}
+  .band-yellow .section-head .sub{color:var(--ink); font-weight:600;}
+
+  .actu-grid{display:grid; grid-template-columns:1fr 1.4fr; gap:44px; align-items:start;}
+  @media (max-width:900px){ .actu-grid{grid-template-columns:1fr;} }
+
+  /* Mission sur fond bleu */
+  .band-blue .mission-box{background:transparent; border:none; box-shadow:none; padding:0; margin:0;}
+  .mission-eyebrow{
+    font-family:'Archivo Narrow',sans-serif; font-size:14px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.1em; color:var(--gold-pale); margin-bottom:18px;
+  }
+  .mission-statement{
+    font-family:'Archivo',sans-serif; font-size:clamp(22px, 2.8vw, 34px);
+    line-height:1.3; font-weight:800; letter-spacing:-0.015em;
+    margin:0 0 34px; max-width:860px; text-transform:uppercase; color:var(--card);
+  }
+  .mission-statement .hl{
+    background:var(--yellow); color:var(--sur-clair); padding:0 8px;
+    -webkit-box-decoration-break:clone; box-decoration-break:clone;
+  }
+  .band-blue .mission-box h2{
+    color:var(--card); text-transform:uppercase; font-weight:800; letter-spacing:-0.015em;
+    font-size:clamp(22px, 2.8vw, 34px); line-height:1.25;
+  }
+  .band-blue .mission-box p{color:var(--card);}
+  .band-blue .compare-col{border:3px solid var(--card); background:transparent;}
+  .band-blue .compare-col:last-child{border-color:var(--yellow); background:rgba(255,210,77,0.08);}
+  .band-blue .compare-col .tag{
+    background:transparent; border:none; padding:0; color:var(--gold-pale);
+    font-family:'Archivo Narrow',sans-serif; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.08em;
+  }
+  .band-blue .compare-col:last-child .tag{color:var(--yellow);}
+  .band-blue .compare-col ul, .band-blue .compare-col li{color:var(--card);}
+  .band-blue .snooze-pill{background:var(--card); color:var(--ink); border-color:var(--ink);}
+  .band-blue .intro-compact{background:var(--card); color:var(--ink);}
+
+  /* Cartes (projets, challengés, votes) : bordures épaisses + ombre dure */
+  .bill{border:3px solid var(--ink); box-shadow:var(--shadow); background:var(--card);}
+  .bill .num{color:var(--gold); font-weight:900; font-family:'Archivo',sans-serif;}
+
+  /* Quoi de neuf : items à barre bleue */
+  .news-item{display:block; border-bottom:none; border-left:4px solid var(--gold); padding:4px 0 4px 18px; margin-bottom:20px;}
+  .news-date{
+    font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--gold); margin-bottom:4px;
+  }
+  /* Encadré noir compact « travaux / reprise » (maquette) */
+  .calendar-box{
+    border:3px solid var(--ink); background:var(--ink);
+    padding:16px 20px; margin-top:20px;
+  }
+  .calendar-box .status{
+    color:var(--paper); font-family:'Archivo Narrow',sans-serif;
+    font-size:13px; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.06em; margin:0;
+  }
+
+  /* Pétitions : compteur bleu + barre bordée */
+  .petition-card{border:3px solid var(--ink); background:var(--paper); box-shadow:none;}
+  .petition-progress{height:12px; border:2px solid var(--ink); background:var(--card);}
+  .petition-progress .fill{background:var(--gold-bg);}
+  .petition-count{font-family:'Archivo',sans-serif; font-weight:900; font-size:20px; color:var(--gold);}
+
+  @media (max-width:640px){
+    .hero-poster{padding:30px 0 28px;}
+    .hero-h1{font-size:clamp(34px, 11vw, 48px); }
+    .hero-outline{-webkit-text-stroke:2px var(--ink);}
+    .stat-band{grid-template-columns:1fr;}
+    .stat-cell{border-right:none; border-bottom:3px solid var(--ink);}
+    .stat-cell:last-child{border-bottom:none;}
+    .bleed{padding-inline:18px;}
+  }
+
+  /* ---------- PHASE 3 : PROJETS DE LOI ---------- */
+  .view-hero{padding:34px 0 8px;}
+  .hero-h1-md{font-size:clamp(36px, 5.6vw, 72px); line-height:0.94;}
+  .view-hero-sub{font-size:17px; font-weight:500; max-width:640px; line-height:1.45; margin:18px 0 8px;}
+  .visually-hidden-title{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+
+  /* Recherche + filtres brutaux */
+  .toolbar input{
+    border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow);
+    padding:14px 16px; font-family:'Archivo',sans-serif; font-weight:500; font-size:15px;
+  }
+  .toolbar input:focus{outline:3px solid var(--yellow); outline-offset:0;}
+  .status-chip, .step-chip{
+    border:3px solid var(--ink); background:var(--card); color:var(--ink);
+    font-family:'Archivo Narrow',sans-serif; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.04em; padding:8px 14px; font-size:12.5px; cursor:pointer;
+  }
+  .status-chip.active, .step-chip.active{background:var(--ink-bg); color:var(--yellow); border-color:var(--ink);}
+  .sort-toggle, .filter-hamburger{
+    border:2px solid var(--ink); background:var(--card); color:var(--ink);
+    font-family:'Archivo Narrow',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.03em;
+  }
+  .sort-toggle:hover, .filter-hamburger:hover{background:var(--yellow);}
+
+  /* Recherche + filtres rapides (maquette) sur une rangée */
+  .projets-controls{display:flex; gap:16px; flex-wrap:wrap; align-items:stretch; margin-top:22px;}
+  /* min() : un min-width fixe de 300 px dépassait l'écran quand la largeur de
+     mise en page tombe sous 300 px — ce que produit le bouton A+ à 150 %. */
+  .projets-controls .brutal-search{flex:1 1 320px; min-width:min(300px,100%); max-width:560px; margin-top:0;}
+  .quick-filters{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+  .qf-btn{
+    font-family:'Archivo Narrow',sans-serif; font-size:13.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em;
+    border:3px solid var(--ink); background:var(--card); color:var(--ink);
+    padding:10px 16px; cursor:pointer;
+  }
+  .qf-btn.active{background:var(--ink-bg); color:var(--yellow);}
+  .qf-btn:hover:not(.active){background:var(--yellow);}
+  /* Compteur sur les filtres des promesses. Chiffres à chasse fixe pour que les
+     boutons ne sautillent pas quand les nombres changent en filtrant. */
+  .qf-n{opacity:0.68; font-variant-numeric:tabular-nums; margin-left:6px; font-weight:800;}
+  .qf-btn.qf-zero{opacity:0.45;}
+  /* Le renvoi « Médias » vit dans la rangée des partis sans en être un : trait
+     pointillé et fond neutre pour qu'on ne le prenne pas pour un filtre. */
+  .qf-btn.qf-renvoi{
+    border-style:dashed; background:transparent; color:var(--ink);
+  }
+  .qf-btn.qf-renvoi:hover{background:var(--yellow); color:var(--sur-clair); border-style:solid;}
+
+  /* Légende de provenance, sous la liste des promesses. */
+  .prom-methode{
+    border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow);
+    padding:22px 26px; margin-top:26px; scroll-margin-top:80px;
+  }
+  .prom-methode h3{
+    font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase;
+    letter-spacing:-0.01em; font-size:19px; margin:0 0 14px;
+  }
+  .prom-methode ul{margin:0; padding-left:20px;}
+  .prom-methode li{font-size:14.5px; line-height:1.55; margin-bottom:10px;}
+  .prom-methode li:last-child{margin-bottom:0;}
+  .prom-methode-fin{
+    margin:16px 0 0; padding-top:14px; border-top:2px solid var(--ink);
+    font-size:14.5px; line-height:1.5; font-weight:600;
+  }
+
+  /* Les comparateurs des médias : même cadre que la légende, mais sur le papier
+     plutôt que sur du blanc, pour qu'on lise « ailleurs » et non « chez nous ». */
+  .prom-ailleurs{
+    border:3px solid var(--ink); background:var(--paper-2); box-shadow:var(--shadow);
+    padding:22px 26px; margin-top:18px; scroll-margin-top:80px;
+  }
+  .prom-ailleurs h3{
+    font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase;
+    letter-spacing:-0.01em; font-size:19px; margin:0 0 12px;
+  }
+  .prom-ailleurs > p{font-size:14.5px; line-height:1.55; margin:0 0 14px;}
+  .prom-ailleurs-liste{list-style:none; margin:0; padding:0; display:grid; gap:10px;}
+  .prom-ailleurs-liste a{
+    display:block; border:2px solid var(--ink); background:var(--card);
+    padding:11px 14px; font-size:14px; line-height:1.4; text-decoration:none;
+  }
+  .prom-ailleurs-liste a:hover{background:var(--yellow); color:var(--sur-clair);}
+  .prom-ailleurs-liste b{font-family:'Archivo',sans-serif; font-weight:800;}
+
+  /* Résultat du scrutin dans la bande de dissolution (après le 5 octobre). */
+  .diss-resultat{
+    font-family:'Archivo',sans-serif; font-weight:900; font-size:21px;
+    line-height:1.25; margin:0 0 14px; letter-spacing:-0.01em;
+  }
+  #billsResultHead{margin-top:6px; margin-bottom:18px;}
+
+  /* Bande légende */
+  .legend-strip{
+    background:var(--card); border-block:3px solid var(--ink);
+    padding-top:16px; padding-bottom:16px; margin:18px 0 26px;
+    display:flex; align-items:center; justify-content:flex-start;
+    gap:12px 18px; flex-wrap:wrap;
+  }
+  .legend-label{font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--slate); white-space:nowrap; flex:none;}
+  .legend-chips{display:flex; align-items:center; gap:8px; flex-wrap:wrap; flex:none;}
+  @media (max-width:640px){ .legend-chips{flex:1 1 100%; min-width:0;} }
+  .legend-arrow{font-weight:900;}
+  .legend-link{
+    font-family:'Archivo Narrow',sans-serif; font-size:12.5px;
+    font-weight:700; text-transform:uppercase; letter-spacing:0.04em;
+    color:var(--gold); cursor:pointer; white-space:nowrap; flex:none; padding-left:4px;
+  }
+  .bstep{white-space:nowrap;}
+  .legend-link:hover{color:var(--gold-hover);}
+
+  /* Chips d'étapes des cartes (remplacent les barres de progression) */
+  .bstep-row{display:flex; gap:6px; margin-top:16px; flex-wrap:wrap;}
+  .bstep{
+    font-family:'Archivo Narrow',sans-serif; font-size:11.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.03em; border:2px solid var(--ink);
+    padding:3px 9px; background:var(--paper);
+  }
+  .bstep.on{background:var(--gold-bg); color:var(--sur-fonce);}
+  .bstep.now{background:var(--yellow); color:var(--sur-clair);}
+  .bstep.off{background:var(--card); color:var(--slate); border-color:var(--line-soft);}
+
+  /* Tête de carte façon maquette : badge PL | titre+parrain | badges à droite */
+  .bill .num{
+    display:inline-block; background:var(--gold-bg); color:var(--sur-fonce);
+    border:2px solid var(--ink); padding:5px 12px; flex:none;
+    font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:14px;
+    letter-spacing:0.02em; white-space:nowrap;
+  }
+  .bill .head{align-items:flex-start; gap:18px;}
+  .bill-head-main{flex:1 1 0; min-width:240px;}
+  /* Écrans étroits (Pixel 8 en 360 px et moins) : le min-width du titre combiné
+     aux badges de droite débordait de la page. Les libellés de statut se sont
+     allongés (« Tombé en cours de route »), ce qui a révélé le problème.
+     On laisse la tête de carte passer sur deux lignes plutôt que déborder. */
+  @media (max-width:480px){
+    .bill .head{flex-wrap:wrap; gap:10px;}
+    .bill-head-main{min-width:0; flex:1 1 100%;}
+    .bill-head-right{width:100%; justify-content:flex-start;}
+    .status-pill{white-space:normal;}
+  }
+  .bill-head-main h3{margin:0;}
+  .bill-head-right{display:flex; align-items:center; gap:6px; flex:none; flex-wrap:wrap; justify-content:flex-end;}
+  .bill h3{font-weight:800; font-size:17.5px; letter-spacing:-0.01em; line-height:1.25;}
+  .bill .meta{
+    font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:600;
+    color:var(--slate); text-transform:uppercase; letter-spacing:0.04em; margin-top:4px;
+  }
+  .hot-badge{
+    background:var(--ink-bg); color:var(--yellow);
+    font-family:'Archivo Narrow',sans-serif; font-size:12px; font-weight:700;
+    padding:5px 11px; text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap;
+  }
+  .hot-badge-icone{padding:4px 7px; font-size:14px; line-height:1; cursor:help;} /* juste l'icône ; le nombre est dans l'infobulle */
+  /* Résumé ouvert en 2 colonnes (maquette) : « en clair » + dernier événement */
+  .bill-open-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:32px; align-items:start;}
+  .open-label{
+    font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--gold); margin-bottom:12px;
+  }
+  .open-label.side{color:var(--slate); margin-bottom:0;}
+  .bill-open-side{display:flex; flex-direction:column; gap:10px;}
+  .last-event-box{
+    border:2px solid var(--ink); background:var(--paper);
+    padding:14px 16px; font-size:14px; font-weight:600; line-height:1.4;
+  }
+  .bill-open-side .bill-more{display:block; text-align:center;}
+  .bill-summary p{font-size:14px;}
+  @media (max-width:760px){ .bill-open-grid{grid-template-columns:1fr;} }
+
+  /* Pastilles de statut bordées */
+  .status-pill{border:2px solid var(--ink); font-weight:700; font-size:11.5px;}
+  .status-sanctionne{background:var(--green-soft); color:#14532D;}
+  .status-encours{background:var(--gold-soft); color:var(--gold);}
+  .status-glace{background:var(--line-soft); color:var(--ink);}
+  .status-mort{background:var(--ink); color:var(--card); border:2px solid var(--ink);}
+
+  /* Boutons Demander une explication / Suivre / partage */
+  .follow-btn{
+    border:3px solid var(--ink); background:var(--card); color:var(--ink);
+    font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase;
+    letter-spacing:0.03em; cursor:pointer;
+  }
+  .follow-btn:hover{background:var(--yellow); color:var(--sur-clair);}
+  .follow-btn.on{background:var(--ink-bg); color:var(--yellow);}
+  .follow-btn:disabled{background:var(--ink-bg); color:var(--yellow); opacity:1;}
+
+  /* CTA texte intégral (jaune, ombre dure) */
+  .bill-more{
+    border:3px solid var(--ink); background:var(--yellow); color:var(--sur-clair);
+    font-weight:800; text-transform:uppercase; letter-spacing:0.03em;
+    box-shadow:var(--shadow-sm); padding:12px 18px;
+  }
+  .bill-more:hover{background:var(--ink-bg); color:var(--yellow);}
+
+  .bills-astuce{text-align:center; font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink); font-weight:800; margin:-4px 0 14px;}
+  /* Explainer jaune */
+  #band-challenge-explainer{margin-top:34px; margin-bottom:34px;} /* autant d'air au-dessus qu'au-dessous, entre les cartes (Martin, 29 sept. 2026) */
+  #band-challenge-explainer h2{
+    font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase;
+    letter-spacing:-0.02em; font-size:clamp(26px, 3.2vw, 40px); margin:0 0 14px;
+  }
+  #band-challenge-explainer p{font-size:16.5px; font-weight:500; line-height:1.5; max-width:760px; margin:0 0 12px;}
+
+  /* ---------- PHASE 4 : VOTES (carte détaillée, maquette) ---------- */
+  .vote-card{border:3px solid var(--ink); box-shadow:var(--shadow); background:var(--card); margin-bottom:16px;}
+  .vc-head{display:flex; align-items:flex-start; gap:16px; padding:20px 24px; cursor:pointer;}
+  .vc-head-main{flex:1; min-width:0;}
+  .vc-head-main h3{margin:0; font-size:17px; font-weight:800; line-height:1.3; letter-spacing:-0.01em;}
+  .vc-meta{font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:600; color:var(--slate); text-transform:uppercase; letter-spacing:0.04em; margin-top:4px;}
+  .vc-counts{display:flex; gap:16px; align-items:baseline; flex:none;}
+  .vcc{font-family:'Archivo Narrow',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; color:var(--slate); white-space:nowrap;}
+  .vcc b{font-family:'Archivo',sans-serif; font-size:22px; font-weight:900; letter-spacing:-0.02em;}
+  .vcc.pour b{color:#1E9E5A;} .vcc.contre b{color:#D64545;} .vcc.abst b{color:#8B8578;}
+  .vc-toggle{flex:none; font-weight:900; font-size:22px; line-height:1; min-width:20px; text-align:center;}
+  .vote-card > .bar{margin:0 24px 20px;}
+  .vc-detail{display:none; border-top:3px solid var(--ink); padding:20px 24px;}
+  .vc-detail.open{display:block;}
+  .vc-pgrid{display:grid; grid-template-columns:repeat(auto-fit, minmax(175px, 1fr)); gap:14px; margin-bottom:16px;}
+  .vc-pbox{border:2px solid var(--ink); background:var(--card);}
+  .vc-phead{padding:8px 14px; font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.04em; border-bottom:2px solid var(--ink);}
+  .vc-pbody{padding:12px 14px; display:flex; flex-direction:column; gap:6px;}
+  .vc-prow{display:flex; justify-content:space-between; gap:10px; font-size:13.5px;}
+  .vc-prow span{font-family:'Archivo Narrow',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:0.03em;}
+  .vc-prow b{font-weight:800;}
+  .vc-ncols{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-bottom:16px;}
+  .vc-ncol{border:2px solid var(--ink); background:var(--card); display:flex; flex-direction:column;}
+  .vc-nhead{padding:8px 14px; font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--card); border-bottom:2px solid var(--ink);}
+  .vc-nhead.pour{background:#2E9958;} .vc-nhead.contre{background:#D9442F;} .vc-nhead.abst{background:#8B8578;}
+  .vc-nbody{padding:10px 14px; max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:5px;}
+  .vc-nrow{display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600;}
+  .vc-chip{width:12px; height:12px; border:1px solid var(--ink); flex:none;}
+  .vc-empty{font-size:12px; color:var(--slate);}
+  .vc-foot{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .vc-foot-note{font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--slate);}
+  @media (max-width:820px){ .vc-ncols{grid-template-columns:1fr;} }
+  @media (max-width:640px){ .vc-head{flex-wrap:wrap;} .vc-counts{width:100%;} }
+  /* Barre jaune « Voir 6 de plus » (maquette) */
+  .votes-more{
+    display:block; width:100%; margin-top:10px;
+    border:3px solid var(--ink); background:var(--yellow); color:var(--sur-clair);
+    box-shadow:var(--shadow); cursor:pointer;
+    font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:14px;
+    text-transform:uppercase; letter-spacing:0.05em; padding:14px 20px; text-align:center;
+  }
+  .votes-more:hover{background:var(--ink-bg); color:var(--yellow);}
+  .votes-more-note{
+    margin-top:10px; text-align:center; font-family:'Archivo Narrow',sans-serif;
+    font-size:12.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--slate);
+  }
+  .vote-card h3{font-weight:800; font-size:17px; letter-spacing:-0.01em;}
+  .result-badge{
+    font-family:'Archivo Narrow',sans-serif; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em; border:2px solid var(--ink);
+    padding:4px 11px; white-space:nowrap; flex:none; align-self:flex-start;
+  }
+  .result-badge.adopte{background:var(--green-soft); color:#14532D;}
+  .result-badge.rejete{background:var(--red-soft); color:var(--red);}
+
+  /* Barre de résultat segmentée, bordée (maquette) */
+  .bar{height:16px; border:2px solid var(--ink); background:var(--line-soft);}
+  .bar .seg.pour{background:#2E9958;}
+  .bar .seg.contre{background:#D9442F; border-left:2px solid var(--ink);}
+  .bar .seg.abst{background:var(--line-soft); opacity:1; border-left:2px solid var(--ink);}
+
+  /* Décompte compact en gros chiffres */
+  .vote-compact-row{font-family:'Archivo',sans-serif; font-size:13px;}
+  .vote-compact-row b{font-size:21px; font-weight:900; letter-spacing:-0.02em;}
+
+  .info-box{border:2px solid var(--ink); background:var(--card);}
+
+  /* Bande bleue « Comment lire un vote » */
+  #band-lire-vote{margin-top:34px;}
+  #band-lire-vote h2{
+    font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase;
+    letter-spacing:-0.02em; font-size:clamp(26px, 3.2vw, 40px); margin:0 0 30px; color:var(--card);
+  }
+  .lire-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
+  .lire-box{border:3px solid var(--card); padding:22px 24px;}
+  .lire-box h3{font-size:24px; font-weight:900; margin:0 0 10px; color:var(--card); letter-spacing:-0.01em;}
+  .lire-box p{font-size:15px; line-height:1.5; margin:0; color:var(--gold-paler); font-weight:500;}
+  .lire-box.hl{border-color:var(--yellow); background:rgba(255,210,77,0.08);}
+  .lire-box.hl h3{color:var(--yellow);}
+  .lire-box.hl p{color:var(--card);}
+  @media (max-width:900px){ .lire-grid{grid-template-columns:1fr;} }
+
+  /* ---------- PHASE 5 : MINISTRES & ASSEMBLÉE ---------- */
+  /* Grande recherche façon maquette : cellule loupe JAUNE + champ bordé */
+  .brutal-search{
+    display:flex; max-width:640px; margin-top:22px;
+    border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow);
+  }
+  .brutal-search .bs-icon{
+    display:flex; align-items:center; padding:0 16px; font-size:18px;
+    border-right:3px solid var(--ink); background:var(--yellow); flex:none;
+  }
+  .brutal-search input{
+    flex:1; min-width:0; border:none; outline:none; background:var(--card);
+    box-shadow:none; font-family:'Archivo',sans-serif; font-size:16px;
+    font-weight:500; padding:16px 18px; color:var(--ink);
+  }
+  .brutal-search input:focus{outline:none;}
+  .hero-filters{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:14px;}
+  #band-composition{margin-top:30px;}
+  #band-composition .compo-wrap{margin-bottom:0;}
+
+  /* Composition : barre empilée bordée + légende à carrés */
+  .compo-wrap{margin-bottom:34px;}
+  .compo-bar{display:flex; height:56px; border:3px solid var(--ink); background:var(--card);}
+  .compo-seg{height:100%;}
+  .compo-legend{display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; align-items:center;}
+  .compo-row{
+    display:flex; align-items:center; gap:8px;
+    font-family:'Archivo Narrow',sans-serif; font-size:13.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.03em;
+  }
+  .compo-swatch{width:16px; height:16px; border:2px solid var(--ink); flex:none;}
+  .compo-note{flex-basis:100%; font-size:11.5px; color:var(--slate); font-family:'Archivo Narrow',sans-serif;}
+
+  /* Cartes ministres brutales — grille de 3 par rangée (maquette) */
+  #ministresGrid.grid{grid-template-columns:repeat(3, 1fr); gap:20px;}
+  @media (max-width:980px){ #ministresGrid.grid{grid-template-columns:repeat(2, 1fr);} }
+  @media (max-width:640px){ #ministresGrid.grid{grid-template-columns:1fr;} }
+  .m-card{
+    border:3px solid var(--ink); box-shadow:var(--shadow); background:var(--card);
+    padding:0; display:flex; flex-direction:column;
+    /* Un élément de grille a min-width:auto : il refuse de rétrécir sous la
+       largeur de son plus long contenu, et débordait donc sa cellule sur les
+       écrans très étroits (320 px). */
+    min-width:0;
+  }
+  .m-card, .m-card *{overflow-wrap:break-word; word-break:break-word;}
+  .m-card-top{padding:20px 22px 16px; border-bottom:2px solid var(--ink);}
+  .m-top-row{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px;}
+  .m-name{font-size:19px; font-weight:800; letter-spacing:-0.01em; line-height:1.15; text-transform:uppercase;}
+  .m-portfolio{
+    font-family:'Archivo Narrow',sans-serif; font-size:13px; font-weight:700;
+    color:var(--gold); text-transform:uppercase; letter-spacing:0.04em; margin-top:5px;
+  }
+  .m-card-bottom{padding:14px 22px 18px; display:flex; flex-direction:column; gap:8px; margin-top:auto;}
+  .m-row{display:flex; justify-content:space-between; gap:10px; font-size:13.5px; align-items:baseline;}
+  .m-label{font-family:'Archivo Narrow',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--slate); flex:none;}
+  .m-val{font-weight:700; text-align:right;}
+  .m-val-blue{font-weight:800; color:var(--gold);}
+  .m-mail{
+    font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700;
+    letter-spacing:0.03em; margin-top:6px; border-top:2px solid var(--line-soft);
+    padding-top:10px; color:var(--gold);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .m-card .follow-btn{padding:7px 12px; font-size:11.5px;}
+  .head-note{
+    font-family:'Archivo Narrow',sans-serif; font-size:13px; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.05em; color:var(--slate); flex:none;
+  }
+  /* Sécurité petits écrans (≤480px) : la note de section passe sous le titre,
+     et les mots longs des cartes du lexique se coupent proprement. */
+  @media (max-width:480px){
+    .section-head{flex-wrap:wrap; row-gap:6px;}
+    .head-note{flex:1 1 100%;}
+    .lexique-item dt, .lexique-item dd{overflow-wrap:break-word; word-break:break-word; min-width:0;}
+  }
+  /* Titres de groupes (Les ministres / Le reste de l'Assemblée) : taille maquette */
+  .min-group-head{margin-top:44px; align-items:baseline;}
+  .min-group-head h2{font-size:clamp(28px, 3.6vw, 46px); margin:0;}
+  .depute-party{
+    border:2px solid var(--ink); font-family:'Archivo Narrow',sans-serif;
+    font-weight:700; text-transform:uppercase; letter-spacing:0.03em; padding:3px 9px;
+  }
+  .party-chip{border-width:2px; font-weight:700; text-transform:uppercase;}
+  .role-group-title{
+    font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase;
+    letter-spacing:-0.01em;
+  }
+
+  /* Tableau du reste de l'Assemblée, groupé par parti */
+  #deputesList{display:block;}
+  .dep-table{border:3px solid var(--ink); box-shadow:var(--shadow-lg); background:var(--card);}
+  .dep-table-head{
+    display:grid; grid-template-columns:1fr 280px 110px; gap:16px; padding:12px 22px;
+    background:var(--ink); color:var(--paper);
+    font-family:'Archivo Narrow',sans-serif; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em;
+  }
+  .dep-group-banner{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:12px 22px; border-top:3px solid var(--ink); border-bottom:2px solid var(--ink);
+  }
+  .dep-group-name{font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:0.02em;}
+  .dep-group-count{font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;}
+  .dep-row{
+    display:grid; grid-template-columns:1fr 280px 110px; gap:16px; padding:13px 22px;
+    border-top:2px solid var(--line-soft); align-items:center; background:var(--card);
+  }
+  .dep-name{font-size:15px; font-weight:700;}
+  .dep-mail{font-family:'Archivo Narrow',sans-serif; font-size:12px; font-weight:600; color:var(--gold);}
+  .dep-riding{font-size:13.5px; font-weight:600;}
+  .dep-att{font-family:'Archivo Narrow',sans-serif; font-size:11.5px; color:var(--slate);}
+  .dep-follow{padding:7px 12px; font-size:11.5px; justify-self:start;}
+  @media (max-width:760px){
+    .dep-table-head{display:none;}
+    .dep-row{grid-template-columns:1fr; gap:8px;}
+    .dep-follow{justify-self:start;}
+  }
+
+  /* Comparateur sur bande bleue */
+  #band-comparateur{margin-top:34px;}
+  #band-comparateur .section-head h2{color:var(--card);}
+  #band-comparateur .section-head .sub{color:var(--gold-pale);}
+  .comparateur-toolbar{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;}
+  .comparateur-toolbar select{
+    border:3px solid var(--ink); background:var(--yellow); color:var(--sur-clair);
+    font-family:'Archivo Narrow',sans-serif; font-size:15px; font-weight:700;
+    text-transform:uppercase; padding:14px 16px; cursor:pointer;
+    box-shadow:5px 5px 0 var(--ink);
+  }
+  .comparateur-toolbar select#compareB{background:var(--card);}
+  #band-comparateur .compare-table-wrap{border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow-lg); overflow-x:auto;}
+  #band-comparateur .compare-table{width:100%; border-collapse:collapse; color:var(--ink);}
+  #band-comparateur .compare-table th{
+    background:var(--ink); color:var(--paper); text-align:left; padding:14px 20px;
+    font-size:16px; font-weight:800; text-transform:uppercase;
+  }
+  #band-comparateur .compare-table td{padding:13px 20px; border-top:2px solid var(--line-soft); font-size:14px; font-weight:600;}
+  #band-comparateur .compare-table td:first-child{
+    font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.05em; color:var(--slate); width:200px;
+  }
+  @media (max-width:760px){ .comparateur-toolbar{grid-template-columns:1fr;} }
+  /* Placeholder du comparateur (avant sélection) */
+  .compare-placeholder{border:3px dashed var(--card); background:rgba(255,255,255,0.06); padding:26px 24px;}
+  .cp-cols{display:flex; align-items:stretch; gap:16px;}
+  .cp-col{
+    flex:1; display:flex; align-items:center; gap:12px; min-width:0;
+    border:3px solid var(--card); background:transparent; padding:16px 18px;
+  }
+  .cp-col.filled{border-color:var(--yellow); background:rgba(255,210,77,0.1);}
+  .cp-slot{
+    flex:none; width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+    background:var(--yellow); color:var(--sur-clair); border:2px solid var(--ink);
+    font-family:'Archivo',sans-serif; font-weight:900; font-size:16px;
+  }
+  .cp-txt{font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:14px; text-transform:uppercase; letter-spacing:0.03em; color:var(--card); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .cp-vs{
+    flex:none; align-self:center; font-family:'Archivo',sans-serif; font-weight:900;
+    font-size:18px; color:var(--gold-pale); letter-spacing:0.04em;
+  }
+  .cp-hint{
+    margin-top:16px; font-family:'Archivo Narrow',sans-serif; font-size:13px; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--gold-pale);
+  }
+  @media (max-width:760px){ .cp-cols{flex-direction:column;} }
+
+  /* ---------- PHASE 6 : LEXIQUE, COMPTE, RÔLES ---------- */
+  /* Lexique : grille 2 colonnes de cartes brutales (le <dl> existant) */
+  #body-lexique dl{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; margin:0;
+  }
+  .lexique-item{
+    background:var(--card); border:3px solid var(--ink); box-shadow:var(--shadow);
+    padding:24px 26px; margin:0;
+    display:grid; grid-template-columns:1fr auto; gap:0 12px; align-items:start;
+  }
+  .lexique-item dt{
+    grid-column:1; font-family:'Archivo',sans-serif; font-size:19px; font-weight:900;
+    letter-spacing:-0.01em; text-transform:uppercase; margin:0 0 10px;
+  }
+  .lexique-item dd{grid-column:1 / -1; margin:0; font-size:15px; font-weight:500; line-height:1.5;}
+  /* Bulle de catégorie en haut à droite (couleurs de la palette) */
+  .lex-badge{
+    grid-column:2; justify-self:end; align-self:start;
+    border:2px solid var(--ink); font-family:'Archivo Narrow',sans-serif;
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;
+    padding:4px 10px; white-space:nowrap;
+  }
+  .lex-badge.cat-proc{background:var(--gold-soft); color:var(--gold);}       /* bleu Québec */
+  .lex-badge.cat-votes{background:var(--green-soft); color:#14532D;}         /* vert */
+  .lex-badge.cat-pers{background:var(--yellow); color:var(--sur-clair);}          /* jaune */
+  .lex-badge.cat-outils{background:#CFF0F7; color:#0A6E85;}                 /* cyan (CAQ) */
+  @media (max-width:820px){ #body-lexique dl{grid-template-columns:1fr;} }
+
+  /* Bande jaune « suggérer un terme » */
+  #band-suggest{margin-top:34px;}
+  .suggest-inner{display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;}
+  #band-suggest h2{
+    font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase;
+    letter-spacing:-0.02em; font-size:clamp(26px, 3.2vw, 40px); margin:0 0 10px;
+  }
+  #band-suggest p{font-size:16.5px; font-weight:500; line-height:1.5; margin:0; max-width:520px;}
+  .suggest-cta{
+    border:3px solid var(--ink); background:var(--ink-bg); color:var(--yellow);
+    padding:16px 26px; font-weight:800; font-size:15px; text-transform:uppercase;
+    letter-spacing:0.03em; box-shadow:6px 6px 0 rgba(19,19,19,0.35); white-space:nowrap;
+  }
+  .suggest-cta:hover{background:var(--gold-bg); color:var(--sur-fonce);}
+
+  /* Cartes de rôles (Qui gravite autour) */
+  .role-card{border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow-sm);}
+  .role-card .role{
+    font-family:'Archivo Narrow',sans-serif; font-weight:700; color:var(--gold);
+    text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .role-card h3{font-weight:800; text-transform:uppercase; letter-spacing:-0.01em;}
+  .role-badge{border:2px solid var(--ink); font-family:'Archivo Narrow',sans-serif; font-weight:700; text-transform:uppercase;}
+
+  /* Vue Compte & à propos */
+  .account-box{border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow);}
+  .roadmap-item{border:2px solid var(--ink); background:var(--card);}
+  .roadmap-status{
+    border:2px solid var(--ink); font-family:'Archivo Narrow',sans-serif;
+    font-weight:700; text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .roadmap-status.now{background:var(--green-soft); color:#14532D;}
+
+  @media (max-width:640px){
+    header.top{padding:24px 18px 18px;}
+    .app{padding:0 18px 60px;}
+    nav.tabs{padding:0 18px;}
+    .hemicycle-wrap{flex-direction:column; align-items:flex-start;}
+
+    .filter-hamburger{
+      display:flex; align-items:center; gap:6px;
+      font-family:'Archivo Narrow',sans-serif; font-weight:600; font-size:11.5px;
+      padding:8px 14px; border-radius:20px; cursor:pointer;
+      border:1.5px solid var(--line); background:var(--card); color:var(--ink);
+      margin-top:10px; width:100%; justify-content:space-between;
+    }
+    .filter-hamburger[aria-expanded="true"]{border-color:var(--ink);}
+    .status-filters, .step-filters{
+      display:none; margin-top:8px; padding:10px; background:var(--paper-2);
+      border-radius:var(--radius); border:1px solid var(--line);
+    }
+    .step-filters{margin-top:8px;}
+    .status-filters.open, .step-filters.open{display:flex;}
+  }
+
+  /* Largeur de mise en page très étroite.
+     ⚠️ Pas de @media ici, et c'est volontaire : le `zoom` du bouton A+ NE
+     CHANGE PAS la largeur vue par les media queries. À 150 % sur un écran de
+     412 px, la mise en page ne dispose réellement que de 275 px, mais
+     « @media (max-width:360px) » ne se déclencherait jamais. C'est le JS
+     (majLargeurEtroite) qui pose la classe .etroit d'après la largeur EFFECTIVE.
+     Le logotype tient en un seul mot — il ne peut pas se couper — il faut donc
+     le réduire, sinon il pousse la page hors de l'écran.
+
+     ⚠️ LA RANGÉE DU LOGO A SON PROPRE SEUIL, .entete-etroite (moins de 420 px
+     effectifs), plus large que .etroit (360 px). Logo + feuille d'érable + bouton
+     « Villes » font 375 px de large : avec les 18 px de marge de chaque côté, il leur
+     faut 411 px d'écran. Les iPhone font 375, 390 ou 393 px — la réduction à 360 ne
+     s'y déclenchait jamais, et la rangée débordait de 18 px sur TOUTES les pages :
+     toute la page glissait de gauche à droite sous le doigt. Mesuré le 19 sept. 2026
+     à 375 px : 393 px de page avant, 375 après. La liste du menu s'ancre alors à
+     droite : ancrée à gauche, elle sortait de l'écran une fois ouverte (439 px). */
+  .entete-etroite .brand{gap:8px; min-width:0;}
+  .entete-etroite .brand-text .brand-title{font-size:19px;}
+  .entete-etroite .brand-mark, .entete-etroite .maple-flip, .entete-etroite .maple-flip svg{width:30px; height:30px;}
+  .entete-etroite .villes-menu{margin-left:8px;}
+  .entete-etroite .city-flip{height:24px; padding:0 8px; font-size:9px;}
+  .entete-etroite .villes-menu ul{left:auto; right:0;}
+  /* Sous 360 px (vieux petits téléphones, ou A+ poussé), un cran de plus : la rangée
+     faisait 307 px pour 284 disponibles à 320 px, et débordait encore de 7 px. Mesuré
+     tenant de 300 à 359 px avec ces trois réglages. */
+  .etroit .brand-text .brand-title{font-size:17px;}
+  .etroit .maple-flip{margin-left:4px;}
+  .etroit .city-flip{padding:0 7px;}
+  .etroit .suggest-cta{white-space:normal;}   /* nowrap : 389 px sur 275 disponibles */
+  .etroit .result-badge{white-space:normal;}
+  .etroit .dep-group-banner{flex-wrap:wrap; gap:4px;}
+  .etroit .dep-group-name{min-width:0;}
+  .etroit .hero-h1-md{font-size:30px;}
+  .etroit .vc-counts{flex-wrap:wrap; gap:8px;}
+  .etroit .vcc{white-space:normal;}
+  .etroit .vote-card *{overflow-wrap:break-word; word-break:break-word;}
+  /* Un champ ou une liste déroulante ne rétrécit pas sous sa largeur par
+     défaut du navigateur : sans ceci, ils débordent sur écran très étroit. */
+  input, select, textarea{max-width:100%;}
+
+  .font-size-ctrl{
+    display:flex; align-items:center; gap:2px; flex:none;
+    background:var(--card); border:1px solid var(--line); border-radius:20px; padding:3px;
+  }
+  .font-size-ctrl button{
+    font-family:'Archivo',sans-serif; font-weight:700; font-size:12px; color:var(--ink);
+    background:none; border:none; cursor:pointer; padding:6px 10px; border-radius:16px; line-height:1;
+  }
+  .font-size-ctrl button:hover{background:var(--paper-2);}
+  .font-size-ctrl #fontPct{font-family:'Archivo Narrow',sans-serif; font-size:10.5px; color:var(--slate); min-width:34px; text-align:center;}
+
+  .lang-toggle{
+    font-family:'Archivo Narrow',sans-serif; font-weight:600; font-size:12px;
+    background:var(--card); color:var(--ink); border:1px solid var(--line); border-radius:20px;
+    padding:8px 14px; cursor:pointer; flex:none;
+  }
+  .lang-toggle:hover{background:var(--paper-2);}
+
+  /* GÉOMÉTRIE COMMUNE DES CONTRÔLES D'EN-TÊTE (taille du texte, thème, langue).
+     Ils forment une rangée : hauteurs et traits doivent concorder. Ils avaient
+     dérivé à 38 / 32 / 34 px avec des bordures de 1 et 2 px, parce que chacun est
+     défini DEUX fois — une fois dans la feuille d'origine, une fois dans la
+     refonte brutaliste. Plutôt que d'aller corriger quatre règles dispersées et
+     de laisser le prochain ajout dériver à son tour, on fixe la géométrie ici,
+     en dernier, pour tous les enfants directs de .header-ctrls. */
+  .header-ctrls > *{
+    height:var(--h-ctrl); box-sizing:border-box;
+    border:1px solid var(--line);
+  }
+  .font-size-ctrl{padding:0 6px;}
+  .lang-toggle{padding:0 14px;}
+  .theme-toggle{width:var(--h-ctrl); padding:0;}
+
+  /* ---------- HAMBURGER (mobile) ---------- */
+  .hamburger{
+    display:none; flex:none; width:36px; height:36px;
+    border:1px solid var(--line); border-radius:var(--radius); background:var(--card);
+    align-items:center; justify-content:center; gap:4px; flex-direction:column; cursor:pointer;
+  }
+  .hamburger span{display:block; width:18px; height:1.5px; background:var(--ink); transition:transform 0.2s, opacity 0.2s;}
+  .hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
+  .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
+
+  @media (max-width:640px){
+    .top-meta{display:none;}
+    .hamburger{display:flex; margin-left:auto;}
+    nav.tabs{
+      display:none; position:fixed; inset:0; z-index:100;
+      flex-direction:column; overflow-y:auto; background:var(--paper);
+      padding:20px 0 40px; border-bottom:none; gap:8px;
+    }
+    nav.tabs.open{display:flex;}
+    nav.tabs a{
+      padding:16px 24px; border-bottom:1px solid var(--line); border-left:3px solid transparent;
+      text-align:left; font-size:15px;
+    }
+    nav.tabs a.active{background:var(--ink-bg); color:var(--sur-fonce); border-left-color:var(--yellow); border-bottom-color:var(--ink);}
+    nav.tabs .close-menu{
+      display:flex; justify-content:flex-end; padding:0 18px 12px;
+      font-family:'Archivo Narrow',sans-serif; font-size:12px; color:var(--slate); cursor:pointer;
+    }
+  }
+
+  /* ---------- MISES À JOUR DU SITE (/sources) ----------
+     La case du créateur est celle de l'ancienne bande dessinée (photo ronde, bulle, trait
+     sous le nom), refaite en HTML : dans le SVG, le texte tombait à 8 px sur un téléphone et
+     la case restait claire en thème sombre. */
+  .createur{
+    max-width:760px;
+    background:var(--card); border:1.5px solid var(--line); box-shadow:var(--shadow-sm);
+    padding:22px 26px; margin:0 0 36px;
+  }
+  .createur-tete{display:flex; align-items:center; gap:24px;}
+  /* Le mot du créateur : pourquoi le site existe. Texte de lecture, 62 caractères par ligne. */
+  .createur-mot{margin:20px 0 0;}
+  .createur-mot p{font-size:15.5px; line-height:1.65; color:var(--ink); margin:0 0 11px; max-width:62ch;}
+  .createur-mot p:last-child{margin-bottom:0;}
+  .createur-lead{font-weight:700; border-left:5px solid var(--yellow); padding-left:12px;}
+  /* La SEULE exception au « tout est carré » (*{border-radius:0 !important}) : la photo reste
+     ronde, comme dans la case d'origine que Martin a choisi de garder. */
+  .createur-photo{
+    flex:none; width:120px; height:120px; border-radius:50% !important; object-fit:cover;
+    border:2px solid var(--line); background:var(--paper-2);
+  }
+  .createur-bulle{
+    position:relative; display:flex; flex-direction:column; gap:3px; min-width:0;
+    background:var(--paper-2); border:1.5px solid var(--line); padding:14px 20px 15px;
+    font-size:14px; line-height:1.45; color:var(--ink);
+  }
+  /* La pointe de la bulle, tournée vers la photo : un triangle du trait, puis un du fond. */
+  .createur-bulle::before, .createur-bulle::after{
+    content:''; position:absolute; top:50%; border-style:solid; border-color:transparent;
+  }
+  .createur-bulle::before{left:-13px; margin-top:-12px; border-width:12px 13px 12px 0; border-right-color:var(--line);}
+  .createur-bulle::after{left:-10px; margin-top:-10px; border-width:10px 11px 10px 0; border-right-color:var(--paper-2);}
+  .createur-nom{font-family:'Archivo',sans-serif; font-weight:600; font-size:21px; line-height:1.2; margin-top:2px;}
+  .createur-nom::after{content:''; display:block; width:120px; max-width:100%; height:3px; margin:7px 0 4px; background:#A9782E;}
+  @media (max-width:560px){
+    .createur{padding:16px;}
+    .createur-tete{gap:18px;}
+    .createur-mot p{font-size:15px;}
+    .createur-photo{width:84px; height:84px;}
+    .createur-bulle{padding:11px 14px 12px; font-size:13.5px;}
+    .createur-nom{font-size:18px;}
+  }
+
+  .maj{max-width:760px;}
+  .maj-liste, .maj-liste ol{list-style:none; margin:0; padding:0;}
+  .maj-mois{margin:0 0 30px;}
+  .maj-mois h2{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:14px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink); margin:0 0 4px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  }
+  .maj-entree{display:grid; grid-template-columns:118px 1fr; gap:16px; padding:14px 0; border-bottom:1px solid var(--line-soft);}
+  .maj-entree time{font-family:'Archivo Narrow',sans-serif; font-size:13px; color:var(--slate); padding-top:3px;}
+  .maj-corps h3{font-family:'Archivo',sans-serif; font-weight:600; font-size:16px; line-height:1.3; margin:7px 0 4px; color:var(--ink);}
+  .maj-corps p{margin:0; font-size:14px; line-height:1.55; color:var(--ink);}
+  .maj-volet{
+    display:inline-block; font-family:'Archivo Narrow',sans-serif; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:0.04em; line-height:1; padding:4px 7px 3px; border:1px solid var(--line);
+    background:var(--paper-2); color:var(--ink);
+  }
+  .maj-volet-assemblee{background:var(--gold-soft);}
+  .maj-volet-compte{background:var(--yellow); color:var(--sur-clair);}
+  .maj-vide{font-size:14px; color:var(--slate); padding:14px 0;}
+  .maj-plus{
+    font-family:'Archivo',sans-serif; font-size:14px; font-weight:500; cursor:pointer;
+    background:var(--card); color:var(--ink); border:1.5px solid var(--line); box-shadow:var(--shadow-sm);
+    padding:10px 18px; margin:4px 0 12px;
+  }
+  .maj-plus:hover{border-color:var(--gold); color:var(--gold);}
+  .maj-plus[hidden]{display:none;}
+  @media (max-width:560px){
+    .maj-entree{grid-template-columns:1fr; gap:2px;}
+  }
+
+  /* ---------- SEO : le sujet dans chaque titre, fil d'Ariane, portes d'entrée de l'accueil,
+     plan du site en pied de page, et les listes écrites dans le HTML ---------- */
+  /* Le sujet de la page, en tête de son <h1> : le slogan reste l'affiche, mais le titre dit
+     enfin de quoi parle la page, avec les mots qu'on tape dans un moteur de recherche. */
+  .hero-h1 .hero-sujet{
+    display:block; width:max-content; max-width:100%;
+    font-family:'Archivo Narrow',sans-serif; font-size:14px; font-weight:700; line-height:1.25;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--sur-clair); -webkit-text-stroke:0;
+    background:var(--yellow); border:2px solid var(--ink); padding:5px 10px 4px; margin:0 0 18px;
+  }
+  .fil-ariane{
+    font-family:'Archivo Narrow',sans-serif; font-size:12.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--slate); padding:20px 0 0;
+  }
+  .fil-ariane a{color:var(--ink); text-decoration:none; border-bottom:2px solid var(--yellow);}
+  .fil-ariane a:hover{color:var(--gold);}
+  .fil-ariane .sep{margin:0 8px;}
+  .fil-ariane + .view-hero{padding-top:20px;}
+  .fil-ariane + .section-head{margin-top:14px;}
+
+  /* /mon-dossier — l'espace de la personne, côté Assemblée. Même grammaire que le reste du site :
+     cartes bordées de noir, ombre portée, étiquettes jaunes. */
+  .md-bloc{margin:0 0 20px;}
+  .md-carte{border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow-sm); padding:20px 22px;}
+  .md-carte h2{margin:0; font-size:clamp(18px, 2.2vw, 24px); letter-spacing:-0.01em;}
+  .md-carte-tete{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 14px; margin-bottom:12px;}
+  .md-etiquette{font-family:'Archivo',sans-serif; font-size:12.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; padding:2px 10px; background:var(--yellow); color:var(--sur-clair); border:2px solid var(--ink);}
+  .md-verrou{border-style:dashed;}
+  .md-note{font-size:13.5px; line-height:1.5; color:var(--slate);}
+  .md-lien{color:var(--gold); font-weight:700; text-decoration:underline;}
+  .md-liens{display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-top:8px; font-size:13.5px;}
+  .md-ligne{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+  .md-ligne input{flex:1 1 200px; min-width:0; font:inherit; font-size:15px; padding:9px 10px; border:2px solid var(--ink); background:var(--card); color:var(--ink);}
+  .md-carte .account-btn{font-family:'Archivo',sans-serif; font-size:15px; font-weight:800; padding:9px 16px; background:var(--ink); color:var(--card); border:2px solid var(--ink); cursor:pointer;}
+  .md-carte .account-btn:disabled{opacity:.6; cursor:default;}
+  .md-liste{list-style:none; margin:0; padding:0; display:grid; gap:10px;}
+  .md-ligne-loi, .md-ligne-elu{display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:8px 14px; padding:12px 14px; border:2px solid var(--line-soft); background:var(--paper-2);}
+  .md-loi-tete{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:4px;}
+  .md-pl{font-family:'Archivo',sans-serif; font-weight:900; font-size:13px; letter-spacing:.03em;}
+  .md-bouton-doux{font:inherit; font-size:13px; font-weight:700; cursor:pointer; padding:5px 10px; background:transparent; color:var(--ink); border:2px solid var(--ink);}
+  .md-bouton-doux:hover{background:var(--yellow); color:var(--sur-clair);}
+  .md-mots{list-style:none; margin:10px 0 0; padding:0; display:grid; gap:8px;}
+  .md-mots li{display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px;}
+  .md-mot{font-weight:800; padding:2px 10px; border:2px solid var(--ink); background:var(--paper-2);}
+  .md-case{display:flex; align-items:flex-start; gap:10px; font-size:15px; line-height:1.45;}
+  .md-case input{width:18px; height:18px; margin-top:2px; accent-color:var(--gold);}
+  .md-themes{border:0; margin:12px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:8px 18px;}
+  .md-themes legend{padding:0; margin-bottom:8px;}
+  @media (max-width:640px){ .md-carte{padding:16px 14px;} }
+  /* Vos projets de ville (ancienne page /mes-dossiers, fusionnée le 30 sept. 2026). La section porte
+     .ab-page pour les couleurs des villes (commun/abonnes.css) ; on lui retire le fond et la police
+     de page entière, et son titre prend le style des cartes de Mon dossier. */
+  .md-villes.ab-page{background:transparent; font-family:inherit; margin:34px 0 0; padding-top:24px; border-top:3px solid var(--ink);}
+  .md-villes-titre{font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:-0.02em; font-size:clamp(22px,2.6vw,30px); margin:0 0 10px; color:var(--ink);}
+  #villes{scroll-margin-top:120px;}
+  /* Le thème de la section suit celui de DQ (html[data-theme=dark], jamais prefers-color-scheme), pas celui des villes (clair/sombre) :
+     sans ça, un ordinateur en mode sombre la mettait en sombre dans une page claire. L'id bat
+     « :root:not([data-theme=clair]) .ab-page » d'abonnes.css. */
+  #villes.ab-page{--fond:#F7F8FA; --carte:#FFFFFF; --encre:#16191D; --doux:#5B6570; --ligne:#DDE2E7; --ligne-forte:#C2CAD2; --accent:#0B8A4B; --accent-fond:#E6F6EC; --accent-encre:#076338; --fond-2:#EEF1F4;}
+  html[data-theme="dark"] #villes.ab-page{--fond:#0E1116; --carte:#161B22; --encre:#E6EAEE; --doux:#9AA5B1; --ligne:#262D36; --ligne-forte:#36404B; --accent:#3DD68C; --accent-fond:#0F2A1D; --accent-encre:#7BE7B2; --fond-2:#1C232C;}
+
+  /* Légende de la présence aux votes (page Ministres, sous la composition). Neutre : ni rouge ni
+     vert, le site ne juge pas ; la barre montre l'étendue réelle et la médiane. */
+  .legende-presence{margin:28px 0 10px; padding:18px 20px; border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow-sm);}
+  .lp-tete{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 16px; margin-bottom:10px;}
+  .lp-titre{font-family:'Archivo',sans-serif; font-weight:900; font-size:17px; text-transform:uppercase; letter-spacing:-0.01em;}
+  .lp-lien{font-weight:700; font-size:13.5px; color:var(--gold); text-decoration:underline;}
+  .lp-formule{margin:0 0 16px; font-size:15px; line-height:1.55; max-width:78ch;}
+  /* L'exemple « 88 % » reste neutre : en jaune, il aurait dit « sous la médiane », ce qui est faux. */
+  .lp-formule b{display:inline-block; padding:0 6px; border:2px solid var(--ink); background:var(--card); color:var(--ink);}
+  .lp-echelle{max-width:640px; margin:0 0 14px;}
+  .lp-repere-ligne{position:relative; height:20px;}
+  .lp-repere{position:absolute; bottom:2px; font-size:12.5px; font-weight:800; white-space:nowrap;}
+  .lp-ancre-centre{transform:translateX(-50%);}
+  .lp-ancre-droite{transform:translateX(-100%); padding-right:6px;}
+  .lp-ancre-gauche{padding-left:6px;}
+  /* La barre peinte (--mediane et --mediane-jaune posés par dq.js) : neutre de 0 à la médiane du
+     jaune, jaune jusqu'à la médiane de l'Assemblée, vert jusqu'à 100. */
+  .lp-barre{position:relative; height:14px; border:2px solid var(--ink); background:linear-gradient(to right, var(--card) 0 var(--mediane-jaune, 0%), #FFD24D var(--mediane-jaune, 0%) var(--mediane, 50%), #1E7B45 var(--mediane, 50%) 100%);}
+  .lp-mediane-jaune{width:2px; margin-left:-1px; top:-4px; bottom:-4px;}
+  .lp-groupes{list-style:none; margin:10px 0 0; padding:0; display:grid; gap:6px; font-size:14px;}
+  .lp-groupes li{display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px;}
+  .lp-groupes .presence-pastille{min-width:132px; text-align:center;}
+  /* Le pourcentage d'un élu : vert à la médiane de l'Assemblée ou au-dessus, jaune en dessous.
+     Couleurs fixes (pas de jeton du thème) : elles se lisent pareil en clair et en sombre. */
+  .presence-pastille{display:inline-block; padding:1px 7px; border:2px solid #131313; font-weight:800; line-height:1.3; white-space:nowrap;}
+  .presence-haute{background:#1E7B45; color:#FFFFFF;}
+  .presence-moyenne{background:#FFD24D; color:#131313;}
+  /* « Sans couleur » : le chiffre dans une pastille neutre, aux couleurs de la carte. */
+  .presence-neutre{background:var(--card); color:var(--ink); border-color:var(--ink);}
+  .lp-mediane{position:absolute; top:-8px; bottom:-8px; width:3px; margin-left:-1.5px; background:var(--ink);}
+  .lp-bornes{display:flex; justify-content:space-between; margin-top:8px; font-size:12.5px; font-weight:700; color:var(--slate);}
+  .lp-legende-chiffres{margin:8px 0 0; font-size:14px;}
+  .lp-notes{margin:0; padding-left:18px; font-size:14px; line-height:1.55; color:var(--ink);}
+  .lp-notes li{margin:0 0 4px;}
+  .lp-notes b{font-weight:900;}
+  .lp-asterisque{margin:12px 0 0; padding-top:10px; border-top:1px solid var(--line-soft); font-size:13.5px; line-height:1.5; color:var(--slate);}
+  .lp-asterisque a{color:var(--gold); font-weight:700; text-decoration:underline;}
+  .lp-asterisque-suite{margin-top:6px; padding-top:0; border-top:0;}
+  /* La carte visée par ce lien, dans le Lexique : qu'elle ne passe pas sous l'en-tête collant. */
+  #role-presidence{scroll-margin-top:120px;}
+
+  /* L'abonnement vendu par les projets de loi (accueil et page Projets de loi). Bande bleue :
+     un bloc sombre dans les deux thèmes (voir html[data-theme="dark"] .band-blue). */
+  .promo-alertes .promo-sur{margin:0 0 8px; font-weight:800; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--yellow);}
+  .promo-alertes h2{margin:0 0 12px; font-size:clamp(26px, 3.6vw, 44px); line-height:1.05; letter-spacing:-0.02em; max-width:20ch; color:var(--sur-fonce);}
+  .promo-alertes .promo-texte{margin:0 0 10px; max-width:62ch; font-size:17px; line-height:1.5; color:var(--sur-fonce);}
+  .promo-alertes .promo-dissolution{font-size:14.5px; opacity:.85;}
+  .promo-alertes .promo-cta{display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; margin-top:18px;}
+  .promo-alertes .hero-cta{background:var(--yellow); color:var(--sur-clair); border-color:var(--sur-clair); padding:16px 24px; text-decoration:none;}
+  .promo-alertes .hero-cta:hover{background:var(--card); color:var(--sur-clair);}
+  .promo-alertes .promo-prix{font-size:14.5px; font-weight:600; color:var(--sur-fonce);}
+  .promo-alertes .promo-limites{margin:16px 0 0; max-width:62ch; font-size:15px; line-height:1.5; color:var(--sur-fonce);}
+  .promo-alertes .promo-limites b{color:var(--yellow);}
+  .promo-accueil-grille{display:grid; grid-template-columns:minmax(0, 1.6fr) minmax(260px, 1fr); gap:28px; align-items:start;}
+  @media (max-width:860px){ .promo-accueil-grille{grid-template-columns:1fr;} }
+  .promo-cote{display:flex; flex-direction:column; gap:16px;}
+  .promo-villes{background:var(--yellow); color:#131313; border:3px solid #131313; box-shadow:var(--shadow); padding:16px 20px;}
+  .promo-villes-titre{display:block; margin:0 0 6px; font-family:'Archivo',sans-serif; font-weight:900; font-size:17px; text-transform:uppercase; letter-spacing:-0.01em;}
+  .promo-villes p{margin:0; font-size:14.5px; line-height:1.5; color:#131313;}
+  .promo-villes a{color:#131313; font-weight:800; text-decoration:underline;}
+  .promo-villes a:hover{color:var(--gold-bg);}
+  .promo-villes .promo-villes-lien{display:inline-block; margin-top:10px; font-weight:900; text-decoration:underline;}
+  .promo-compte{background:#FFFFFF; color:#131313; border:3px solid #131313; box-shadow:var(--shadow); padding:18px 20px;}
+  .promo-compte-titre{display:block; margin:0 0 10px; font-family:'Archivo',sans-serif; font-weight:900; font-size:17px; text-transform:uppercase;}
+  .promo-compte-ligne{display:flex; flex-wrap:wrap; gap:8px;}
+  .promo-compte-ligne input{flex:1 1 180px; min-width:0; font:inherit; font-size:15px; padding:9px 10px; border:2px solid #131313; background:#FFFFFF; color:#131313;}
+  .promo-compte .account-btn{font-family:'Archivo',sans-serif; font-size:15px; font-weight:800; line-height:1.2; padding:9px 16px; background:#131313; color:#FFFFFF; border:2px solid #131313; cursor:pointer; flex:none;}
+  .promo-compte .account-btn:not(:disabled):hover{background:var(--gold-bg); border-color:var(--gold-bg);}
+  .promo-compte .account-btn:disabled{opacity:.6; cursor:default;}
+  /* En sombre, une règle générale des survols jaunes force l'encre claire : le libellé du bouton
+     jaune devenait blanc sur blanc. */
+  html[data-theme="dark"] .promo-alertes .hero-cta:hover{color:var(--sur-clair);}
+  .promo-compte-note{margin:10px 0 0; font-size:13.5px; line-height:1.45; color:#555550;}
+  .promo-compte-note .promo-lien{color:var(--gold-bg); font-weight:700; text-decoration:underline;}
+  .promo-mes-dossiers{display:inline-block; margin-top:12px; font-weight:800; color:var(--gold-bg); text-decoration:underline;}
+
+  .footer-nav{
+    max-width:1280px; margin:0 auto 22px; padding:0 28px 22px;
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 20px;
+    border-bottom:1px solid var(--slate);
+  }
+  .footer-nav a{color:var(--paper); font-weight:700; text-decoration:none;}
+  .footer-nav a:hover{color:var(--yellow);}
+  .footer-nav-villes{display:inline-flex; flex-wrap:wrap; align-items:baseline; gap:8px 14px;}
+
+  /* Les listes écrites par le build (scripts/build-section-pages.js) : ce qu'un robot, ou un
+     navigateur sans JavaScript, lit dans le HTML. commun/dq.js les retire dès que les vraies
+     cartes sont affichées. */
+  .prerendu{font-size:14px; line-height:1.5; color:var(--ink); margin:6px 0 24px; max-width:900px;}
+  .prerendu ul{margin:0; padding-left:20px;}
+  .prerendu li{margin:0 0 6px;}
+  .prerendu .pr-meta{color:var(--slate);}
+  .prerendu .pr-note{font-size:12.5px; color:var(--slate); margin:10px 0 0;}
+  /* Ces quatre éléments étaient des <a role=button> ou des <span> sans adresse ; devenus de vrais
+     liens, le navigateur les soulignait. Leur survol garde ses propres règles, plus précises. */
+  .hero-cta, .legend-link, .bd-back, .footer-etmoi{text-decoration:none;}
+  /* « Villes : » prend la couleur des liens du pied de page : le gris hérité du footer tombait à
+     un contraste de 1,8:1 en thème sombre, où le pied de page est clair. */
+  .footer-nav-villes > span:first-child{color:var(--paper); font-weight:400;}
+
+  /* Anglais choisi : la page reste cachée le temps que commun/dq.js la traduise (script du
+     <head> de gabarit.html, qui la montre de toute façon après 1,5 s). Sans ça, un lecteur
+     anglophone voyait chaque page en français avant qu'elle ne bascule. */
+  html.dq-fr:not(.dq-pret) body{visibility:hidden;}
+
+  /* L'en-tête sur deux rangées, quand logo, onglets et boutons ne tiennent pas côte à côte
+     (commun/dq.js, majEnteteDeuxRangees, qui pose la classe) : logo et boutons en haut,
+     onglets dessous, alignés sur le logo. Sans ça, la rangée passait à la ligne toute seule et
+     les boutons tombaient seuls sous le logo, à gauche. La barre collante grandit : les cibles
+     de saut réservent plus de place sous elle. */
+  .entete-deux-rangees #dq-topbar header.top{row-gap:10px;}
+  .entete-deux-rangees #dq-topbar .header-ctrls{order:1; margin-left:auto;}
+  .entete-deux-rangees #dq-topbar nav.tabs{order:2; flex:1 1 100%; justify-content:flex-start;}
+  .entete-deux-rangees .view, .entete-deux-rangees [id^="sec-"]{scroll-margin-top:120px;}
+
+  /* Projets omnibus (25 sept. 2026) : pastille, avis dans la carte ouverte, liste des lois touchées. */
+  .omnibus-pill{background:var(--yellow); color:var(--sur-clair); border-color:var(--ink);}
+  .omnibus-avis{margin:0 0 12px; padding:10px 12px; border:2px solid var(--ink); background:var(--paper-2); font-size:14.5px; line-height:1.45;}
+  /* Omnibus : une tête par loi touchée, comme les annexes de DossierOntario. */
+  .volet-titre{margin:16px 0 4px; font-size:15px; line-height:1.35; font-weight:700;}
+  .volet-titre span{display:inline-block; font-family:'Archivo Narrow',sans-serif; text-transform:uppercase; letter-spacing:.04em; font-size:11px; background:var(--gold); color:#fff; padding:2px 6px; margin-right:6px; vertical-align:2px;}
+  .bill-lois{cursor:pointer; margin-top:12px; border:1px solid var(--line-soft); padding:12px 14px; background:var(--paper-2);}
+  .bill-lois:hover{border-color:var(--ink);}
+  /* Un + à gauche pour déplier la liste, un − une fois ouverte (25 sept. 2026). */
+  .bill-lois summary{list-style:none;}
+  .bill-lois summary::-webkit-details-marker{display:none;}
+  .bill-lois summary::before{content:"+"; display:inline-block; width:1.1em; font-size:15px; font-weight:800; color:var(--gold);}
+  .bill-lois[open] summary::before{content:"\2212";}
+  .bill-lois summary{cursor:pointer; font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:12.5px; text-transform:uppercase; letter-spacing:0.04em;}
+  .bill-lois ul{margin:8px 0 0; padding-left:20px; font-size:14px; line-height:1.45; columns:2 260px; column-gap:24px;}
+
+/* La ligne d'archives des projets de loi (commun/dq.js, renderArchivesNote). */
+.archives-note{margin:18px 0 0; font-size:15px; line-height:1.5; color:var(--ink);}
+.archives-note a{color:var(--ink); font-weight:800; text-decoration:underline; text-underline-offset:3px;}
+
+/* Promesses : une section par parti, celui qui forme le gouvernement en tête (renderPromises). */
+.prom-parti{margin-top:34px;}
+.prom-parti:first-child{margin-top:0;}
+.prom-parti-titre{display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:0 0 16px; padding-bottom:10px; border-bottom:3px solid var(--ink); font-family:'Archivo',sans-serif; font-size:24px; font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; color:var(--ink);}
+.prom-parti-puce{width:16px; height:16px; border:2px solid var(--ink); flex:none;}
+.prom-parti-n{margin-left:auto; font-size:12px; font-weight:800; letter-spacing:0.06em;}
+.prom-parti-role{font-size:11px; font-weight:800; letter-spacing:0.06em; padding:3px 8px; background:var(--ink); color:var(--card);}
+
+/* La page /regles : les règles de sources du site, une carte par règle. */
+.regles-liste{list-style:none; margin:28px 0 0; padding:0; display:grid; gap:16px;}
+.regle{border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow); padding:20px 24px;}
+.regle-titre{display:flex; align-items:baseline; gap:14px; margin:0 0 10px; font-family:'Archivo',sans-serif; font-size:21px; font-weight:900; line-height:1.2; letter-spacing:-0.01em; color:var(--ink);}
+.regle-no{flex:none; min-width:34px; padding:2px 8px; background:var(--ink); color:var(--card); font-size:17px; text-align:center;}
+.regle p{margin:0; font-size:15.5px; line-height:1.6; color:var(--ink); max-width:75ch;}
+.regles-suite{margin:26px 0 0; font-size:15px; line-height:1.6; color:var(--ink);}
+.regles-suite a{color:var(--ink); font-weight:800; text-decoration:underline; text-underline-offset:3px;}
+
+/* Promesses : les autres partis, repliés sous celui qui a le plus de sièges (un menu par parti). */
+.prom-parti-repli{margin-top:16px; border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow);}
+.prom-parti-repli > summary.prom-parti-titre{margin:0; padding:16px 20px; border-bottom:0; cursor:pointer; list-style:none; font-size:20px;}
+.prom-parti-repli > summary::-webkit-details-marker{display:none;}
+.prom-parti-repli > summary .prom-parti-n::after{content:" +"; font-size:18px;}
+.prom-parti-repli[open] > summary .prom-parti-n::after{content:" −";}
+.prom-parti-repli[open] > summary.prom-parti-titre{border-bottom:3px solid var(--ink); margin-bottom:16px;}
+.prom-parti-repli[open]{padding-bottom:4px;}
+.prom-parti-repli > .prom-card{margin-left:16px; margin-right:16px;}
+.prom-parti-repli > summary:focus-visible{outline:3px solid var(--ink); outline-offset:3px;}
+
+/* La page 404 (vue « introuvable ») : le faux vote et les liens. Du jaune, pas de blanc sur noir. */
+.p404-carte{margin:28px 0 0; border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow); padding:20px 24px;}
+.p404-surtitre{font-size:12px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink);}
+.p404-motion{margin:4px 0 16px; font-family:'Archivo',sans-serif; font-size:22px; font-weight:800; line-height:1.25; color:var(--ink);}
+.p404-decompte{display:flex; flex-wrap:wrap; gap:10px; margin:0; padding:0; list-style:none;}
+.p404-decompte li{flex:1 1 130px; border:3px solid var(--ink); padding:10px 14px; color:var(--ink);}
+.p404-decompte b{display:block; font-family:'Archivo',sans-serif; font-size:38px; font-weight:900; line-height:1;}
+.p404-decompte span{font-size:12px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase;}
+.p404-decompte .p404-contre{background:var(--yellow); border-color:#131313; color:#131313; flex-grow:2;}
+.p404-decompte .p404-contre b{font-size:58px;}
+.p404-verdict{margin:16px 0 0; font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink);}
+.p404-etapes{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 0; padding:0; list-style:none; font-size:12.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink);}
+.p404-etapes li{border:2px solid var(--ink); padding:4px 9px;}
+.p404-etapes .fait{background:var(--yellow); color:#131313; border-color:#131313;}
+.p404-etapes .rate{opacity:0.55; text-decoration:line-through;}
+.p404-blague{margin:14px 0 0; font-size:13px; line-height:1.5; color:var(--ink);}
+.p404-blague a{color:var(--ink); font-weight:800; text-decoration:underline; text-underline-offset:3px;}
+.p404-liens{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin:28px 0 0; padding:0; list-style:none;}
+.p404-liens a{display:block; border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow); padding:14px 16px; color:var(--ink); text-decoration:none; font-family:'Archivo',sans-serif; font-weight:900; font-size:17px; text-transform:uppercase;}
+.p404-liens a small{display:block; margin-top:5px; font-weight:500; font-size:13px; line-height:1.4; text-transform:none;}
+.p404-liens a:hover, .p404-liens a:focus-visible{background:var(--yellow); color:#131313;}
+
+/* FINANCES PUBLIQUES : le tableau de la bande bleue (renderFinances) et le bouton $ des fiches. */
+.finances-toolbar{grid-template-columns:minmax(0, 520px);}
+.fin-vide{border:3px dashed var(--card); padding:22px 24px; font-size:15px; line-height:1.5; color:var(--sur-fonce);}
+.fin-tete{margin:0 0 16px; font-family:'Archivo',sans-serif; font-size:22px; font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; color:var(--sur-fonce);}
+.fin-tete b{font-weight:900;}
+.fin-grille{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:18px; align-items:start;}
+.fin-bloc{background:var(--card); color:var(--ink); border:3px solid var(--ink); box-shadow:var(--shadow); padding:18px 20px;}
+.fin-bloc h3{margin:0 0 10px; font-family:'Archivo',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:0.01em; line-height:1.25; color:var(--ink);}
+.fin-tag{display:inline-block; margin-left:6px; padding:2px 7px; background:var(--yellow); color:#131313; border:2px solid #131313; font-size:10.5px; letter-spacing:0.05em; vertical-align:2px;}
+.fin-entite{margin:0 0 8px; font-size:13.5px; font-weight:700; color:var(--ink);}
+.fin-table{width:100%; border-collapse:collapse; font-size:14px;}
+.fin-table td{padding:6px 0; border-bottom:1px solid var(--line-soft, #E5E2DA); vertical-align:top; color:var(--ink);}
+.fin-table td:last-child{text-align:right; white-space:nowrap; padding-left:14px; font-variant-numeric:tabular-nums; font-weight:700;}
+.fin-table .fin-total td{font-weight:900; border-top:2px solid var(--ink); border-bottom:0;}
+.fin-table .fin-n1 td:first-child{padding-left:14px;}
+.fin-table .fin-n2 td:first-child{padding-left:28px; font-size:13px;}
+.fin-table .fin-n2 td:last-child{font-weight:500; font-size:13px;}
+.fin-table .fin-n0 td{font-weight:800;}
+.fin-petit{font-weight:500; font-size:12px;}
+.fin-note{margin:12px 0 0; font-size:12.5px; line-height:1.5; color:var(--ink);}
+.fin-note a{color:var(--ink); font-weight:800; text-decoration:underline; text-underline-offset:2px;}
+.fin-btn{flex:none; width:34px; height:34px; padding:0; border:2px solid var(--ink); background:var(--yellow); color:#131313; font-family:'Archivo',sans-serif; font-size:17px; font-weight:900; line-height:1; cursor:pointer;}
+.fin-btn:hover, .fin-btn:focus-visible{background:var(--ink); color:var(--card);}
+.m-top-row .fin-btn{margin-left:auto; margin-right:8px;}
+.dep-actions{display:flex; align-items:center; gap:8px;}
+.dep-row{grid-template-columns:1fr 280px 156px;}
+@media (max-width:760px){ .dep-row{grid-template-columns:1fr;} }
+#band-finances .section-head .sub{color:var(--sur-fonce); opacity:1;}
+/* La flèche « en haut » à côté du menu des finances publiques. */
+.finances-toolbar{grid-template-columns:minmax(0, 520px) auto; justify-content:start; align-items:stretch; gap:12px;}
+.fin-haut{width:54px; min-height:48px; padding:0; border:3px solid var(--ink); background:var(--card); color:var(--ink); box-shadow:var(--shadow); font-family:'Archivo',sans-serif; font-size:24px; font-weight:900; line-height:1; cursor:pointer;}
+.fin-haut:hover, .fin-haut:focus-visible{background:var(--yellow); color:#131313;}
+@media (max-width:760px){ .finances-toolbar{grid-template-columns:minmax(0, 1fr) auto;} }
+
+/* La capsule « Votes ↑ ↓ » : classe tout le monde par présence aux votes (setMinistresSort). */
+.tri-vote-rang{display:flex; align-items:center; flex-wrap:wrap; gap:14px;}
+.tri-vote-rang h2{margin:0;}
+.tri-vote{display:inline-flex; align-items:stretch; border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow); vertical-align:middle;}
+.tri-vote-lbl{display:flex; align-items:center; padding:0 12px; font-family:'Archivo',sans-serif; font-size:12px; font-weight:900; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink);}
+.tri-vote-btn{width:38px; height:34px; padding:0; border:0; border-left:3px solid var(--ink); background:var(--card); color:var(--ink); font-family:'Archivo',sans-serif; font-size:19px; font-weight:900; line-height:1; cursor:pointer;}
+.tri-vote-btn:hover, .tri-vote-btn:focus-visible{background:var(--yellow); color:#131313;}
+.tri-vote-btn.on{background:var(--yellow); color:#131313;}
+#combinedTitle{display:flex; align-items:center; flex-wrap:wrap; gap:14px;}
+#ministresTitle, #combinedTitle{scroll-margin-top:90px;}
+.tri-vote-avis{flex:1 1 100%; border-left:6px solid var(--yellow); background:var(--card); padding:10px 14px; font-family:'Archivo',sans-serif; font-size:14px; font-weight:500; line-height:1.5; text-transform:none; letter-spacing:0; color:var(--ink);}
+
+/* Finances publiques : « le cabinet au complet » et « d'une année à l'autre », sous un rapport. */
+.fin-evol{margin-top:16px; padding-top:14px; border-top:3px solid var(--ink);}
+.fin-evol h4{margin:0 0 8px; font-family:'Archivo',sans-serif; font-size:13px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink);}
+.fin-evol-defile{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+.fin-table-evol{font-size:13px; min-width:100%;}
+.fin-table-evol th{padding:5px 0 5px 12px; text-align:right; font-size:11.5px; font-weight:900; white-space:nowrap; border-bottom:2px solid var(--ink); color:var(--ink);}
+.fin-table-evol td{padding:5px 0; font-weight:500;}
+.fin-table-evol td:first-child{font-weight:700; min-width:150px;}
+.fin-table-evol td:not(:first-child){text-align:right; white-space:nowrap; padding-left:12px; font-variant-numeric:tabular-nums; font-weight:500;}
+.fin-table-evol .fin-somme{font-weight:900; background:var(--yellow); color:#131313; padding-right:6px;}
+.fin-table-evol .fin-rien{opacity:0.6;}
+.fin-grille:has(.fin-evol){grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));}
+.fin-bloc-large{grid-column:1 / -1; display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.25fr); gap:28px; align-items:start;}
+.fin-col{min-width:0;}
+.fin-col-plus .fin-evol:first-child{margin-top:0; padding-top:0; border-top:0;}
+.fin-grille:has(.fin-evol){grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
+.fin-table-evol td:first-child{min-width:120px;}
+@media (max-width:900px){ .fin-bloc-large{grid-template-columns:minmax(0, 1fr); gap:0;} .fin-col-plus .fin-evol:first-child{margin-top:16px; padding-top:14px; border-top:3px solid var(--ink);} }
+
+/* Finances publiques : la légende « Comment lire ce tableau », sous les blocs. */
+.fin-legende{margin-top:18px; background:var(--card); color:var(--ink); border:3px solid var(--ink); box-shadow:var(--shadow); padding:16px 20px;}
+.fin-legende summary{cursor:pointer; font-family:'Archivo',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:0.01em; color:var(--ink);}
+.fin-legende dl{margin:12px 0 0; display:grid; grid-template-columns:minmax(150px, 220px) minmax(0, 1fr); gap:10px 20px;}
+.fin-legende dt{font-size:13.5px; font-weight:800; line-height:1.4; color:var(--ink);}
+.fin-legende dd{margin:0; font-size:13.5px; line-height:1.55; color:var(--ink);}
+@media (max-width:700px){ .fin-legende dl{grid-template-columns:minmax(0, 1fr); gap:4px 0;} .fin-legende dd{margin-bottom:10px;} }
+
+/* Le retour de la recherche des ministres et député·e·s, sous la boîte. */
+.search-retour{margin-top:10px; padding:10px 14px; background:var(--card); color:var(--ink); border:3px solid var(--ink); font-size:14px; line-height:1.6;}
+.search-retour a{color:var(--ink); font-weight:700;}
+.search-retour-nom{margin:2px 4px; padding:2px 10px; background:#FFD24D; color:#131313; border:2px solid #131313; font:inherit; font-weight:700; cursor:pointer;}
+.fiche-trouvee{outline:4px solid #FFD24D; outline-offset:2px;}
+.search-retour-source{display:block; margin-top:6px; font-size:12px; opacity:.8;}
+.search-retour-vide{display:inline-block; background:transparent; border-style:dashed; cursor:default;}
+
+/* Sur téléphone, la bande jaune de la dissolution remplissait tout le premier écran de l’accueil :
+   on ne voyait pas à quoi sert le site (Martin, 16 oct. 2026 : « tu peux l’enlever »). */
+@media (max-width:640px){ #band-dissolution{display:none;} }
+
+/* Le bouton café sous « Partager », sur les projets de la 44e législature (boutonCafe, commun/dq.js). Bleu poudre. */
+.bill-cafe-row{display:flex; justify-content:flex-end; margin-top:8px;}
+.bill-cafe-btn{display:inline-block; padding:6px 14px; background:#B0D4E8; color:#131313; border:2px solid #131313; box-shadow:3px 3px 0 #131313; font-family:'Archivo Narrow',sans-serif; font-size:13px; font-weight:700; text-decoration:none;}
+.bill-cafe-btn:hover{background:#FFD24D;}
+
+/* Mon dossier : la carte « Ce qui s'en vient » (outils pour abonné·e·s, annoncés d'avance). */
+.md-avenir-liste{margin:10px 0 0; padding-left:20px; display:grid; gap:8px; line-height:1.5;}
+.md-a-venir{border-style:dashed;}
+/* Page /abonnement (21 oct. 2026) : les outils avec leur état, et les trois forfaits. */
+.ab-outils{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:10px; line-height:1.5;}
+.ab-outils li{display:flex; gap:12px; align-items:flex-start;}
+.ab-etat{flex:none; font-family:'Archivo',sans-serif; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border:2px solid var(--ink); margin-top:2px; min-width:86px; text-align:center;}
+.ab-bientot{background:transparent; border-style:dashed;}
+.ab-dispo{background:var(--yellow); color:var(--sur-clair);}
+.ab-forfaits{list-style:none; margin:12px 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px;}
+.ab-forfaits li{border:2px solid var(--ink); padding:12px 14px; display:grid; gap:4px;}
+.ab-montant{font-family:'Archivo',sans-serif; font-size:26px; font-weight:900;}
+
+/* Qui a voté quoi, sous une loi sanctionnée (scrapers/build-frontend-data.js, caseVotes). */
+.bill-votes{margin-top:12px;}
+.bill-votes summary{cursor:pointer; font-weight:700;}
+.bill-votes-note{font-size:13px; line-height:1.5; margin:8px 0;}
+.bill-votes-grille{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px;}
+.bill-votes-col ul{list-style:none; margin:6px 0 0; padding:0; font-size:13px; line-height:1.6; max-height:320px; overflow:auto;}
+.bill-votes-col span{opacity:.7;}
+.bill-votes-ancien{opacity:.55;}
+/* Mémoires déposés en commission (caseMemoires ; la liste vient du serveur pour les abonné·e·s). */
+.bill-memoires-liste{list-style:none; margin:6px 0 0; padding:0; font-size:13px; line-height:1.6; max-height:320px; overflow:auto;}
+.bill-memoires-liste span{opacity:.7;}
+.md-memoires{margin:8px 0;}
+.md-memoires summary{cursor:pointer;}
+.bill-votes-mail{text-decoration:none; font-weight:700;}
+@media (max-width:640px){ .bill-votes-grille{grid-template-columns:minmax(0, 1fr);} }
+
+/* La case des votes prend l'allure de « Lois et règlements touchés » : un rectangle à part, un + / − (Martin, 18 oct. 2026). */
+.bill-votes{cursor:pointer; margin-top:12px; border:1px solid var(--line-soft); padding:12px 14px; background:var(--paper-2);}
+.bill-votes:hover{border-color:var(--ink);}
+.bill-votes summary{list-style:none; cursor:pointer; font-family:'Archivo Narrow',sans-serif; font-weight:700; font-size:12.5px; text-transform:uppercase; letter-spacing:0.04em;}
+.bill-votes summary::-webkit-details-marker{display:none;}
+.bill-votes summary::before{content:"+"; display:inline-block; width:1.1em; font-size:15px; font-weight:800; color:var(--gold);}
+.bill-votes[open] summary::before{content:"\2212";}
+
+/* Le ⧉ qui copie l'adresse, à côté du ✉ (case des votes). */
+.bill-votes-copie{background:none; border:0; padding:0 2px; margin:0; font:inherit; font-weight:700; cursor:pointer; color:inherit;}
+.bill-votes-copie:hover{color:var(--gold, #b8860b);}
+
+/* Mon dossier : « Ce qui vous préoccupe » (mdPreoccupations, commun/dq.js). */
+.md-preoc-texte{width:100%; box-sizing:border-box; margin:6px 0; padding:10px; border:2px solid var(--ink); font:inherit; background:var(--card); color:var(--ink);}
+.md-preoc-envoi{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:12px;}
+.md-preoc-table{width:100%; border-collapse:collapse; margin:8px 0;}
+.md-preoc-table td{padding:6px 4px; border-bottom:1px solid var(--line-soft); vertical-align:middle;}
+.md-preoc-barre{width:40%;}
+.md-preoc-barre span{display:block; height:12px; background:#FFD24D; border:1px solid var(--ink);}
+.md-preoc-pc{width:4em; text-align:right; font-weight:700;}
+
+.md-preoc-alerte{color:var(--ink); background:#FFD24D; padding:6px 10px; border:2px solid var(--ink);}
+
+/* Mon dossier : compteur de mots ; Lexique : les messages côté admin (renderAdminPreoccupations). */
+.md-preoc-mots{margin-left:auto;}
+.md-preoc-trop{color:#b00020; font-weight:700;}
+.admin-preoc-defile{max-height:520px; overflow:auto; border:1px solid var(--line-soft);}
+.admin-preoc{width:100%; border-collapse:collapse; font-size:13.5px;}
+.admin-preoc th, .admin-preoc td{padding:6px 8px; border-bottom:1px solid var(--line-soft); text-align:left; vertical-align:top;}
+.admin-preoc td:nth-child(2){white-space:pre-wrap; max-width:520px;}
+.admin-preoc-spam td{opacity:.55;}
+
+.admin-preoc-actions{white-space:nowrap;}
+.admin-preoc-ok{font-weight:700; color:#1d7a3a;}
+
+/* Mon dossier : l'export des données (mdExport). */
+.md-export-boutons{display:grid; grid-template-columns:auto 1fr; gap:8px 12px; align-items:center;}
+
+/* Mon dossier : les alertes sur mesure (mdAlertes). */
+.md-sous-titre{font-size:14px; font-weight:700; margin:16px 0 6px;}
+.md-mots{list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:6px;}
+.md-mot{display:inline-flex; align-items:center; gap:6px; border:1px solid currentColor; padding:2px 4px 2px 10px; font-size:14px;}
+.md-mot .md-bouton-doux{padding:0 8px; min-width:0;}
+
+.md-dispo{display:inline-block; font-size:11px; font-weight:800; text-transform:uppercase; padding:0 6px; background:#FFD24D; color:#131313; border:1px solid #131313;}
+
+/* Flux RSS par ministère : une ligne par ministère, le + en ajoute une (mdFluxAjouterMinistere). */
+.md-flux-min{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px;}
+.md-flux-min select{max-width:100%;}
+.md-flux-min input{flex:1 1 220px; min-width:0;}
+.md-flux-plus{font-weight:800; min-width:2em;}
+
+/* Redéploiement du 21 oct. 2026 : les prix Stripe des trois forfaits (variables Vercel). */
+
+/* Les cases des forfaits, cliquables : jaunes au survol et une fois choisies (abChoisirForfait). */
+.ab-forfait{cursor:pointer; transition:background .12s;}
+.ab-forfait:hover, .ab-forfait:focus-visible, .ab-forfait-choisi{background:#FFD24D; color:#131313; outline:none;}
+.ab-forfait-choisi{box-shadow:4px 4px 0 #131313;}
+/* Codes cadeaux (21 oct. 2026) : la case du code et la liste des codes achetés, dans Mon dossier. */
+.ab-code-champ{font-family:monospace; text-transform:uppercase; letter-spacing:1px; min-width:16ch;}
+.ab-mes-codes{margin:4px 0 8px; padding-left:18px;}
+.ab-mes-codes code{font-weight:bold; letter-spacing:1px;}
+
+/* « Offrir un abonnement » discret mais visuel, sous « Votre compte » de Mon dossier (abonné·e·s). */
+.md-cadeau-discret{margin-top:10px; padding:10px 14px; border:2px dashed var(--ink); background:var(--card); font-size:13.5px; display:block;}
+.md-cadeau-ligne{margin-top:6px; padding-top:6px; border-top:1px dashed var(--ink);}
+.md-cadeau-titre{font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:.02em; margin-right:8px;}
+.md-cadeau-puce{background:var(--card); border:2px solid var(--ink); box-shadow:2px 2px 0 var(--ink); padding:3px 10px; margin:4px 6px 4px 0; font:inherit; font-size:13px; font-weight:700; cursor:pointer; color:var(--ink);}
+.md-cadeau-puce:hover, .md-cadeau-puce.ab-forfait-choisi{background:#FFD24D; color:#131313;}
+
+/* Les deux lignes alignées en colonnes : titre | les 3 boîtes | le texte. Sur téléphone, l'une sous l'autre. */
+.md-cadeau-discret > div[data-i18n]{display:grid; grid-template-columns:minmax(220px, 280px) auto 1fr; align-items:center; gap:4px 14px;}
+.md-cadeau-puces{display:grid; grid-template-columns:repeat(3, 120px); gap:8px;}
+.md-cadeau-puces .md-cadeau-puce{margin:0; text-align:center;}
+@media (max-width:760px){ .md-cadeau-discret > div[data-i18n]{grid-template-columns:1fr;} .md-cadeau-puces{grid-template-columns:repeat(3, minmax(0, 1fr));} }
+
+/* Combien de codes d'un coup, après « 1 an » (Martin, 21 oct. 2026). */
+.md-cadeau-puces{grid-template-columns:repeat(3, 120px) auto;}
+.md-cadeau-qte{font:inherit; font-size:13px; border:1px solid var(--ink); background:var(--bg, #fff); color:inherit; padding:2px 4px; cursor:pointer;}
+@media (max-width:760px){ .md-cadeau-puces{grid-template-columns:repeat(3, minmax(0, 1fr)) auto;} }
+
+.md-cadeau-discret > div[data-i18n]{grid-template-columns:minmax(220px, 360px) auto 1fr;}
+
+.md-cadeau-qte{width:64px; text-align:center;}
+
+/* Pas connecté : « Identifiez-vous d'abord » dans chaque case de forfait. */
+.ab-sans-compte .ab-forfait::after{content:attr(data-avis); display:block; margin-top:6px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--muted, #5B6570);}
+
+/* « Vous avez reçu un code? » surligné en jaune. */
+.md-lien-surligne{background:#FFD24D; color:#131313; padding:1px 5px; text-decoration:none;}
+.md-lien-surligne:hover{background:#131313; color:#FFD24D;}
+
+/* Lisibilité : les paragraphes des cartes respirent, sur téléphone surtout. */
+.md-carte p{line-height:1.5;}
+.md-lien-surligne{display:inline-block; margin-top:4px;}
+
+/* Téléphone : la pastille au-dessus du texte, le texte sur toute la largeur. */
+@media (max-width:600px){ .ab-outils li{flex-direction:column; gap:4px;} .ab-outils .ab-etat{min-width:0;} }
+
+/* « Selon les abonnements » : la pastille pointillée, un peu plus large que « Bientôt ». */
+.ab-selon{min-width:0; white-space:nowrap;}
+
+/* Partager la fiche d'un·e élu·e (22 oct. 2026), à gauche du bouton $. */
+.part-elu{position:relative; display:inline-flex; flex:none;}
+.part-btn{width:34px; height:34px; padding:0; border:2px solid var(--ink); background:var(--card); color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; justify-content:center;}
+.part-btn:hover, .part-btn:focus-visible, .part-btn[aria-expanded="true"]{background:var(--ink); color:var(--card);}
+.part-menu{position:absolute; top:calc(100% + 4px); right:0; z-index:30; display:flex; flex-direction:column; min-width:140px; background:var(--card); border:2px solid var(--ink); box-shadow:3px 3px 0 var(--ink);}
+.part-menu a, .part-menu button{display:block; padding:8px 12px; font:inherit; font-size:13.5px; font-weight:700; color:var(--ink); text-decoration:none; background:none; border:0; text-align:left; cursor:pointer;}
+.part-menu a:hover, .part-menu button:hover{background:var(--yellow); color:#131313;}
+
+/* Ministres d'un parti disparu : le sprite d'arcade remplace la pastille (22 oct. 2026). */
+.parti-arcade{background:#131313 !important; color:inherit !important; border:2px solid #131313 !important; padding:1px 3px !important; display:inline-flex; align-items:center; cursor:help;}
+.parti-arcade svg{display:block;}
+
+/* Le ✕ qui efface une boîte de recherche (22 oct. 2026), visible seulement quand il y a du texte. */
+.bs-effacer{flex:none; width:48px; border:0; border-left:3px solid var(--ink); background:var(--card); color:var(--ink); font-size:20px; font-weight:900; line-height:1; cursor:pointer;}
+.bs-effacer:hover, .bs-effacer:focus-visible{background:var(--yellow); color:#131313;}
+.bs-effacer[hidden]{display:none;}
+
+/* Le « W » vers la page Wikipédia, à côté du $ (23 oct. 2026). */
+.wiki-btn{flex:none; width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; border:2px solid var(--ink); background:var(--card); color:var(--ink); font-family:Georgia,'Times New Roman',serif; font-size:18px; font-weight:700; line-height:1; text-decoration:none;}
+.wiki-btn:hover, .wiki-btn:focus-visible{background:var(--ink); color:var(--card);}
+/* Quatre petits boutons dans l'en-tête de la carte : plus serrés, « + Suivre » sur une ligne. */
+.m-top-row{gap:5px;}
+.m-top-row .part-btn, .m-top-row .wiki-btn, .m-top-row .fin-btn{width:30px; height:30px;}
+.m-top-row .follow-btn{white-space:nowrap;}
+/* Rangées des élu·e·s : quatre boutons (partage, W, $, Suivre) tiennent sur une ligne (23 oct. 2026). */
+.dep-row, .dep-table-head{grid-template-columns:1fr 280px 224px;}
+.dep-actions{gap:5px; justify-content:flex-end;}
+.dep-actions .part-btn, .dep-actions .wiki-btn, .dep-actions .fin-btn{width:30px; height:30px;}
+.dep-actions .follow-btn{white-space:nowrap;}
+@media (max-width:760px){ .dep-row{grid-template-columns:1fr;} .dep-actions{justify-content:flex-start;} }
+
+/* Une pastille par législature sur les cartes de ministres et d'élu·e·s (30 oct. 2026). */
+.leg-ruban{display:flex; gap:8px; align-items:stretch;}
+.leg-bloc{flex:1; min-width:0; border:2px solid var(--ink); padding:6px 9px; font-size:12.5px; line-height:1.45; font-weight:600;}
+.leg-bloc.leg-passe{border-color:var(--line-soft); color:var(--slate);}
+.leg-bloc.leg-cache{display:none;}
+.leg-num{font-family:'Archivo',sans-serif; font-weight:900; font-size:14px;}
+.leg-fleche{flex:none; border:2px solid var(--ink); background:var(--paper); font-weight:900; padding:0 7px; cursor:pointer;}
+.leg-fleche:hover{background:var(--yellow);}
+.leg-titre{font-size:12px; margin-bottom:4px;}
+.leg-pres{white-space:nowrap; margin:2px 0;}
+/* Sans rectangle (Martin, 30 oct. 2026) : un simple filet sépare les législatures. */
+.leg-bloc, .leg-bloc.leg-passe{border:0; padding:0 0 0 10px; border-left:2px solid var(--ink);}
+.leg-bloc.leg-passe{border-left-color:var(--line-soft);}
+.leg-num{font-size:13px;}
+/* Liste des député·e·s : une législature par segment, sur une ligne. */
+.leg-ligne-passe{color:var(--slate);}
+.leg-ligne-sep{color:var(--line-soft); font-weight:400;}
+.leg-seg.leg-cache{display:none;}
+.leg-seg.leg-premier > .leg-ligne-sep{display:none;}
+.leg-fleche-ligne{padding:0 5px; font-size:11px; line-height:1.3; margin-left:4px;}
+.leg-ruban.leg-ruban-ligne{display:inline; gap:0;}
+
+/* Les votes nominaux dans la carte d'un projet de loi (caseVotes, 30 oct. 2026) : les cartes de /votes, déjà ouvertes. */
+.bill-votes .bill-vote-card{margin:12px 0 0; cursor:default;}
+.bill-votes .bill-vote-card .vc-head{cursor:default;}
+.bill-votes .bill-vote-card .vc-nrow .bill-votes-mail, .bill-votes .bill-vote-card .vc-nrow .bill-votes-copie{margin-left:4px;}
+/* Les étapes de la légende des projets mènent à leur terme du Lexique. */
+a.bstep-lien{color:inherit; text-decoration:none;}
+a.bstep-lien:hover{background:var(--yellow); color:var(--sur-clair);}
+/* La page /archives : les liens d'une législature. */
+.archives-liens{line-height:1.9;}
+.archives-liens a, #archivesListe a, .regle-titre a{color:var(--ink); font-weight:800; text-decoration:underline; text-underline-offset:3px;}
+/* Les ancres du Lexique (/lexique#etapes) : sous l'en-tête collant, pas dessous. */
+.lexique-item[id]{scroll-margin-top:120px;}
+.leg-lien{color:inherit; text-decoration:underline; text-underline-offset:2px;}
+.leg-lien:hover{color:var(--gold);}
+/* « Réservé aux abonné·e·s » en jaune sur la case des mémoires (Martin, 30 oct. 2026). */
+.pastille-abonnes{background:#FFD24D; color:#131313; padding:1px 6px; font-weight:700; white-space:nowrap;}
+/* Pas de bouton café pour les abonné·e·s (Martin, 2 nov. 2026). */
+body.abonne .bill-cafe-row{display:none;}
+/* Bouton café animé (Martin, 3 nov. 2026) : icône croissant + tasse brune, bulle de 5 points. */
+.bill-cafe-btn{display:inline-flex; align-items:center; gap:8px; padding:5px 10px 5px 8px; --duree:8s;}
+.bill-cafe-btn .icone{flex:none; mix-blend-mode:multiply;}
+.bill-cafe-btn .bulle{position:relative; width:118px; height:22px; background:#fff; border:2px solid #131313; border-radius:11px; overflow:hidden;}
+.bill-cafe-btn .pt{position:absolute; top:7px; width:7px; height:7px; border-radius:50%; background:#F2B705;
+    animation:var(--a) var(--duree) linear 1 both;}
+.bill-cafe-btn .pt:nth-child(1){left:12px; --a:mange1} .bill-cafe-btn .pt:nth-child(2){left:33px; --a:mange2} .bill-cafe-btn .pt:nth-child(3){left:54px; --a:mange3}
+.bill-cafe-btn .pt:nth-child(4){left:75px; --a:mange4} .bill-cafe-btn .pt:nth-child(5){left:96px; --a:mange5}
+.bill-cafe-btn .passant{position:absolute; top:2px; left:0; transform:translateX(-26px); animation:traverse var(--duree) linear 1 both; animation-delay:calc(var(--suite, 0) * .75s);}
+
+/* Couvercle qui s'ouvre et se ferme en mangeant */
+.bill-cafe-btn .couvercle{transform-origin:3px 6px; animation:croque .22s steps(2) infinite;}
+@keyframes croque{50%{transform:rotate(-28deg);}}
+
+/* Cycle : la tasse traverse pendant les premiers 18 %, puis les points reviennent un à un. */
+@keyframes traverse{0%{transform:translateX(-26px)} 36%,100%{transform:translateX(124px)}}
+@keyframes mange1{0%,9.1%{background:#F2B705; transform:scale(1)} 10.6%{transform:scale(.6)} 12.1%,70%{background:#6B4A3A; transform:scale(1)} 73%,100%{background:#F2B705}}
+@keyframes mange2{0%,14.2%{background:#F2B705; transform:scale(1)} 15.7%{transform:scale(.6)} 17.2%,74%{background:#6B4A3A; transform:scale(1)} 77%,100%{background:#F2B705}}
+@keyframes mange3{0%,19.2%{background:#F2B705; transform:scale(1)} 20.7%{transform:scale(.6)} 22.2%,78%{background:#6B4A3A; transform:scale(1)} 81%,100%{background:#F2B705}}
+@keyframes mange4{0%,24.2%{background:#F2B705; transform:scale(1)} 25.7%{transform:scale(.6)} 27.2%,82%{background:#6B4A3A; transform:scale(1)} 85%,100%{background:#F2B705}}
+@keyframes mange5{0%,29.3%{background:#F2B705; transform:scale(1)} 30.8%{transform:scale(.6)} 32.3%,86%{background:#6B4A3A; transform:scale(1)} 89%,100%{background:#F2B705}}
+
+@media (prefers-reduced-motion: reduce){ .bill-cafe-btn .pt, .bill-cafe-btn .passant, .bill-cafe-btn .couvercle{animation:none;} .bill-cafe-btn .passant{display:none;} }
+/* Bouton café de la même grosseur que la case « Dernière activité » (Martin, 3 nov. 2026). */
+.bill-cafe-btn{padding:12px 16px; font-size:14px; gap:12px; width:100%; box-sizing:border-box;}
+.bill-cafe-btn .bulle{margin-left:auto;}
+/* « Partager » centré dans la colonne (Martin, 3 nov. 2026). */
+.bill-share-row{justify-content:center;}
+/* Pas de mot « Partager » : les icônes parlent d'elles-mêmes (Martin, 3 nov. 2026). */
+.bill-share-row .bill-share-label{display:none;}
+/* Boutons de partage aux couleurs des réseaux (Martin, 3 nov. 2026). */
+.bill-share-btn[data-reseau]{color:#fff; display:inline-flex; align-items:center; justify-content:center;}
+.bill-share-btn[data-reseau="x"]{background:#000;}
+.bill-share-btn[data-reseau="fb"]{background:#1877F2;}
+.bill-share-btn[data-reseau="li"]{background:#0A66C2;}
+.bill-share-btn[data-reseau="reddit"]{background:#FF4500;}
+.bill-share-btn[data-reseau]:hover{filter:brightness(1.15); color:#fff;}
+.bill-share-btn[data-reseau="threads"]{background:#000;}
+.bill-share-btn[data-reseau="bsky"]{background:#1185FE;}
+/* L'icône du bouton café flippe toutes les 5 s (Martin, 3 nov. 2026). */
+.bill-cafe-btn .icone{transition:transform .3s ease-in; object-fit:contain;}
+.bill-cafe-btn .icone.tourne{transform:rotateY(90deg);}
+/* Icône du bouton café un peu plus grosse (Martin, 3 nov. 2026), bouton toujours à 52 px de haut. */
+.bill-cafe-btn .icone{width:34px; height:34px;}
+.bill-cafe-btn{padding-top:7px; padding-bottom:7px;}
+/* Bouton café souple (Martin, 3 nov. 2026) : sur téléphone ou avec le zoom A+, le texte passe à la ligne
+   et la bulle descend sous le texte au lieu de pousser la colonne hors de la carte. */
+.bill-cafe-btn{flex-wrap:wrap; row-gap:6px; min-width:0;}
+.bill-cafe-row{min-width:0;}
+.bill-open-side, .bill-open-grid > *{min-width:0;}
+/* Très étroit (téléphone + zoom A+) : les boutons de l'en-tête et le logo passent à la ligne plutôt que de déborder. */
+html.etroit .header-ctrls{flex-wrap:wrap; justify-content:flex-end; row-gap:6px; max-width:100%;}
+html.etroit .brand{flex-wrap:wrap; row-gap:6px; max-width:100%;}
+/* Sur téléphone, icône, texte et bulle du bouton café centrés (Martin, 3 nov. 2026). */
+@media (max-width:760px){ .bill-cafe-btn{justify-content:center; text-align:center;} .bill-cafe-btn .bulle{margin-left:0;} }
+html.etroit .bill-cafe-btn{justify-content:center; text-align:center;}
+html.etroit .bill-cafe-btn .bulle{margin-left:0;}
+/* La pastille jaune peut passer à la ligne au lieu de déborder de sa case (téléphone + zoom A+). */
+.pastille-abonnes{white-space:normal; display:inline-block; max-width:100%; box-sizing:border-box;}
+
+/* Page d'un ministre (/ministres/<slug>, scripts/build-minister-pages.js). Texte FR et EN dans la
+   page, basculé par body.lang-en. */
+body:not(.lang-en) .en-txt, body.lang-en .fr-txt{display:none;}
+.min-hero{display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap;}
+.min-tete{flex:1 1 280px; min-width:0;}
+.min-tete .follow-btn{margin-top:12px;}
+.min-photo{margin:0; flex:0 0 200px; max-width:100%;}
+.min-photo img{display:block; width:200px; max-width:100%; height:auto; border:3px solid var(--ink);}
+.min-photo figcaption{font-size:11.5px; color:var(--slate); margin-top:6px; line-height:1.35; overflow-wrap:anywhere;}
+.min-fiche{max-width:820px; overflow-wrap:break-word;}
+.min-fiche h2{margin:28px 0 10px; font-weight:800; text-transform:uppercase; font-size:18px;}
+.min-fiche h2:first-child{margin-top:0;}
+.min-liste{margin:0; padding-left:20px; line-height:1.5;}
+.min-liste li{margin-bottom:6px;}
+.min-faits{margin-top:14px; display:flex; flex-direction:column; gap:6px;}
+.min-faits .m-row{display:flex; justify-content:flex-start; gap:12px; flex-wrap:wrap;}
+.min-faits .m-label{min-width:150px;}
+.min-source{margin-top:30px; font-size:12px; color:var(--slate);}
+.min-source a{color:inherit;}
+.m-name a{color:inherit; text-decoration:none;}
+.m-name a:hover{text-decoration:none;}
+/* Promesses sur les fiches de ministres : la citation, puis la source en petit dessous. */
+.min-liste .min-promesse{margin-bottom:14px;}
+.min-promesse q{quotes:"« " " »";}
+.min-prom-source{display:block; margin-top:2px; font-size:13.5px; color:var(--slate);}
+.min-prom-source a{color:inherit; padding:0 2px; text-decoration:underline;}
+.min-prom-source a:hover{color:#131313; background:#FFE88A; text-decoration:none;}
+/* Réseaux sociaux sur les fiches de ministres (relevés sur le site du parti). */
+.min-colphoto{flex:0 0 200px; max-width:100%;}
+.min-reseaux{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 0;}
+.min-reseaux a{display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border:2px solid var(--ink); color:var(--ink); background:var(--card); text-decoration:none;}
+.min-reseaux a:hover{background:#FFE88A; color:#131313;}
+/* Nom du ministre sur les cartes : souligné jaune comme le fil d'Ariane, il mène à sa fiche (Martin, 4 nov. 2026). */
+.m-name a{color:inherit; text-decoration:none; border-bottom:4px solid #FFD24D;}
+.m-name a:hover{color:var(--gold); text-decoration:none; border-bottom-color:var(--gold);}
+.dep-name a{color:inherit; text-decoration:none; border-bottom:4px solid #FFD24D;}
+.dep-name a:hover{color:var(--gold); text-decoration:none; border-bottom-color:var(--gold);}
+/* Fiche sans vote encore : pastille bleue « À venir » (ni vert ni jaune, qui jugeraient). */
+.presence-avenir{background:var(--gold); color:#FFFFFF; border-color:var(--ink); text-transform:uppercase; font-size:13px;}
+/* Fiches de ministres : barre jaune devant chaque titre de section, pour donner du relief (Martin, 4 nov. 2026). */
+.min-fiche h2{border-left:8px solid #FFD24D; padding-left:10px; margin-top:28px;}
+/* Idées de mots-clés cliquables dans Mon dossier. */
+.md-exemples{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:8px 0 0; font-size:13.5px;}
+.md-exemples span{color:var(--slate); margin-right:2px;}
+.md-exemple{border:2px solid var(--ink); background:var(--card); color:var(--ink); padding:2px 9px; font:inherit; font-weight:700; cursor:pointer;}
+.md-exemple:hover{background:#FFE88A; color:#131313;}
+
+/* REFONTE de /mon-dossier (prototype, 3 nov. 2026) : en-tête + connexion compacte, compteurs,
+   « Pour commencer », tuiles des outils, bande « Nous écrire ». Même grammaire : bordures noires,
+   ombres décalées, jaune, bleu var(--gold). */
+#view-mondossier .mdr-tete{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:18px 32px; padding:28px 0 22px;}
+#view-mondossier .mdr-titre{margin:0; flex:1 1 420px; min-width:0;}
+.mdr-compte{flex:0 1 420px; min-width:0; width:100%;}
+.mdr-compte .md-carte{padding:14px 16px;}
+.mdr-connexion{border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow-sm); padding:14px 16px;}
+.mdr-connexion-lib{font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:13px; letter-spacing:.05em;}
+.mdr-connexion .md-ligne{margin-top:8px;}
+.mdr-connexion .md-ligne input{flex:1 1 180px; min-width:0; font:inherit; font-size:15px; padding:9px 10px; border:2px solid var(--ink); background:var(--card); color:var(--ink);}
+.mdr-connexion .md-note{margin:8px 0 0;}
+.mdr-btn-jaune{font-family:'Archivo',sans-serif; font-size:15px; font-weight:900; padding:9px 16px; background:var(--yellow); color:var(--sur-clair, #131313); border:2px solid var(--ink); box-shadow:3px 3px 0 var(--ink); cursor:pointer;}
+.mdr-btn-jaune:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink);}
+.mdr-btn-jaune:active{transform:translate(2px,2px); box-shadow:1px 1px 0 var(--ink);}
+.mdr-btn-jaune:disabled{opacity:.6; cursor:default; transform:none;}
+
+.mdr-compteurs{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px;}
+.mdr-compteur{border:3px solid var(--ink); box-shadow:var(--shadow-sm); padding:14px 16px; display:flex; flex-direction:column; gap:2px; color:var(--ink);}
+.mdr-bleu{background:color-mix(in srgb, #0E4FC1 16%, var(--card));}
+.mdr-ocre{background:color-mix(in srgb, #D99A1E 22%, var(--card));}
+.mdr-vert{background:color-mix(in srgb, #0B8A4B 18%, var(--card));}
+.mdr-nb{font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(34px,5vw,48px); line-height:1;}
+.mdr-lib{font-family:'Archivo',sans-serif; font-weight:800; font-size:13px; text-transform:uppercase; letter-spacing:.04em;}
+.mdr-gratuit{margin:14px 0 28px; font-size:14.5px; color:var(--slate);}
+.mdr-gratuit b{color:var(--ink);}
+
+.mdr-h2{font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; font-size:clamp(18px,2.2vw,24px); margin:0 0 12px;}
+.mdr-cartes{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px;}
+.mdr-carte{position:relative; border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow-sm); padding:16px; display:flex; flex-direction:column; gap:4px; transition:transform .1s, box-shadow .1s;}
+.mdr-carte:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--ink);}
+.mdr-num{font-family:'Archivo',sans-serif; font-weight:900; font-size:22px; color:var(--gold);}
+.mdr-carte-titre{font-size:17px;}
+.mdr-carte-sous{font-size:14px; color:var(--slate);}
+.mdr-carte-action{margin-top:8px; font-weight:800;}
+.mdr-carte-action a{color:var(--gold); text-decoration:underline; position:relative; z-index:1;}
+.mdr-carte-action a:first-child::after{content:''; position:absolute; inset:0;}
+.mdr-carte-action a:first-child{position:static;}
+.mdr-carte-action a + a{position:relative; z-index:2;}
+
+.mdr-plus{margin:34px 0 0; padding-top:24px; border-top:3px solid var(--ink);}
+.mdr-plus-tete{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:6px 16px; margin-bottom:4px;}
+.mdr-tuiles{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px;}
+.mdr-tuile{font:inherit; text-align:left; text-decoration:none; color:var(--ink); border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow-sm); padding:14px; display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; column-gap:12px; align-items:center; cursor:pointer;}
+.mdr-tuile .mdr-icone{grid-row:1 / span 2; color:var(--gold);}
+.mdr-tuile b{font-size:15.5px;}
+.mdr-tuile span{font-size:13.5px; color:var(--slate);}
+.mdr-tuile:hover, .mdr-tuile[aria-expanded="true"]{background:var(--yellow); color:var(--sur-clair, #131313);}
+.mdr-tuile:hover span, .mdr-tuile[aria-expanded="true"] span, .mdr-tuile:hover .mdr-icone, .mdr-tuile[aria-expanded="true"] .mdr-icone{color:var(--sur-clair, #131313);}
+.mdr-outils{margin-top:16px;}
+
+.mdr-bande{margin:34px 0 0; border:3px solid var(--ink); background:var(--ink); color:var(--card); padding:16px 18px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 20px;}
+.mdr-bande p{margin:0; font-size:16px;}
+#mdEcrirePli.ab-page{background:transparent; color:var(--ink); font-family:inherit; margin-top:16px; padding:0; min-height:0;}
+.mdr-pli #ecrire{margin-bottom:20px;}
+
+@media (max-width:760px){
+  .mdr-cartes, .mdr-tuiles{grid-template-columns:1fr;}
+  .mdr-compteurs{gap:8px;}
+  .mdr-compteur{padding:10px 8px;}
+  .mdr-lib{font-size:11px; letter-spacing:0;}
+  .mdr-compte{flex-basis:100%;}
+}
+
+/* Thème clair choisi sur le site mais système en sombre : abonnes.css attend data-theme="clair", le site écrit "light". */
+:root[data-theme="light"] #mdEcrirePli.ab-page, :root[data-theme="light"] #villes.ab-page{--fond:#F7F8FA; --carte:#FFFFFF; --encre:#16191D; --doux:#5B6570; --ligne:#DDE2E7; --ligne-forte:#C2CAD2; --fond-2:#EEF1F4;}
+
+/* VOS COURRIELS (Mon dossier, 3 nov. 2026) : une carte par provenance, interrupteurs DQ.
+   Rendu par boiteInfolettre (commun/infolettre.js). Hors de .ab-page : seulement les variables de DQ,
+   qui suivent déjà le thème clair/sombre du site. --mdc-accent vient de la carte (Assemblée, ville). */
+.mdc-section{margin:34px 0 0; padding-top:24px; border-top:3px solid var(--ink);}
+.mdc-chapeau{margin:-4px 0 16px; font-size:15px; color:var(--slate);}
+.mdc-cartes{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; align-items:start;}
+.mdc-carte{min-width:0; border:3px solid var(--ink); background:var(--card); box-shadow:var(--shadow-sm); border-top:10px solid var(--mdc-accent, var(--gold)); padding:14px 16px 12px; color:var(--ink);}
+.mdc-carte.ab-mtl-blocs{display:block; margin:0;}
+.mdc-tete{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;}
+.mdc-tete h3{margin:0; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; font-size:18px; line-height:1.15;}
+.mdc-note, .mdc-aide{margin:0 0 8px; font-size:13px; line-height:1.45; color:var(--slate);}
+.mdc-lignes{display:flex; flex-direction:column;}
+.mdc-ligne{position:relative; display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px; align-items:start; padding:11px 0; border-top:2px solid var(--line-soft); cursor:pointer;}
+.mdc-ligne-arr{cursor:default;}
+.mdc-lignes > .mdc-ligne:first-child{border-top:0;}
+.mdc-texte{display:block; min-width:0;}
+.mdc-titre{font-weight:800; font-size:15px; line-height:1.3;}
+.mdc-freq{display:inline-block; margin:2px 0 0; padding:1px 7px; border:2px solid var(--ink); font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.03em; line-height:1.4; vertical-align:1px; max-width:100%;}
+.mdc-quoi{display:block; margin-top:4px; font-size:13.5px; line-height:1.45; color:var(--slate);}
+/* L'interrupteur : la case native reste dans le DOM (mêmes événements), cachée à l'œil. */
+.mdc-inter{position:absolute; opacity:0; width:1px; height:1px; margin:0; pointer-events:none;}
+.mdc-switch{position:relative; width:46px; height:26px; margin-top:1px; border:3px solid var(--ink); background:var(--paper); box-sizing:border-box; transition:background .12s;}
+.mdc-switch::after{content:''; position:absolute; top:3px; left:3px; width:14px; height:14px; background:var(--ink); transition:transform .12s;}
+.mdc-inter:checked + .mdc-switch{background:var(--mdc-accent, var(--gold));}
+.mdc-inter:checked + .mdc-switch::after{transform:translateX(20px); background:#FFFFFF; box-shadow:0 0 0 2px #131313;}
+.mdc-inter:focus-visible + .mdc-switch{outline:3px solid var(--yellow); outline-offset:2px;}
+.mdc-inter:disabled + .mdc-switch{opacity:.55;}
+.mdc-icone{display:flex; align-items:center; justify-content:center; width:46px; height:26px; color:var(--mdc-accent, var(--gold));}
+/* Arrondissements : puces carrées et menu DQ. */
+.mdc-puces{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+.mdc .mdc-puce{border-radius:0; display:inline-flex; align-items:center; gap:6px; padding:3px 4px 3px 9px; border:2px solid var(--ink); background:var(--yellow); color:#131313; font-size:13px; font-weight:800; max-width:100%;}
+.mdc .mdc-puce-x{display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; padding:0; border:0; background:transparent; color:#131313; cursor:pointer;}
+.mdc .mdc-puce-x:hover{background:#131313; color:#FFD24D;}
+.mdc-select{position:relative; display:block; margin-top:8px; max-width:100%;}
+.mdc-select::after{content:''; position:absolute; right:13px; top:50%; width:7px; height:7px; border-right:3px solid var(--ink); border-bottom:3px solid var(--ink); transform:translateY(-70%) rotate(45deg); pointer-events:none;}
+.mdc .mdc-select select{margin:0; max-width:none; appearance:none; -webkit-appearance:none; width:100%; font:inherit; font-size:14px; font-weight:700; padding:7px 36px 7px 10px; border:2px solid var(--ink); border-radius:0; background:var(--card); color:var(--ink); box-shadow:3px 3px 0 var(--ink); cursor:pointer;}
+.mdc-select select:focus-visible{outline:3px solid var(--yellow); outline-offset:2px;}
+/* Langues de Montréal : deux pastilles à bascule. */
+.mdc-langues{display:inline-flex; flex:none;}
+.mdc-langue{position:relative; cursor:pointer;}
+.mdc-langue input{position:absolute; opacity:0; width:1px; height:1px; margin:0;}
+.mdc-langue span{display:block; padding:3px 9px; border:2px solid var(--ink); font-family:'Archivo',sans-serif; font-weight:900; font-size:13px; background:var(--card); color:var(--ink);}
+.mdc-langue + .mdc-langue span{border-left:0;}
+.mdc-langue input:checked + span{background:var(--ink); color:var(--paper);}
+.mdc-langue input:focus-visible + span{outline:3px solid var(--yellow); outline-offset:1px;}
+.mdc-pied{margin:8px 0 0; padding-top:8px; border-top:2px solid var(--line-soft); font-size:12px; color:var(--slate);}
+.mdc-etat{margin:12px 0 0; font-size:13px; color:var(--slate);}
+#courriels{scroll-margin-top:120px;}
+
+/* Offrir un abonnement (3 nov. 2026) : une carte DQ repliée, ouverte par le bouton de l'en-tête. */
+.mdr-lien-btn{font:inherit; font-weight:800; padding:0; border:0; background:none; color:var(--gold); text-decoration:underline; cursor:pointer;}
+.mdr-offrir{margin:16px 0 0;}
+.mdr-offrir .md-cadeau-discret.mdr-offrir-carte{margin:0; padding:16px; border:3px solid var(--ink); box-shadow:var(--shadow-sm); background:var(--card); font-size:14px;}
+.mdr-offrir-carte[hidden]{display:none !important;}
+.mdr-offrir-titre{margin:0 0 10px; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:17px;}
+.mdr-offrir .md-cadeau-ligne{border-top:2px solid var(--line-soft); margin-top:10px; padding-top:10px;}
+.mdr-offrir .md-cadeau-titre{font-size:14px;}
+.mdr-offrir .md-cadeau-discret > div[data-i18n]{display:grid; grid-template-columns:110px minmax(0,1fr); align-items:center; gap:6px 14px;}
+.mdr-offrir .md-cadeau-discret > div[data-i18n] > .md-note{grid-column:2;}
+.mdr-offrir .md-cadeau-puces{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)) 64px; gap:8px; min-width:0;}
+.mdr-offrir .md-cadeau-puce{margin:0; min-width:0; padding:5px 6px; text-align:center; white-space:normal;}
+@media (max-width:640px){ .mdr-offrir .md-cadeau-discret > div[data-i18n]{grid-template-columns:minmax(0,1fr);} .mdr-offrir .md-cadeau-discret > div[data-i18n] > .md-note{grid-column:1;} .mdr-offrir .md-cadeau-puces{grid-template-columns:repeat(3, minmax(0,1fr));} }
+.mdr-offrir .md-cadeau-qte{border:2px solid var(--ink); border-radius:0; background:var(--card); color:var(--ink); font:inherit; font-weight:700; width:64px; padding:3px 6px;}
+
+/* Nous écrire (3 nov. 2026) : le formulaire au style DQ, plus de vert. */
+#mdEcrirePli .mdr-ecrire{border:3px solid var(--ink); border-radius:0; background:var(--card); box-shadow:var(--shadow-sm); color:var(--ink);}
+#mdEcrirePli .mdr-ecrire h2{font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; color:var(--ink);}
+#mdEcrirePli .mdr-ecrire .ab-chapeau, #mdEcrirePli .mdr-ecrire .ab-note{color:var(--slate);}
+#mdEcrirePli .ab-message select, #mdEcrirePli .ab-message textarea{border:2px solid var(--ink); border-radius:0; background:var(--card); color:var(--ink); font:inherit; padding:8px 10px;}
+#mdEcrirePli .ab-message select:focus-visible, #mdEcrirePli .ab-message textarea:focus-visible{outline:3px solid var(--yellow); outline-offset:2px;}
+#mdEcrirePli .ab-message .ab-bouton{font-family:'Archivo',sans-serif; font-weight:900; font-size:15px; padding:9px 18px; border-radius:0; background:#131313; color:#FFD24D; border:2px solid var(--ink); box-shadow:3px 3px 0 var(--gold); cursor:pointer;}
+#mdEcrirePli .ab-message .ab-bouton:hover{background:var(--yellow); color:#131313;}
+#mdEcrirePli .ab-merci{border:3px solid var(--ink); background:var(--yellow); color:#131313; padding:12px 14px; border-radius:0; font-weight:700;}
+@media (max-width:640px){ .mdc-cartes{grid-template-columns:minmax(0,1fr);} .mdc-carte{padding:12px 12px 10px;} }
+/* Compteur de suivis à côté du bouton Suivre (4 nov. 2026). */
+.nb-suivis{font-weight:inherit;}
+/* Un espace entre les cartes des ministres et la bande Finances publiques (Martin, 4 nov. 2026). */
+#ministresGrid{margin-bottom:48px;}
+/* Vos projets de ville, refonte (4 nov. 2026) : en-tête avec compte et « + Ajouter un projet »,
+   projets suivis en grille de cartes groupées par ville (bandeau --ville), catalogue en cartes.
+   Préfixe #villes pour passer devant commun/abonnes.css (.ab-page details.ab-dossier…). */
+#villes{position:relative;}
+#villes .vp-entete{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:0 0 14px; padding-right:250px; min-height:48px;}
+#villes .vp-entete .md-villes-titre{margin:0;}
+#villes .vp-compte{display:inline-block; min-width:34px; padding:3px 9px; text-align:center; font-family:'Archivo',sans-serif; font-weight:900; font-size:16px; background:#FFD24D; color:#131313; border:3px solid #131313; box-shadow:3px 3px 0 #131313;}
+#villes .vp-compte[hidden]{display:none;}
+#villes details.ab-suggestions{border:0; background:transparent; box-shadow:none; padding:0; margin:0;}
+#villes details.ab-suggestions > summary.vp-ajouter{position:absolute; top:24px; right:0; list-style:none; cursor:pointer; display:inline-flex; align-items:center; min-height:44px; padding:8px 16px; font-family:'Archivo',sans-serif; font-weight:800; font-size:15px; text-transform:uppercase; letter-spacing:.01em; background:var(--card); color:var(--ink); border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); transition:transform .08s, box-shadow .08s;}
+#villes details.ab-suggestions > summary.vp-ajouter::after{content:none; display:none;}
+#villes details.ab-suggestions > summary.vp-ajouter::-webkit-details-marker{display:none;}
+#villes details.ab-suggestions > summary.vp-ajouter:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--ink);}
+#villes details.ab-suggestions > summary.vp-ajouter:focus-visible{outline:3px solid var(--gold); outline-offset:3px;}
+#villes .vp-ajouter-ouvert, #villes details[open] > summary .vp-ajouter-ferme{display:none;}
+#villes details[open] > summary .vp-ajouter-ouvert{display:inline;}
+#villes details.ab-suggestions > .ab-pliable-corps{margin:0 0 28px; padding:18px; background:var(--paper); border:3px solid var(--ink); box-shadow:var(--shadow);}
+#villes .vp-cat-titre{margin:0 0 6px; display:flex; align-items:center; gap:10px; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:20px; color:var(--ink);}
+#villes .vp-cat-titre .vp-compte{font-size:14px; padding:1px 7px; box-shadow:none;}
+#villes .vp-ville{--ville:var(--gold); margin:0 0 26px;}
+#villes .vp-ville-titre{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:0 0 12px; padding:6px 12px; background:var(--ville); color:#fff; border:3px solid #131313; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:17px; letter-spacing:.01em;}
+#villes .vp-ville-titre span{font-size:13px; font-weight:700; text-transform:none; letter-spacing:0;}
+#villes .vp-grille{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px; align-items:stretch;}
+#villes details.ab-dossier{margin:0; padding:0; background:var(--card); color:var(--ink); border:3px solid var(--ink); border-top:8px solid var(--ville); border-radius:0; box-shadow:5px 5px 0 var(--ink); min-width:0;}
+#villes details.ab-dossier[open]{grid-column:1/-1;}
+#villes details.ab-dossier > summary{display:flex; flex-direction:column; gap:12px; padding:16px 18px; border-radius:0; height:100%; box-sizing:border-box;}
+#villes details.ab-dossier[open] > summary{height:auto; border-bottom:3px solid var(--ink); border-radius:0;}
+#villes details.ab-dossier > summary::after{content:none; display:none;}
+#villes details.ab-dossier > summary:hover{background:transparent;}
+#villes details.ab-dossier > summary:focus-visible{outline:3px solid var(--gold); outline-offset:-6px;}
+#villes .vp-titre{margin:0; font-family:'Archivo',sans-serif; font-weight:900; font-size:22px; line-height:1.15; letter-spacing:-0.01em; color:var(--ink); overflow-wrap:anywhere;}
+#villes .vp-chiffres{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:4px; font-size:14.5px; color:var(--slate, var(--ink));}
+#villes .vp-chiffres li:first-child{font-weight:800; color:var(--ink); font-size:16px;}
+#villes .vp-chiffres strong{color:var(--ink);}
+#villes .vp-actions{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:auto; padding-top:4px;}
+#villes .vp-voir{display:inline-flex; align-items:center; min-height:40px; padding:6px 14px; background:#FFD24D; color:#131313; border:3px solid #131313; box-shadow:3px 3px 0 #131313; font-family:'Archivo',sans-serif; font-weight:800; font-size:14px; text-transform:uppercase;}
+#villes details.ab-dossier > summary:hover .vp-voir{transform:translate(-1px,-1px); box-shadow:4px 4px 0 #131313;}
+#villes .vp-voir-ouvert, #villes details[open] .vp-voir-ferme{display:none;}
+#villes details[open] .vp-voir-ouvert{display:inline;}
+#villes .vp-retirer{font-size:13px; color:var(--slate, var(--ink)); text-decoration:underline; background:none; border:0; padding:4px 0; cursor:pointer;}
+#villes .ab-dossier-corps{padding:16px 18px 18px;}
+#villes .vp-sugg{display:flex; flex-direction:column; gap:8px; margin:0; padding:14px 16px; background:var(--card); color:var(--ink); border:3px solid var(--ink); border-top:6px solid var(--ville); border-radius:0; box-shadow:4px 4px 0 var(--ink); min-width:0;}
+#villes .vp-sugg h3{margin:0; font-family:'Archivo',sans-serif; font-weight:900; font-size:19px; line-height:1.15; color:var(--ink);}
+#villes .vp-sugg .ab-meta{font-size:13.5px;}
+#villes .vp-sugg .ab-bouton{background:var(--ville); border:3px solid #131313; color:#fff; border-radius:0; box-shadow:3px 3px 0 #131313; font-weight:800; text-transform:uppercase; min-height:40px;}
+#villes .vp-sugg .ab-bouton:disabled{opacity:.6;}
+@media (max-width:640px){
+  #villes .vp-entete{padding-right:0;}
+  #villes details.ab-suggestions > summary.vp-ajouter{position:static; display:flex; justify-content:center; width:100%; margin:0 0 16px; box-sizing:border-box;}
+  #villes details.ab-suggestions > .ab-pliable-corps{padding:14px 12px;}
+  #villes .vp-grille{grid-template-columns:minmax(0,1fr);}
+  #villes .vp-titre{font-size:20px;}
+}
+/* Sous le bouton café d'un projet de loi : suivre en se connectant, puis Devenez DossierQuébec (4 nov. 2026). */
+.bill-abo{margin:14px 0 0; padding:14px 16px; border:3px solid var(--ink); background:var(--card); box-shadow:4px 4px 0 var(--ink);}
+.bill-abo-titre{display:block; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:14.5px; margin-bottom:8px;}
+.bill-abo-ligne{display:flex; gap:8px; flex-wrap:wrap;}
+.bill-abo-ligne input{flex:1 1 180px; min-width:0; padding:8px 10px; border:2px solid var(--ink); background:var(--card); color:var(--ink); font:inherit;}
+.bill-abo-btn{padding:8px 14px; border:3px solid var(--ink); background:#FFD24D; color:#131313; font:inherit; font-weight:800; cursor:pointer; white-space:nowrap;}
+.bill-abo-btn:hover{background:var(--gold); color:#FFFFFF;}
+.bill-abo-note{margin:6px 0 0; font-size:12.5px; color:var(--slate);}
+body.connecte .bill-abo-suivre{display:none;}
+body.abonne .bill-abo, body.abonne .bill-abo-devenir{display:none;}
+.bill-abo-devenir{margin-top:14px;}
+
+/* REPRÉSENTE TA VILLE (6 nov. 2026) : formulaire d'intérêt, /represente-ta-ville. */
+.rtv{max-width:760px; margin:0 auto; padding:28px 0 48px;}
+.rtv-etapes{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:28px;}
+.rtv-etape{border:3px solid var(--ink); background:var(--card); box-shadow:4px 4px 0 var(--ink); padding:14px 16px;}
+.rtv-etape b{display:inline-block; background:#FFD24D; border:2px solid var(--ink); padding:0 8px; font-family:'Archivo',sans-serif; font-weight:900; margin-bottom:6px;}
+.rtv-etape p{margin:0; font-size:15px; line-height:1.45;}
+.rtv-form{display:grid; gap:14px; border:3px solid var(--ink); background:var(--card); box-shadow:4px 4px 0 var(--ink); padding:20px 22px;}
+.rtv-form label{display:grid; gap:6px; font-weight:700; font-size:14px;}
+.rtv-form input:not([type=radio]), .rtv-form textarea{font:inherit; font-weight:400; padding:10px 12px; border:2px solid var(--ink); background:#fff; color:#131313;}
+.rtv-form fieldset{border:0; margin:0; padding:0; display:grid; gap:6px;}
+.rtv-form legend{font-weight:700; font-size:14px; margin-bottom:6px;}
+.rtv-form .rtv-choix{display:flex; align-items:center; gap:8px; font-weight:400;}
+.rtv-form .bill-more{justify-self:start; cursor:pointer;}
+.rtv-pot{position:absolute; left:-9999px; width:1px; height:1px; opacity:0;}
+.rtv-note{margin:0; font-size:13px; color:var(--muted, #5B6570);}
+.rtv-merci{margin:0; font-size:16px;}
+@media (max-width:760px){ .rtv-etapes{grid-template-columns:1fr;} }
+.rtv-h1{font-size:clamp(40px, 7vw, 88px) !important; line-height:1 !important; overflow-wrap:anywhere;}
+.rtv-lien{color:inherit; font-weight:700; text-decoration:underline; text-decoration-color:#FFD24D; text-decoration-thickness:4px; text-underline-offset:3px;}
+.rtv-lien:hover{text-decoration-color:#0E4FC1;}
+
+/* « Une réalisation de DAFR Solution » : signature sans surlignage (6 nov. 2026). */
+#footerDafr{ color:inherit; }
+
+/* Représentez votre ville : les prix (7 nov. 2026). */
+.rtv-prix{border:3px solid var(--ink); background:var(--card); box-shadow:4px 4px 0 var(--ink); padding:16px 18px; margin-bottom:28px;}
+.rtv-prix p{margin:0 0 10px; font-size:15px; line-height:1.45;}
+.rtv-prix-h{font-family:'Archivo',sans-serif; font-weight:900; font-size:20px; margin:0 0 12px;}
+.rtv-grille{border-collapse:collapse; margin:0 0 12px; font-size:15px;}
+.rtv-grille td{padding:5px 18px 5px 0; border-bottom:1px solid var(--line, #ddd);}
+.rtv-grille td:last-child{font-weight:800; text-align:right; padding-right:0;}
+.rtv-fondateur{background:#FFF3C4; color:#131313; border-left:4px solid #FFD24D; padding:8px 10px;}

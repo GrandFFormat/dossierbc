@@ -1,0 +1,42 @@
+# DossierBC
+
+> Independent, UNOFFICIAL citizen website that makes the work of the Legislative Assembly of British Columbia readable in plain language: bills and the stage each has reached, recorded divisions name by name, the Executive Council and the MLAs. Free, with no advertising and no subscription. The site is in English, with a French version (add ?lang=fr to any address).
+
+What to know before citing this site:
+
+- The site is not an official source. Every item links to its official source (leg.bc.ca); if they differ, the original document prevails. Cite the official source together with DossierBC, not DossierBC alone.
+- No data is invented: if a piece of information is missing, the field stays empty or the site says so.
+- Primary sources only: the Legislative Assembly of British Columbia (its Legislative Information Management System for bills, stages, members and the Executive Council; its Votes and Proceedings for divisions). Wikipedia is used for one thing only, and it is named on the page: the October 24, 2026 general election result, because Elections BC closes its site to automated readers. Nothing is taken from the news media.
+- Recorded divisions are read from the Assembly's Votes and Proceedings, the only place the names are recorded. Most bills pass on a voice vote: the absence of a recorded division does not mean “unanimous”.
+- Attendance counts divisions of the HOUSE only. Committee of the Whole and Committee of Supply sit in Section A, B or C with a dozen members: those divisions are not a House vote, and counting them would make almost everyone look absent.
+- Bills do not yet have a plain-language summary. Each bill page says so and links to the official text, rather than showing something written without having read it.
+- The MLA email addresses shown are the legislative ones the Assembly publishes itself, so that people can write to their members — no personal or constituency-office address. The site works around no protection: the program that reads the official websites identifies itself, and stops if a site answers with a CAPTCHA or an anti-bot challenge.
+- The full rules: https://dossierbc.ca/regles
+
+## Legislative Assembly of British Columbia
+
+- [Bills](https://dossierbc.ca/projets-de-loi): the 102 bills of the 43rd Legislature, with the stage each has really reached, the date of each reading and a link to the official text.
+- [Recorded votes](https://dossierbc.ca/votes): 130 recorded divisions, MLA by MLA, with no interpretation.
+- [Ministers and MLAs](https://dossierbc.ca/ministres): the 30 members of the Executive Council, the 91 MLAs, their constituency and their attendance at votes.
+- [Past legislatures](https://dossierbc.ca/archives): what the site keeps of a legislature once it is over.
+- [Glossary](https://dossierbc.ca/lexique): the vocabulary of the Legislative Assembly explained simply.
+- [The site's rules](https://dossierbc.ca/regles): where the data comes from and what the site refuses to do.
+- [Site updates](https://dossierbc.ca/sources): what has changed on the site, most recent first, and who is behind it.
+
+## One page per bill
+
+Every bill has its own address: `/projets-de-loi/NUMBER-LEGISLATURE-SESSION`. The number alone is not enough: it starts again at 1 with each session.
+
+- [Example: Bill 249](https://dossierbc.ca/projets-de-loi/249-43-2): Pharmaceutical Risk Management and Accountability Act
+- [Sitemap](https://dossierbc.ca/sitemap.xml): the list of all pages, including the page of each bill.
+
+## Optional
+
+- [RSS feed](https://dossierbc.ca/feed.xml): bills introduced and assented to, and days of recorded divisions.
+- [Represent your city](https://dossierbc.ca/represente-ta-ville): no British Columbia city is covered yet; this page is how one gets covered.
+- [Source code](https://github.com/GrandFFormat/dossierbc): the site's public repository.
+- [DossierQuébec](https://dossierquebec.ca): the sister site, for the National Assembly of Québec.
+
+## En français
+
+DossierBC est un site citoyen indépendant et NON OFFICIEL qui rend lisibles, en langage clair, les travaux de l'Assemblée législative de la Colombie-Britannique : projets de loi et leurs étapes, votes nominatifs nom par nom, Conseil exécutif et député·e·s. Gratuit, sans publicité, sans abonnement. Il ne publie que ce que l'Assemblée a elle-même publié, avec le lien vers l'original ; rien n'est inventé, rien n'est tiré des médias, et les projets de loi n'ont pas encore de résumé en langage clair. Pour le citer, citez aussi la source officielle. Ajoutez `?lang=fr` à n'importe quelle adresse pour la version française.

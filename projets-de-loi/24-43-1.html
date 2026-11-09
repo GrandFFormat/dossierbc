@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Consentement (Loi 25) : par défaut, Google Analytics n'a PAS le droit de déposer de témoins.
+     La bannière (commun/consentement.js) passe analytics_storage à « granted » après « Accepter ». -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<!-- Mesure d'audience : AUCUNE pour l'instant. La propriété Google Analytics de la
+     Colombie-Britannique n'existe pas encore, et celle du Nouveau-Brunswick a été retirée d'ici
+     pour qu'elle ne reçoive pas ce trafic. Pour la brancher : remettre le bloc gtag.js des autres
+     sites de la famille avec l'identifiant de la nouvelle propriété. Le consentement
+     (commun/consentement.js) et la bande de témoins sont déjà en place et n'attendent que ça. -->
+<!-- Pas de bannière de témoins : il n'y a aucune mesure d'audience sur ce site pour l'instant,
+     donc rien à faire accepter. Elle revient avec le bloc gtag.js, le jour où la propriété
+     Google Analytics de la Colombie-Britannique existera.
+<script src="/commun/consentement.js" defer></script> -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* La langue, avant d'afficher quoi que ce soit — EXACTEMENT la décision de langueDeDepart
+   (commun/dq.js) : « ?lang=fr » dans l'adresse, sinon le choix gardé dans dvq:langue (commun à
+   tout le site) ; en revenant par Précédent ou Suivant, le choix gardé passe avant l'adresse.
+   Le site est ANGLOPHONE : l'anglais est écrit dans le HTML et s'affiche tout de suite. C'est
+   le français qui attend sa traduction, et la page reste cachée le temps que dq.js la fasse :
+   1,5 s au plus, même s'il échoue. lang="fr" n'est posé qu'au moment de traduire (dq.js).
+   Tout est dans une fonction : une variable globale ici entrerait en collision avec les
+   déclarations de dq.js et le ferait planter en entier. */
+(function(){
+  try{
+    var valide = function(l){ return l === 'en' || l === 'fr'; };
+    var gardee = null;
+    try{ gardee = localStorage.getItem('dvq:langue'); }catch(e){}
+    var q = new URLSearchParams(location.search).get('lang');
+    var nav = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+    var parHistorique = !!nav && nav.type === 'back_forward';
+    var choix = (parHistorique && valide(gardee)) ? gardee : (valide(q) ? q : gardee);
+    if(choix !== 'fr') return;
+    var racine = document.documentElement;
+    racine.classList.add('dq-fr');
+    setTimeout(function(){ racine.classList.add('dq-pret'); }, 1500);
+  }catch(e){}
+})();
+</script>
+<title>Bill 24 — Vaping Product Damages and Health Care Costs Recovery Act — DossierBC</title>
+<meta name="dvq:titre-fr" content="Projet de loi 24 — Vaping Product Damages and Health Care Costs Recovery Act — DossierBC">
+<meta name="description" content="Bill 24: Pas encore de résumé en langage clair pour ce projet : le texte officiel, sur leg.bc.ca, fait foi.">
+<link rel="canonical" href="https://dossierbc.ca/projets-de-loi/24-43-1">
+<!-- Plus de <link rel="alternate"> vers /feed.xml : le flux RSS est réservé aux abonné·e·s depuis le
+     21 oct. 2026 (api/feed.js), chacun avec son adresse personnelle dans Mon dossier. -->
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E4FC1">
+
+<!-- Open Graph (aperçu au partage : Facebook, LinkedIn, iMessage…) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="Bill 24 — Vaping Product Damages and Health Care Costs Recovery Act — DossierBC">
+<meta property="og:description" content="Bill 24: Pas encore de résumé en langage clair pour ce projet : le texte officiel, sur leg.bc.ca, fait foi.">
+<meta property="og:url" content="https://dossierbc.ca/projets-de-loi/24-43-1">
+<meta property="og:image" content="https://dossierbc.ca/dossierbc-cover.png">
+<meta property="og:image:width" content="1702">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DossierBC — veille citoyenne de l'Assemblée législative de la Colombie-Britannique">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bill 24 — Vaping Product Damages and Health Care Costs Recovery Act — DossierBC">
+<meta name="twitter:description" content="Bill 24: Pas encore de résumé en langage clair pour ce projet : le texte officiel, sur leg.bc.ca, fait foi.">
+<meta name="twitter:image" content="https://dossierbc.ca/dossierbc-cover.png">
+
+<link rel="icon" type="image/svg+xml" href="/commun/bc.svg">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="/commun/bc-48.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/commun/bc-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/commun/bc-180.png">
+
+<!-- Données structurées (aide Google à comprendre le site) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://dossierbc.ca/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Bills",
+      "item": "https://dossierbc.ca/projets-de-loi"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Bill 24",
+      "item": "https://dossierbc.ca/projets-de-loi/24-43-1"
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/commun/dq.css">
+<!-- Le design de la Colombie-Britannique, posé par-dessus dq.css. Il apporte ses polices (Barlow
+     et Barlow Condensed, servies par le site depuis commun/polices/) : plus rien n'est chargé
+     chez Google Fonts, et le cahier de design est suivi à la lettre. -->
+<link rel="stylesheet" href="/commun/bc.css">
+</head>
+<body data-page="projets" data-donnees="bills,deputesRaw,stats,legislatureEtat">
+
+<!-- Ticker brutaliste : bande noire défilante — contenu rempli avec les VRAIES
+     données par renderTicker() (appelé une fois les datasets chargés). -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-text" id="tickerA">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+    <span class="ticker-text" id="tickerB">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<div id="dq-topbar">
+<header class="top">
+  <div class="brand">
+    <div class="brand-text" role="button" tabindex="0" aria-label="Retour à l'aperçu" onclick="goToTab('apercu')">
+      <!-- Volontairement un div, et non un titre de niveau 1 : le nom du site se
+           répète sur chaque page, alors que le titre de niveau 1 doit annoncer
+           le sujet de LA page. C'est le titre de une de la vue active qui joue
+           ce rôle, et le générateur de pages de section s'en assure.
+           (Pas de balise écrite en toutes lettres dans ce commentaire : elle
+           fausserait les outils qui comptent les titres à l'expression
+           régulière.) -->
+      <div class="brand-title"><span class="bc-marque" aria-hidden="true"></span>Dossier<span class="brand-blue">BC</span><span class="brand-ca">.ca</span></div>
+      <p>Qui siège, qui légifère, qui vote quoi</p>
+    </div>
+    <!-- Feuille d'érable : passerelle vers le site fédéral DossierCanada.
+         Flippe jaune ↔ rouge toutes les 20 s (voir le script plus bas). -->
+    <a class="maple-flip" id="mapleFlip" role="button" tabindex="0"
+       title="Aller au site fédéral — DossierCanada"
+       aria-label="Aller au site fédéral — DossierCanada"
+       onclick="goToFederal(event)">
+      <svg viewBox="-2015 -2000 4030 4030" aria-hidden="true"><path fill="currentColor" d="m-90 2030 45-863a95 95 0 0 0-111-98l-859 151 116-320a65 65 0 0 0-20-73l-941-762 212-99a65 65 0 0 0 34-79l-186-572 542 115a65 65 0 0 0 73-38l105-247 423 454a65 65 0 0 0 111-57l-204-1052 327 189a65 65 0 0 0 91-27l332-652 332 652a65 65 0 0 0 91 27l327-189-204 1052a65 65 0 0 0 111 57l423-454 105 247a65 65 0 0 0 73 38l542-115-186 572a65 65 0 0 0 34 79l212 99-941 762a65 65 0 0 0-20 73l116 320-859-151a95 95 0 0 0-111 98l45 863z"/></svg>
+    </a>
+    <!-- LES VILLES, EN PASTILLE (Martin, 9 novembre 2026). Elle était devenue un onglet le
+         7 novembre. Deux raisons de la ramener ici : ce menu ne mène pas à une section du site
+         mais à d'AUTRES sites, et dans la barre il vivait à l'intérieur d'un conteneur qui défile
+         (nav.tabs, overflow-x:auto), qui découpait son panneau et faisait apparaître une barre de
+         défilement en travers des onglets. Hors de la barre, le conflit n'existe pas. -->
+    <details class="villes-menu" id="villesMenu">
+      <summary class="city-flip nav-villes" title="Les volets municipaux" aria-label="Les volets municipaux">
+        <span data-i18n="nav.villes">Cities</span>
+      </summary>
+      <ul>
+        <!-- Aucune ville encore : le seul lien mène au formulaire de DossierQuébec (guide, étape 9). -->
+        <li class="villes-rtv"><a id="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a></li>
+      </ul>
+    </details>
+
+    <!-- Les volets municipaux (DossierVille) : un bouton « Villes » qui ouvre la liste.
+         Vrais liens <a href> : le clavier, le clic du milieu et « ouvrir dans un
+         nouvel onglet » fonctionnent sans une ligne de code. La barre oblique finale
+         est OBLIGATOIRE — sans elle, les chemins relatifs du volet (assets/, data/)
+         se résolvent depuis la racine du site. Plus de rel="nofollow" depuis le
+         21 sept. 2026 : les volets sont ouverts aux moteurs de recherche. Le chemin dit /quebec/ : c'est la
+         liste, sous « Villes », qui dit qu'il s'agit de la ville. -->
+  </div>
+  <!-- Nav DANS la ligne du header (maquette : logo | menu | contrôles sur
+       UNE seule rangée). Sur mobile, le nav devient le panneau plein écran
+       du hamburger (position:fixed), peu importe où il vit dans le DOM. -->
+  <nav class="tabs">
+    <div class="close-menu" id="closeMenuBtn"><span data-i18n="nav.close">Close</span> ✕</div>
+    <!-- De vrais liens, pas des <button> : un moteur de recherche ne suit pas un bouton, et
+         /ministres, /projets-de-loi, /votes et /lexique n'avaient aucun lien qu'il puisse suivre. -->
+    <a href="/" data-view="apercu"><span class="n">01</span><span data-i18n="nav.apercu">Overview</span></a>
+    <a href="/ministres" data-view="ministres"><span class="n">02</span><span data-i18n="nav.ministres">Ministers</span></a>
+    <a class="active" aria-current="page" href="/projets-de-loi" data-view="projets"><span class="n">03</span><span data-i18n="nav.projets">Bills</span></a>
+    <!-- Votes a quitté la barre le 30 oct. 2026 : les votes vivent dans les cartes des projets de
+         loi, et /votes reste lié du pied de page et de la page des projets. -->
+    <!-- Archives : remis dans la barre le 9 novembre 2026 (Martin). La 43e législature est
+         terminée ; ses ministres et ses député·e·s basculeront ici dès que la 44e aura publié les
+         siens. Pas de page Promesses tant que la Colombie-Britannique n'en a pas. -->
+    <a href="/archives" data-view="archives"><span class="n">04</span><span data-i18n="nav.archives">Archives</span></a>
+    <a href="/lexique" data-view="lexique"><span class="n">05</span><span data-i18n="nav.lexique">Glossary</span></a>
+    <a href="/mon-dossier" data-view="mondossier" class="nav-mondossier"><span class="n">★</span><span data-i18n="nav.mondossier">My file</span></a>
+    <!-- Le menu des villes a quitté la barre d'onglets le 9 novembre 2026 : il est redevenu la
+         pastille à côté du nom du site, comme chez DossierQuébec. Voir .brand plus haut. -->
+  </nav>
+  <div class="header-ctrls">
+    <div class="font-size-ctrl" id="fontSizeCtrl">
+      <button id="fontMinus" aria-label="Réduire le texte">A−</button>
+      <span id="fontPct">100%</span>
+      <button id="fontPlus" aria-label="Agrandir le texte">A+</button>
+    </div>
+    <!-- Aucun contenu textuel : l'icône est dessinée en CSS. Le nom accessible
+         vient donc entièrement de aria-label, que le JS tient à jour. -->
+    <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Passer au thème sombre"></button>
+    <button class="lang-toggle" id="langToggle">English</button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+</div>
+
+<script>
+/* Bascule le bloc logo+menu en mode compact après un peu de défilement.
+   Hystérésis (80 vs 20) pour éviter le clignotement autour du seuil. */
+(function(){
+  var bar = document.getElementById('dq-topbar');
+  var compact = false;
+  function onScroll(){
+    var y = window.scrollY;
+    if(!compact && y > 80){ compact = true; bar.classList.add('compact'); }
+    else if(compact && y < 20){ compact = false; bar.classList.remove('compact'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+// Ouvre le site fédéral DossierCanada dans un nouvel onglet.
+function goToFederal(evt){
+  if(evt) evt.stopPropagation();
+  window.open('https://dossiercanada.ca/', '_blank', 'noopener');
+}
+// Feuille d'érable : flippe jaune ↔ rouge toutes les 20 secondes.
+(function(){
+  var leaf = document.getElementById('mapleFlip');
+  if(!leaf) return;
+  setInterval(function(){ leaf.classList.toggle('is-red'); }, 20000);
+})();
+
+// Menu « Villes » : compte les clics vers chaque volet municipal (événement
+// personnalisé Vercel Web Analytics — onglet « Events » du tableau de bord), et
+// referme le menu quand on clique ailleurs ou qu'on appuie sur Échap.
+(function(){
+  var menu = document.getElementById('villesMenu');
+  if(!menu) return;
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if(window.va) window.va('event', { name: 'clic_icone_ville', data: { ville: a.getAttribute('href') } });
+    });
+  });
+  document.addEventListener('click', function(e){ if(menu.open && !menu.contains(e.target)) menu.open = false; });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menu.open){ menu.open = false; menu.querySelector('summary').focus(); } });
+})();
+</script>
+
+<div class="app">
+
+  <!-- APERÇU -->
+  <section class="view active" id="view-projets">
+    <nav class="fil-ariane" aria-label="Fil d'Ariane"><a href="/" data-i18n="fil.accueil">Accueil</a><span class="sep" aria-hidden="true">›</span><span aria-current="page" data-i18n="fil.projets">Bills</span></nav>
+    <!-- Hero de vue (refonte brutaliste) -->
+    <div class="view-hero">
+      <h1 class="hero-h1 hero-h1-md">
+        <span class="hero-sujet" data-i18n="sujet.projets">British Columbia bills</span>
+        <span data-i18n="projhero.l1">Bills,</span>
+        <span class="hero-outline" data-i18n="projhero.l2">translated plainly.</span>
+      </h1>
+      <p class="view-hero-sub" data-i18n="projhero.sub">Every bill with its real stage and the date of each reading. The full text is always one click away on leg.bc.ca.</p>
+
+
+    <!-- L'état des législatures, écrit par etatLegislature() (commun/dq.js) à partir des données
+         de l'Assemblée. Vide et invisible tant que la législature montrée est celle en cours :
+         aucune date n'est écrite ici. -->
+    <div class="info-box" id="etatLegislature" hidden></div>
+      <!-- Recherche façon maquette + 4 filtres rapides (actif = noir/jaune) -->
+      <div class="projets-controls">
+        <div class="brutal-search">
+          <span class="bs-icon" aria-hidden="true">🔍</span>
+          <input type="text" id="searchBills" data-i18n-placeholder="ph.searchBills" placeholder="Number, title or keyword…">
+        </div>
+        <!-- Tri par activité. La logique existait déjà (toggleBillsSort) mais
+             AUCUN bouton ne la déclenchait : la liste était figée sur « activité
+             la plus récente » sans que personne puisse en sortir. -->
+        <button class="sort-toggle" id="sortToggle" onclick="toggleBillsSort()">↓ Activité récente</button>
+        <div class="quick-filters" id="billsQuickFilters"></div>
+      </div>
+    </div>
+
+    <!-- Bande légende : le chemin d'un projet (les 3 étapes RÉELLES du site) -->
+    <div class="legend-strip bleed">
+      <span class="legend-label" data-i18n="legend.label">A bill's path:</span>
+      <span class="legend-chips">
+        <span class="bstep">Première lecture</span><span class="legend-arrow">→</span>
+        <a class="bstep bstep-lien" href="/lexique#etape-etude">Deuxième lecture et comité</a><span class="legend-arrow">→</span>
+        <a class="bstep bstep-lien" href="/lexique#etape-adoption">Troisième lecture / Sanction</a>
+      </span>
+      <!-- #etapes : les étapes du Lexique, plutôt que le haut de la page (lobbyistes d'abord). -->
+      <a class="legend-link" href="/lexique#etapes" data-i18n="legend.link">What are these stages? → Glossary</a>
+    </div>
+    <!-- Les votes nominaux sont dans chaque carte (« Qui a voté… ») ; la liste complète, motions
+         comprises, reste sur /votes (30 oct. 2026). -->
+    <p class="archives-note" id="lienTousVotes"><a href="/votes" data-i18n="projets.tousvotes">All recorded votes, motions included →</a></p>
+
+    <!-- Titre de résultats (change avec le filtre actif) -->
+    <div class="section-head min-group-head" id="billsResultHead">
+      <div><h2 id="billsResultTitle">Tous les projets</h2></div>
+      <span class="head-note" id="billsResultNote"></span>
+    </div>
+
+    <div id="billsList"><article class="bill-prerendu">
+<h2>Bill 24 — Vaping Product Damages and Health Care Costs Recovery Act</h2>
+<p>Sanctionné le 2025-12-03, chapitre 29 · Parrain : Niki Sharma</p>
+<p><em>Pas encore de résumé en langage clair pour ce projet : le texte officiel, sur leg.bc.ca, fait foi.</em></p><details class="bill-votes" data-objet="Projet%20de%20loi%20n%C2%B0%2024%20%E2%80%94%20Vaping%20Product%20Damages%20and%20Health%20Care%20Costs%20Recovery%20Act"><summary>Qui a voté pour ou contre : 49 / 42 (Troisième lecture · 5 votes nominaux)</summary><p class="bill-votes-note">Chaque vote nom par nom sur ce projet, du plus ancien au plus récent, tel que consigné au Journal de l’Assemblée. Un nom en gris : cette personne ne siège plus à l’Assemblée.</p><div class="vote-card bill-vote-card"><div class="vc-head"><span class="result-badge rejete">Rejeté</span><div class="vc-head-main"><h3>Motion</h3><div class="vc-meta">2025-10-08 · Vote nominal</div></div><div class="vc-counts"><span class="vcc pour"><b>40</b> pour</span><span class="vcc contre"><b>48</b> contre</span></div></div><div class="bar"><div class="seg pour" style="width:45.5%"></div><div class="seg contre" style="width:54.5%"></div><div class="seg abst" style="width:0.0%"></div></div><div class="vc-detail open" data-vote="1-24" data-leg="43"><div class="vc-pgrid"></div><div class="vc-ncols"></div><div class="vc-foot"><span class="vc-foot-note">Ne pas figurer sur la liste n’est pas un vote « non » — mission, maladie, horaire.</span><a class="bill-more" href="https://www.leg.bc.ca/parliamentary-business/overview/43rd-parliament/1st-session/file/v251008.htm" target="_blank" rel="noopener">Votes and Proceedings → leg.bc.ca</a></div></div></div><div class="vote-card bill-vote-card"><div class="vc-head"><span class="result-badge rejete">Rejeté</span><div class="vc-head-main"><h3>Amendement</h3><div class="vc-meta">2025-11-25 · Vote nominal</div></div><div class="vc-counts"><span class="vcc pour"><b>3</b> pour</span><span class="vcc contre"><b>5</b> contre</span></div></div><div class="bar"><div class="seg pour" style="width:37.5%"></div><div class="seg contre" style="width:62.5%"></div><div class="seg abst" style="width:0.0%"></div></div><div class="vc-detail open" data-vote="1-56" data-leg="43"><div class="vc-pgrid"></div><div class="vc-ncols"></div><div class="vc-foot"><span class="vc-foot-note">Ne pas figurer sur la liste n’est pas un vote « non » — mission, maladie, horaire.</span><a class="bill-more" href="https://www.leg.bc.ca/parliamentary-business/overview/43rd-parliament/1st-session/file/v251125.htm" target="_blank" rel="noopener">Votes and Proceedings → leg.bc.ca</a></div></div></div><div class="vote-card bill-vote-card"><div class="vc-head"><span class="result-badge rejete">Rejeté</span><div class="vc-head-main"><h3>Amendement</h3><div class="vc-meta">2025-11-25 · Vote nominal</div></div><div class="vc-counts"><span class="vcc pour"><b>3</b> pour</span><span class="vcc contre"><b>5</b> contre</span></div></div><div class="bar"><div class="seg pour" style="width:37.5%"></div><div class="seg contre" style="width:62.5%"></div><div class="seg abst" style="width:0.0%"></div></div><div class="vc-detail open" data-vote="1-57" data-leg="43"><div class="vc-pgrid"></div><div class="vc-ncols"></div><div class="vc-foot"><span class="vc-foot-note">Ne pas figurer sur la liste n’est pas un vote « non » — mission, maladie, horaire.</span><a class="bill-more" href="https://www.leg.bc.ca/parliamentary-business/overview/43rd-parliament/1st-session/file/v251125.htm" target="_blank" rel="noopener">Votes and Proceedings → leg.bc.ca</a></div></div></div><div class="vote-card bill-vote-card"><div class="vc-head"><span class="result-badge rejete">Rejeté</span><div class="vc-head-main"><h3>Amendement</h3><div class="vc-meta">2025-11-25 · Vote nominal</div></div><div class="vc-counts"><span class="vcc pour"><b>3</b> pour</span><span class="vcc contre"><b>5</b> contre</span></div></div><div class="bar"><div class="seg pour" style="width:37.5%"></div><div class="seg contre" style="width:62.5%"></div><div class="seg abst" style="width:0.0%"></div></div><div class="vc-detail open" data-vote="1-58" data-leg="43"><div class="vc-pgrid"></div><div class="vc-ncols"></div><div class="vc-foot"><span class="vc-foot-note">Ne pas figurer sur la liste n’est pas un vote « non » — mission, maladie, horaire.</span><a class="bill-more" href="https://www.leg.bc.ca/parliamentary-business/overview/43rd-parliament/1st-session/file/v251125.htm" target="_blank" rel="noopener">Votes and Proceedings → leg.bc.ca</a></div></div></div><div class="vote-card bill-vote-card"><div class="vc-head"><span class="result-badge adopte">Adopté</span><div class="vc-head-main"><h3>Troisième lecture</h3><div class="vc-meta">2025-12-02 · Vote nominal</div></div><div class="vc-counts"><span class="vcc pour"><b>49</b> pour</span><span class="vcc contre"><b>42</b> contre</span></div></div><div class="bar"><div class="seg pour" style="width:53.8%"></div><div class="seg contre" style="width:46.2%"></div><div class="seg abst" style="width:0.0%"></div></div><div class="vc-detail open" data-vote="1-74" data-leg="43"><div class="vc-pgrid"></div><div class="vc-ncols"></div><div class="vc-foot"><span class="vc-foot-note">Ne pas figurer sur la liste n’est pas un vote « non » — mission, maladie, horaire.</span><a class="bill-more" href="https://www.leg.bc.ca/parliamentary-business/overview/43rd-parliament/1st-session/file/v251202.htm" target="_blank" rel="noopener">Votes and Proceedings → leg.bc.ca</a></div></div></div></details>
+<p><a href="https://www.leg.bc.ca/parliamentary-business/overview/43rd-parliament/1st-session/file/gov24-1.htm" rel="noopener">Le projet de loi sur le site de l'Assemblée législative (leg.bc.ca)</a></p>
+</article></div>
+    <div class="prerendu" data-prerendu="bills">
+      <ul aria-label="Bills">
+        <li><b>Bill M 249</b> — Pharmaceutical Risk Management and Accountability Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-05-28</span></li>
+        <li><b>Bill M 217</b> — Dashboard Cameras in Commercial Vehicles Act <span class="pr-meta">· Received Royal Assent on 2026-05-28, chapter 17</span></li>
+        <li><b>Bill 22</b> — Supply Act, 2026-2027 <span class="pr-meta">· Received Royal Assent on 2026-05-28, chapter 20</span></li>
+        <li><b>Bill 20</b> — K'ómoks Treaty Act <span class="pr-meta">· Received Royal Assent on 2026-05-28, chapter 18</span></li>
+        <li><b>Bill 9</b> — Freedom of Information and Protection of Privacy Amendment Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-05-28, chapter 19</span></li>
+        <li><b>Bill M 248</b> — Chinese Heritage Month Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-05-27</span></li>
+        <li><b>Bill M 247</b> — Crown Land and Financial Transparency Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-05-26</span></li>
+        <li><b>Bill M 246</b> — Small Farms Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-05-21</span></li>
+        <li><b>Bill M 245</b> — Young Workers Income Tax Relief Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-05-21</span></li>
+        <li><b>Bill M 231</b> — Veterans and First Responders Month Act <span class="pr-meta">· Received Royal Assent on 2026-05-21, chapter 16</span></li>
+        <li><b>Bill 16</b> — Miscellaneous Statutes Amendment Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-05-21, chapter 15</span></li>
+        <li><b>Bill 14</b> — Forests Statutes Amendment Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-05-21, chapter 14</span></li>
+        <li><b>Bill M 244</b> — Home Rental Fairness Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-05-07</span></li>
+        <li><b>Bill M 237</b> — Insurance (Vehicle) Amendment Act, 2026 <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-04-27</span></li>
+        <li><b>Bill M 243</b> — Speculation and Vacancy Tax Repeal Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-04-16</span></li>
+        <li><b>Bill M 214</b> — Firefighters' Health Act <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 11</span></li>
+        <li><b>Bill 15</b> — Environmental Assessment Amendment Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 13</span></li>
+        <li><b>Bill 13</b> — Safe Access to Places of Public Worship Act <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 9</span></li>
+        <li><b>Bill 12</b> — Safe Access to Schools Amendment Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 8</span></li>
+        <li><b>Bill 11</b> — Residential Tenancy Amendment Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 12</span></li>
+        <li><b>Bill 10</b> — Labour Statutes Amendment Act, 2026  <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 10</span></li>
+        <li><b>Bill 8</b> — Civil Forfeiture Amendment Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 7</span></li>
+        <li><b>Bill 6</b> — Motor Vehicle Amendment Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 6</span></li>
+        <li><b>Bill 2</b> — Budget Measures Implementation Act, 2026 <span class="pr-meta">· Received Royal Assent on 2026-04-16, chapter 5</span></li>
+        <li><b>Bill 21</b> — Kitselas Treaty Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-04-15</span></li>
+        <li><b>Bill M 242</b> — Mental Health (Brain Injury) Amendment Act, 2026 <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-04-14</span></li>
+        <li><b>Bill M 241</b> — Interpretation Amendment Act, 2026 <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-04-13</span></li>
+        <li><b>Bill M 240</b> — Transparency of Advocacy Organizations Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-04-02</span></li>
+        <li><b>Bill 18</b> — Housing and Municipal Affairs Statutes (Parental Leave) Amendment Act, 2026 <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-04-02</span></li>
+        <li><b>Bill 17</b> — Housing and Municipal Affairs Statutes (Codes of Conduct) Amendment Act, 2026 <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-04-02</span></li>
+        <li><b>Bill M 239</b> — Aboriginal Title Transparency Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-03-30</span></li>
+        <li><b>Bill 7</b> — Post-Secondary International Education (Designated Institutions) Act <span class="pr-meta">· Received Royal Assent on 2026-03-12, chapter 4</span></li>
+        <li><b>Bill 5</b> — Trade Recognition Act <span class="pr-meta">· Received Royal Assent on 2026-03-12, chapter 3</span></li>
+        <li><b>Bill 4</b> — Supply Act (No. 1), 2026 <span class="pr-meta">· Received Royal Assent on 2026-03-12, chapter 1</span></li>
+        <li><b>Bill 3</b> — Budget Measures Implementation Act (No. 2), 2026 <span class="pr-meta">· Received Royal Assent on 2026-03-12, chapter 2</span></li>
+        <li><b>Bill M 238</b> — Health Professions and Occupations Repeal Act (No. 2) <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-03-10</span></li>
+        <li><b>Bill M 236</b> — Health Professions and Occupations Repeal Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-03-09</span></li>
+        <li><b>Bill M 232</b> — Long Term Care Access and Transparency Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-03-09</span></li>
+        <li><b>Bill M 235</b> — Drug Recovery and Community Safety Act <span class="pr-meta">· Ruled out of order by the Speaker: it cannot proceed</span></li>
+        <li><b>Bill M 234</b> — School Amendment Act, 2026 <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-03-05</span></li>
+        <li><b>Bill M 233</b> — Public Sector Construction Projects Procurement Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-03-05</span></li>
+        <li><b>Bill M 226</b> — Motor Vehicle Amendment Act (No. 2), 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-02-23</span></li>
+        <li><b>Bill 1</b> — An Act to Ensure the Supremacy of Parliament <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-02-12</span></li>
+        <li><b>Bill M 230</b> — Recall and Initiative Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-12-03</span></li>
+        <li><b>Bill 32</b> — Mental Health Amendment Act (No. 2), 2025 <span class="pr-meta">· Received Royal Assent on 2025-12-03, chapter 28</span></li>
+        <li><b>Bill 29</b> — Child, Family and Community Service Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-12-03, chapter 30</span></li>
+        <li><b>Bill 28</b> — Business Practices and Consumer Protection Amendment Act (No. 2), 2025 <span class="pr-meta">· Received Royal Assent on 2025-12-03, chapter 31</span></li>
+        <li><b>Bill 24</b> — Vaping Product Damages and Health Care Costs Recovery Act <span class="pr-meta">· Received Royal Assent on 2025-12-03, chapter 29</span></li>
+        <li><b>Bill 23</b> — Regulations Act <span class="pr-meta">· Received Royal Assent on 2025-12-03, chapter 33</span></li>
+        <li><b>Bill 22</b> — Statutes Act <span class="pr-meta">· Received Royal Assent on 2025-12-03, chapter 32</span></li>
+        <li><b>Bill M 229</b> — Low Carbon Fuels Amendment Act (No. 2), 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-12-02</span></li>
+        <li><b>Bill M 228</b> — Freedom Convoy Recognition Day Act <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-12-02</span></li>
+        <li><b>Bill M 227</b> — Business Practices and Consumer Protection (Greenwashing Prevention) Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-12-02</span></li>
+        <li><b>Bill 31</b> — Energy Statutes Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-11-27, chapter 23</span></li>
+        <li><b>Bill 30</b> — Employment Standards (Serious Illness or Injury Leave) Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-11-27, chapter 27</span></li>
+        <li><b>Bill 25</b> — Housing and Municipal Affairs Statutes Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-11-27, chapter 26</span></li>
+        <li><b>Bill 21</b> — Attorney General Statutes Amendment Act (No. 2), 2025 <span class="pr-meta">· Received Royal Assent on 2025-11-27, chapter 25</span></li>
+        <li><b>Bill 20</b> — Construction Prompt Payment Act <span class="pr-meta">· Received Royal Assent on 2025-11-27, chapter 24</span></li>
+        <li><b>Bill M 225</b> — Secure Procurement in Respect of China Act <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-11-26</span></li>
+        <li><b>Bill M 224</b> — Insurance (Vehicle) Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-11-24</span></li>
+        <li><b>Bill M 223</b> — Interpretation Amendment Act (No. 2), 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-11-19</span></li>
+        <li><b>Bill M 222</b> — Short-Term Rental Accommodations Amendment  Act (No. 2), 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-11-19</span></li>
+        <li><b>Bill M 221</b> — Short-Term Rental Accommodations Amendment  Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-11-19</span></li>
+        <li><b>Bill M 216</b> — Professional Reliance Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2025-11-17</span></li>
+        <li><b>Bill M 220</b> — Municipal Affairs Statutes Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-10-30</span></li>
+        <li><b>Bill M 219</b> — Health Authorities Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-10-30</span></li>
+        <li><b>Bill M 210</b> — Korean Heritage Month Act <span class="pr-meta">· Received Royal Assent on 2025-10-30, chapter 17</span></li>
+        <li><b>Bill 27</b> — Miscellaneous Statutes Amendment Act (No. 2), 2025 <span class="pr-meta">· Received Royal Assent on 2025-10-30, chapter 19</span></li>
+        <li><b>Bill 19</b> — School Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-10-30, chapter 22</span></li>
+        <li><b>Bill 18</b> — Sexual Violence Policy Act <span class="pr-meta">· Received Royal Assent on 2025-10-30, chapter 20</span></li>
+        <li><b>Bill 17</b> — Intimate Images Protection Statutes Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-10-30, chapter 21</span></li>
+        <li><b>Bill 12</b> — Motor Vehicle Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-10-30, chapter 18</span></li>
+        <li><b>Bill 10</b> — Attorney General Statutes Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-10-30, chapter 16</span></li>
+        <li><b>Bill 9</b> — Health Care Costs Recovery Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-10-30, chapter 15</span></li>
+        <li><b>Bill M 218</b> — Residential Tenancy Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-10-28</span></li>
+        <li><b>Bill 26</b> — Vancouver Charter Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-10-09</span></li>
+        <li><b>Bill M 215</b> — Parental Transparency and Age-Appropriate Education Act <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-05-29</span></li>
+        <li><b>Bill M 204</b> — Perinatal and Postnatal Mental Health Strategy Act <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 8</span></li>
+        <li><b>Bill M 202</b> — Eligibility to Hold Public Office Act <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 9</span></li>
+        <li><b>Bill 16</b> — Supply Act, 2025–2026 <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 14</span></li>
+        <li><b>Bill 15</b> — Infrastructure Projects Act <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 13</span></li>
+        <li><b>Bill 14</b> — Renewable Energy Projects (Streamlined Permitting) Act <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 12</span></li>
+        <li><b>Bill 13</b> — Miscellaneous Statutes Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 7</span></li>
+        <li><b>Bill 11</b> — Employment Standards Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 6</span></li>
+        <li><b>Bill 7</b> — Economic Stabilization (Tariff Response) Act <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 11</span></li>
+        <li><b>Bill 5</b> — Budget Measures Implementation Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-05-29, chapter 10</span></li>
+        <li><b>Bill M 213</b> — Drug Use Prevention Education in Schools Act <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-05-06</span></li>
+        <li><b>Bill M 212</b> — Income Tax (Grocery Rebate Guarantee) Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-04-16</span></li>
+        <li><b>Bill M 211</b> — Zero-Emission Vehicles Repeal Act <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-04-10</span></li>
+        <li><b>Bill M 209</b> — Tax Relief and Tariff Defence Act <span class="pr-meta">· Ruled out of order by the Speaker: it cannot proceed</span></li>
+        <li><b>Bill M 205</b> — Mental Health Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-04-07</span></li>
+        <li><b>Bill M 208</b> — Emergency and Disaster Management Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-04-03</span></li>
+        <li><b>Bill M 207</b> — Greenhouse Gas Industrial Reporting and Control Repeal Act  <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-04-01</span></li>
+        <li><b>Bill 8</b> — Carbon Tax Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-03-31, chapter 5</span></li>
+        <li><b>Bill 6</b> — Supply Act (No. 1), 2025 <span class="pr-meta">· Received Royal Assent on 2025-03-31, chapter 4</span></li>
+        <li><b>Bill 4</b> — Business Practices and Consumer Protection Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-03-31, chapter 3</span></li>
+        <li><b>Bill 3</b> — Protected Areas of British Columbia Amendment Act, 2025 <span class="pr-meta">· Received Royal Assent on 2025-03-31, chapter 2</span></li>
+        <li><b>Bill 2</b> — Acting Conflict of Interest Commissioner Continuation Act <span class="pr-meta">· Received Royal Assent on 2025-03-31, chapter 1</span></li>
+        <li><b>Bill M 206</b> — Interpretation (Pacific Daylight Time) Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-03-13</span></li>
+        <li><b>Bill M 203</b> — Free Trade and Mobility Within Canada Act <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-03-04</span></li>
+        <li><b>Bill M 201</b> — Low Carbon Fuels Amendment Act, 2025 <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-02-26</span></li>
+        <li><b>Bill 1</b> — An Act to Ensure the Supremacy of Parliament <span class="pr-meta">· Died on the Order Paper at the end of session 1, last stage on 2025-02-18</span></li>
+      </ul>
+      <p class="pr-note">All 102 bills, from the most recently active to the oldest. The full text of each one: <a href="https://www.leg.bc.ca/" rel="noopener">leg.bc.ca</a>.<noscript> Filters, search and the details of each card need JavaScript.</noscript></p>
+    </div>
+
+    <!-- Explainer « challenger » : adapté au VRAI mécanisme du site (compte
+         requis, 1 demande par personne, paliers 500/1000) — la maquette disait
+         « pas de compte requis », ce qui ne correspond pas à la réalité.
+         N.-B. (Martin, 7 nov. 2026) : gardée, avec le bouton des cartes. -->
+    <div class="band band-yellow bleed" id="band-challenge-explainer">
+      <h2 data-i18n="chexp.h">✋ What is “challenging”?</h2>
+      <p data-i18n="chexp.p1">One click on “Ask for an explanation” = a citizen request for the bill's sponsor to explain it in plain language, and for us to keep an eye on it together.</p>
+      <p data-i18n="chexp.p2"><b>An account (email) is required</b> — one request per person, no anonymous requests.</p>
+      <p data-i18n="chexp.p3">In British Columbia, these requests lead to nothing official: the Assembly has no online petitions, unlike Quebec or the House of Commons. For now, it is a simple way to see which laws trouble people. Some day, an elected member may find a use for it.</p>
+    </div>
+
+    <!-- Reste des projets (3e et suivants) — la bande jaune ci-dessus
+         s'intercale ainsi entre le 2e et le 3e projet. -->
+    <div id="billsListRest"></div>
+  </section>
+
+  <!-- MINISTRES & DÉPUTÉS -->
+  
+
+  <!-- PROJETS DE LOI -->
+  
+
+  <!-- VOTES -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+  <!-- N.-B. (Martin, 7 nov. 2026) : vue de l'abonnement retirée pour l'instant (à reprendre de DossierQuébec). -->
+
+  <!-- ARCHIVES (Martin, 9 novembre 2026). La 43e législature est terminée depuis le 22 septembre.
+       Dès que la 44e aura publié ses député·e·s et son conseil des ministres, tout ce que le site
+       montre aujourd'hui — projets, votes, député·e·s, ministres — bascule ici. La liste est
+       remplie par renderArchives (commun/dq.js) à partir de data/archives/index.json : tant que
+       la 43e est celle qui vit, la page le dit plutôt que de montrer une liste vide. -->
+  
+
+  <!-- REPRÉSENTEZ VOTRE VILLE (Martin, 9 novembre 2026). Jusqu'ici la pastille « Villes » envoyait
+       vers le formulaire de DossierQuébec : quelqu'un de Kelowna atterrissait sur un site qui
+       parle du Québec, avec une liste de villes québécoises. DossierBC a maintenant la sienne,
+       avec les villes de la Colombie-Britannique et leurs prix. Le formulaire poste sur
+       /api/represente, qui envoie le tout par courriel — rien n'est promis, on mesure la demande.
+       Les textes vivent en double (.fr-txt / .en-txt) comme sur la page de DossierQuébec, pas en
+       clés data-i18n : c'est une page à part, qui ne sert qu'ici. -->
+  
+
+  <!-- LEXIQUE (fusion : personnes, lexique, apropos) -->
+  
+
+  <!-- PAGE CACHÉE — la BD « l'idée derrière le site ». Aucun onglet n'y mène :
+       accessible seulement par le « et moi » du bas de page (à côté de
+       « Construit avec Claude »). goToTab('bd') fonctionne sans bouton d'onglet. -->
+  <!-- /mon-dossier : l'espace de la personne connectée, côté ASSEMBLÉE seulement (Martin,
+       22 sept. 2026 : « mes dossiers provincial et les villes doivent être complètement séparés »).
+       Les villes y ont leur section (#villes) depuis le 30 sept. 2026 ; avant, /mes-dossiers. Tout le contenu
+       est rempli par commun/dq.js (renderMonDossier) : rien de personnel n'est dans le HTML. -->
+  <!-- LES RÈGLES (Martin, 5 oct. 2026 : « on pourrait quasiment faire une page de ça… à côté de
+       Facebook »). Les règles de sources du site, écrites une fois pour être montrées à quelqu'un :
+       tout ce que les encadrés de méthode disent page par page, réuni. Lien dans le pied de page. -->
+  
+
+  <!-- LA PAGE 404 (Martin, 6 oct. 2026 : « faut une page drôle 404 », puis : avec le jaune et tout
+       le kit du site, « morte dans l'œuf », et pas de blanc sur noir). Vercel sert 404.html, avec le
+       code 404, pour toute adresse qui n'existe pas ; avant, c'était le message brut de l'hébergeur,
+       en anglais. Fabriquée comme les autres pages (scripts/build-section-pages.js, vue
+       « introuvable »), donc avec l'en-tête, le menu et le pied du site.
+       « Morte dans l'œuf » est le libellé des projets de loi jamais rendus plus loin que la
+       présentation. Le faux vote est ÉTIQUETÉ comme une blague : ce site n'invente jamais de donnée. -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+
+  
+
+  
+
+</div>
+
+<!-- Footer maquette : texte à gauche (avec « construit avec Claude » suivi du
+     lien caché « et moi » vers la BD), liens texte en majuscules à droite. -->
+<footer>
+  <nav class="footer-nav" aria-label="Plan du site">
+    <a href="/" data-i18n="nav.apercu">Overview</a>
+    <a href="/ministres" data-i18n="nav.ministres">Ministers</a>
+    <a href="/projets-de-loi" data-i18n="nav.projets">Bills</a>
+    <a href="/votes" data-i18n="nav.votes">Votes</a>
+    <a href="/lexique" data-i18n="nav.lexique">Glossary</a>
+    <a href="/sources" data-i18n="fil.bd">Site updates</a>
+    <a href="/mon-dossier" data-i18n="nav.mondossier">My file</a>
+    <span class="footer-nav-villes"><span data-i18n="footer.villes">Cities:</span>
+      <a class="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a>
+    </span>
+  </nav>
+  <div class="footer-inner">
+  <span class="footer-left-line"><span id="footerLeft">Site non officiel — données publiques de l'Assemblée législative de la Colombie-Britannique ·</span> <span id="footerRight">Une réalisation de</span> <a class="footer-etmoi" id="footerDafr" href="https://www.dafrsolution.com" target="_blank" rel="noopener">DAFR Solution</a></span>
+  <span class="footer-right-group">
+    <a class="footer-gh" href="/regles" data-i18n="footer.regles">The rules</a>
+    <!-- N.-B. (Martin, 7 nov. 2026) : abonnement, café, flux RSS des abonné·e·s et crédit Flaticon retirés pour l'instant. -->
+    <a class="footer-gh" href="https://github.com/GrandFFormat/dossierbc" target="_blank" rel="noopener" data-i18n="footer.source">Source code</a>
+    <!-- La langue aussi en pied de page, comme sur le cahier. Son texte est écrit par
+         applyLanguage() : « Français » quand on lit l'anglais, « English » quand on lit le
+         français. -->
+    <a class="footer-gh" id="langToggleFooter" href="#" role="button">Français</a>
+  </span>
+  </div>
+</footer>
+
+<button id="backToTop" class="dq-remonter" aria-label="Remonter en haut" title="Remonter en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/commun/apercu.js"></script>
+<script src="/commun/dq.js"></script>
+<!-- Vercel Web Analytics — sans cookie, sans donnée personnelle (donc pas de
+     bannière de consentement requise). Le script est servi automatiquement par
+     Vercel quand Web Analytics est activé dans le tableau de bord du projet. -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

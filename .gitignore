@@ -1,0 +1,18 @@
+.env
+api.env
+node_modules/
+.claude/settings.local.json
+
+# Écritures en deux temps (fichier voisin, puis renommage) : un .tmp resté là après un run
+# interrompu ne doit pas être ramassé par le « git add » du workflow.
+data/*.tmp
+*/data/*.tmp
+
+# Textes officiels des projets de loi : cache local des scrapers, relus sur leg.bc.ca au besoin.
+# Ils ne sont pas à nous — leg.bc.ca réserve la reproduction de son contenu — et ils sont
+# régénérables : ils n'ont rien à faire dans un dépôt public.
+data/textes/
+
+# Captures d'écran : jamais dans un dépôt public (règle de Martin, 8 nov. 2026).
+*.capture.png
+captures/

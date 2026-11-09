@@ -1,0 +1,368 @@
+{
+ "elus": {
+  "2": {
+   "name": "Brittny Anderson",
+   "party": "NDP"
+  },
+  "5": {
+   "name": "Brenda Bailey",
+   "party": "NDP"
+  },
+  "7": {
+   "name": "Bruce Banman",
+   "party": "IND"
+  },
+  "8": {
+   "name": "Lisa Beare",
+   "party": "NDP"
+  },
+  "9": {
+   "name": "Garry Begg",
+   "party": "NDP"
+  },
+  "12": {
+   "name": "Jagrup Brar",
+   "party": "NDP"
+  },
+  "13": {
+   "name": "Spencer Chandra Herbert",
+   "party": "NDP"
+  },
+  "14": {
+   "name": "Susie Chant",
+   "party": "NDP"
+  },
+  "16": {
+   "name": "Raj Chouhan",
+   "party": "NDP"
+  },
+  "17": {
+   "name": "George Chow",
+   "party": "NDP"
+  },
+  "26": {
+   "name": "Adrian Dix",
+   "party": "NDP"
+  },
+  "27": {
+   "name": "Lorne Doerkson",
+   "party": "CON"
+  },
+  "30": {
+   "name": "David Eby",
+   "party": "NDP"
+  },
+  "31": {
+   "name": "Mable Elmore",
+   "party": "NDP"
+  },
+  "33": {
+   "name": "Mike Farnworth",
+   "party": "NDP"
+  },
+  "36": {
+   "name": "Rick Glumac",
+   "party": "NDP"
+  },
+  "37": {
+   "name": "Kelly Greene",
+   "party": "NDP"
+  },
+  "38": {
+   "name": "Trevor Halford",
+   "party": "CON"
+  },
+  "40": {
+   "name": "Ravi Kahlon",
+   "party": "NDP"
+  },
+  "41": {
+   "name": "Anne Kang",
+   "party": "NDP"
+  },
+  "47": {
+   "name": "Grace Lore",
+   "party": "NDP"
+  },
+  "48": {
+   "name": "Bowinn Ma",
+   "party": "NDP"
+  },
+  "49": {
+   "name": "Sheila Malcolmson",
+   "party": "NDP"
+  },
+  "52": {
+   "name": "Peter Milobar",
+   "party": "IND"
+  },
+  "56": {
+   "name": "Josie Osborne",
+   "party": "NDP"
+  },
+  "58": {
+   "name": "Ravi Parmar",
+   "party": "NDP"
+  },
+  "59": {
+   "name": "Ian Paton",
+   "party": "IND"
+  },
+  "61": {
+   "name": "Lana Popham",
+   "party": "NDP"
+  },
+  "67": {
+   "name": "Janet Routledge",
+   "party": "NDP"
+  },
+  "70": {
+   "name": "John Rustad",
+   "party": "CON"
+  },
+  "71": {
+   "name": "Harwinder Sandhu",
+   "party": "NDP"
+  },
+  "72": {
+   "name": "Niki Sharma",
+   "party": "NDP"
+  },
+  "82": {
+   "name": "Elenore Sturko",
+   "party": "IND"
+  },
+  "85": {
+   "name": "Teresa Wat",
+   "party": "IND"
+  },
+  "86": {
+   "name": "Jennifer Whiteside",
+   "party": "NDP"
+  },
+  "147": {
+   "name": "Jodie Wickens",
+   "party": "NDP"
+  },
+  "355": {
+   "name": "Jeremy Valeriote",
+   "party": "VERT"
+  },
+  "357": {
+   "name": "Korky Neufeld",
+   "party": "CON"
+  },
+  "358": {
+   "name": "Donegal Wilson",
+   "party": "IND"
+  },
+  "359": {
+   "name": "Sharon Hartwell",
+   "party": "CON"
+  },
+  "360": {
+   "name": "Rohini Arora",
+   "party": "NDP"
+  },
+  "361": {
+   "name": "Paul Choi",
+   "party": "NDP"
+  },
+  "362": {
+   "name": "Heather Maahs",
+   "party": "CON"
+  },
+  "363": {
+   "name": "Á'a:líya Warbus",
+   "party": "IND"
+  },
+  "364": {
+   "name": "Scott McInnis",
+   "party": "CON"
+  },
+  "366": {
+   "name": "Jennifer Blatherwick",
+   "party": "NDP"
+  },
+  "367": {
+   "name": "Brennan Day",
+   "party": "IND"
+  },
+  "368": {
+   "name": "Qwulti'stunaat - Debra Toporowski",
+   "party": "NDP"
+  },
+  "370": {
+   "name": "Darlene Rotchford",
+   "party": "NDP"
+  },
+  "371": {
+   "name": "Tony Luck",
+   "party": "CON"
+  },
+  "372": {
+   "name": "Dana Lajeunesse",
+   "party": "NDP"
+  },
+  "373": {
+   "name": "Ward Stamer",
+   "party": "CON"
+  },
+  "374": {
+   "name": "Tara Armstrong",
+   "party": "IND"
+  },
+  "375": {
+   "name": "Gavin Dew",
+   "party": "CON"
+  },
+  "376": {
+   "name": "Steve Morissette",
+   "party": "NDP"
+  },
+  "377": {
+   "name": "Pete Davis",
+   "party": "CON"
+  },
+  "378": {
+   "name": "Stephanie Higginson",
+   "party": "NDP"
+  },
+  "379": {
+   "name": "Harman Bhangu",
+   "party": "CON"
+  },
+  "380": {
+   "name": "Misty Van Popta",
+   "party": "CON"
+  },
+  "381": {
+   "name": "Jody Toor",
+   "party": "CON"
+  },
+  "382": {
+   "name": "Lawrence Mok",
+   "party": "CON"
+  },
+  "383": {
+   "name": "George Anderson",
+   "party": "NDP"
+  },
+  "384": {
+   "name": "Laanas - Tamara Davidson",
+   "party": "NDP"
+  },
+  "385": {
+   "name": "Anna Kindy",
+   "party": "CON"
+  },
+  "386": {
+   "name": "Diana Gibson",
+   "party": "NDP"
+  },
+  "387": {
+   "name": "Jordan Kealy",
+   "party": "IND"
+  },
+  "388": {
+   "name": "Larry Neufeld",
+   "party": "CON"
+  },
+  "389": {
+   "name": "Amelia Boultbee",
+   "party": "NDP"
+  },
+  "390": {
+   "name": "Randene Neill",
+   "party": "NDP"
+  },
+  "391": {
+   "name": "Kiel Giddens",
+   "party": "CON"
+  },
+  "392": {
+   "name": "Sheldon Clare",
+   "party": "CON"
+  },
+  "393": {
+   "name": "Rosalyn Bird",
+   "party": "IND"
+  },
+  "394": {
+   "name": "Hon Chan",
+   "party": "IND"
+  },
+  "395": {
+   "name": "Steve Kooner",
+   "party": "CON"
+  },
+  "396": {
+   "name": "Rob Botterell",
+   "party": "VERT"
+  },
+  "397": {
+   "name": "David Williams",
+   "party": "CON"
+  },
+  "398": {
+   "name": "Claire Rattée",
+   "party": "CON"
+  },
+  "399": {
+   "name": "Amna Shah",
+   "party": "NDP"
+  },
+  "400": {
+   "name": "Mandeep Dhaliwal",
+   "party": "CON"
+  },
+  "401": {
+   "name": "Brent Chapman",
+   "party": "CON"
+  },
+  "402": {
+   "name": "Jessie Sunner",
+   "party": "NDP"
+  },
+  "403": {
+   "name": "Bryan Tepper",
+   "party": "CON"
+  },
+  "404": {
+   "name": "Linda Hepner",
+   "party": "CON"
+  },
+  "405": {
+   "name": "Sunita Dhir",
+   "party": "NDP"
+  },
+  "406": {
+   "name": "Christine Boyle",
+   "party": "NDP"
+  },
+  "407": {
+   "name": "Dallas Brodie",
+   "party": "IND"
+  },
+  "408": {
+   "name": "Terry Yung",
+   "party": "NDP"
+  },
+  "409": {
+   "name": "Nina Krieger",
+   "party": "NDP"
+  },
+  "410": {
+   "name": "Macklin McCall",
+   "party": "CON"
+  },
+  "411": {
+   "name": "Lynne Block",
+   "party": "CON"
+  },
+  "412": {
+   "name": "Kristina Loewen",
+   "party": "CON"
+  }
+ }
+}

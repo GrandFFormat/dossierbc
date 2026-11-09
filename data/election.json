@@ -1,0 +1,62 @@
+{
+  "luLe": "2026-11-09T02:35:06.183Z",
+  "lueLeJour": "2026-11-09",
+  "source": "https://en.wikipedia.org/wiki/2026_British_Columbia_general_election",
+  "sourceNom": "Wikipedia",
+  "avis": "Résultats lus sur Wikipédia, faute de source officielle lisible : elections.bc.ca interdit la lecture automatisée, et l'Assemblée ne publie ses député·e·s qu'à la réception des résultats certifiés.",
+  "scrutin": "2026-10-24",
+  "siegesTotal": 93,
+  "majorite": 47,
+  "gagnant": "CON",
+  "majoritaire": true,
+  "partis": [
+    {
+      "nom": "Conservative",
+      "code": "CON",
+      "chef": "Lorne Doerkson",
+      "interimaire": true,
+      "sieges": 64,
+      "pourcentVote": 48.06
+    },
+    {
+      "nom": "New Democratic",
+      "code": "NDP",
+      "chef": "David Eby",
+      "interimaire": false,
+      "sieges": 27,
+      "pourcentVote": 37.37
+    },
+    {
+      "nom": "Green",
+      "code": "VERT",
+      "chef": "Emily Lowan",
+      "interimaire": false,
+      "sieges": 2,
+      "pourcentVote": 10.97
+    },
+    {
+      "nom": "CentreBC",
+      "code": null,
+      "chef": "Elenore Sturko",
+      "interimaire": false,
+      "sieges": 0,
+      "pourcentVote": 1.62
+    },
+    {
+      "nom": "OneBC",
+      "code": null,
+      "chef": "Dallas Brodie",
+      "interimaire": true,
+      "sieges": 0,
+      "pourcentVote": 1.51
+    },
+    {
+      "nom": "Independent and No Affiliation",
+      "code": "IND",
+      "chef": null,
+      "interimaire": false,
+      "sieges": 0,
+      "pourcentVote": 0.33
+    }
+  ]
+}

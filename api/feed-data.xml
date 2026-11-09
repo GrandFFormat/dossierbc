@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DossierBC — Quoi de neuf</title>
+    <link>https://dossierbc.ca/</link>
+    <atom:link href="https://dossierbc.ca/api/feed-data.xml" rel="self" type="application/rss+xml"/>
+    <description>Dépôts et sanctions de projets de loi, journées de votes nominatifs à l'Assemblée législative de la Colombie-Britannique. Site citoyen indépendant, données publiques officielles.</description>
+    <language>fr-CA</language>
+    <lastBuildDate>Sun, 08 Nov 2026 14:04:22 GMT</lastBuildDate>
+    <item>
+      <title>Dépôt du projet de loi n° 249 — Pharmaceutical Risk Management and Accountability Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/249-43-2</link>
+      <guid isPermaLink="false">depot-249-2026-05-28</guid>
+      <pubDate>Thu, 28 May 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 249 — Pharmaceutical Risk Management and Accountability Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 217 — Dashboard Cameras in Commercial Vehicles Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/217-43-2</link>
+      <guid isPermaLink="false">sanction-217-2026-05-28</guid>
+      <pubDate>Thu, 28 May 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 217 — Dashboard Cameras in Commercial Vehicles Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 22 — Supply Act, 2026-2027</title>
+      <link>https://dossierbc.ca/projets-de-loi/22-43-2</link>
+      <guid isPermaLink="false">depot-22-2026-05-28</guid>
+      <pubDate>Thu, 28 May 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 22 — Supply Act, 2026-2027</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 22 — Supply Act, 2026-2027</title>
+      <link>https://dossierbc.ca/projets-de-loi/22-43-2</link>
+      <guid isPermaLink="false">sanction-22-2026-05-28</guid>
+      <pubDate>Thu, 28 May 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 22 — Supply Act, 2026-2027</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 20 — K'ómoks Treaty Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/20-43-2</link>
+      <guid isPermaLink="false">sanction-20-2026-05-28</guid>
+      <pubDate>Thu, 28 May 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 20 — K'ómoks Treaty Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 9 — Freedom of Information and Protection of Privacy Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/9-43-2</link>
+      <guid isPermaLink="false">sanction-9-2026-05-28</guid>
+      <pubDate>Thu, 28 May 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 9 — Freedom of Information and Protection of Privacy Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>3 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-05-28</guid>
+      <pubDate>Thu, 28 May 2026 16:00:00 GMT</pubDate>
+      <description>3 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 248 — Chinese Heritage Month Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/248-43-2</link>
+      <guid isPermaLink="false">depot-248-2026-05-27</guid>
+      <pubDate>Wed, 27 May 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 248 — Chinese Heritage Month Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 247 — Crown Land and Financial Transparency Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/247-43-2</link>
+      <guid isPermaLink="false">depot-247-2026-05-26</guid>
+      <pubDate>Tue, 26 May 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 247 — Crown Land and Financial Transparency Act</description>
+    </item>
+    <item>
+      <title>4 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-05-26</guid>
+      <pubDate>Tue, 26 May 2026 16:00:00 GMT</pubDate>
+      <description>4 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>2 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-05-25</guid>
+      <pubDate>Mon, 25 May 2026 16:00:00 GMT</pubDate>
+      <description>2 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 246 — Small Farms Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/246-43-2</link>
+      <guid isPermaLink="false">depot-246-2026-05-21</guid>
+      <pubDate>Thu, 21 May 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 246 — Small Farms Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 245 — Young Workers Income Tax Relief Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/245-43-2</link>
+      <guid isPermaLink="false">depot-245-2026-05-21</guid>
+      <pubDate>Thu, 21 May 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 245 — Young Workers Income Tax Relief Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 231 — Veterans and First Responders Month Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/231-43-2</link>
+      <guid isPermaLink="false">sanction-231-2026-05-21</guid>
+      <pubDate>Thu, 21 May 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 231 — Veterans and First Responders Month Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 16 — Miscellaneous Statutes Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/16-43-2</link>
+      <guid isPermaLink="false">sanction-16-2026-05-21</guid>
+      <pubDate>Thu, 21 May 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 16 — Miscellaneous Statutes Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 14 — Forests Statutes Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/14-43-2</link>
+      <guid isPermaLink="false">sanction-14-2026-05-21</guid>
+      <pubDate>Thu, 21 May 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 14 — Forests Statutes Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>3 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-05-21</guid>
+      <pubDate>Thu, 21 May 2026 16:00:00 GMT</pubDate>
+      <description>3 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>3 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-05-20</guid>
+      <pubDate>Wed, 20 May 2026 16:00:00 GMT</pubDate>
+      <description>3 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>2 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-05-19</guid>
+      <pubDate>Tue, 19 May 2026 16:00:00 GMT</pubDate>
+      <description>2 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 244 — Home Rental Fairness Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/244-43-2</link>
+      <guid isPermaLink="false">depot-244-2026-05-07</guid>
+      <pubDate>Thu, 07 May 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 244 — Home Rental Fairness Act</description>
+    </item>
+    <item>
+      <title>5 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-05-06</guid>
+      <pubDate>Wed, 06 May 2026 16:00:00 GMT</pubDate>
+      <description>5 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>2 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-05-04</guid>
+      <pubDate>Mon, 04 May 2026 16:00:00 GMT</pubDate>
+      <description>2 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>2 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-04-28</guid>
+      <pubDate>Tue, 28 Apr 2026 16:00:00 GMT</pubDate>
+      <description>2 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>1 vote nominatif tenu à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-04-27</guid>
+      <pubDate>Mon, 27 Apr 2026 16:00:00 GMT</pubDate>
+      <description>1 vote nominatif tenu à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>2 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-04-22</guid>
+      <pubDate>Wed, 22 Apr 2026 16:00:00 GMT</pubDate>
+      <description>2 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>1 vote nominatif tenu à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-04-21</guid>
+      <pubDate>Tue, 21 Apr 2026 16:00:00 GMT</pubDate>
+      <description>1 vote nominatif tenu à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>1 vote nominatif tenu à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-04-20</guid>
+      <pubDate>Mon, 20 Apr 2026 16:00:00 GMT</pubDate>
+      <description>1 vote nominatif tenu à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 243 — Speculation and Vacancy Tax Repeal Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/243-43-2</link>
+      <guid isPermaLink="false">depot-243-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 243 — Speculation and Vacancy Tax Repeal Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 214 — Firefighters' Health Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/214-43-2</link>
+      <guid isPermaLink="false">sanction-214-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 214 — Firefighters' Health Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 15 — Environmental Assessment Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/15-43-2</link>
+      <guid isPermaLink="false">sanction-15-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 15 — Environmental Assessment Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 13 — Safe Access to Places of Public Worship Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/13-43-2</link>
+      <guid isPermaLink="false">sanction-13-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 13 — Safe Access to Places of Public Worship Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 12 — Safe Access to Schools Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/12-43-2</link>
+      <guid isPermaLink="false">sanction-12-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 12 — Safe Access to Schools Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 11 — Residential Tenancy Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/11-43-2</link>
+      <guid isPermaLink="false">sanction-11-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 11 — Residential Tenancy Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 10 — Labour Statutes Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/10-43-2</link>
+      <guid isPermaLink="false">sanction-10-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 10 — Labour Statutes Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 8 — Civil Forfeiture Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/8-43-2</link>
+      <guid isPermaLink="false">sanction-8-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 8 — Civil Forfeiture Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 6 — Motor Vehicle Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/6-43-2</link>
+      <guid isPermaLink="false">sanction-6-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 6 — Motor Vehicle Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 2 — Budget Measures Implementation Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/2-43-2</link>
+      <guid isPermaLink="false">sanction-2-2026-04-16</guid>
+      <pubDate>Thu, 16 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 2 — Budget Measures Implementation Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 21 — Kitselas Treaty Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/21-43-2</link>
+      <guid isPermaLink="false">depot-21-2026-04-15</guid>
+      <pubDate>Wed, 15 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 21 — Kitselas Treaty Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 20 — K'ómoks Treaty Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/20-43-2</link>
+      <guid isPermaLink="false">depot-20-2026-04-14</guid>
+      <pubDate>Tue, 14 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 20 — K'ómoks Treaty Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 242 — Mental Health (Brain Injury) Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/242-43-2</link>
+      <guid isPermaLink="false">depot-242-2026-04-14</guid>
+      <pubDate>Tue, 14 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 242 — Mental Health (Brain Injury) Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 241 — Interpretation Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/241-43-2</link>
+      <guid isPermaLink="false">depot-241-2026-04-13</guid>
+      <pubDate>Mon, 13 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 241 — Interpretation Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>3 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-04-13</guid>
+      <pubDate>Mon, 13 Apr 2026 16:00:00 GMT</pubDate>
+      <description>3 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 240 — Transparency of Advocacy Organizations Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/240-43-2</link>
+      <guid isPermaLink="false">depot-240-2026-04-02</guid>
+      <pubDate>Thu, 02 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 240 — Transparency of Advocacy Organizations Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 18 — Housing and Municipal Affairs Statutes (Parental Leave) Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/18-43-2</link>
+      <guid isPermaLink="false">depot-18-2026-04-02</guid>
+      <pubDate>Thu, 02 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 18 — Housing and Municipal Affairs Statutes (Parental Leave) Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 17 — Housing and Municipal Affairs Statutes (Codes of Conduct) Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/17-43-2</link>
+      <guid isPermaLink="false">depot-17-2026-04-02</guid>
+      <pubDate>Thu, 02 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 17 — Housing and Municipal Affairs Statutes (Codes of Conduct) Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 16 — Miscellaneous Statutes Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/16-43-2</link>
+      <guid isPermaLink="false">depot-16-2026-04-01</guid>
+      <pubDate>Wed, 01 Apr 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 16 — Miscellaneous Statutes Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>4 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-04-01</guid>
+      <pubDate>Wed, 01 Apr 2026 16:00:00 GMT</pubDate>
+      <description>4 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 15 — Environmental Assessment Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/15-43-2</link>
+      <guid isPermaLink="false">depot-15-2026-03-31</guid>
+      <pubDate>Tue, 31 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 15 — Environmental Assessment Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>1 vote nominatif tenu à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-03-31</guid>
+      <pubDate>Tue, 31 Mar 2026 16:00:00 GMT</pubDate>
+      <description>1 vote nominatif tenu à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 14 — Forests Statutes Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/14-43-2</link>
+      <guid isPermaLink="false">depot-14-2026-03-30</guid>
+      <pubDate>Mon, 30 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 14 — Forests Statutes Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 239 — Aboriginal Title Transparency Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/239-43-2</link>
+      <guid isPermaLink="false">depot-239-2026-03-30</guid>
+      <pubDate>Mon, 30 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 239 — Aboriginal Title Transparency Act</description>
+    </item>
+    <item>
+      <title>1 vote nominatif tenu à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-03-30</guid>
+      <pubDate>Mon, 30 Mar 2026 16:00:00 GMT</pubDate>
+      <description>1 vote nominatif tenu à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 7 — Post-Secondary International Education (Designated Institutions) Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/7-43-2</link>
+      <guid isPermaLink="false">sanction-7-2026-03-12</guid>
+      <pubDate>Thu, 12 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 7 — Post-Secondary International Education (Designated Institutions) Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 5 — Trade Recognition Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/5-43-2</link>
+      <guid isPermaLink="false">sanction-5-2026-03-12</guid>
+      <pubDate>Thu, 12 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 5 — Trade Recognition Act</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 4 — Supply Act (No. 1), 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/4-43-2</link>
+      <guid isPermaLink="false">sanction-4-2026-03-12</guid>
+      <pubDate>Thu, 12 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 4 — Supply Act (No. 1), 2026</description>
+    </item>
+    <item>
+      <title>Sanction du projet de loi n° 3 — Budget Measures Implementation Act (No. 2), 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/3-43-2</link>
+      <guid isPermaLink="false">sanction-3-2026-03-12</guid>
+      <pubDate>Thu, 12 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Sanction du projet de loi n° 3 — Budget Measures Implementation Act (No. 2), 2026</description>
+    </item>
+    <item>
+      <title>3 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-03-12</guid>
+      <pubDate>Thu, 12 Mar 2026 16:00:00 GMT</pubDate>
+      <description>3 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 238 — Health Professions and Occupations Repeal Act (No. 2)</title>
+      <link>https://dossierbc.ca/projets-de-loi/238-43-2</link>
+      <guid isPermaLink="false">depot-238-2026-03-10</guid>
+      <pubDate>Tue, 10 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 238 — Health Professions and Occupations Repeal Act (No. 2)</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 237 — Insurance (Vehicle) Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/237-43-2</link>
+      <guid isPermaLink="false">depot-237-2026-03-09</guid>
+      <pubDate>Mon, 09 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 237 — Insurance (Vehicle) Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 13 — Safe Access to Places of Public Worship Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/13-43-2</link>
+      <guid isPermaLink="false">depot-13-2026-03-09</guid>
+      <pubDate>Mon, 09 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 13 — Safe Access to Places of Public Worship Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 12 — Safe Access to Schools Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/12-43-2</link>
+      <guid isPermaLink="false">depot-12-2026-03-09</guid>
+      <pubDate>Mon, 09 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 12 — Safe Access to Schools Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 236 — Health Professions and Occupations Repeal Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/236-43-2</link>
+      <guid isPermaLink="false">depot-236-2026-03-09</guid>
+      <pubDate>Mon, 09 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 236 — Health Professions and Occupations Repeal Act</description>
+    </item>
+    <item>
+      <title>1 vote nominatif tenu à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-03-09</guid>
+      <pubDate>Mon, 09 Mar 2026 16:00:00 GMT</pubDate>
+      <description>1 vote nominatif tenu à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 235 — Drug Recovery and Community Safety Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/235-43-2</link>
+      <guid isPermaLink="false">depot-235-2026-03-05</guid>
+      <pubDate>Thu, 05 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 235 — Drug Recovery and Community Safety Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 234 — School Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/234-43-2</link>
+      <guid isPermaLink="false">depot-234-2026-03-05</guid>
+      <pubDate>Thu, 05 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 234 — School Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 233 — Public Sector Construction Projects Procurement Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/233-43-2</link>
+      <guid isPermaLink="false">depot-233-2026-03-05</guid>
+      <pubDate>Thu, 05 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 233 — Public Sector Construction Projects Procurement Act</description>
+    </item>
+    <item>
+      <title>5 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-03-05</guid>
+      <pubDate>Thu, 05 Mar 2026 16:00:00 GMT</pubDate>
+      <description>5 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 11 — Residential Tenancy Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/11-43-2</link>
+      <guid isPermaLink="false">depot-11-2026-03-04</guid>
+      <pubDate>Wed, 04 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 11 — Residential Tenancy Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 10 — Labour Statutes Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/10-43-2</link>
+      <guid isPermaLink="false">depot-10-2026-03-04</guid>
+      <pubDate>Wed, 04 Mar 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 10 — Labour Statutes Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 9 — Freedom of Information and Protection of Privacy Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/9-43-2</link>
+      <guid isPermaLink="false">depot-9-2026-02-26</guid>
+      <pubDate>Thu, 26 Feb 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 9 — Freedom of Information and Protection of Privacy Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>3 votes nominatifs tenus à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-02-26</guid>
+      <pubDate>Thu, 26 Feb 2026 16:00:00 GMT</pubDate>
+      <description>3 votes nominatifs tenus à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 232 — Long Term Care Access and Transparency Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/232-43-2</link>
+      <guid isPermaLink="false">depot-232-2026-02-25</guid>
+      <pubDate>Wed, 25 Feb 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 232 — Long Term Care Access and Transparency Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 8 — Civil Forfeiture Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/8-43-2</link>
+      <guid isPermaLink="false">depot-8-2026-02-23</guid>
+      <pubDate>Mon, 23 Feb 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 8 — Civil Forfeiture Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>1 vote nominatif tenu à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-02-23</guid>
+      <pubDate>Mon, 23 Feb 2026 16:00:00 GMT</pubDate>
+      <description>1 vote nominatif tenu à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 231 — Veterans and First Responders Month Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/231-43-2</link>
+      <guid isPermaLink="false">depot-231-2026-02-19</guid>
+      <pubDate>Thu, 19 Feb 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 231 — Veterans and First Responders Month Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 6 — Motor Vehicle Amendment Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/6-43-2</link>
+      <guid isPermaLink="false">depot-6-2026-02-19</guid>
+      <pubDate>Thu, 19 Feb 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 6 — Motor Vehicle Amendment Act, 2026</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 7 — Post-Secondary International Education (Designated Institutions) Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/7-43-2</link>
+      <guid isPermaLink="false">depot-7-2026-02-19</guid>
+      <pubDate>Thu, 19 Feb 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 7 — Post-Secondary International Education (Designated Institutions) Act</description>
+    </item>
+    <item>
+      <title>1 vote nominatif tenu à l'Assemblée.</title>
+      <link>https://dossierbc.ca/votes</link>
+      <guid isPermaLink="false">votes-2026-02-19</guid>
+      <pubDate>Thu, 19 Feb 2026 16:00:00 GMT</pubDate>
+      <description>1 vote nominatif tenu à l'Assemblée.</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 5 — Trade Recognition Act</title>
+      <link>https://dossierbc.ca/projets-de-loi/5-43-2</link>
+      <guid isPermaLink="false">depot-5-2026-02-18</guid>
+      <pubDate>Wed, 18 Feb 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 5 — Trade Recognition Act</description>
+    </item>
+    <item>
+      <title>Dépôt du projet de loi n° 2 — Budget Measures Implementation Act, 2026</title>
+      <link>https://dossierbc.ca/projets-de-loi/2-43-2</link>
+      <guid isPermaLink="false">depot-2-2026-02-17</guid>
+      <pubDate>Tue, 17 Feb 2026 16:00:00 GMT</pubDate>
+      <description>Dépôt du projet de loi n° 2 — Budget Measures Implementation Act, 2026</description>
+    </item>
+  </channel>
+</rss>

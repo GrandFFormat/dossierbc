@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Consentement (Loi 25) : par défaut, Google Analytics n'a PAS le droit de déposer de témoins.
+     La bannière (commun/consentement.js) passe analytics_storage à « granted » après « Accepter ». -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<!-- Mesure d'audience : AUCUNE pour l'instant. La propriété Google Analytics de la
+     Colombie-Britannique n'existe pas encore, et celle du Nouveau-Brunswick a été retirée d'ici
+     pour qu'elle ne reçoive pas ce trafic. Pour la brancher : remettre le bloc gtag.js des autres
+     sites de la famille avec l'identifiant de la nouvelle propriété. Le consentement
+     (commun/consentement.js) et la bande de témoins sont déjà en place et n'attendent que ça. -->
+<!-- Pas de bannière de témoins : il n'y a aucune mesure d'audience sur ce site pour l'instant,
+     donc rien à faire accepter. Elle revient avec le bloc gtag.js, le jour où la propriété
+     Google Analytics de la Colombie-Britannique existera.
+<script src="/commun/consentement.js" defer></script> -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* La langue, avant d'afficher quoi que ce soit — EXACTEMENT la décision de langueDeDepart
+   (commun/dq.js) : « ?lang=fr » dans l'adresse, sinon le choix gardé dans dvq:langue (commun à
+   tout le site) ; en revenant par Précédent ou Suivant, le choix gardé passe avant l'adresse.
+   Le site est ANGLOPHONE : l'anglais est écrit dans le HTML et s'affiche tout de suite. C'est
+   le français qui attend sa traduction, et la page reste cachée le temps que dq.js la fasse :
+   1,5 s au plus, même s'il échoue. lang="fr" n'est posé qu'au moment de traduire (dq.js).
+   Tout est dans une fonction : une variable globale ici entrerait en collision avec les
+   déclarations de dq.js et le ferait planter en entier. */
+(function(){
+  try{
+    var valide = function(l){ return l === 'en' || l === 'fr'; };
+    var gardee = null;
+    try{ gardee = localStorage.getItem('dvq:langue'); }catch(e){}
+    var q = new URLSearchParams(location.search).get('lang');
+    var nav = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+    var parHistorique = !!nav && nav.type === 'back_forward';
+    var choix = (parHistorique && valide(gardee)) ? gardee : (valide(q) ? q : gardee);
+    if(choix !== 'fr') return;
+    var racine = document.documentElement;
+    racine.classList.add('dq-fr');
+    setTimeout(function(){ racine.classList.add('dq-pret'); }, 1500);
+  }catch(e){}
+})();
+</script>
+<title>Adrian Dix, ministre — DossierBC</title>
+<meta name="dvq:titre-fr" content="Adrian Dix, ministre — DossierBC">
+<meta name="description" content="Adrian Dix (NDP, Vancouver-Renfrew) : Minister of Energy and Climate Solutions. Ses fonctions, ses projets de loi, sa présence aux votes et sa biographie.">
+<link rel="canonical" href="https://dossierbc.ca/ministres/adrian-dix">
+<!-- Plus de <link rel="alternate"> vers /feed.xml : le flux RSS est réservé aux abonné·e·s depuis le
+     21 oct. 2026 (api/feed.js), chacun avec son adresse personnelle dans Mon dossier. -->
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E4FC1">
+
+<!-- Open Graph (aperçu au partage : Facebook, LinkedIn, iMessage…) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="Adrian Dix, ministre — DossierBC">
+<meta property="og:description" content="Adrian Dix (NDP, Vancouver-Renfrew) : Minister of Energy and Climate Solutions. Ses fonctions, ses projets de loi, sa présence aux votes et sa biographie.">
+<meta property="og:url" content="https://dossierbc.ca/ministres/adrian-dix">
+<meta property="og:image" content="https://dossierbc.ca/dossierbc-cover.png">
+<meta property="og:image:width" content="1702">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DossierBC — veille citoyenne de l'Assemblée législative de la Colombie-Britannique">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Adrian Dix, ministre — DossierBC">
+<meta name="twitter:description" content="Adrian Dix (NDP, Vancouver-Renfrew) : Minister of Energy and Climate Solutions. Ses fonctions, ses projets de loi, sa présence aux votes et sa biographie.">
+<meta name="twitter:image" content="https://dossierbc.ca/dossierbc-cover.png">
+
+<link rel="icon" type="image/svg+xml" href="/commun/bc.svg">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="/commun/bc-48.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/commun/bc-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/commun/bc-180.png">
+
+<!-- Données structurées (aide Google à comprendre le site) -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Accueil",
+     "item": "https://dossierbc.ca/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Ministres et député·e·s",
+     "item": "https://dossierbc.ca/ministres"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Adrian Dix",
+     "item": "https://dossierbc.ca/ministres/adrian-dix"
+    }
+   ]
+  },
+  {
+   "@type": "Person",
+   "name": "Adrian Dix",
+   "url": "https://dossierbc.ca/ministres/adrian-dix",
+   "jobTitle": [
+    "Minister of Energy and Climate Solutions"
+   ],
+   "memberOf": [
+    {
+     "@type": "PoliticalParty",
+     "name": "NDP"
+    },
+    {
+     "@type": "GovernmentOrganization",
+     "name": "Conseil exécutif de la Colombie-Britannique"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/commun/dq.css">
+<!-- Le design de la Colombie-Britannique, posé par-dessus dq.css. Il apporte ses polices (Barlow
+     et Barlow Condensed, servies par le site depuis commun/polices/) : plus rien n'est chargé
+     chez Google Fonts, et le cahier de design est suivi à la lettre. -->
+<link rel="stylesheet" href="/commun/bc.css">
+</head>
+<body data-page="ministre" data-donnees="ministers,deputesRaw,deputeEmails,presences,historiqueLeg,billsParrains,stats,legislatureEtat">
+
+<!-- Ticker brutaliste : bande noire défilante — contenu rempli avec les VRAIES
+     données par renderTicker() (appelé une fois les datasets chargés). -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-text" id="tickerA">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+    <span class="ticker-text" id="tickerB">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<div id="dq-topbar">
+<header class="top">
+  <div class="brand">
+    <div class="brand-text" role="button" tabindex="0" aria-label="Retour à l'aperçu" onclick="goToTab('apercu')">
+      <!-- Volontairement un div, et non un titre de niveau 1 : le nom du site se
+           répète sur chaque page, alors que le titre de niveau 1 doit annoncer
+           le sujet de LA page. C'est le titre de une de la vue active qui joue
+           ce rôle, et le générateur de pages de section s'en assure.
+           (Pas de balise écrite en toutes lettres dans ce commentaire : elle
+           fausserait les outils qui comptent les titres à l'expression
+           régulière.) -->
+      <div class="brand-title"><span class="bc-marque" aria-hidden="true"></span>Dossier<span class="brand-blue">BC</span><span class="brand-ca">.ca</span></div>
+      <p>Qui siège, qui légifère, qui vote quoi</p>
+    </div>
+    <!-- Feuille d'érable : passerelle vers le site fédéral DossierCanada.
+         Flippe jaune ↔ rouge toutes les 20 s (voir le script plus bas). -->
+    <a class="maple-flip" id="mapleFlip" role="button" tabindex="0"
+       title="Aller au site fédéral — DossierCanada"
+       aria-label="Aller au site fédéral — DossierCanada"
+       onclick="goToFederal(event)">
+      <svg viewBox="-2015 -2000 4030 4030" aria-hidden="true"><path fill="currentColor" d="m-90 2030 45-863a95 95 0 0 0-111-98l-859 151 116-320a65 65 0 0 0-20-73l-941-762 212-99a65 65 0 0 0 34-79l-186-572 542 115a65 65 0 0 0 73-38l105-247 423 454a65 65 0 0 0 111-57l-204-1052 327 189a65 65 0 0 0 91-27l332-652 332 652a65 65 0 0 0 91 27l327-189-204 1052a65 65 0 0 0 111 57l423-454 105 247a65 65 0 0 0 73 38l542-115-186 572a65 65 0 0 0 34 79l212 99-941 762a65 65 0 0 0-20 73l116 320-859-151a95 95 0 0 0-111 98l45 863z"/></svg>
+    </a>
+    <!-- LES VILLES, EN PASTILLE (Martin, 9 novembre 2026). Elle était devenue un onglet le
+         7 novembre. Deux raisons de la ramener ici : ce menu ne mène pas à une section du site
+         mais à d'AUTRES sites, et dans la barre il vivait à l'intérieur d'un conteneur qui défile
+         (nav.tabs, overflow-x:auto), qui découpait son panneau et faisait apparaître une barre de
+         défilement en travers des onglets. Hors de la barre, le conflit n'existe pas. -->
+    <details class="villes-menu" id="villesMenu">
+      <summary class="city-flip nav-villes" title="Les volets municipaux" aria-label="Les volets municipaux">
+        <span data-i18n="nav.villes">Cities</span>
+      </summary>
+      <ul>
+        <!-- Aucune ville encore : le seul lien mène au formulaire de DossierQuébec (guide, étape 9). -->
+        <li class="villes-rtv"><a id="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a></li>
+      </ul>
+    </details>
+
+    <!-- Les volets municipaux (DossierVille) : un bouton « Villes » qui ouvre la liste.
+         Vrais liens <a href> : le clavier, le clic du milieu et « ouvrir dans un
+         nouvel onglet » fonctionnent sans une ligne de code. La barre oblique finale
+         est OBLIGATOIRE — sans elle, les chemins relatifs du volet (assets/, data/)
+         se résolvent depuis la racine du site. Plus de rel="nofollow" depuis le
+         21 sept. 2026 : les volets sont ouverts aux moteurs de recherche. Le chemin dit /quebec/ : c'est la
+         liste, sous « Villes », qui dit qu'il s'agit de la ville. -->
+  </div>
+  <!-- Nav DANS la ligne du header (maquette : logo | menu | contrôles sur
+       UNE seule rangée). Sur mobile, le nav devient le panneau plein écran
+       du hamburger (position:fixed), peu importe où il vit dans le DOM. -->
+  <nav class="tabs">
+    <div class="close-menu" id="closeMenuBtn"><span data-i18n="nav.close">Close</span> ✕</div>
+    <!-- De vrais liens, pas des <button> : un moteur de recherche ne suit pas un bouton, et
+         /ministres, /projets-de-loi, /votes et /lexique n'avaient aucun lien qu'il puisse suivre. -->
+    <a href="/" data-view="apercu"><span class="n">01</span><span data-i18n="nav.apercu">Overview</span></a>
+    <a class="active" aria-current="page" href="/ministres" data-view="ministres"><span class="n">02</span><span data-i18n="nav.ministres">Ministers</span></a>
+    <a href="/projets-de-loi" data-view="projets"><span class="n">03</span><span data-i18n="nav.projets">Bills</span></a>
+    <!-- Votes a quitté la barre le 30 oct. 2026 : les votes vivent dans les cartes des projets de
+         loi, et /votes reste lié du pied de page et de la page des projets. -->
+    <!-- Archives : remis dans la barre le 9 novembre 2026 (Martin). La 43e législature est
+         terminée ; ses ministres et ses député·e·s basculeront ici dès que la 44e aura publié les
+         siens. Pas de page Promesses tant que la Colombie-Britannique n'en a pas. -->
+    <a href="/archives" data-view="archives"><span class="n">04</span><span data-i18n="nav.archives">Archives</span></a>
+    <a href="/lexique" data-view="lexique"><span class="n">05</span><span data-i18n="nav.lexique">Glossary</span></a>
+    <a href="/mon-dossier" data-view="mondossier" class="nav-mondossier"><span class="n">★</span><span data-i18n="nav.mondossier">My file</span></a>
+    <!-- Le menu des villes a quitté la barre d'onglets le 9 novembre 2026 : il est redevenu la
+         pastille à côté du nom du site, comme chez DossierQuébec. Voir .brand plus haut. -->
+  </nav>
+  <div class="header-ctrls">
+    <div class="font-size-ctrl" id="fontSizeCtrl">
+      <button id="fontMinus" aria-label="Réduire le texte">A−</button>
+      <span id="fontPct">100%</span>
+      <button id="fontPlus" aria-label="Agrandir le texte">A+</button>
+    </div>
+    <!-- Aucun contenu textuel : l'icône est dessinée en CSS. Le nom accessible
+         vient donc entièrement de aria-label, que le JS tient à jour. -->
+    <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Passer au thème sombre"></button>
+    <button class="lang-toggle" id="langToggle">English</button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+</div>
+
+<script>
+/* Bascule le bloc logo+menu en mode compact après un peu de défilement.
+   Hystérésis (80 vs 20) pour éviter le clignotement autour du seuil. */
+(function(){
+  var bar = document.getElementById('dq-topbar');
+  var compact = false;
+  function onScroll(){
+    var y = window.scrollY;
+    if(!compact && y > 80){ compact = true; bar.classList.add('compact'); }
+    else if(compact && y < 20){ compact = false; bar.classList.remove('compact'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+// Ouvre le site fédéral DossierCanada dans un nouvel onglet.
+function goToFederal(evt){
+  if(evt) evt.stopPropagation();
+  window.open('https://dossiercanada.ca/', '_blank', 'noopener');
+}
+// Feuille d'érable : flippe jaune ↔ rouge toutes les 20 secondes.
+(function(){
+  var leaf = document.getElementById('mapleFlip');
+  if(!leaf) return;
+  setInterval(function(){ leaf.classList.toggle('is-red'); }, 20000);
+})();
+
+// Menu « Villes » : compte les clics vers chaque volet municipal (événement
+// personnalisé Vercel Web Analytics — onglet « Events » du tableau de bord), et
+// referme le menu quand on clique ailleurs ou qu'on appuie sur Échap.
+(function(){
+  var menu = document.getElementById('villesMenu');
+  if(!menu) return;
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if(window.va) window.va('event', { name: 'clic_icone_ville', data: { ville: a.getAttribute('href') } });
+    });
+  });
+  document.addEventListener('click', function(e){ if(menu.open && !menu.contains(e.target)) menu.open = false; });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menu.open){ menu.open = false; menu.querySelector('summary').focus(); } });
+})();
+</script>
+
+<div class="app">
+
+  <!-- APERÇU -->
+  <section class="view active" id="view-ministre">
+    <nav class="fil-ariane" aria-label="Fil d'Ariane"><a href="/" data-i18n="fil.accueil">Accueil</a><span class="sep" aria-hidden="true">›</span><a href="/ministres" data-i18n="fil.ministres">Ministres et député·e·s</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">Adrian Dix</span></nav>
+    <div class="view-hero min-hero">
+      <div class="min-colphoto"></div>
+      <div class="min-tete">
+        <h1 class="hero-h1 hero-h1-md"><span class="hero-sujet"><span class="fr-txt">Ministre de la Colombie-Britannique</span><span class="en-txt">British Columbia minister</span></span><span>Adrian Dix</span></h1>
+        <p class="view-hero-sub"><span class="fr-txt">Adrian Dix était Minister of Energy and Climate Solutions au Conseil exécutif de la 43<sup>e</sup> législature, dirigé par le premier ministre David Eby. Cette législature a pris fin le 22 septembre 2026.</span><span class="en-txt">Adrian Dix was Minister of Energy and Climate Solutions in the Executive Council of the 43rd Parliament, led by Premier David Eby. That Parliament ended on September 22, 2026.</span></p>
+        <button class="follow-btn" onclick="toggleFollow('Adrian Dix')" data-i18n="btn.follow">Suivre</button>
+      </div>
+    </div>
+    <div class="band band-white bleed"><div class="min-fiche">
+      <h2><span class="fr-txt">Fonctions</span><span class="en-txt">Roles</span></h2>
+      <ul class="min-liste"><li>Minister of Energy and Climate Solutions</li></ul>
+      <div class="min-faits">
+        <div class="m-row"><span class="m-label"><span class="fr-txt">Parti</span><span class="en-txt">Party</span></span><span class="m-val">NDP (NDP)</span></div>
+        <div class="m-row"><span class="m-label"><span class="fr-txt">Circonscription</span><span class="en-txt">Riding</span></span><span class="m-val">Vancouver-Renfrew</span></div>
+        <div class="m-row"><span class="m-label"><span class="fr-txt">Mandat</span><span class="en-txt">Term</span></span><span class="m-val"><span class="fr-txt">6e</span><span class="en-txt">no. 6</span></span></div>
+      </div>
+
+      <h2><span class="fr-txt">Projets de loi parrainés</span><span class="en-txt">Bills sponsored</span></h2>
+      <ul class="min-liste"><li><a href="/projets-de-loi/31-43-1"><span class="fr-txt">PL 31 — Energy Statutes Amendment Act, 2025</span><span class="en-txt">Bill 31 — Energy Statutes Amendment Act, 2025</span></a> <span class="pr-meta">· <span class="fr-txt">43e législature</span><span class="en-txt">43th Legislature</span> · <span class="fr-txt">Sanctionné le 2025-11-27, chapitre 23</span><span class="en-txt">Received Royal Assent on 2025-11-27, chapter 23</span></span></li><li><a href="/projets-de-loi/14-43-1"><span class="fr-txt">PL 14 — Renewable Energy Projects (Streamlined Permitting) Act</span><span class="en-txt">Bill 14 — Renewable Energy Projects (Streamlined Permitting) Act</span></a> <span class="pr-meta">· <span class="fr-txt">43e législature</span><span class="en-txt">43th Legislature</span> · <span class="fr-txt">Sanctionné le 2025-05-29, chapitre 12</span><span class="en-txt">Received Royal Assent on 2025-05-29, chapter 12</span></span></li></ul>
+
+      <h2><span class="fr-txt">Présence aux votes</span><span class="en-txt">Vote attendance</span></h2>
+      <p><span class="fr-txt"><b class="presence-pastille presence-haute">100 %</b> des votes nominaux depuis le 10 mars 2025 : 74 sur 74, soit 0 votes manqués (43e législature).</span><span class="en-txt"><b class="presence-pastille presence-haute">100%</b> of recorded divisions since March 10, 2025: 74 of 74, i.e. 0 votes missed (43rd Legislature).</span></p><p class="pr-meta"><span class="fr-txt">Un vote manqué peut être une mission officielle, une maladie ou un conflit d’horaire : le registre n’en donne pas la raison.</span><span class="en-txt">A missed vote can be an official mission, an illness or a scheduling conflict: the register does not give the reason.</span></p>
+
+      <h2><span class="fr-txt">Historique</span><span class="en-txt">History</span></h2>
+      <p><span class="fr-txt">6e mandat à l’Assemblée législative.</span><span class="en-txt">Term no. 6 in the Legislative Assembly.</span></p>
+
+      
+
+      <h2><span class="fr-txt">Biographie</span><span class="en-txt">Biography</span></h2><p><span class="fr-txt">Député de Vancouver-Renfrew (NDP), 6e mandat.</span><span class="en-txt">MLA for Vancouver-Renfrew (NDP), term no. 6.</span></p>
+
+      <h2><span class="fr-txt">Coordonnées officielles</span><span class="en-txt">Official contact</span></h2>
+      <p><a class="m-mail" href="mailto:Adrian.Dix.MLA@leg.bc.ca">✉ Adrian.Dix.MLA@leg.bc.ca</a></p>
+      
+    </div></div>
+  </section>
+
+  <!-- MINISTRES & DÉPUTÉS -->
+  
+
+  <!-- PROJETS DE LOI -->
+  
+
+  <!-- VOTES -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+  <!-- N.-B. (Martin, 7 nov. 2026) : vue de l'abonnement retirée pour l'instant (à reprendre de DossierQuébec). -->
+
+  <!-- ARCHIVES (Martin, 9 novembre 2026). La 43e législature est terminée depuis le 22 septembre.
+       Dès que la 44e aura publié ses député·e·s et son conseil des ministres, tout ce que le site
+       montre aujourd'hui — projets, votes, député·e·s, ministres — bascule ici. La liste est
+       remplie par renderArchives (commun/dq.js) à partir de data/archives/index.json : tant que
+       la 43e est celle qui vit, la page le dit plutôt que de montrer une liste vide. -->
+  
+
+  <!-- REPRÉSENTEZ VOTRE VILLE (Martin, 9 novembre 2026). Jusqu'ici la pastille « Villes » envoyait
+       vers le formulaire de DossierQuébec : quelqu'un de Kelowna atterrissait sur un site qui
+       parle du Québec, avec une liste de villes québécoises. DossierBC a maintenant la sienne,
+       avec les villes de la Colombie-Britannique et leurs prix. Le formulaire poste sur
+       /api/represente, qui envoie le tout par courriel — rien n'est promis, on mesure la demande.
+       Les textes vivent en double (.fr-txt / .en-txt) comme sur la page de DossierQuébec, pas en
+       clés data-i18n : c'est une page à part, qui ne sert qu'ici. -->
+  
+
+  <!-- LEXIQUE (fusion : personnes, lexique, apropos) -->
+  
+
+  <!-- PAGE CACHÉE — la BD « l'idée derrière le site ». Aucun onglet n'y mène :
+       accessible seulement par le « et moi » du bas de page (à côté de
+       « Construit avec Claude »). goToTab('bd') fonctionne sans bouton d'onglet. -->
+  <!-- /mon-dossier : l'espace de la personne connectée, côté ASSEMBLÉE seulement (Martin,
+       22 sept. 2026 : « mes dossiers provincial et les villes doivent être complètement séparés »).
+       Les villes y ont leur section (#villes) depuis le 30 sept. 2026 ; avant, /mes-dossiers. Tout le contenu
+       est rempli par commun/dq.js (renderMonDossier) : rien de personnel n'est dans le HTML. -->
+  <!-- LES RÈGLES (Martin, 5 oct. 2026 : « on pourrait quasiment faire une page de ça… à côté de
+       Facebook »). Les règles de sources du site, écrites une fois pour être montrées à quelqu'un :
+       tout ce que les encadrés de méthode disent page par page, réuni. Lien dans le pied de page. -->
+  
+
+  <!-- LA PAGE 404 (Martin, 6 oct. 2026 : « faut une page drôle 404 », puis : avec le jaune et tout
+       le kit du site, « morte dans l'œuf », et pas de blanc sur noir). Vercel sert 404.html, avec le
+       code 404, pour toute adresse qui n'existe pas ; avant, c'était le message brut de l'hébergeur,
+       en anglais. Fabriquée comme les autres pages (scripts/build-section-pages.js, vue
+       « introuvable »), donc avec l'en-tête, le menu et le pied du site.
+       « Morte dans l'œuf » est le libellé des projets de loi jamais rendus plus loin que la
+       présentation. Le faux vote est ÉTIQUETÉ comme une blague : ce site n'invente jamais de donnée. -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+
+  
+
+  
+
+</div>
+
+<!-- Footer maquette : texte à gauche (avec « construit avec Claude » suivi du
+     lien caché « et moi » vers la BD), liens texte en majuscules à droite. -->
+<footer>
+  <nav class="footer-nav" aria-label="Plan du site">
+    <a href="/" data-i18n="nav.apercu">Overview</a>
+    <a href="/ministres" data-i18n="nav.ministres">Ministers</a>
+    <a href="/projets-de-loi" data-i18n="nav.projets">Bills</a>
+    <a href="/votes" data-i18n="nav.votes">Votes</a>
+    <a href="/lexique" data-i18n="nav.lexique">Glossary</a>
+    <a href="/sources" data-i18n="fil.bd">Site updates</a>
+    <a href="/mon-dossier" data-i18n="nav.mondossier">My file</a>
+    <span class="footer-nav-villes"><span data-i18n="footer.villes">Cities:</span>
+      <a class="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a>
+    </span>
+  </nav>
+  <div class="footer-inner">
+  <span class="footer-left-line"><span id="footerLeft">Site non officiel — données publiques de l'Assemblée législative de la Colombie-Britannique ·</span> <span id="footerRight">Une réalisation de</span> <a class="footer-etmoi" id="footerDafr" href="https://www.dafrsolution.com" target="_blank" rel="noopener">DAFR Solution</a></span>
+  <span class="footer-right-group">
+    <a class="footer-gh" href="/regles" data-i18n="footer.regles">The rules</a>
+    <!-- N.-B. (Martin, 7 nov. 2026) : abonnement, café, flux RSS des abonné·e·s et crédit Flaticon retirés pour l'instant. -->
+    <a class="footer-gh" href="https://github.com/GrandFFormat/dossierbc" target="_blank" rel="noopener" data-i18n="footer.source">Source code</a>
+    <!-- La langue aussi en pied de page, comme sur le cahier. Son texte est écrit par
+         applyLanguage() : « Français » quand on lit l'anglais, « English » quand on lit le
+         français. -->
+    <a class="footer-gh" id="langToggleFooter" href="#" role="button">Français</a>
+  </span>
+  </div>
+</footer>
+
+<button id="backToTop" class="dq-remonter" aria-label="Remonter en haut" title="Remonter en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/commun/apercu.js"></script>
+<script src="/commun/dq.js"></script>
+<!-- Vercel Web Analytics — sans cookie, sans donnée personnelle (donc pas de
+     bannière de consentement requise). Le script est servi automatiquement par
+     Vercel quand Web Analytics est activé dans le tableau de bord du projet. -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
