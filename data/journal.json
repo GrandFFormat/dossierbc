@@ -1,0 +1,50 @@
+[
+  {
+    "date": "2026-11-09",
+    "volet": "assemblee",
+    "fr": {
+      "titre": "DossierBC ouvre",
+      "texte": "Le site met en clair les travaux de l'Assemblée législative de la Colombie-Britannique. À l'ouverture : les 102 projets de loi de la 43e législature avec l'étape que chacun a vraiment atteinte, les 130 votes nominatifs nom par nom, les 30 membres du Conseil exécutif et les 91 député·e·s avec leur présence aux votes. Tout est gratuit, sans publicité et sans abonnement. Chaque élément renvoie à sa source sur leg.bc.ca : en cas d'écart, c'est le document officiel qui fait foi."
+    },
+    "en": {
+      "titre": "DossierBC opens",
+      "texte": "The site puts the work of British Columbia's Legislative Assembly in plain language. At launch: the 102 bills of the 43rd Parliament with the stage each has really reached, the 130 recorded divisions name by name, the 30 members of the Executive Council and the 91 MLAs with their attendance at votes. Everything is free, with no advertising and no subscription. Every item links to its source on leg.bc.ca: if they differ, the official document prevails."
+    }
+  },
+  {
+    "date": "2026-11-09",
+    "volet": "assemblee",
+    "fr": {
+      "titre": "Pas encore de résumé en langage clair",
+      "texte": "Les 102 projets de loi n'ont pas de résumé pour l'instant : chaque page le dit et renvoie au texte officiel, plutôt que d'afficher quelque chose d'écrit sans l'avoir lu. Les résumés viendront, et ils diront toujours qu'ils décrivent le projet TEL QUE DÉPOSÉ, pas la version finale après les amendements en comité."
+    },
+    "en": {
+      "titre": "No plain-language summaries yet",
+      "texte": "The 102 bills have no summary for now: each page says so and links to the official text, rather than showing something written without having read it. Summaries will come, and they will always state that they describe the bill AS INTRODUCED, not the final version after committee amendments."
+    }
+  },
+  {
+    "date": "2026-11-09",
+    "volet": "assemblee",
+    "fr": {
+      "titre": "La présence ne compte que les votes de la Chambre",
+      "texte": "56 des 130 divisions de la 43e sont des votes de comité — Committee of the Whole, Committee of Supply — tenus en Section A, B ou C avec huit à douze député·e·s. Les compter aurait fait passer tout le monde pour absent : la médiane de l'Assemblée tombait à 58 %. Le taux affiché ne retient donc que les 74 divisions de la Chambre. Médiane : 100 %. Le marqueur de section est lu dans le procès-verbal, et il concorde sur les 130 divisions."
+    },
+    "en": {
+      "titre": "Attendance counts House divisions only",
+      "texte": "56 of the 130 divisions of the 43rd are committee votes — Committee of the Whole, Committee of Supply — held in Section A, B or C with eight to twelve members. Counting them made almost everyone look absent: the Assembly's median fell to 58%. The published rate therefore keeps only the 74 divisions of the House. Median: 100%. The section marker is read from the Votes and Proceedings, and it agrees on all 130 divisions."
+    }
+  },
+  {
+    "date": "2026-11-09",
+    "volet": "assemblee",
+    "fr": {
+      "titre": "Le résultat du 24 octobre, et ce qui vient après",
+      "texte": "L'accueil et la page des élu·e·s portent la répartition des sièges de l'élection générale du 24 octobre 2026, avec la source nommée et le jour où elle a été lue. La 44e législature est ouverte depuis le 26 octobre, mais elle est encore vide : l'Assemblée publiera ses député·e·s à la réception des résultats certifiés, le 18 novembre 2026. Aucune date de rentrée n'est publiée — le site n'en inventera pas."
+    },
+    "en": {
+      "titre": "The October 24 result, and what comes next",
+      "texte": "The home page and the members page carry the seat split from the October 24, 2026 general election, with the source named and the day it was read. The 44th Parliament has been open since October 26, but it is still empty: the Assembly will publish its members upon receipt of the certified results, on November 18, 2026. No return date has been published — the site will not invent one."
+    }
+  }
+]

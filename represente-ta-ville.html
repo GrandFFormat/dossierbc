@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Consentement (Loi 25) : par défaut, Google Analytics n'a PAS le droit de déposer de témoins.
+     La bannière (commun/consentement.js) passe analytics_storage à « granted » après « Accepter ». -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<!-- Mesure d'audience : AUCUNE pour l'instant. La propriété Google Analytics de la
+     Colombie-Britannique n'existe pas encore, et celle du Nouveau-Brunswick a été retirée d'ici
+     pour qu'elle ne reçoive pas ce trafic. Pour la brancher : remettre le bloc gtag.js des autres
+     sites de la famille avec l'identifiant de la nouvelle propriété. Le consentement
+     (commun/consentement.js) et la bande de témoins sont déjà en place et n'attendent que ça. -->
+<!-- Pas de bannière de témoins : il n'y a aucune mesure d'audience sur ce site pour l'instant,
+     donc rien à faire accepter. Elle revient avec le bloc gtag.js, le jour où la propriété
+     Google Analytics de la Colombie-Britannique existera.
+<script src="/commun/consentement.js" defer></script> -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* La langue, avant d'afficher quoi que ce soit — EXACTEMENT la décision de langueDeDepart
+   (commun/dq.js) : « ?lang=fr » dans l'adresse, sinon le choix gardé dans dvq:langue (commun à
+   tout le site) ; en revenant par Précédent ou Suivant, le choix gardé passe avant l'adresse.
+   Le site est ANGLOPHONE : l'anglais est écrit dans le HTML et s'affiche tout de suite. C'est
+   le français qui attend sa traduction, et la page reste cachée le temps que dq.js la fasse :
+   1,5 s au plus, même s'il échoue. lang="fr" n'est posé qu'au moment de traduire (dq.js).
+   Tout est dans une fonction : une variable globale ici entrerait en collision avec les
+   déclarations de dq.js et le ferait planter en entier. */
+(function(){
+  try{
+    var valide = function(l){ return l === 'en' || l === 'fr'; };
+    var gardee = null;
+    try{ gardee = localStorage.getItem('dvq:langue'); }catch(e){}
+    var q = new URLSearchParams(location.search).get('lang');
+    var nav = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+    var parHistorique = !!nav && nav.type === 'back_forward';
+    var choix = (parHistorique && valide(gardee)) ? gardee : (valide(q) ? q : gardee);
+    if(choix !== 'fr') return;
+    var racine = document.documentElement;
+    racine.classList.add('dq-fr');
+    setTimeout(function(){ racine.classList.add('dq-pret'); }, 1500);
+  }catch(e){}
+})();
+</script>
+<title>Represent your city — DossierBC</title>
+<meta name="description" content="Put your city council's decisions in plain language on DossierBC: how it works, what it costs a sponsoring business, and the price for every B.C. city.">
+<link rel="canonical" href="https://dossierbc.ca/represente-ta-ville">
+<!-- Plus de <link rel="alternate"> vers /feed.xml : le flux RSS est réservé aux abonné·e·s depuis le
+     21 oct. 2026 (api/feed.js), chacun avec son adresse personnelle dans Mon dossier. -->
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E4FC1">
+
+<!-- Open Graph (aperçu au partage : Facebook, LinkedIn, iMessage…) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="Represent your city — DossierBC">
+<meta property="og:description" content="Put your city council's decisions in plain language on DossierBC: how it works, what it costs a sponsoring business, and the price for every B.C. city.">
+<meta property="og:url" content="https://dossierbc.ca/represente-ta-ville">
+<meta property="og:image" content="https://dossierbc.ca/dossierbc-cover.png">
+<meta property="og:image:width" content="1702">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DossierBC — veille citoyenne de l'Assemblée législative de la Colombie-Britannique">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Represent your city — DossierBC">
+<meta name="twitter:description" content="Put your city council's decisions in plain language on DossierBC: how it works, what it costs a sponsoring business, and the price for every B.C. city.">
+<meta name="twitter:image" content="https://dossierbc.ca/dossierbc-cover.png">
+
+<link rel="icon" type="image/svg+xml" href="/commun/bc.svg">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="/commun/bc-48.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/commun/bc-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/commun/bc-180.png">
+
+<!-- Données structurées (aide Google à comprendre le site) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://dossierbc.ca/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Represent your city",
+      "item": "https://dossierbc.ca/represente-ta-ville"
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/commun/dq.css">
+<!-- Le design de la Colombie-Britannique, posé par-dessus dq.css. Il apporte ses polices (Barlow
+     et Barlow Condensed, servies par le site depuis commun/polices/) : plus rien n'est chargé
+     chez Google Fonts, et le cahier de design est suivi à la lettre. -->
+<link rel="stylesheet" href="/commun/bc.css">
+</head>
+<body data-page="represente" data-donnees="stats,legislatureEtat">
+
+<!-- Ticker brutaliste : bande noire défilante — contenu rempli avec les VRAIES
+     données par renderTicker() (appelé une fois les datasets chargés). -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-text" id="tickerA">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+    <span class="ticker-text" id="tickerB">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<div id="dq-topbar">
+<header class="top">
+  <div class="brand">
+    <div class="brand-text" role="button" tabindex="0" aria-label="Retour à l'aperçu" onclick="goToTab('apercu')">
+      <!-- Volontairement un div, et non un titre de niveau 1 : le nom du site se
+           répète sur chaque page, alors que le titre de niveau 1 doit annoncer
+           le sujet de LA page. C'est le titre de une de la vue active qui joue
+           ce rôle, et le générateur de pages de section s'en assure.
+           (Pas de balise écrite en toutes lettres dans ce commentaire : elle
+           fausserait les outils qui comptent les titres à l'expression
+           régulière.) -->
+      <div class="brand-title"><span class="bc-marque" aria-hidden="true"></span>Dossier<span class="brand-blue">BC</span><span class="brand-ca">.ca</span></div>
+      <p>Qui siège, qui légifère, qui vote quoi</p>
+    </div>
+    <!-- Feuille d'érable : passerelle vers le site fédéral DossierCanada.
+         Flippe jaune ↔ rouge toutes les 20 s (voir le script plus bas). -->
+    <a class="maple-flip" id="mapleFlip" role="button" tabindex="0"
+       title="Aller au site fédéral — DossierCanada"
+       aria-label="Aller au site fédéral — DossierCanada"
+       onclick="goToFederal(event)">
+      <svg viewBox="-2015 -2000 4030 4030" aria-hidden="true"><path fill="currentColor" d="m-90 2030 45-863a95 95 0 0 0-111-98l-859 151 116-320a65 65 0 0 0-20-73l-941-762 212-99a65 65 0 0 0 34-79l-186-572 542 115a65 65 0 0 0 73-38l105-247 423 454a65 65 0 0 0 111-57l-204-1052 327 189a65 65 0 0 0 91-27l332-652 332 652a65 65 0 0 0 91 27l327-189-204 1052a65 65 0 0 0 111 57l423-454 105 247a65 65 0 0 0 73 38l542-115-186 572a65 65 0 0 0 34 79l212 99-941 762a65 65 0 0 0-20 73l116 320-859-151a95 95 0 0 0-111 98l45 863z"/></svg>
+    </a>
+    <!-- LES VILLES, EN PASTILLE (Martin, 9 novembre 2026). Elle était devenue un onglet le
+         7 novembre. Deux raisons de la ramener ici : ce menu ne mène pas à une section du site
+         mais à d'AUTRES sites, et dans la barre il vivait à l'intérieur d'un conteneur qui défile
+         (nav.tabs, overflow-x:auto), qui découpait son panneau et faisait apparaître une barre de
+         défilement en travers des onglets. Hors de la barre, le conflit n'existe pas. -->
+    <details class="villes-menu" id="villesMenu">
+      <summary class="city-flip nav-villes" title="Les volets municipaux" aria-label="Les volets municipaux">
+        <span data-i18n="nav.villes">Cities</span>
+      </summary>
+      <ul>
+        <!-- Aucune ville encore : le seul lien mène au formulaire de DossierQuébec (guide, étape 9). -->
+        <li class="villes-rtv"><a id="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a></li>
+      </ul>
+    </details>
+
+    <!-- Les volets municipaux (DossierVille) : un bouton « Villes » qui ouvre la liste.
+         Vrais liens <a href> : le clavier, le clic du milieu et « ouvrir dans un
+         nouvel onglet » fonctionnent sans une ligne de code. La barre oblique finale
+         est OBLIGATOIRE — sans elle, les chemins relatifs du volet (assets/, data/)
+         se résolvent depuis la racine du site. Plus de rel="nofollow" depuis le
+         21 sept. 2026 : les volets sont ouverts aux moteurs de recherche. Le chemin dit /quebec/ : c'est la
+         liste, sous « Villes », qui dit qu'il s'agit de la ville. -->
+  </div>
+  <!-- Nav DANS la ligne du header (maquette : logo | menu | contrôles sur
+       UNE seule rangée). Sur mobile, le nav devient le panneau plein écran
+       du hamburger (position:fixed), peu importe où il vit dans le DOM. -->
+  <nav class="tabs">
+    <div class="close-menu" id="closeMenuBtn"><span data-i18n="nav.close">Close</span> ✕</div>
+    <!-- De vrais liens, pas des <button> : un moteur de recherche ne suit pas un bouton, et
+         /ministres, /projets-de-loi, /votes et /lexique n'avaient aucun lien qu'il puisse suivre. -->
+    <a href="/" data-view="apercu"><span class="n">01</span><span data-i18n="nav.apercu">Overview</span></a>
+    <a href="/ministres" data-view="ministres"><span class="n">02</span><span data-i18n="nav.ministres">Ministers</span></a>
+    <a href="/projets-de-loi" data-view="projets"><span class="n">03</span><span data-i18n="nav.projets">Bills</span></a>
+    <!-- Votes a quitté la barre le 30 oct. 2026 : les votes vivent dans les cartes des projets de
+         loi, et /votes reste lié du pied de page et de la page des projets. -->
+    <!-- Archives : remis dans la barre le 9 novembre 2026 (Martin). La 43e législature est
+         terminée ; ses ministres et ses député·e·s basculeront ici dès que la 44e aura publié les
+         siens. Pas de page Promesses tant que la Colombie-Britannique n'en a pas. -->
+    <a href="/archives" data-view="archives"><span class="n">04</span><span data-i18n="nav.archives">Archives</span></a>
+    <a href="/lexique" data-view="lexique"><span class="n">05</span><span data-i18n="nav.lexique">Glossary</span></a>
+    <a href="/mon-dossier" data-view="mondossier" class="nav-mondossier"><span class="n">★</span><span data-i18n="nav.mondossier">My file</span></a>
+    <!-- Le menu des villes a quitté la barre d'onglets le 9 novembre 2026 : il est redevenu la
+         pastille à côté du nom du site, comme chez DossierQuébec. Voir .brand plus haut. -->
+  </nav>
+  <div class="header-ctrls">
+    <div class="font-size-ctrl" id="fontSizeCtrl">
+      <button id="fontMinus" aria-label="Réduire le texte">A−</button>
+      <span id="fontPct">100%</span>
+      <button id="fontPlus" aria-label="Agrandir le texte">A+</button>
+    </div>
+    <!-- Aucun contenu textuel : l'icône est dessinée en CSS. Le nom accessible
+         vient donc entièrement de aria-label, que le JS tient à jour. -->
+    <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Passer au thème sombre"></button>
+    <button class="lang-toggle" id="langToggle">English</button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+</div>
+
+<script>
+/* Bascule le bloc logo+menu en mode compact après un peu de défilement.
+   Hystérésis (80 vs 20) pour éviter le clignotement autour du seuil. */
+(function(){
+  var bar = document.getElementById('dq-topbar');
+  var compact = false;
+  function onScroll(){
+    var y = window.scrollY;
+    if(!compact && y > 80){ compact = true; bar.classList.add('compact'); }
+    else if(compact && y < 20){ compact = false; bar.classList.remove('compact'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+// Ouvre le site fédéral DossierCanada dans un nouvel onglet.
+function goToFederal(evt){
+  if(evt) evt.stopPropagation();
+  window.open('https://dossiercanada.ca/', '_blank', 'noopener');
+}
+// Feuille d'érable : flippe jaune ↔ rouge toutes les 20 secondes.
+(function(){
+  var leaf = document.getElementById('mapleFlip');
+  if(!leaf) return;
+  setInterval(function(){ leaf.classList.toggle('is-red'); }, 20000);
+})();
+
+// Menu « Villes » : compte les clics vers chaque volet municipal (événement
+// personnalisé Vercel Web Analytics — onglet « Events » du tableau de bord), et
+// referme le menu quand on clique ailleurs ou qu'on appuie sur Échap.
+(function(){
+  var menu = document.getElementById('villesMenu');
+  if(!menu) return;
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if(window.va) window.va('event', { name: 'clic_icone_ville', data: { ville: a.getAttribute('href') } });
+    });
+  });
+  document.addEventListener('click', function(e){ if(menu.open && !menu.contains(e.target)) menu.open = false; });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menu.open){ menu.open = false; menu.querySelector('summary').focus(); } });
+})();
+</script>
+
+<div class="app">
+
+  <!-- APERÇU -->
+  <section class="view active" id="view-represente">
+    <nav class="fil-ariane" aria-label="Fil d'Ariane"><a href="/" data-i18n="fil.accueil">Accueil</a><span class="sep" aria-hidden="true">›</span><span aria-current="page" data-i18n="fil.rtv">Represent your city</span></nav>
+    <div class="view-hero">
+      <h1 class="hero-h1 hero-h1-md">
+        <span class="hero-sujet"><span class="en-txt">City volets</span><span class="fr-txt">Volets municipaux</span></span>
+        <span class="en-txt">Represent</span><span class="fr-txt">Représentez</span>
+        <span class="hero-outline"><span class="en-txt">your city.</span><span class="fr-txt">votre ville.</span></span>
+      </h1>
+      <p class="view-hero-sub">
+        <span class="en-txt">DossierBC puts the Legislative Assembly in plain language. The same can be done for a city council — its decisions, its votes, its spending. <b>No British Columbia city is covered yet.</b> Raise your hand and yours could be the first. <a class="rtv-lien" href="https://dossierquebec.ca/montreal/?lang=en" target="_blank" rel="noopener">See what it looks like, on the City of Montréal →</a></span>
+        <span class="fr-txt">DossierBC met l'Assemblée législative en langage clair. On peut faire la même chose pour un conseil municipal — ses décisions, ses votes, ses dépenses. <b>Aucune ville de la Colombie-Britannique n'est couverte.</b> Levez la main et la vôtre pourrait être la première. <a class="rtv-lien" href="https://dossierquebec.ca/montreal/" target="_blank" rel="noopener">Voir à quoi ça ressemble, sur la Ville de Montréal →</a></span>
+      </p>
+    </div>
+
+    <div class="band band-white bleed"><div class="rtv">
+      <div class="rtv-etapes">
+        <div class="rtv-etape"><b>1</b><p><span class="en-txt">You tell us which city you want to see on the site.</span><span class="fr-txt">Vous nous dites quelle ville vous voulez voir sur le site.</span></p></div>
+        <div class="rtv-etape"><b>2</b><p><span class="en-txt">We check how the city publishes its council minutes — some still scan handwritten pages — and come back to you with the cost.</span><span class="fr-txt">On vérifie comment la Ville publie ses procès-verbaux — certaines numérisent encore des pages écrites à la main — et on vous revient avec le coût.</span></p></div>
+        <div class="rtv-etape"><b>3</b><p><span class="en-txt">Your city appears in the Cities menu, with “Report offered by” and your name on it.</span><span class="fr-txt">Votre ville apparaît dans le menu Villes, avec la mention « Compte rendu offert par » et votre nom.</span></p></div>
+      </div>
+
+      <div class="rtv-prix">
+        <h2 class="rtv-prix-h"><span class="en-txt">Prices, for a sponsoring business</span><span class="fr-txt">Les prix, pour une entreprise commanditaire</span></h2>
+
+        <details class="rtv-menu" open><summary class="rtv-menu-titre"><span class="en-txt">Prices</span><span class="fr-txt">Les prix</span></summary>
+        <p><b class="en-txt">Setup: $500, once.</b><b class="fr-txt">Démarrage : 500 $, une fois.</b>
+          <span class="en-txt">We load the decisions of the last two months. A council does not sit from the 1st to the 31st: two months guarantee one full month, so whoever subscribes gets a real summary right away. Not every city publishes its minutes in a modern way, and digging them out is most of the work.</span>
+          <span class="fr-txt">On charge les décisions des deux derniers mois. Un conseil ne siège pas du 1<sup>er</sup> au 31 : deux mois garantissent un mois complet, et la personne qui s'abonne reçoit tout de suite un vrai résumé. Toutes les villes ne publient pas leurs procès-verbaux de façon moderne, et aller les chercher est l'essentiel du travail.</span></p>
+        <p><b class="en-txt">Then, per month:</b><b class="fr-txt">Ensuite, par mois :</b></p>
+        <table class="rtv-grille">
+          <tr><td><span class="en-txt">City under 50,000 people</span><span class="fr-txt">Ville de moins de 50 000 habitant·e·s</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+          <tr><td><span class="en-txt">50,000 to 150,000 people</span><span class="fr-txt">De 50 000 à 150 000</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td><span class="en-txt">150,000 to 500,000 people</span><span class="fr-txt">De 150 000 à 500 000</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
+          <tr><td><span class="en-txt">500,000 to 1 million people</span><span class="fr-txt">De 500 000 à 1 million</span></td><td><span class="en-txt">$300</span><span class="fr-txt">300 $</span></td></tr>
+          <tr><td><span class="en-txt">Over 1 million people</span><span class="fr-txt">Plus d'un million</span></td><td><span class="en-txt">$500</span><span class="fr-txt">500 $</span></td></tr>
+        </table>
+        </details>
+
+        <details class="rtv-menu"><summary class="rtv-menu-titre"><span class="en-txt">British Columbia cities and their prices</span><span class="fr-txt">Les villes de la Colombie-Britannique et leurs prix</span></summary>
+        <p class="rtv-villes-titre"><b class="en-txt">Every municipality over 50,000</b><b class="fr-txt">Toutes les municipalités de plus de 50 000</b>
+          <span class="rtv-archaique-legende"><span class="en-txt">Marked “blocked”: the city's own website turns automated reading away. We do not get around that.</span><span class="fr-txt">Marquées « bloquée » : le site de la Ville refuse la lecture automatisée. On ne contourne pas.</span></span></p>
+        <table class="rtv-villes">
+          <tr><th>#</th><th><span class="en-txt">City</span><span class="fr-txt">Ville</span></th><th><span class="en-txt">Population (2021)</span><span class="fr-txt">Population (2021)</span></th><th><span class="en-txt">Price per month</span><span class="fr-txt">Prix par mois</span></th></tr>
+          <tr class="rtv-bloquee"><td>1</td><td>Vancouver</td><td><span class="en-txt">662,248</span><span class="fr-txt">662 248</span></td><td><span class="rtv-bloc"><span class="en-txt">Blocked</span><span class="fr-txt">Bloquée</span></span></td></tr>
+          <tr><td>2</td><td>Surrey</td><td><span class="en-txt">568,322</span><span class="fr-txt">568 322</span></td><td><span class="en-txt">$300</span><span class="fr-txt">300 $</span></td></tr>
+          <tr><td>3</td><td>Burnaby</td><td><span class="en-txt">249,125</span><span class="fr-txt">249 125</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
+          <tr><td>4</td><td>Richmond</td><td><span class="en-txt">209,937</span><span class="fr-txt">209 937</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
+          <tr><td>5</td><td>Abbotsford</td><td><span class="en-txt">153,524</span><span class="fr-txt">153 524</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
+          <tr><td>6</td><td>Coquitlam</td><td><span class="en-txt">148,625</span><span class="fr-txt">148 625</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-bloquee"><td>7</td><td>Kelowna</td><td><span class="en-txt">144,576</span><span class="fr-txt">144 576</span></td><td><span class="rtv-bloc"><span class="en-txt">Blocked</span><span class="fr-txt">Bloquée</span></span></td></tr>
+        </table>
+        <details class="rtv-villes-plus"><summary><span class="en-txt">See the 13 other cities over 50,000</span><span class="fr-txt">Voir les 13 autres villes de plus de 50 000</span></summary>
+        <table class="rtv-villes">
+          <tr><th>#</th><th><span class="en-txt">City</span><span class="fr-txt">Ville</span></th><th><span class="en-txt">Population (2021)</span><span class="fr-txt">Population (2021)</span></th><th><span class="en-txt">Price per month</span><span class="fr-txt">Prix par mois</span></th></tr>
+          <tr class="rtv-bloquee"><td>8</td><td>Langley <span class="pr-meta">(district)</span></td><td><span class="en-txt">132,603</span><span class="fr-txt">132 603</span></td><td><span class="rtv-bloc"><span class="en-txt">Blocked</span><span class="fr-txt">Bloquée</span></span></td></tr>
+          <tr><td>9</td><td>Saanich</td><td><span class="en-txt">117,735</span><span class="fr-txt">117 735</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>10</td><td>Delta</td><td><span class="en-txt">108,455</span><span class="fr-txt">108 455</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>11</td><td>Nanaimo</td><td><span class="en-txt">99,863</span><span class="fr-txt">99 863</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>12</td><td>Kamloops</td><td><span class="en-txt">97,902</span><span class="fr-txt">97 902</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>13</td><td>Chilliwack</td><td><span class="en-txt">93,203</span><span class="fr-txt">93 203</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>14</td><td>Victoria</td><td><span class="en-txt">91,867</span><span class="fr-txt">91 867</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>15</td><td>Maple Ridge</td><td><span class="en-txt">90,990</span><span class="fr-txt">90 990</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>16</td><td>North Vancouver <span class="pr-meta">(district)</span></td><td><span class="en-txt">88,168</span><span class="fr-txt">88 168</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>17</td><td>New Westminster</td><td><span class="en-txt">78,916</span><span class="fr-txt">78 916</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>18</td><td>Prince George</td><td><span class="en-txt">76,708</span><span class="fr-txt">76 708</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>19</td><td>Port Coquitlam</td><td><span class="en-txt">61,498</span><span class="fr-txt">61 498</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr><td>20</td><td>North Vancouver <span class="pr-meta">(city)</span></td><td><span class="en-txt">58,120</span><span class="fr-txt">58 120</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+        </table>
+        </details>
+        <details class="rtv-villes-plus"><summary><span class="en-txt">Just under the line, at $50 a month</span><span class="fr-txt">Juste sous la barre, à 50 $ par mois</span></summary>
+        <table class="rtv-villes">
+          <tr><th>#</th><th><span class="en-txt">City</span><span class="fr-txt">Ville</span></th><th><span class="en-txt">Population (2021)</span><span class="fr-txt">Population (2021)</span></th><th><span class="en-txt">Price per month</span><span class="fr-txt">Prix par mois</span></th></tr>
+          <tr><td>21</td><td>Langford</td><td><span class="en-txt">46,584</span><span class="fr-txt">46 584</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+          <tr><td>22</td><td>Vernon</td><td><span class="en-txt">44,519</span><span class="fr-txt">44 519</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+          <tr><td>23</td><td>West Vancouver</td><td><span class="en-txt">44,122</span><span class="fr-txt">44 122</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+          <tr><td>24</td><td>Mission</td><td><span class="en-txt">41,519</span><span class="fr-txt">41 519</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+        </table>
+        <p class="rtv-note"><span class="en-txt">Langford grew 31.8% between 2016 and 2021 — it has most likely crossed 50,000 since.</span><span class="fr-txt">Langford a grandi de 31,8 % entre 2016 et 2021 — elle a très probablement passé les 50 000 depuis.</span></p>
+        </details>
+        <p class="rtv-note"><span class="en-txt">Population from the 2021 Census of Canada. Any city not listed here is under 50,000, at $50 a month.</span><span class="fr-txt">Population du recensement de 2021. Une ville absente de ces listes est sous les 50 000, à 50 $ par mois.</span></p>
+        <p class="rtv-note"><span class="en-txt"><b>Vancouver, Kelowna and the Township of Langley cannot be delivered today.</b> Their websites answer an automated reader with a challenge page instead of the document, and we do not work around those. If one of them is your city, raise your hand anyway: a single email from the city usually settles it, and we will take it from there.</span><span class="fr-txt"><b>Vancouver, Kelowna et le district de Langley ne peuvent pas être livrées aujourd'hui.</b> Leurs sites répondent à un robot par une page de vérification plutôt que par le document, et on ne contourne pas ça. Si c'est votre ville, levez la main quand même : un courriel de la Ville règle habituellement la chose, et on s'occupe du reste.</span></p>
+        </details>
+
+        <details class="rtv-menu"><summary class="rtv-menu-titre"><span class="en-txt">Terms</span><span class="fr-txt">Conditions</span></summary>
+        <p><span class="en-txt">Sponsorship is taken in three-month blocks. One sponsor per city. If several want the same city, sealed bids, best offer wins.</span><span class="fr-txt">La représentation se prend par blocs de trois mois. Un seul commanditaire par ville. Si plusieurs veulent la même ville, offres sous pli, la meilleure l'emporte.</span></p>
+        <p class="rtv-fondateur"><b class="en-txt">Founders:</b><b class="fr-txt">Fondateurs :</b> <span class="en-txt">the first sponsors choose three months, six months or a year, at the same monthly price for the whole term.</span><span class="fr-txt">les premiers commanditaires choisissent trois mois, six mois ou un an, au même prix par mois pour toute la durée.</span></p>
+        </details>
+      </div>
+
+      <form class="rtv-form" id="rtvForm" onsubmit="event.preventDefault(); rtvEnvoyer(this)">
+        <label><span><span class="en-txt">Your city</span><span class="fr-txt">Votre ville</span></span><input name="ville" required maxlength="80" placeholder="Kamloops, Nanaimo, Prince George…"></label>
+        <label><span><span class="en-txt">Your name or your organization's</span><span class="fr-txt">Votre nom ou celui de votre organisme</span></span><input name="nom" required maxlength="120"></label>
+        <label><span><span class="en-txt">Your email</span><span class="fr-txt">Votre courriel</span></span><input name="courriel" type="email" required maxlength="200"></label>
+        <fieldset>
+          <legend><span class="en-txt">You are</span><span class="fr-txt">Vous êtes</span></legend>
+          <label class="rtv-choix"><input type="radio" name="profil" value="citoyen" checked> <span class="en-txt">A citizen</span><span class="fr-txt">Un citoyen ou une citoyenne</span></label>
+          <label class="rtv-choix"><input type="radio" name="profil" value="organisme"> <span class="en-txt">An organization</span><span class="fr-txt">Un organisme</span></label>
+          <label class="rtv-choix"><input type="radio" name="profil" value="entreprise"> <span class="en-txt">A business that wants to sponsor its city</span><span class="fr-txt">Une entreprise qui veut commanditer sa ville</span></label>
+        </fieldset>
+        <label><span><span class="en-txt">Anything else (optional)</span><span class="fr-txt">Un mot de plus (facultatif)</span></span><textarea name="message" rows="4" maxlength="2000"></textarea></label>
+        <input name="site_web" class="rtv-pot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" class="bill-more"><span class="en-txt">Raise my hand →</span><span class="fr-txt">Lever la main →</span></button>
+        <p class="rtv-note" aria-live="polite" id="rtvEtat"><span class="en-txt">No parties, candidates or elected officials. A sponsor has no say over the content.</span><span class="fr-txt">Pas de parti, de candidat·e ni d'élu·e. Le commanditaire n'a aucun droit de regard sur le contenu.</span></p>
+      </form>
+    </div></div>
+  </section>
+
+  <!-- MINISTRES & DÉPUTÉS -->
+  
+
+  <!-- PROJETS DE LOI -->
+  
+
+  <!-- VOTES -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+  <!-- N.-B. (Martin, 7 nov. 2026) : vue de l'abonnement retirée pour l'instant (à reprendre de DossierQuébec). -->
+
+  <!-- ARCHIVES (Martin, 9 novembre 2026). La 43e législature est terminée depuis le 22 septembre.
+       Dès que la 44e aura publié ses député·e·s et son conseil des ministres, tout ce que le site
+       montre aujourd'hui — projets, votes, député·e·s, ministres — bascule ici. La liste est
+       remplie par renderArchives (commun/dq.js) à partir de data/archives/index.json : tant que
+       la 43e est celle qui vit, la page le dit plutôt que de montrer une liste vide. -->
+  
+
+  <!-- REPRÉSENTEZ VOTRE VILLE (Martin, 9 novembre 2026). Jusqu'ici la pastille « Villes » envoyait
+       vers le formulaire de DossierQuébec : quelqu'un de Kelowna atterrissait sur un site qui
+       parle du Québec, avec une liste de villes québécoises. DossierBC a maintenant la sienne,
+       avec les villes de la Colombie-Britannique et leurs prix. Le formulaire poste sur
+       /api/represente, qui envoie le tout par courriel — rien n'est promis, on mesure la demande.
+       Les textes vivent en double (.fr-txt / .en-txt) comme sur la page de DossierQuébec, pas en
+       clés data-i18n : c'est une page à part, qui ne sert qu'ici. -->
+  
+
+  <!-- LEXIQUE (fusion : personnes, lexique, apropos) -->
+  
+
+  <!-- PAGE CACHÉE — la BD « l'idée derrière le site ». Aucun onglet n'y mène :
+       accessible seulement par le « et moi » du bas de page (à côté de
+       « Construit avec Claude »). goToTab('bd') fonctionne sans bouton d'onglet. -->
+  <!-- /mon-dossier : l'espace de la personne connectée, côté ASSEMBLÉE seulement (Martin,
+       22 sept. 2026 : « mes dossiers provincial et les villes doivent être complètement séparés »).
+       Les villes y ont leur section (#villes) depuis le 30 sept. 2026 ; avant, /mes-dossiers. Tout le contenu
+       est rempli par commun/dq.js (renderMonDossier) : rien de personnel n'est dans le HTML. -->
+  <!-- LES RÈGLES (Martin, 5 oct. 2026 : « on pourrait quasiment faire une page de ça… à côté de
+       Facebook »). Les règles de sources du site, écrites une fois pour être montrées à quelqu'un :
+       tout ce que les encadrés de méthode disent page par page, réuni. Lien dans le pied de page. -->
+  
+
+  <!-- LA PAGE 404 (Martin, 6 oct. 2026 : « faut une page drôle 404 », puis : avec le jaune et tout
+       le kit du site, « morte dans l'œuf », et pas de blanc sur noir). Vercel sert 404.html, avec le
+       code 404, pour toute adresse qui n'existe pas ; avant, c'était le message brut de l'hébergeur,
+       en anglais. Fabriquée comme les autres pages (scripts/build-section-pages.js, vue
+       « introuvable »), donc avec l'en-tête, le menu et le pied du site.
+       « Morte dans l'œuf » est le libellé des projets de loi jamais rendus plus loin que la
+       présentation. Le faux vote est ÉTIQUETÉ comme une blague : ce site n'invente jamais de donnée. -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+
+  
+
+  
+
+</div>
+
+<!-- Footer maquette : texte à gauche (avec « construit avec Claude » suivi du
+     lien caché « et moi » vers la BD), liens texte en majuscules à droite. -->
+<footer>
+  <nav class="footer-nav" aria-label="Plan du site">
+    <a href="/" data-i18n="nav.apercu">Overview</a>
+    <a href="/ministres" data-i18n="nav.ministres">Ministers</a>
+    <a href="/projets-de-loi" data-i18n="nav.projets">Bills</a>
+    <a href="/votes" data-i18n="nav.votes">Votes</a>
+    <a href="/lexique" data-i18n="nav.lexique">Glossary</a>
+    <a href="/sources" data-i18n="fil.bd">Site updates</a>
+    <a href="/mon-dossier" data-i18n="nav.mondossier">My file</a>
+    <span class="footer-nav-villes"><span data-i18n="footer.villes">Cities:</span>
+      <a class="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a>
+    </span>
+  </nav>
+  <div class="footer-inner">
+  <span class="footer-left-line"><span id="footerLeft">Site non officiel — données publiques de l'Assemblée législative de la Colombie-Britannique ·</span> <span id="footerRight">Une réalisation de</span> <a class="footer-etmoi" id="footerDafr" href="https://www.dafrsolution.com" target="_blank" rel="noopener">DAFR Solution</a></span>
+  <span class="footer-right-group">
+    <a class="footer-gh" href="/regles" data-i18n="footer.regles">The rules</a>
+    <!-- N.-B. (Martin, 7 nov. 2026) : abonnement, café, flux RSS des abonné·e·s et crédit Flaticon retirés pour l'instant. -->
+    <a class="footer-gh" href="https://github.com/GrandFFormat/dossierbc" target="_blank" rel="noopener" data-i18n="footer.source">Source code</a>
+    <!-- La langue aussi en pied de page, comme sur le cahier. Son texte est écrit par
+         applyLanguage() : « Français » quand on lit l'anglais, « English » quand on lit le
+         français. -->
+    <a class="footer-gh" id="langToggleFooter" href="#" role="button">Français</a>
+  </span>
+  </div>
+</footer>
+
+<button id="backToTop" class="dq-remonter" aria-label="Remonter en haut" title="Remonter en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/commun/apercu.js"></script>
+<script src="/commun/dq.js"></script>
+<!-- Vercel Web Analytics — sans cookie, sans donnée personnelle (donc pas de
+     bannière de consentement requise). Le script est servi automatiquement par
+     Vercel quand Web Analytics est activé dans le tableau de bord du projet. -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

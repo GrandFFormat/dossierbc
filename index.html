@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Consentement (Loi 25) : par défaut, Google Analytics n'a PAS le droit de déposer de témoins.
+     La bannière (commun/consentement.js) passe analytics_storage à « granted » après « Accepter ». -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<!-- Mesure d'audience : AUCUNE pour l'instant. La propriété Google Analytics de la
+     Colombie-Britannique n'existe pas encore, et celle du Nouveau-Brunswick a été retirée d'ici
+     pour qu'elle ne reçoive pas ce trafic. Pour la brancher : remettre le bloc gtag.js des autres
+     sites de la famille avec l'identifiant de la nouvelle propriété. Le consentement
+     (commun/consentement.js) et la bande de témoins sont déjà en place et n'attendent que ça. -->
+<!-- Pas de bannière de témoins : il n'y a aucune mesure d'audience sur ce site pour l'instant,
+     donc rien à faire accepter. Elle revient avec le bloc gtag.js, le jour où la propriété
+     Google Analytics de la Colombie-Britannique existera.
+<script src="/commun/consentement.js" defer></script> -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* La langue, avant d'afficher quoi que ce soit — EXACTEMENT la décision de langueDeDepart
+   (commun/dq.js) : « ?lang=fr » dans l'adresse, sinon le choix gardé dans dvq:langue (commun à
+   tout le site) ; en revenant par Précédent ou Suivant, le choix gardé passe avant l'adresse.
+   Le site est ANGLOPHONE : l'anglais est écrit dans le HTML et s'affiche tout de suite. C'est
+   le français qui attend sa traduction, et la page reste cachée le temps que dq.js la fasse :
+   1,5 s au plus, même s'il échoue. lang="fr" n'est posé qu'au moment de traduire (dq.js).
+   Tout est dans une fonction : une variable globale ici entrerait en collision avec les
+   déclarations de dq.js et le ferait planter en entier. */
+(function(){
+  try{
+    var valide = function(l){ return l === 'en' || l === 'fr'; };
+    var gardee = null;
+    try{ gardee = localStorage.getItem('dvq:langue'); }catch(e){}
+    var q = new URLSearchParams(location.search).get('lang');
+    var nav = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+    var parHistorique = !!nav && nav.type === 'back_forward';
+    var choix = (parHistorique && valide(gardee)) ? gardee : (valide(q) ? q : gardee);
+    if(choix !== 'fr') return;
+    var racine = document.documentElement;
+    racine.classList.add('dq-fr');
+    setTimeout(function(){ racine.classList.add('dq-pret'); }, 1500);
+  }catch(e){}
+})();
+</script>
+<title>The Legislative Assembly in plain language — DossierBC</title>
+<meta name="description" content="Follow British Columbia's Legislative Assembly in plain language: bills and the stage each has really reached, recorded votes name by name, and the cabinet.">
+<link rel="canonical" href="https://dossierbc.ca/">
+<!-- Plus de <link rel="alternate"> vers /feed.xml : le flux RSS est réservé aux abonné·e·s depuis le
+     21 oct. 2026 (api/feed.js), chacun avec son adresse personnelle dans Mon dossier. -->
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E4FC1">
+
+<!-- Open Graph (aperçu au partage : Facebook, LinkedIn, iMessage…) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="The Legislative Assembly in plain language — DossierBC">
+<meta property="og:description" content="Follow British Columbia's Legislative Assembly in plain language: bills and the stage each has really reached, recorded votes name by name, and the cabinet.">
+<meta property="og:url" content="https://dossierbc.ca/">
+<meta property="og:image" content="https://dossierbc.ca/dossierbc-cover.png">
+<meta property="og:image:width" content="1702">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DossierBC — veille citoyenne de l'Assemblée législative de la Colombie-Britannique">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Legislative Assembly in plain language — DossierBC">
+<meta name="twitter:description" content="Follow British Columbia's Legislative Assembly in plain language: bills and the stage each has really reached, recorded votes name by name, and the cabinet.">
+<meta name="twitter:image" content="https://dossierbc.ca/dossierbc-cover.png">
+
+<link rel="icon" type="image/svg+xml" href="/commun/bc.svg">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="/commun/bc-48.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/commun/bc-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/commun/bc-180.png">
+
+<!-- Données structurées (aide Google à comprendre le site) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://dossierbc.ca/#site",
+      "name": "DossierBC",
+      "url": "https://dossierbc.ca/",
+      "description": "Follow British Columbia's Legislative Assembly in plain language: bills and the stage each has really reached, recorded votes name by name, and the cabinet.",
+      "inLanguage": "fr-CA",
+      "publisher": {
+        "@id": "https://dossierbc.ca/#organisation"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://dossierbc.ca/#organisation",
+      "name": "DossierBC",
+      "url": "https://dossierbc.ca/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dossierbc.ca/commun/nb-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/GrandFFormat/dossierbc"
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/commun/dq.css">
+<!-- Le design de la Colombie-Britannique, posé par-dessus dq.css. Il apporte ses polices (Barlow
+     et Barlow Condensed, servies par le site depuis commun/polices/) : plus rien n'est chargé
+     chez Google Fonts, et le cahier de design est suivi à la lettre. -->
+<link rel="stylesheet" href="/commun/bc.css">
+</head>
+<body data-page="apercu" data-donnees="newsItems,petitions,apercuBills,deputesRaw,stats,legislatureEtat">
+
+<!-- Ticker brutaliste : bande noire défilante — contenu rempli avec les VRAIES
+     données par renderTicker() (appelé une fois les datasets chargés). -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-text" id="tickerA">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+    <span class="ticker-text" id="tickerB">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<div id="dq-topbar">
+<header class="top">
+  <div class="brand">
+    <div class="brand-text" role="button" tabindex="0" aria-label="Retour à l'aperçu" onclick="goToTab('apercu')">
+      <!-- Volontairement un div, et non un titre de niveau 1 : le nom du site se
+           répète sur chaque page, alors que le titre de niveau 1 doit annoncer
+           le sujet de LA page. C'est le titre de une de la vue active qui joue
+           ce rôle, et le générateur de pages de section s'en assure.
+           (Pas de balise écrite en toutes lettres dans ce commentaire : elle
+           fausserait les outils qui comptent les titres à l'expression
+           régulière.) -->
+      <div class="brand-title"><span class="bc-marque" aria-hidden="true"></span>Dossier<span class="brand-blue">BC</span><span class="brand-ca">.ca</span></div>
+      <p>Qui siège, qui légifère, qui vote quoi</p>
+    </div>
+    <!-- Feuille d'érable : passerelle vers le site fédéral DossierCanada.
+         Flippe jaune ↔ rouge toutes les 20 s (voir le script plus bas). -->
+    <a class="maple-flip" id="mapleFlip" role="button" tabindex="0"
+       title="Aller au site fédéral — DossierCanada"
+       aria-label="Aller au site fédéral — DossierCanada"
+       onclick="goToFederal(event)">
+      <svg viewBox="-2015 -2000 4030 4030" aria-hidden="true"><path fill="currentColor" d="m-90 2030 45-863a95 95 0 0 0-111-98l-859 151 116-320a65 65 0 0 0-20-73l-941-762 212-99a65 65 0 0 0 34-79l-186-572 542 115a65 65 0 0 0 73-38l105-247 423 454a65 65 0 0 0 111-57l-204-1052 327 189a65 65 0 0 0 91-27l332-652 332 652a65 65 0 0 0 91 27l327-189-204 1052a65 65 0 0 0 111 57l423-454 105 247a65 65 0 0 0 73 38l542-115-186 572a65 65 0 0 0 34 79l212 99-941 762a65 65 0 0 0-20 73l116 320-859-151a95 95 0 0 0-111 98l45 863z"/></svg>
+    </a>
+    <!-- LES VILLES, EN PASTILLE (Martin, 9 novembre 2026). Elle était devenue un onglet le
+         7 novembre. Deux raisons de la ramener ici : ce menu ne mène pas à une section du site
+         mais à d'AUTRES sites, et dans la barre il vivait à l'intérieur d'un conteneur qui défile
+         (nav.tabs, overflow-x:auto), qui découpait son panneau et faisait apparaître une barre de
+         défilement en travers des onglets. Hors de la barre, le conflit n'existe pas. -->
+    <details class="villes-menu" id="villesMenu">
+      <summary class="city-flip nav-villes" title="Les volets municipaux" aria-label="Les volets municipaux">
+        <span data-i18n="nav.villes">Cities</span>
+      </summary>
+      <ul>
+        <!-- Aucune ville encore : le seul lien mène au formulaire de DossierQuébec (guide, étape 9). -->
+        <li class="villes-rtv"><a id="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a></li>
+      </ul>
+    </details>
+
+    <!-- Les volets municipaux (DossierVille) : un bouton « Villes » qui ouvre la liste.
+         Vrais liens <a href> : le clavier, le clic du milieu et « ouvrir dans un
+         nouvel onglet » fonctionnent sans une ligne de code. La barre oblique finale
+         est OBLIGATOIRE — sans elle, les chemins relatifs du volet (assets/, data/)
+         se résolvent depuis la racine du site. Plus de rel="nofollow" depuis le
+         21 sept. 2026 : les volets sont ouverts aux moteurs de recherche. Le chemin dit /quebec/ : c'est la
+         liste, sous « Villes », qui dit qu'il s'agit de la ville. -->
+  </div>
+  <!-- Nav DANS la ligne du header (maquette : logo | menu | contrôles sur
+       UNE seule rangée). Sur mobile, le nav devient le panneau plein écran
+       du hamburger (position:fixed), peu importe où il vit dans le DOM. -->
+  <nav class="tabs">
+    <div class="close-menu" id="closeMenuBtn"><span data-i18n="nav.close">Close</span> ✕</div>
+    <!-- De vrais liens, pas des <button> : un moteur de recherche ne suit pas un bouton, et
+         /ministres, /projets-de-loi, /votes et /lexique n'avaient aucun lien qu'il puisse suivre. -->
+    <a class="active" aria-current="page" href="/" data-view="apercu"><span class="n">01</span><span data-i18n="nav.apercu">Overview</span></a>
+    <a href="/ministres" data-view="ministres"><span class="n">02</span><span data-i18n="nav.ministres">Ministers</span></a>
+    <a href="/projets-de-loi" data-view="projets"><span class="n">03</span><span data-i18n="nav.projets">Bills</span></a>
+    <!-- Votes a quitté la barre le 30 oct. 2026 : les votes vivent dans les cartes des projets de
+         loi, et /votes reste lié du pied de page et de la page des projets. -->
+    <!-- Archives : remis dans la barre le 9 novembre 2026 (Martin). La 43e législature est
+         terminée ; ses ministres et ses député·e·s basculeront ici dès que la 44e aura publié les
+         siens. Pas de page Promesses tant que la Colombie-Britannique n'en a pas. -->
+    <a href="/archives" data-view="archives"><span class="n">04</span><span data-i18n="nav.archives">Archives</span></a>
+    <a href="/lexique" data-view="lexique"><span class="n">05</span><span data-i18n="nav.lexique">Glossary</span></a>
+    <a href="/mon-dossier" data-view="mondossier" class="nav-mondossier"><span class="n">★</span><span data-i18n="nav.mondossier">My file</span></a>
+    <!-- Le menu des villes a quitté la barre d'onglets le 9 novembre 2026 : il est redevenu la
+         pastille à côté du nom du site, comme chez DossierQuébec. Voir .brand plus haut. -->
+  </nav>
+  <div class="header-ctrls">
+    <div class="font-size-ctrl" id="fontSizeCtrl">
+      <button id="fontMinus" aria-label="Réduire le texte">A−</button>
+      <span id="fontPct">100%</span>
+      <button id="fontPlus" aria-label="Agrandir le texte">A+</button>
+    </div>
+    <!-- Aucun contenu textuel : l'icône est dessinée en CSS. Le nom accessible
+         vient donc entièrement de aria-label, que le JS tient à jour. -->
+    <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Passer au thème sombre"></button>
+    <button class="lang-toggle" id="langToggle">English</button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+</div>
+
+<script>
+/* Bascule le bloc logo+menu en mode compact après un peu de défilement.
+   Hystérésis (80 vs 20) pour éviter le clignotement autour du seuil. */
+(function(){
+  var bar = document.getElementById('dq-topbar');
+  var compact = false;
+  function onScroll(){
+    var y = window.scrollY;
+    if(!compact && y > 80){ compact = true; bar.classList.add('compact'); }
+    else if(compact && y < 20){ compact = false; bar.classList.remove('compact'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+// Ouvre le site fédéral DossierCanada dans un nouvel onglet.
+function goToFederal(evt){
+  if(evt) evt.stopPropagation();
+  window.open('https://dossiercanada.ca/', '_blank', 'noopener');
+}
+// Feuille d'érable : flippe jaune ↔ rouge toutes les 20 secondes.
+(function(){
+  var leaf = document.getElementById('mapleFlip');
+  if(!leaf) return;
+  setInterval(function(){ leaf.classList.toggle('is-red'); }, 20000);
+})();
+
+// Menu « Villes » : compte les clics vers chaque volet municipal (événement
+// personnalisé Vercel Web Analytics — onglet « Events » du tableau de bord), et
+// referme le menu quand on clique ailleurs ou qu'on appuie sur Échap.
+(function(){
+  var menu = document.getElementById('villesMenu');
+  if(!menu) return;
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if(window.va) window.va('event', { name: 'clic_icone_ville', data: { ville: a.getAttribute('href') } });
+    });
+  });
+  document.addEventListener('click', function(e){ if(menu.open && !menu.contains(e.target)) menu.open = false; });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menu.open){ menu.open = false; menu.querySelector('summary').focus(); } });
+})();
+</script>
+
+<div class="app">
+
+  <!-- APERÇU -->
+  <section class="view active" id="view-apercu">
+
+    <!-- L'état des législatures, écrit par etatLegislature() (commun/dq.js) à partir des données
+         de l'Assemblée. Vide et invisible tant que la législature montrée est celle en cours :
+         aucune date n'est écrite ici. -->
+    <div class="info-box" id="etatLegislatureAccueil" hidden></div>
+
+    <!-- Hero poster brutaliste : la devise du site devient l'affiche.
+         (La ligne du header .brand-text p est masquée en échange.) -->
+    <!-- L'AFFICHE, d'après le cahier « Sun & waves » (variante 2a « Horizon ») : le texte à
+         gauche, le soleil et la feuille de spécifications à droite, puis la ligne d'horizon et sa
+         bande de vagues sur toute la largeur. -->
+    <div class="bc-affiche">
+      <div class="bc-affiche-texte">
+        <p class="hero-session" id="heroSession" hidden></p>
+        <p class="hero-sujet" data-i18n="sujet.apercu">British Columbia's Legislative Assembly in plain language</p>
+        <h1 class="hero-h1">
+          <span data-i18n="hero.l1">Who sits,</span>
+          <span class="hero-outline" data-i18n="hero.l2">who legislates,</span>
+          <span class="hero-blue" data-i18n="hero.l3">who votes what.</span>
+        </h1>
+        <p class="bc-lead" data-i18n="hero.manifesto">The B.C. Legislature reorganized <b>by person</b> and translated into <b>plain language</b>. No judgement, no verdict — an independent citizen site on real public data.</p>
+        <div class="bc-boutons">
+          <a class="bc-bouton" href="/projets-de-loi" data-i18n="hero.cta">Explore →</a>
+          <a class="bc-bouton bc-bouton-second" href="/ministres" data-i18n="hero.cta2">The members</a>
+        </div>
+      </div>
+
+      <div class="bc-affiche-figure">
+        <!-- Le soleil : disque or, cercle de repère en pointillé, huit traits, cote « R 150 ».
+             Dessiné, pas une image : rien à télécharger, et il suit la couleur du thème. -->
+        <svg class="bc-soleil" viewBox="0 0 440 440" role="img" aria-label="Sun and waves, the emblem of this site">
+          <circle cx="220" cy="220" r="200" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" opacity=".45"/>
+          <g stroke="currentColor" stroke-width="1" opacity=".55">
+            <line x1="220" y1="4" x2="220" y2="26"/><line x1="220" y1="414" x2="220" y2="436"/>
+            <line x1="4" y1="220" x2="26" y2="220"/><line x1="414" y1="220" x2="436" y2="220"/>
+            <line x1="67" y1="67" x2="83" y2="83"/><line x1="357" y1="67" x2="341" y2="83"/>
+            <line x1="67" y1="373" x2="83" y2="357"/><line x1="357" y1="373" x2="341" y2="357"/>
+          </g>
+          <circle cx="220" cy="220" r="150" fill="var(--bc-or)"/>
+          <text x="250" y="18" font-family="Barlow" font-size="10" letter-spacing="1.5" fill="currentColor" opacity=".55">R 150</text>
+        </svg>
+
+        <!-- La feuille de spécifications : quatre compteurs, vraies données (stats.json). -->
+        <div class="bc-compteurs">
+          <div><b id="statDeputes">91</b><span data-i18n="stat.deputes">MLAs</span></div>
+          <div><b id="statMinistres">30</b><span data-i18n="stat.ministres">Ministers</span></div>
+          <div><b id="statProjets">102</b><span data-i18n="stat.projets">Bills</span></div>
+          <div><b id="statVotes">130</b><span data-i18n="stat.votes">Votes recorded</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L'horizon et ses vagues : le drapeau réduit à de la géométrie. -->
+    <div class="bc-horizon bleed" aria-hidden="true">
+      <svg class="bc-vagues" viewBox="0 0 1280 120" preserveAspectRatio="none">
+        <g fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M0 28 q20 -12 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0"/>
+          <path d="M0 60 q20 -12 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0"/>
+          <path d="M0 92 q20 -12 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- N.-B. (maquette, Martin, 7 nov. 2026) : l'état de l'Assemblée, sous l'affiche. renderTicker()
+         lit .calendar-box .status : la classe reste. -->
+    <div class="calendar-box nb-etat">
+      <div class="status" data-i18n="cal.status">● Legislative Assembly of British Columbia</div>
+    </div>
+
+    <!-- LES PROJETS SIGNALÉS, d'après le cahier : un cadre de quatre cellules. La première porte le
+         titre, l'avertissement et le pager ; les trois autres sont les projets, écrits par
+         renderChallenged() (commun/dq.js) sous forme de .ch-card. Les classes de DossierQuébec
+         restent : c'est elles que le JavaScript écrit, bc.css les remeuble. -->
+    <div class="bc-signales cadre-plan cadre-encre" id="band-challenged">
+      <div class="bc-signales-intro">
+        <div class="kicker"><span data-i18n="signales.sur">Flagged by citizens</span> · <span id="challengedTotal">—</span></div>
+        <div class="section-head" id="sec-challenged">
+          <div>
+            <h2 id="challengedTitle">Challenge a bill</h2>
+            <div class="sub" id="challengedSub"></div>
+          </div>
+        </div>
+        <p class="bc-signales-avis"><span data-i18n="signales.avis"><b>No online petitions in British Columbia.</b> The Assembly only accepts paper petitions, tabled by an MLA. Flagging a bill here has no official value: it is a citizen counter that shows what worries people, and points you to how to act.</span></p>
+        <div class="bc-pager" id="challengedPager" hidden>
+          <button type="button" id="challengedPrev" onclick="pagerChallenged(-1)">&#8249;</button>
+          <button type="button" id="challengedNext" onclick="pagerChallenged(1)">&#8250;</button>
+          <span class="bc-rang" id="challengedRange"></span>
+        </div>
+        <p class="nb-agir"><span data-i18n="signales.agir">To act officially:</span> <a href="/ministres" data-i18n="signales.depute">write to your MLA</a></p>
+      </div>
+      <div id="challengedList"></div>
+      <div class="cadre-plan-bas"></div>
+    </div>
+
+    <!-- LES PROJETS RÉCENTS : la section en 1/3 du cahier — le titre et l'explication dans la
+         colonne mince, le tableau dans le cadre. -->
+    <div class="bc-section" id="band-recents">
+      <div class="bc-section-intro" id="sec-projets-recents">
+        <div class="kicker" data-i18n="kicker.projets">Bills</div>
+        <h2 data-i18n="h.billsrecent">Recently active in the House</h2>
+        <p data-i18n="apercu.recent.sub">Click a bill to read its plain-language summary, its stage and the votes.</p>
+        <a class="bc-tout" href="/projets-de-loi" data-i18n="apercu.voirtout">See all &#8594;</a>
+      </div>
+      <div>
+        <div class="bc-section-cadre cadre-plan cadre-encre" id="body-projets-recents">
+          <div id="apercuBills"></div>
+          <div class="prerendu" data-prerendu="apercuBills">
+      <ul aria-label="Recently active bills">
+        <li><b>Bill M 249</b> — Pharmaceutical Risk Management and Accountability Act <span class="pr-meta">· Died on the Order Paper at the end of session 2, last stage on 2026-05-28</span></li>
+        <li><b>Bill M 217</b> — Dashboard Cameras in Commercial Vehicles Act <span class="pr-meta">· Received Royal Assent on 2026-05-28, chapter 17</span></li>
+        <li><b>Bill 22</b> — Supply Act, 2026-2027 <span class="pr-meta">· Received Royal Assent on 2026-05-28, chapter 20</span></li>
+        <li><b>Bill 20</b> — K'ómoks Treaty Act <span class="pr-meta">· Received Royal Assent on 2026-05-28, chapter 18</span></li>
+      </ul>
+      <p class="pr-note">Official source: <a href="https://www.leg.bc.ca/" rel="noopener">leg.bc.ca</a>.</p>
+    </div>
+          <div class="cadre-plan-bas"></div>
+        </div>
+        <p class="bc-section-source" data-i18n="apercu.source">Official source: <a href="https://www.leg.bc.ca/en" target="_blank" rel="noopener">leg.bc.ca</a></p>
+      </div>
+    </div>
+
+    <!-- LE JOURNAL EN FRISE : même grille en 1/3, et la ligne verticale du cahier à droite.
+         renderNews() écrit .news-item / .news-date / .news-body ; bc.css y pose les points. -->
+    <div class="bc-section" id="band-actu">
+      <div class="bc-section-intro" id="sec-quoideneuf">
+        <div class="kicker" data-i18n="kicker.journal">Journal</div>
+        <h2 data-i18n="h.quoideneuf">What actually happened</h2>
+        <p data-i18n="h.quoideneuf.sub">Newest first. Only events from the official record.</p>
+      </div>
+      <div class="bc-frise" id="body-quoideneuf">
+        <div id="newsList"></div>
+        <div class="prerendu" data-prerendu="newsItems">
+      <ul aria-label="What’s new at the Legislative Assembly">
+        <li><span class="pr-meta">28 mai 2026 —</span> 3 votes nominatifs tenus à l'Assemblée.</li>
+        <li><span class="pr-meta">28 mai 2026 —</span> Sanction du projet de loi n° 9 — Freedom of Information and Protection of Privacy Amendment Act, 2026</li>
+        <li><span class="pr-meta">28 mai 2026 —</span> Sanction du projet de loi n° 20 — K'ómoks Treaty Act</li>
+        <li><span class="pr-meta">28 mai 2026 —</span> Sanction du projet de loi n° 22 — Supply Act, 2026-2027</li>
+        <li><span class="pr-meta">28 mai 2026 —</span> Dépôt du projet de loi n° 22 — Supply Act, 2026-2027</li>
+        <li><span class="pr-meta">28 mai 2026 —</span> Sanction du projet de loi n° 217 — Dashboard Cameras in Commercial Vehicles Act</li>
+        <li><span class="pr-meta">28 mai 2026 —</span> Dépôt du projet de loi n° 249 — Pharmaceutical Risk Management and Accountability Act</li>
+        <li><span class="pr-meta">27 mai 2026 —</span> Dépôt du projet de loi n° 248 — Chinese Heritage Month Act</li>
+      </ul>
+      <p class="pr-note">Official source: <a href="https://www.leg.bc.ca/" rel="noopener">leg.bc.ca</a>.</p>
+    </div>
+      </div>
+    </div>
+
+    <!-- SUIVRE ET COMMANDITER : un seul cadre, deux cellules, celle de droite en or — c'est la
+         bande du cahier. Les deux boîtes gardent leurs identifiants (renderPromoCompte). -->
+    <div class="bc-suivre cadre-plan cadre-encre">
+      <div class="promo-alertes promo-accueil" id="band-alertes-accueil" role="region" aria-labelledby="promoAccueilTitre">
+        <p class="promo-sur" data-i18n="promo.sur">Free &#183; no password</p>
+        <h2 id="promoAccueilTitre" data-i18n="promo.h">Follow up to three bills</h2>
+        <p class="promo-texte" data-i18n="promo.p">A link arrives by email when a bill you follow moves.</p>
+        <div class="promo-compte">
+          <div id="promoCompte">
+            <div class="promo-compte-ligne">
+              <input type="email" id="promoEmail" placeholder="Your email" data-i18n-placeholder="promo.courriel" aria-label="Your email" disabled>
+              <button class="account-btn" id="promoLienBtn" onclick="handlePromoLink()" disabled>Get the link</button>
+            </div>
+          </div>
+          <a class="promo-mes-dossiers" href="/mon-dossier" data-i18n="promo.mesdossiers">My file &#8594;</a>
+        </div>
+      </div>
+
+      <div class="bc-cellule-or nb-commandite" role="region" aria-labelledby="commanditeTitre">
+        <p class="promo-sur" data-i18n="commandite.sur">Sponsorship</p>
+        <h2 id="commanditeTitre" data-i18n="commandite.h">Bring your city council in</h2>
+        <p class="promo-texte" data-i18n="commandite.p">Agendas, votes and resolutions in plain language. One local sponsor funds one city.</p>
+        <a class="hero-cta lienRtv" href="/represente-ta-ville" data-i18n="commandite.cta">Sponsor a city &#8594;</a>
+        <p class="nb-commandite-villes" data-i18n="commandite.villes">Kelowna, Nanaimo, Prince George are still open</p>
+      </div>
+      <div class="cadre-plan-bas"></div>
+    </div>
+
+    <!-- LA MISSION : la phrase en gros à gauche, les deux comparaisons à droite. -->
+    <div class="bc-mission" id="band-mission">
+      <div>
+        <div class="mission-eyebrow" data-i18n="mission.eyebrow">Our mission</div>
+        <p class="mission-statement"><span data-i18n="mission.st1">leg.bc.ca is the source of record. This site only makes it </span><span class="hl" data-i18n="mission.st2">easier to follow.</span></p>
+      </div>
+      <div class="compare">
+        <div class="compare-col">
+          <span class="tag" data-i18n="mission.assnat.tag">The official site</span>
+          <ul>
+            <li data-i18n="mission.assnat.1">Organizes everything by official document</li>
+            <li data-i18n="mission.assnat.2">The complete, legally authoritative source</li>
+            <li data-i18n="mission.assnat.3">Neutral &#8212; never compares or summarizes</li>
+          </ul>
+        </div>
+        <div class="compare-col">
+          <span class="tag" data-i18n="mission.site.tag">This site</span>
+          <ul>
+            <li data-i18n="mission.site.1">Organizes everything by person: one profile, all their files</li>
+            <li data-i18n="mission.site.2">Translates the jargon into plain language (see the Glossary)</li>
+            <li data-i18n="mission.site.3">Lets you follow what affects you, with no judgment or verdict</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MINISTRES & DÉPUTÉS -->
+  
+
+  <!-- PROJETS DE LOI -->
+  
+
+  <!-- VOTES -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+  <!-- N.-B. (Martin, 7 nov. 2026) : vue de l'abonnement retirée pour l'instant (à reprendre de DossierQuébec). -->
+
+  <!-- ARCHIVES (Martin, 9 novembre 2026). La 43e législature est terminée depuis le 22 septembre.
+       Dès que la 44e aura publié ses député·e·s et son conseil des ministres, tout ce que le site
+       montre aujourd'hui — projets, votes, député·e·s, ministres — bascule ici. La liste est
+       remplie par renderArchives (commun/dq.js) à partir de data/archives/index.json : tant que
+       la 43e est celle qui vit, la page le dit plutôt que de montrer une liste vide. -->
+  
+
+  <!-- REPRÉSENTEZ VOTRE VILLE (Martin, 9 novembre 2026). Jusqu'ici la pastille « Villes » envoyait
+       vers le formulaire de DossierQuébec : quelqu'un de Kelowna atterrissait sur un site qui
+       parle du Québec, avec une liste de villes québécoises. DossierBC a maintenant la sienne,
+       avec les villes de la Colombie-Britannique et leurs prix. Le formulaire poste sur
+       /api/represente, qui envoie le tout par courriel — rien n'est promis, on mesure la demande.
+       Les textes vivent en double (.fr-txt / .en-txt) comme sur la page de DossierQuébec, pas en
+       clés data-i18n : c'est une page à part, qui ne sert qu'ici. -->
+  
+
+  <!-- LEXIQUE (fusion : personnes, lexique, apropos) -->
+  
+
+  <!-- PAGE CACHÉE — la BD « l'idée derrière le site ». Aucun onglet n'y mène :
+       accessible seulement par le « et moi » du bas de page (à côté de
+       « Construit avec Claude »). goToTab('bd') fonctionne sans bouton d'onglet. -->
+  <!-- /mon-dossier : l'espace de la personne connectée, côté ASSEMBLÉE seulement (Martin,
+       22 sept. 2026 : « mes dossiers provincial et les villes doivent être complètement séparés »).
+       Les villes y ont leur section (#villes) depuis le 30 sept. 2026 ; avant, /mes-dossiers. Tout le contenu
+       est rempli par commun/dq.js (renderMonDossier) : rien de personnel n'est dans le HTML. -->
+  <!-- LES RÈGLES (Martin, 5 oct. 2026 : « on pourrait quasiment faire une page de ça… à côté de
+       Facebook »). Les règles de sources du site, écrites une fois pour être montrées à quelqu'un :
+       tout ce que les encadrés de méthode disent page par page, réuni. Lien dans le pied de page. -->
+  
+
+  <!-- LA PAGE 404 (Martin, 6 oct. 2026 : « faut une page drôle 404 », puis : avec le jaune et tout
+       le kit du site, « morte dans l'œuf », et pas de blanc sur noir). Vercel sert 404.html, avec le
+       code 404, pour toute adresse qui n'existe pas ; avant, c'était le message brut de l'hébergeur,
+       en anglais. Fabriquée comme les autres pages (scripts/build-section-pages.js, vue
+       « introuvable »), donc avec l'en-tête, le menu et le pied du site.
+       « Morte dans l'œuf » est le libellé des projets de loi jamais rendus plus loin que la
+       présentation. Le faux vote est ÉTIQUETÉ comme une blague : ce site n'invente jamais de donnée. -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+
+  
+
+  
+
+</div>
+
+<!-- Footer maquette : texte à gauche (avec « construit avec Claude » suivi du
+     lien caché « et moi » vers la BD), liens texte en majuscules à droite. -->
+<footer>
+  <nav class="footer-nav" aria-label="Plan du site">
+    <a href="/" data-i18n="nav.apercu">Overview</a>
+    <a href="/ministres" data-i18n="nav.ministres">Ministers</a>
+    <a href="/projets-de-loi" data-i18n="nav.projets">Bills</a>
+    <a href="/votes" data-i18n="nav.votes">Votes</a>
+    <a href="/lexique" data-i18n="nav.lexique">Glossary</a>
+    <a href="/sources" data-i18n="fil.bd">Site updates</a>
+    <a href="/mon-dossier" data-i18n="nav.mondossier">My file</a>
+    <span class="footer-nav-villes"><span data-i18n="footer.villes">Cities:</span>
+      <a class="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a>
+    </span>
+  </nav>
+  <div class="footer-inner">
+  <span class="footer-left-line"><span id="footerLeft">Site non officiel — données publiques de l'Assemblée législative de la Colombie-Britannique ·</span> <span id="footerRight">Une réalisation de</span> <a class="footer-etmoi" id="footerDafr" href="https://www.dafrsolution.com" target="_blank" rel="noopener">DAFR Solution</a></span>
+  <span class="footer-right-group">
+    <a class="footer-gh" href="/regles" data-i18n="footer.regles">The rules</a>
+    <!-- N.-B. (Martin, 7 nov. 2026) : abonnement, café, flux RSS des abonné·e·s et crédit Flaticon retirés pour l'instant. -->
+    <a class="footer-gh" href="https://github.com/GrandFFormat/dossierbc" target="_blank" rel="noopener" data-i18n="footer.source">Source code</a>
+    <!-- La langue aussi en pied de page, comme sur le cahier. Son texte est écrit par
+         applyLanguage() : « Français » quand on lit l'anglais, « English » quand on lit le
+         français. -->
+    <a class="footer-gh" id="langToggleFooter" href="#" role="button">Français</a>
+  </span>
+  </div>
+</footer>
+
+<button id="backToTop" class="dq-remonter" aria-label="Remonter en haut" title="Remonter en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/commun/apercu.js"></script>
+<script src="/commun/dq.js"></script>
+<!-- Vercel Web Analytics — sans cookie, sans donnée personnelle (donc pas de
+     bannière de consentement requise). Le script est servi automatiquement par
+     Vercel quand Web Analytics est activé dans le tableau de bord du projet. -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

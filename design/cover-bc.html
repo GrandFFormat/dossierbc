@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>dossierbc-cover.png</title>
+<style>
+  @font-face { font-family:'Barlow'; src:url('/commun/polices/barlow-400.woff2') format('woff2'); font-weight:400; font-display:block; }
+  @font-face { font-family:'Barlow'; src:url('/commun/polices/barlow-500.woff2') format('woff2'); font-weight:500; font-display:block; }
+  @font-face { font-family:'Barlow'; src:url('/commun/polices/barlow-700.woff2') format('woff2'); font-weight:700; font-display:block; }
+  @font-face { font-family:'Barlow Condensed'; src:url('/commun/polices/barlow-condensed-700.woff2') format('woff2'); font-weight:700; font-display:block; }
+  body { margin:0; background:#555; font:14px system-ui; color:#fff; }
+  canvas { display:block; width:851px; height:315px; margin:20px auto; }
+  p { text-align:center; }
+</style>
+<canvas id="c" width="1702" height="630"></canvas>
+<p id="etat">…</p>
+<script>
+// L'image de partage de DossierBC, 1702 × 630. Identité « Sun & waves » : papier, bleu héraldique,
+// or soleil, Barlow Condensed, AUCUNE ombre — des filets d'un pixel, comme le reste du site.
+const BLEU = '#1f4f8a', OR = '#e3b528', PAPIER = '#fbfbfa', ENCRE = '#17202b', ARDOISE = '#4c545e';
+const W = 1702, H = 630;
+
+async function dessiner() {
+  await document.fonts.load('700 1em "Barlow Condensed"');
+  await document.fonts.load('700 1em Barlow');
+  await document.fonts.load('500 1em Barlow');
+  await document.fonts.ready;
+
+  const g = document.getElementById('c').getContext('2d');
+  g.fillStyle = PAPIER; g.fillRect(0, 0, W, H);
+
+  // --- Le soleil et l'eau, à droite : le même motif que l'affiche de l'accueil.
+  const cx = 1310, horizon = 395, r = 168;
+  g.save();
+  g.beginPath(); g.rect(0, 0, W, horizon); g.clip();
+  g.fillStyle = OR; g.beginPath(); g.arc(cx, horizon, r, 0, Math.PI * 2); g.fill();
+  g.restore();
+
+  // La ligne d'horizon, d'un pixel, sur toute la largeur du bloc de droite.
+  g.strokeStyle = BLEU; g.lineWidth = 2;
+  g.beginPath(); g.moveTo(1010, horizon); g.lineTo(W - 70, horizon); g.stroke();
+
+  // Trois lignes d'eau sous l'horizon.
+  const vague = (y, amp, lam, de, a) => {
+    g.beginPath();
+    for (let x = de; x <= a; x += 2) {
+      const yy = y + Math.sin(((x - de) / lam) * Math.PI * 2) * amp;
+      x === de ? g.moveTo(x, yy) : g.lineTo(x, yy);
+    }
+    g.stroke();
+  };
+  g.lineWidth = 4; g.strokeStyle = BLEU;
+  vague(horizon + 42, 7, 150, 1010, W - 70);
+  vague(horizon + 86, 7, 150, 1050, W - 110);
+  g.lineWidth = 3; g.strokeStyle = 'rgba(31,79,138,.45)';
+  vague(horizon + 128, 6, 150, 1010, W - 70);
+
+  // --- Le texte, à gauche.
+  g.textBaseline = 'alphabetic';
+  g.fillStyle = BLEU;
+  g.font = '700 196px "Barlow Condensed"';
+  g.fillText('DossierBC', 92, 290);
+
+  g.fillStyle = ENCRE;
+  g.font = '500 54px Barlow';
+  g.fillText("British Columbia's Legislative", 96, 372);
+  g.fillText('Assembly, in plain language', 96, 436);
+
+  // Le filet or, puis la ligne de contenu.
+  g.fillStyle = OR; g.fillRect(96, 474, 300, 6);
+  g.fillStyle = ARDOISE;
+  g.font = '400 36px Barlow';
+  g.fillText('Bills · Recorded votes · Cabinet and MLAs', 96, 532);
+
+  // --- Le bandeau or du bas : la grammaire de la famille Dossier.
+  g.fillStyle = OR; g.fillRect(0, H - 54, W, 54);
+  g.fillStyle = '#17202b';
+  g.font = '700 32px Barlow';
+  g.fillText('dossierbc.ca', 96, H - 17);
+  g.font = '500 30px Barlow';
+  const avis = 'Independent and unofficial · Free · Sources named on every page';
+  g.fillText(avis, W - 70 - g.measureText(avis).width, H - 17);
+
+  // --- Récupérer l'image. Servie par le petit serveur d'écriture (PUT /ecrire), elle tombe
+  // directement dans le dépôt ; servie par n'importe quel autre serveur, le lien la télécharge.
+  const blob = await new Promise((ok) => document.getElementById('c').toBlob(ok, 'image/png'));
+  const etat = document.getElementById('etat');
+  let ecrit = false;
+  try { ecrit = (await fetch('/ecrire', { method: 'PUT', body: blob })).ok; } catch (e) {}
+  if (ecrit) { etat.textContent = `Écrit dans le dépôt : ${blob.size} octets (${W} × ${H}).`; return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'dossierbc-cover.png';
+  a.textContent = `Télécharger dossierbc-cover.png (${blob.size} octets, ${W} × ${H})`;
+  a.style.color = '#e3b528';
+  etat.textContent = '';
+  etat.append(a);
+}
+dessiner().catch((e) => { document.getElementById('etat').textContent = 'Erreur : ' + e.message; });
+</script>
+</html>

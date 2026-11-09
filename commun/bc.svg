@@ -1,0 +1,15 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DossierBC">
+  <!--
+    La marque de DossierBC : le soleil couchant sur les vagues, la tuile bleue, le bandeau or.
+    Dessin et couleurs décrits dans scripts/fabriquer-images.mjs, qui fabrique aussi les PNG.
+    Aucun double trait d'union dans ce bloc : un commentaire XML l'interdit, et un SVG qui ne se
+    parse pas ne s'affiche pas du tout.
+  -->
+  <rect width="64" height="64" fill="#1f4f8a"/>
+  <circle cx="32" cy="24" r="13" fill="#e3b528"/>
+  <g fill="none" stroke="#fbfbfa" stroke-width="2.4">
+    <path d="M0,41 q8,-3.2 16,0 t16,0 t16,0 t16,0"/>
+    <path d="M0,47 q8,-3.2 16,0 t16,0 t16,0 t16,0"/>
+  </g>
+  <rect y="52" width="64" height="12" fill="#e3b528"/>
+</svg>

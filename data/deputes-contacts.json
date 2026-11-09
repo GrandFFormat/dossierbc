@@ -1,0 +1,463 @@
+{
+  "source": "https://www.leg.bc.ca/members/find-mla-by-constituency",
+  "scrapedAt": "2026-11-08T13:56:25.893Z",
+  "note": "Courriels législatifs publiés par l'Assemblée dans son API, pour que le public puisse écrire à ses élu·e·s.",
+  "count": 91,
+  "contacts": [
+    {
+      "name": "Brittny Anderson",
+      "email": "Brittny.Anderson.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "George Anderson",
+      "email": "George.Anderson.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Tara Armstrong",
+      "email": "Tara.Armstrong.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Rohini Arora",
+      "email": "Rohini.Arora.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Brenda Bailey",
+      "email": "Brenda.Bailey.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Bruce Banman",
+      "email": "Bruce.Banman.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Lisa Beare",
+      "email": "Lisa.Beare.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Garry Begg",
+      "email": "Garry.Begg.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Harman Bhangu",
+      "email": "Harman.Bhangu.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Rosalyn Bird",
+      "email": "Rosalyn.Bird.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Jennifer Blatherwick",
+      "email": "Jennifer.Blatherwick.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Lynne Block",
+      "email": "Lynne.Block.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Rob Botterell",
+      "email": "Rob.Botterell.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Amelia Boultbee",
+      "email": "Amelia.Boultbee.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Christine Boyle",
+      "email": "Christine.Boyle.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Jagrup Brar",
+      "email": "Jagrup.Brar.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Dallas Brodie",
+      "email": "Dallas.Brodie.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Hon Chan",
+      "email": "Hon.Chan.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Spencer Chandra Herbert",
+      "email": "s.chandraherbert.mla@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Susie Chant",
+      "email": "Susie.Chant.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Brent Chapman",
+      "email": "Brent.Chapman.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Paul Choi",
+      "email": "Paul.Choi.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Raj Chouhan",
+      "email": "Raj.Chouhan.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "George Chow",
+      "email": "George.Chow.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Sheldon Clare",
+      "email": "Sheldon.Clare.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Laanas - Tamara Davidson",
+      "email": "Tamara.Davidson.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Pete Davis",
+      "email": "Pete.Davis.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Brennan Day",
+      "email": "Brennan.Day.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Gavin Dew",
+      "email": "Gavin.Dew.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Mandeep Dhaliwal",
+      "email": "Mandeep.Dhaliwal.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Sunita Dhir",
+      "email": "Sunita.Dhir.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Adrian Dix",
+      "email": "Adrian.Dix.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Lorne Doerkson",
+      "email": "Lorne.Doerkson.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "David Eby",
+      "email": "David.Eby.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Mable Elmore",
+      "email": "Mable.Elmore.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Mike Farnworth",
+      "email": "Mike.Farnworth.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Diana Gibson",
+      "email": "Diana.Gibson.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Kiel Giddens",
+      "email": "Kiel.Giddens.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Rick Glumac",
+      "email": "Rick.Glumac.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Kelly Greene",
+      "email": "Kelly.Greene.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Trevor Halford",
+      "email": "trevor.halford.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Sharon Hartwell",
+      "email": "Sharon.Hartwell.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Linda Hepner",
+      "email": "Linda.Hepner.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Stephanie Higginson",
+      "email": "Stephanie.Higginson.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Ravi Kahlon",
+      "email": "Ravi.Kahlon.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Anne Kang",
+      "email": "Anne.Kang.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Jordan Kealy",
+      "email": "Jordan.Kealy.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Anna Kindy",
+      "email": "Anna.Kindy.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Steve Kooner",
+      "email": "Steve.Kooner.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Nina Krieger",
+      "email": "Nina.Krieger.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Dana Lajeunesse",
+      "email": "Dana.Lajeunesse.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Kristina Loewen",
+      "email": "Kristina.Loewen.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Grace Lore",
+      "email": "Grace.Lore.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Tony Luck",
+      "email": "Tony.Luck.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Bowinn Ma",
+      "email": "Bowinn.Ma.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Heather Maahs",
+      "email": "Heather.Maahs.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Sheila Malcolmson",
+      "email": "Sheila.Malcolmson.mla@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Macklin McCall",
+      "email": "Macklin.McCall.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Scott McInnis",
+      "email": "Scott.McInnis.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Peter Milobar",
+      "email": "Peter.Milobar.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Lawrence Mok",
+      "email": "Lawrence.Mok.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Steve Morissette",
+      "email": "Steve.Morissette.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Randene Neill",
+      "email": "Randene.Neill.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Korky Neufeld",
+      "email": "Korky.Neufeld.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Larry Neufeld",
+      "email": "Larry.Neufeld.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Josie Osborne",
+      "email": "Josie.Osborne.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Ravi Parmar",
+      "email": "Ravi.Parmar.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Ian Paton",
+      "email": "Ian.Paton.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Lana Popham",
+      "email": "Lana.Popham.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Claire Rattée",
+      "email": "Claire.Rattee.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Darlene Rotchford",
+      "email": "Darlene.Rotchford.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Janet Routledge",
+      "email": "Janet.Routledge.mla@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "John Rustad",
+      "email": "John.Rustad.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Harwinder Sandhu",
+      "email": "Harwinder.Sandhu.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Amna Shah",
+      "email": "Amna.Shah.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Niki Sharma",
+      "email": "Niki.Sharma.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Ward Stamer",
+      "email": "Ward.Stamer.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Elenore Sturko",
+      "email": "Elenore.Sturko.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Jessie Sunner",
+      "email": "Jessie.Sunner.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Bryan Tepper",
+      "email": "Bryan.Tepper.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Jody Toor",
+      "email": "Jody.Toor.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Qwulti'stunaat - Debra Toporowski",
+      "email": "Debra.Toporowski.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Jeremy Valeriote",
+      "email": "Jeremy.Valeriote.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Misty Van Popta",
+      "email": "Misty.VanPopta.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Á'a:líya Warbus",
+      "email": "Aaliya.Warbus.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Teresa Wat",
+      "email": "Teresa.Wat.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Jennifer Whiteside",
+      "email": "Jennifer.Whiteside.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Jodie Wickens",
+      "email": "Jodie.Wickens.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "David Williams",
+      "email": "David.Williams.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Donegal Wilson",
+      "email": "Donegal.Wilson.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    },
+    {
+      "name": "Terry Yung",
+      "email": "Terry.Yung.MLA@leg.bc.ca",
+      "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency"
+    }
+  ]
+}

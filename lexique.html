@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Consentement (Loi 25) : par défaut, Google Analytics n'a PAS le droit de déposer de témoins.
+     La bannière (commun/consentement.js) passe analytics_storage à « granted » après « Accepter ». -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<!-- Mesure d'audience : AUCUNE pour l'instant. La propriété Google Analytics de la
+     Colombie-Britannique n'existe pas encore, et celle du Nouveau-Brunswick a été retirée d'ici
+     pour qu'elle ne reçoive pas ce trafic. Pour la brancher : remettre le bloc gtag.js des autres
+     sites de la famille avec l'identifiant de la nouvelle propriété. Le consentement
+     (commun/consentement.js) et la bande de témoins sont déjà en place et n'attendent que ça. -->
+<!-- Pas de bannière de témoins : il n'y a aucune mesure d'audience sur ce site pour l'instant,
+     donc rien à faire accepter. Elle revient avec le bloc gtag.js, le jour où la propriété
+     Google Analytics de la Colombie-Britannique existera.
+<script src="/commun/consentement.js" defer></script> -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* La langue, avant d'afficher quoi que ce soit — EXACTEMENT la décision de langueDeDepart
+   (commun/dq.js) : « ?lang=fr » dans l'adresse, sinon le choix gardé dans dvq:langue (commun à
+   tout le site) ; en revenant par Précédent ou Suivant, le choix gardé passe avant l'adresse.
+   Le site est ANGLOPHONE : l'anglais est écrit dans le HTML et s'affiche tout de suite. C'est
+   le français qui attend sa traduction, et la page reste cachée le temps que dq.js la fasse :
+   1,5 s au plus, même s'il échoue. lang="fr" n'est posé qu'au moment de traduire (dq.js).
+   Tout est dans une fonction : une variable globale ici entrerait en collision avec les
+   déclarations de dq.js et le ferait planter en entier. */
+(function(){
+  try{
+    var valide = function(l){ return l === 'en' || l === 'fr'; };
+    var gardee = null;
+    try{ gardee = localStorage.getItem('dvq:langue'); }catch(e){}
+    var q = new URLSearchParams(location.search).get('lang');
+    var nav = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+    var parHistorique = !!nav && nav.type === 'back_forward';
+    var choix = (parHistorique && valide(gardee)) ? gardee : (valide(q) ? q : gardee);
+    if(choix !== 'fr') return;
+    var racine = document.documentElement;
+    racine.classList.add('dq-fr');
+    setTimeout(function(){ racine.classList.add('dq-pret'); }, 1500);
+  }catch(e){}
+})();
+</script>
+<title>Glossary of the Legislative Assembly — DossierBC</title>
+<meta name="description" content="First reading, Royal Assent, recorded division: the vocabulary of British Columbia's Legislative Assembly, explained plainly, with a link to each source.">
+<link rel="canonical" href="https://dossierbc.ca/lexique">
+<!-- Plus de <link rel="alternate"> vers /feed.xml : le flux RSS est réservé aux abonné·e·s depuis le
+     21 oct. 2026 (api/feed.js), chacun avec son adresse personnelle dans Mon dossier. -->
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E4FC1">
+
+<!-- Open Graph (aperçu au partage : Facebook, LinkedIn, iMessage…) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="Glossary of the Legislative Assembly — DossierBC">
+<meta property="og:description" content="First reading, Royal Assent, recorded division: the vocabulary of British Columbia's Legislative Assembly, explained plainly, with a link to each source.">
+<meta property="og:url" content="https://dossierbc.ca/lexique">
+<meta property="og:image" content="https://dossierbc.ca/dossierbc-cover.png">
+<meta property="og:image:width" content="1702">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DossierBC — veille citoyenne de l'Assemblée législative de la Colombie-Britannique">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Glossary of the Legislative Assembly — DossierBC">
+<meta name="twitter:description" content="First reading, Royal Assent, recorded division: the vocabulary of British Columbia's Legislative Assembly, explained plainly, with a link to each source.">
+<meta name="twitter:image" content="https://dossierbc.ca/dossierbc-cover.png">
+
+<link rel="icon" type="image/svg+xml" href="/commun/bc.svg">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="/commun/bc-48.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/commun/bc-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/commun/bc-180.png">
+
+<!-- Données structurées (aide Google à comprendre le site) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://dossierbc.ca/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Glossary",
+      "item": "https://dossierbc.ca/lexique"
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/commun/dq.css">
+<!-- Le design de la Colombie-Britannique, posé par-dessus dq.css. Il apporte ses polices (Barlow
+     et Barlow Condensed, servies par le site depuis commun/polices/) : plus rien n'est chargé
+     chez Google Fonts, et le cahier de design est suivi à la lettre. -->
+<link rel="stylesheet" href="/commun/bc.css">
+</head>
+<body data-page="lexique" data-donnees="stats,legislatureEtat">
+
+<!-- Ticker brutaliste : bande noire défilante — contenu rempli avec les VRAIES
+     données par renderTicker() (appelé une fois les datasets chargés). -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-text" id="tickerA">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+    <span class="ticker-text" id="tickerB">● DossierBC — site citoyen indépendant · vraies données publiques&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<div id="dq-topbar">
+<header class="top">
+  <div class="brand">
+    <div class="brand-text" role="button" tabindex="0" aria-label="Retour à l'aperçu" onclick="goToTab('apercu')">
+      <!-- Volontairement un div, et non un titre de niveau 1 : le nom du site se
+           répète sur chaque page, alors que le titre de niveau 1 doit annoncer
+           le sujet de LA page. C'est le titre de une de la vue active qui joue
+           ce rôle, et le générateur de pages de section s'en assure.
+           (Pas de balise écrite en toutes lettres dans ce commentaire : elle
+           fausserait les outils qui comptent les titres à l'expression
+           régulière.) -->
+      <div class="brand-title"><span class="bc-marque" aria-hidden="true"></span>Dossier<span class="brand-blue">BC</span><span class="brand-ca">.ca</span></div>
+      <p>Qui siège, qui légifère, qui vote quoi</p>
+    </div>
+    <!-- Feuille d'érable : passerelle vers le site fédéral DossierCanada.
+         Flippe jaune ↔ rouge toutes les 20 s (voir le script plus bas). -->
+    <a class="maple-flip" id="mapleFlip" role="button" tabindex="0"
+       title="Aller au site fédéral — DossierCanada"
+       aria-label="Aller au site fédéral — DossierCanada"
+       onclick="goToFederal(event)">
+      <svg viewBox="-2015 -2000 4030 4030" aria-hidden="true"><path fill="currentColor" d="m-90 2030 45-863a95 95 0 0 0-111-98l-859 151 116-320a65 65 0 0 0-20-73l-941-762 212-99a65 65 0 0 0 34-79l-186-572 542 115a65 65 0 0 0 73-38l105-247 423 454a65 65 0 0 0 111-57l-204-1052 327 189a65 65 0 0 0 91-27l332-652 332 652a65 65 0 0 0 91 27l327-189-204 1052a65 65 0 0 0 111 57l423-454 105 247a65 65 0 0 0 73 38l542-115-186 572a65 65 0 0 0 34 79l212 99-941 762a65 65 0 0 0-20 73l116 320-859-151a95 95 0 0 0-111 98l45 863z"/></svg>
+    </a>
+    <!-- LES VILLES, EN PASTILLE (Martin, 9 novembre 2026). Elle était devenue un onglet le
+         7 novembre. Deux raisons de la ramener ici : ce menu ne mène pas à une section du site
+         mais à d'AUTRES sites, et dans la barre il vivait à l'intérieur d'un conteneur qui défile
+         (nav.tabs, overflow-x:auto), qui découpait son panneau et faisait apparaître une barre de
+         défilement en travers des onglets. Hors de la barre, le conflit n'existe pas. -->
+    <details class="villes-menu" id="villesMenu">
+      <summary class="city-flip nav-villes" title="Les volets municipaux" aria-label="Les volets municipaux">
+        <span data-i18n="nav.villes">Cities</span>
+      </summary>
+      <ul>
+        <!-- Aucune ville encore : le seul lien mène au formulaire de DossierQuébec (guide, étape 9). -->
+        <li class="villes-rtv"><a id="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a></li>
+      </ul>
+    </details>
+
+    <!-- Les volets municipaux (DossierVille) : un bouton « Villes » qui ouvre la liste.
+         Vrais liens <a href> : le clavier, le clic du milieu et « ouvrir dans un
+         nouvel onglet » fonctionnent sans une ligne de code. La barre oblique finale
+         est OBLIGATOIRE — sans elle, les chemins relatifs du volet (assets/, data/)
+         se résolvent depuis la racine du site. Plus de rel="nofollow" depuis le
+         21 sept. 2026 : les volets sont ouverts aux moteurs de recherche. Le chemin dit /quebec/ : c'est la
+         liste, sous « Villes », qui dit qu'il s'agit de la ville. -->
+  </div>
+  <!-- Nav DANS la ligne du header (maquette : logo | menu | contrôles sur
+       UNE seule rangée). Sur mobile, le nav devient le panneau plein écran
+       du hamburger (position:fixed), peu importe où il vit dans le DOM. -->
+  <nav class="tabs">
+    <div class="close-menu" id="closeMenuBtn"><span data-i18n="nav.close">Close</span> ✕</div>
+    <!-- De vrais liens, pas des <button> : un moteur de recherche ne suit pas un bouton, et
+         /ministres, /projets-de-loi, /votes et /lexique n'avaient aucun lien qu'il puisse suivre. -->
+    <a href="/" data-view="apercu"><span class="n">01</span><span data-i18n="nav.apercu">Overview</span></a>
+    <a href="/ministres" data-view="ministres"><span class="n">02</span><span data-i18n="nav.ministres">Ministers</span></a>
+    <a href="/projets-de-loi" data-view="projets"><span class="n">03</span><span data-i18n="nav.projets">Bills</span></a>
+    <!-- Votes a quitté la barre le 30 oct. 2026 : les votes vivent dans les cartes des projets de
+         loi, et /votes reste lié du pied de page et de la page des projets. -->
+    <!-- Archives : remis dans la barre le 9 novembre 2026 (Martin). La 43e législature est
+         terminée ; ses ministres et ses député·e·s basculeront ici dès que la 44e aura publié les
+         siens. Pas de page Promesses tant que la Colombie-Britannique n'en a pas. -->
+    <a href="/archives" data-view="archives"><span class="n">04</span><span data-i18n="nav.archives">Archives</span></a>
+    <a class="active" aria-current="page" href="/lexique" data-view="lexique"><span class="n">05</span><span data-i18n="nav.lexique">Glossary</span></a>
+    <a href="/mon-dossier" data-view="mondossier" class="nav-mondossier"><span class="n">★</span><span data-i18n="nav.mondossier">My file</span></a>
+    <!-- Le menu des villes a quitté la barre d'onglets le 9 novembre 2026 : il est redevenu la
+         pastille à côté du nom du site, comme chez DossierQuébec. Voir .brand plus haut. -->
+  </nav>
+  <div class="header-ctrls">
+    <div class="font-size-ctrl" id="fontSizeCtrl">
+      <button id="fontMinus" aria-label="Réduire le texte">A−</button>
+      <span id="fontPct">100%</span>
+      <button id="fontPlus" aria-label="Agrandir le texte">A+</button>
+    </div>
+    <!-- Aucun contenu textuel : l'icône est dessinée en CSS. Le nom accessible
+         vient donc entièrement de aria-label, que le JS tient à jour. -->
+    <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Passer au thème sombre"></button>
+    <button class="lang-toggle" id="langToggle">English</button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+</div>
+
+<script>
+/* Bascule le bloc logo+menu en mode compact après un peu de défilement.
+   Hystérésis (80 vs 20) pour éviter le clignotement autour du seuil. */
+(function(){
+  var bar = document.getElementById('dq-topbar');
+  var compact = false;
+  function onScroll(){
+    var y = window.scrollY;
+    if(!compact && y > 80){ compact = true; bar.classList.add('compact'); }
+    else if(compact && y < 20){ compact = false; bar.classList.remove('compact'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+// Ouvre le site fédéral DossierCanada dans un nouvel onglet.
+function goToFederal(evt){
+  if(evt) evt.stopPropagation();
+  window.open('https://dossiercanada.ca/', '_blank', 'noopener');
+}
+// Feuille d'érable : flippe jaune ↔ rouge toutes les 20 secondes.
+(function(){
+  var leaf = document.getElementById('mapleFlip');
+  if(!leaf) return;
+  setInterval(function(){ leaf.classList.toggle('is-red'); }, 20000);
+})();
+
+// Menu « Villes » : compte les clics vers chaque volet municipal (événement
+// personnalisé Vercel Web Analytics — onglet « Events » du tableau de bord), et
+// referme le menu quand on clique ailleurs ou qu'on appuie sur Échap.
+(function(){
+  var menu = document.getElementById('villesMenu');
+  if(!menu) return;
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if(window.va) window.va('event', { name: 'clic_icone_ville', data: { ville: a.getAttribute('href') } });
+    });
+  });
+  document.addEventListener('click', function(e){ if(menu.open && !menu.contains(e.target)) menu.open = false; });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menu.open){ menu.open = false; menu.querySelector('summary').focus(); } });
+})();
+</script>
+
+<div class="app">
+
+  <!-- APERÇU -->
+  <section class="view active" id="view-lexique">
+    <nav class="fil-ariane" aria-label="Fil d'Ariane"><a href="/" data-i18n="fil.accueil">Accueil</a><span class="sep" aria-hidden="true">›</span><span aria-current="page" data-i18n="fil.lexique">Glossary</span></nav>
+    <!-- Hero de vue (refonte brutaliste) -->
+    <div class="view-hero">
+      <h1 class="hero-h1 hero-h1-md">
+        <span class="hero-sujet" data-i18n="sujet.lexique">Legislative Assembly glossary</span>
+        <span data-i18n="lexhero.l1">The jargon,</span>
+        <span class="hero-outline" data-i18n="lexhero.l2">decoded.</span>
+      </h1>
+      <p class="view-hero-sub" data-i18n="lexhero.sub">“First reading”, “Committee of the Whole”, “Royal Assent”… The Assembly has its own vocabulary. Here, every term is explained like you'd explain it to a friend.</p>
+    </div>
+
+    <!-- Connexion — remontee tout en haut de Lexique -->
+    <div class="section-head" id="sec-compte"><div><h2 data-i18n="h.compte">Account</h2></div></div>
+    <!-- Contenu de départ = la branche « non connecté » de renderAccountBox() (commun/dq.js), qui le
+         remplace : la boîte a sa hauteur finale dès le premier affichage (CLS). Désactivé tant que
+         la connexion n'est pas prête : un clic avant ce moment enverrait un lien dont la
+         confirmation s'écrirait dans des éléments déjà remplacés. -->
+    <div class="account-box" id="accountBox">
+      <div class="account-row">
+        <input type="email" id="accountEmailInput" placeholder="Votre courriel" disabled>
+        <button class="account-btn" id="magicLinkBtn" onclick="handleMagicLinkClick()" disabled>Envoyer un lien de connexion</button>
+      </div>
+      <div class="account-note" id="accountStatusNote">Connectez-vous pour synchroniser les ministres, député·e·s et projets de loi que vous suivez entre vos appareils.</div>
+    </div>
+    <div id="adminFlagCounts"></div>
+    <!-- Les messages de « Ce qui vous préoccupe », admins seulement (renderAdminPreoccupations). -->
+    <div id="adminPreoccupations"></div>
+
+    <div class="quick-nav" id="quickNavLexique">
+      <span class="quick-nav-label" data-i18n="quicknav.label">Jump to:</span>
+      <a data-jump="sec-personnes" data-i18n="quicknav.personnes">Who's involved</a>
+      <a data-jump="sec-lobby" data-i18n="quicknav.lobby">Lobbyist registry</a>
+      <a data-jump="sec-lexique" data-i18n="quicknav.lexiqueitem">Glossary</a>
+      <a data-jump="sec-apropos" data-i18n="quicknav.apropos">Where this data comes from</a>
+    </div>
+
+    <div class="section-head" id="sec-personnes"><div><h2 data-i18n="h.personnes">Who's involved around the Assembly</h2><div class="sub" data-i18n="pers.sub">The public roles we hadn't covered yet — real names, real current functions</div></div></div>
+
+    <div id="body-personnes">
+    <!-- C.-B. : la section est vide à dessein. La version du Nouveau-Brunswick listait huit
+         titulaires de charges, avec leurs vrais noms — rien de cela n'est vrai ici, et les
+         titulaires de la Colombie-Britannique ne sont pas encore sourcés. On explique l'absence
+         plutôt que d'afficher faux (règle : toute absence s'explique). -->
+    <div class="info-box" data-i18n="pers.absence"><b>Not yet covered for British Columbia.</b> This section lists the officers around an assembly — the Speaker, the Clerk, the Auditor General, the Ombudsperson, the Information and Privacy Commissioner. On this site it is empty on purpose: the Legislative Assembly publishes these appointments on its own pages, and we have not yet read them with a scraper. Rather than show the wrong province's names, we say what is missing. The Speaker, who does appear in the API, is marked on the Members page.</div>
+    </div>
+
+    <div class="section-head" id="sec-lobby"><div><h2 data-i18n="h.lobby">The lobbyist registry</h2><div class="sub" data-i18n="lobby.sub">Who's paid to influence public decisions — and how to look it up</div></div></div>
+    <div class="info-box" style="scroll-margin-top:12px;">
+      <p data-i18n="lobby.body" style="margin:0 0 8px;">Anyone paid to communicate with <b>public office holders</b> (ministers, MLAs, senior officials…) in order to influence a decision must register in British Columbia's <b>Lobbyists Registry</b>, kept by the Office of the Registrar of Lobbyists.</p>
+      <p data-i18n="lobby.note" style="margin:0 0 10px; color:var(--slate); font-size:12.5px;">Why this site does not reproduce the registry: we have not asked the Registrar for permission, and we do not copy a public register without it. The search tool below is the official one, and it stays the reference.</p>
+      <div style="font-size:12.5px;">
+        <a href="https://www.lobbyistsregistrar.bc.ca/" target="_blank" rel="noopener" style="color:var(--gold);" data-i18n="lobby.link1">Search the official registry ↗</a>
+      </div>
+    </div>
+
+    <div class="section-head" id="sec-lexique"><div><h2 data-i18n="h.lexique">Parliamentary glossary</h2><div class="sub" data-i18n="h.lexique.sub">To understand the rest of the site without a political science degree</div></div></div>
+
+    <div id="body-lexique">
+
+    <dl>
+      <div class="lexique-item" id="etapes">
+        <dt data-i18n="lex.1.t">Bill</dt>
+        <span class="lex-badge cat-proc" data-i18n="lexcat.proc">Process</span>
+        <dd data-i18n="lex.1.d">The text a member or the government submits to the Assembly to become a law. It only becomes a real law once passed and then assented to.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.2.t">Second reading</dt>
+        <span class="lex-badge cat-proc" data-i18n="lexcat.proc">Process</span>
+        <dd data-i18n="lex.2.d">The first big step: the Assembly debates the general idea of the bill and votes on whether it accepts it, before studying the details clause by clause.</dd>
+      </div>
+      <div class="lexique-item" id="etape-etude">
+        <dt data-i18n="lex.3.t">Committee stage</dt>
+        <span class="lex-badge cat-proc" data-i18n="lexcat.proc">Process</span>
+        <dd data-i18n="lex.3.d">The step where the bill is gone over clause by clause, most often in Committee of the Whole (the entire Assembly sitting as a committee), sometimes by a standing committee. Amendments can be proposed there.</dd>
+      </div>
+      <div class="lexique-item" id="etape-adoption">
+        <dt data-i18n="lex.4.t">Third reading</dt>
+        <span class="lex-badge cat-proc" data-i18n="lexcat.proc">Process</span>
+        <dd data-i18n="lex.4.d">The Assembly's final vote on the bill as a whole, once the committee stage is over.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.5.t">Royal Assent</dt>
+        <span class="lex-badge cat-proc" data-i18n="lexcat.proc">Process</span>
+        <dd data-i18n="lex.5.d">The very last step: the Lieutenant-Governor gives official assent, and the bill formally becomes a law of British Columbia.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.6.t">Committee</dt>
+        <span class="lex-badge cat-proc" data-i18n="lexcat.proc">Process</span>
+        <dd data-i18n="lex.6.d">A smaller group of MLAs who study a subject or a bill in depth, may hear from experts and citizens, then report back to the full Assembly.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.14.t">Brief (to a committee)</dt>
+        <span class="lex-badge cat-proc" data-i18n="lexcat.proc">Process</span>
+        <dd data-i18n="lex.14.d">A document that an organization, a business or a citizen submits to an Assembly committee to say what they think of a bill or a subject under study: what they support, what should change, what worries them. Some are invited to present it in person to the MLAs.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.15.t">Brief or lobbying?</dt>
+        <span class="lex-badge cat-proc" data-i18n="lexcat.proc">Process</span>
+        <dd data-i18n="lex.15.d">Both try to influence a decision, but not in the same way. A <b>brief</b> is a public position, within a committee's official process: you know who is speaking and on what subject. <b>Lobbying</b> happens in private: meetings, calls or emails with a minister, a minister's office or public servants. The law only requires that it be entered in the province's lobbyists' registry, which says who is lobbying, for whom and on what subject, never what was said.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.7.t">Recorded vote</dt>
+        <span class="lex-badge cat-votes" data-i18n="lexcat.votes">Votes</span>
+        <dd data-i18n="lex.7.d">A vote where each MLA's name and choice (for or against) are written in the Assembly's Journals — as opposed to a voice vote, where only the result is noted. In British Columbia, most bills pass by voice vote.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.8.t">Journal of the Assembly</dt>
+        <span class="lex-badge cat-votes" data-i18n="lexcat.votes">Votes</span>
+        <dd data-i18n="lex.8.d">The official, summarized record of each sitting: decisions, votes, documents tabled. It is there, and only there, that names are written down during a recorded division.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.9.t">Debates journal (Journal des débats)</dt>
+        <span class="lex-badge cat-votes" data-i18n="lexcat.votes">Votes</span>
+        <dd data-i18n="lex.9.d">The complete, word-for-word transcript of everything said in the House — unlike the Journal of the Assembly, which only summarizes the decisions.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.10.t">House leader</dt>
+        <span class="lex-badge cat-pers" data-i18n="lexcat.pers">People & roles</span>
+        <dd data-i18n="lex.10.d">The MLA responsible for organizing their group's proceedings at the Assembly — a bit like the conductor of the calendar and debates for their party.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.11.t">Whip</dt>
+        <span class="lex-badge cat-pers" data-i18n="lexcat.pers">People & roles</span>
+        <dd data-i18n="lex.11.d">The MLA in charge of making sure members of their parliamentary group are present for votes and follow the party line.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.12.t">Minister Delegate / Minister Responsible for</dt>
+        <span class="lex-badge cat-pers" data-i18n="lexcat.pers">People & roles</span>
+        <dd data-i18n="lex.12.d">A minister who isn't the main head of a department, but who officially holds responsibility for a specific file within or alongside it.</dd>
+      </div>
+      <div class="lexique-item">
+        <dt data-i18n="lex.13.t">Attendance (%)</dt>
+        <span class="lex-badge cat-outils" data-i18n="lexcat.outils">Citizen tools</span>
+        <dd data-i18n="lex.13.d">The figure shown under each MLA: out of the recorded divisions <b>of the House</b>, the share in which this person appears as for or against — meaning they were present to vote, whichever way they voted. Divisions held in <b>committee</b> (Committee of the Whole, Committee of Supply, in Section A, B or C) are left out: only about a dozen members sit there, and counting them would make everyone look absent. The count starts when the legislature opens. The Assembly publishes no official attendance; this is an indicator of presence, not an official measure, and a missed vote can be an official mission, an illness or a scheduling conflict — the register does not give the reason.</dd>
+      </div>
+    </dl>
+    </div>
+
+    <!-- Bande jaune « suggérer un terme » (maquette) — le canal de contact
+         existant est la page Facebook : pas de courriel inventé. -->
+
+    <div class="section-head" id="sec-apropos"><div><h2 data-i18n="h.apropos">Where this data comes from, and how to go further</h2></div></div>
+
+    <div id="body-apropos">
+
+    <div class="bill">
+      <h3 data-i18n="apropos.sources.h">Public sources used here</h3>
+      <p style="font-size:13px; line-height:1.7; color:var(--slate);" data-i18n="apropos.sources.p"><b style="color:var(--ink)">Bills</b> — leg.bc.ca, “Status of Legislation” for each session of the legislature, in French and English: stages, dates of each reading.<br><b style="color:var(--ink)">Bill details</b> (type, sponsor, official text) — leg.bc.ca, each bill's page in both languages.<br><b style="color:var(--ink)">Bill summaries</b> — generated by artificial intelligence (Claude API) from the official text as introduced, one pass per language; each summary is labelled as such on the site.<br><b style="color:var(--ink)">Recorded divisions</b> — the Assembly's daily Journals (PDF, leg.bc.ca), the only place where names are recorded.<br><b style="color:var(--ink)">Executive Council</b> — leg.bc.ca, Executive Council page, in French and English.<br><b style="color:var(--ink)">MLAs</b> — leg.bc.ca, official list of sitting members. Their email addresses are not shown: leg.bc.ca masks them.<br><b style="color:var(--ink)">Attendance (%)</b> — calculated from the recorded divisions above (see the definition in the glossary); no outside source.</p>
+    </div>
+
+    </div>
+
+  </section>
+
+  <!-- MINISTRES & DÉPUTÉS -->
+  
+
+  <!-- PROJETS DE LOI -->
+  
+
+  <!-- VOTES -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+  <!-- N.-B. (Martin, 7 nov. 2026) : vue de l'abonnement retirée pour l'instant (à reprendre de DossierQuébec). -->
+
+  <!-- ARCHIVES (Martin, 9 novembre 2026). La 43e législature est terminée depuis le 22 septembre.
+       Dès que la 44e aura publié ses député·e·s et son conseil des ministres, tout ce que le site
+       montre aujourd'hui — projets, votes, député·e·s, ministres — bascule ici. La liste est
+       remplie par renderArchives (commun/dq.js) à partir de data/archives/index.json : tant que
+       la 43e est celle qui vit, la page le dit plutôt que de montrer une liste vide. -->
+  
+
+  <!-- REPRÉSENTEZ VOTRE VILLE (Martin, 9 novembre 2026). Jusqu'ici la pastille « Villes » envoyait
+       vers le formulaire de DossierQuébec : quelqu'un de Kelowna atterrissait sur un site qui
+       parle du Québec, avec une liste de villes québécoises. DossierBC a maintenant la sienne,
+       avec les villes de la Colombie-Britannique et leurs prix. Le formulaire poste sur
+       /api/represente, qui envoie le tout par courriel — rien n'est promis, on mesure la demande.
+       Les textes vivent en double (.fr-txt / .en-txt) comme sur la page de DossierQuébec, pas en
+       clés data-i18n : c'est une page à part, qui ne sert qu'ici. -->
+  
+
+  <!-- LEXIQUE (fusion : personnes, lexique, apropos) -->
+  
+
+  <!-- PAGE CACHÉE — la BD « l'idée derrière le site ». Aucun onglet n'y mène :
+       accessible seulement par le « et moi » du bas de page (à côté de
+       « Construit avec Claude »). goToTab('bd') fonctionne sans bouton d'onglet. -->
+  <!-- /mon-dossier : l'espace de la personne connectée, côté ASSEMBLÉE seulement (Martin,
+       22 sept. 2026 : « mes dossiers provincial et les villes doivent être complètement séparés »).
+       Les villes y ont leur section (#villes) depuis le 30 sept. 2026 ; avant, /mes-dossiers. Tout le contenu
+       est rempli par commun/dq.js (renderMonDossier) : rien de personnel n'est dans le HTML. -->
+  <!-- LES RÈGLES (Martin, 5 oct. 2026 : « on pourrait quasiment faire une page de ça… à côté de
+       Facebook »). Les règles de sources du site, écrites une fois pour être montrées à quelqu'un :
+       tout ce que les encadrés de méthode disent page par page, réuni. Lien dans le pied de page. -->
+  
+
+  <!-- LA PAGE 404 (Martin, 6 oct. 2026 : « faut une page drôle 404 », puis : avec le jaune et tout
+       le kit du site, « morte dans l'œuf », et pas de blanc sur noir). Vercel sert 404.html, avec le
+       code 404, pour toute adresse qui n'existe pas ; avant, c'était le message brut de l'hébergeur,
+       en anglais. Fabriquée comme les autres pages (scripts/build-section-pages.js, vue
+       « introuvable »), donc avec l'en-tête, le menu et le pied du site.
+       « Morte dans l'œuf » est le libellé des projets de loi jamais rendus plus loin que la
+       présentation. Le faux vote est ÉTIQUETÉ comme une blague : ce site n'invente jamais de donnée. -->
+  
+
+  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
+       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
+       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
+       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
+
+  
+
+  
+
+</div>
+
+<!-- Footer maquette : texte à gauche (avec « construit avec Claude » suivi du
+     lien caché « et moi » vers la BD), liens texte en majuscules à droite. -->
+<footer>
+  <nav class="footer-nav" aria-label="Plan du site">
+    <a href="/" data-i18n="nav.apercu">Overview</a>
+    <a href="/ministres" data-i18n="nav.ministres">Ministers</a>
+    <a href="/projets-de-loi" data-i18n="nav.projets">Bills</a>
+    <a href="/votes" data-i18n="nav.votes">Votes</a>
+    <a href="/lexique" data-i18n="nav.lexique">Glossary</a>
+    <a href="/sources" data-i18n="fil.bd">Site updates</a>
+    <a href="/mon-dossier" data-i18n="nav.mondossier">My file</a>
+    <span class="footer-nav-villes"><span data-i18n="footer.villes">Cities:</span>
+      <a class="lienRtv" href="/represente-ta-ville">+ <span data-i18n="nav.rtv">Represent your city</span></a>
+    </span>
+  </nav>
+  <div class="footer-inner">
+  <span class="footer-left-line"><span id="footerLeft">Site non officiel — données publiques de l'Assemblée législative de la Colombie-Britannique ·</span> <span id="footerRight">Une réalisation de</span> <a class="footer-etmoi" id="footerDafr" href="https://www.dafrsolution.com" target="_blank" rel="noopener">DAFR Solution</a></span>
+  <span class="footer-right-group">
+    <a class="footer-gh" href="/regles" data-i18n="footer.regles">The rules</a>
+    <!-- N.-B. (Martin, 7 nov. 2026) : abonnement, café, flux RSS des abonné·e·s et crédit Flaticon retirés pour l'instant. -->
+    <a class="footer-gh" href="https://github.com/GrandFFormat/dossierbc" target="_blank" rel="noopener" data-i18n="footer.source">Source code</a>
+    <!-- La langue aussi en pied de page, comme sur le cahier. Son texte est écrit par
+         applyLanguage() : « Français » quand on lit l'anglais, « English » quand on lit le
+         français. -->
+    <a class="footer-gh" id="langToggleFooter" href="#" role="button">Français</a>
+  </span>
+  </div>
+</footer>
+
+<button id="backToTop" class="dq-remonter" aria-label="Remonter en haut" title="Remonter en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/commun/apercu.js"></script>
+<script src="/commun/dq.js"></script>
+<!-- Vercel Web Analytics — sans cookie, sans donnée personnelle (donc pas de
+     bannière de consentement requise). Le script est servi automatiquement par
+     Vercel quand Web Analytics est activé dans le tableau de bord du projet. -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+  "cleanUrls": true,
+  "installCommand": "npm install --omit=dev --ignore-scripts --no-audit --no-fund",
+  "buildCommand": "echo \"Rien a construire : les pages sont deja fabriquees et commitees.\"",
+  "outputDirectory": ".",
+  "ignoreCommand": "sh scripts/vercel-deployer.sh",
+  "functions": {
+    "api/feed.js": {
+      "includeFiles": "api/feed-data.xml"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/feed.xml",
+      "destination": "/api/feed"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/mes-dossiers",
+      "destination": "/mon-dossier",
+      "permanent": true
+    },
+    {
+      "source": "/abonnement",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/promesses",
+      "destination": "/",
+      "permanent": false
+    }
+  ]
+}
