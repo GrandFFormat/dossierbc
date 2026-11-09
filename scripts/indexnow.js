@@ -1,5 +1,5 @@
 // Avertit Bing (et les autres moteurs du protocole IndexNow : Yandex, Seznam, Naver…) que les
-// pages de DossierQuébec ont changé, pour qu'il repasse sans attendre sa tournée. Ajouté le
+// pages de DossierBC ont changé, pour qu'il repasse sans attendre sa tournée. Ajouté le
 // 27 sept. 2026 : Bing montrait encore le titre « Dossier » et un bout de résumé de projet de loi,
 // d'avant le chantier du référencement du 21 septembre.
 //
@@ -7,7 +7,9 @@
 //   node scripts/indexnow.js --essai    affiche ce qui partirait, sans rien envoyer
 //
 // La clé n'est PAS un secret : IndexNow la veut publique, dans un fichier à la racine du site
-// (<clé>.txt, qui contient la clé), pour prouver qu'on parle bien au nom de dossierquebec.ca.
+// (<clé>.txt, qui contient la clé), pour prouver qu'on parle bien au nom de dossierbc.ca. CE FICHIER
+// N'EST PAS ENCORE À LA RACINE DU SITE (9 nov. 2026) et aucun workflow ne lance ce script : tant
+// que les deux manquent, IndexNow refuse la clé et rien n'est signalé à Bing.
 // Lancé par .github/workflows/indexnow.yml.
 
 import { readFileSync } from 'node:fs';

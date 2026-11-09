@@ -4,7 +4,7 @@
 // remplacée par la fiche de la personne, entièrement écrite dans le HTML : fonctions, parti,
 // circonscription, projets de loi parrainés, présence aux votes, mandats, promesses de son parti
 // qui touchent son ministère, coordonnées, et biographie + photo tirées de Wikipédia / Commons
-// (data/site/ministresWiki.json, refait par scripts/ministres-wiki.js). commun/dq.js voit la vue
+// (data/site/ministresWiki.json — ce fichier n'existe pas encore en C.-B. : le script qui le fabriquait cherchait dans la Wikipédia FRANÇAISE « Assemblée nationale du Québec », il est sorti du dépôt le 9 nov. 2026). commun/dq.js voit la vue
 // « ministre » (viewFromPath) et laisse la fiche telle quelle ; le texte anglais est dans la page
 // (.fr-txt / .en-txt, basculés par body.lang-en).
 //
@@ -58,7 +58,11 @@ export const citeSource = (p) => {
 export const LEG = Math.max(0, ...(() => { try { return JSON.parse(readFileSync('data/site/bills.json', 'utf8')); } catch { return []; } })().map((b) => Number(b.legislature) || 0));
 export const LEG_EN = LEG + ({ 1: 'st', 2: 'nd', 3: 'rd' }[(LEG % 100 >= 11 && LEG % 100 <= 13) ? 0 : LEG % 10] || 'th');
 export const deux = (fr, en) => `<span class="fr-txt">${fr}</span><span class="en-txt">${en}</span>`;
-export const PARTIS = { LIB: ['Parti libéral', 'Liberal Party'], PC: ['Parti progressiste-conservateur', 'Progressive Conservative Party'], VERT: ['Parti vert', 'Green Party'], IND: ['Indépendant·e', 'Independent'], PQ: ['Parti québécois', 'Parti Québécois'], CAQ: ['Coalition avenir Québec', 'Coalition Avenir Québec'], PLQ: ['Parti libéral du Québec', 'Quebec Liberal Party'], QS: ['Québec solidaire', 'Québec solidaire'], PCQ: ['Parti conservateur du Québec', 'Conservative Party of Quebec'] };
+// Les quatre étiquettes de la Colombie-Britannique, mot pour mot celles de commun/dq.js (const
+// seats) : les seules que l'Assemblée reconnaisse. Avant le 9 nov. 2026, cette table était celle du
+// Québec et du Nouveau-Brunswick (PQ, CAQ, PLQ, QS, PCQ, LIB, PC) : aucune n'existe ici, et 'NDP'
+// comme 'CON' n'y figuraient pas — les fiches retombaient donc sur le code brut.
+export const PARTIS = { NDP: ['NPD de la Colombie-Britannique', 'BC NDP'], CON: ['Parti conservateur de la Colombie-Britannique', 'Conservative Party of BC'], VERT: ['Parti vert de la Colombie-Britannique', 'BC Green Party'], IND: ['Indépendant·e', 'Independent'] };
 
 // Ministère → thèmes de promesses. Prudent : seulement des correspondances franches, sur le titre
 // du ministère (pas sur « responsable de la région de… »).

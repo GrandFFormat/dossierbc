@@ -26,11 +26,11 @@ import pdfParse from 'pdf-parse';
 const BILLS_PATH = 'data/bills.json';
 const PETITIONS_PATH = 'data/petitions.json';
 const REQUEST_DELAY_MS = 500;
-const USER_AGENT = 'veille-assnat-scraper/0.1 (projet citoyen independant, usage non commercial)';
+const USER_AGENT = 'dossier-colombie-britannique-scraper/0.1 (projet citoyen independant, usage non commercial; +https://dossierbc.ca)';
 const MAX_PDF_CHARS = 60000; // ~15k tokens — au-delà, on tronque (projets de loi omnibus)
 const MODEL = 'claude-sonnet-5';
 
-const SYSTEM_PROMPT = `Tu résumes des projets de loi de l'Assemblée nationale du Québec pour un site citoyen indépendant de veille parlementaire, pensé pour des lecteurs pressés ou ayant de la difficulté à lire de longs blocs de texte.
+const SYSTEM_PROMPT = `Tu résumes des projets de loi de l'Assemblée législative de la Colombie-Britannique pour un site citoyen indépendant de veille parlementaire, pensé pour des lecteurs pressés ou ayant de la difficulté à lire de longs blocs de texte.
 
 Format obligatoire :
 - Pas de plafond fixe de puces (« - »), mais seulement les GRANDES LIGNES : ce qu'un citoyen doit savoir pour comprendre le projet. Vise 5 à 10 puces ; au-delà de 12, c'est que tu détailles trop. Laisse tomber : les pouvoirs des inspecteurs, la récidive, les moyens de défense, les dates d'entrée en vigueur, les exceptions mineures, les ajustements de concordance, les définitions sauf si elles changent qui est touché.
@@ -209,7 +209,7 @@ async function summarizeBill(bill) {
 // par IA en français. On les traduit vers l'anglais pour l'affichage bilingue.
 // Incrémental : on ne (re)traduit un projet que si son contenu source a changé
 // (signature enSource), donc pas de coût ni de churn quotidien inutile.
-const TRANSLATE_SYSTEM = `You are a professional French-to-English translator for an independent, non-partisan citizen watchdog site about Québec's National Assembly. Translate faithfully, neutrally and into clear, natural Canadian English. Do NOT add, omit, interpret or editorialize. Keep the plain, everyday wording of the source: short sentences, no legal jargon (e.g. "the Québec Cabinet" rather than "the Government in council", "creates" rather than "enacts", "removes" rather than "repeals", "rule" rather than "provision"). If the source has bullet lines starting with "- ", keep exactly the same bullets, one idea per line, same order, in ONE string with the bullets separated by line breaks (never a JSON array). Return ONLY valid JSON (no code fence, no preamble).`;
+const TRANSLATE_SYSTEM = `You are a professional French-to-English translator for an independent, non-partisan citizen watchdog site about the Legislative Assembly of British Columbia. Translate faithfully, neutrally and into clear, natural Canadian English. Do NOT add, omit, interpret or editorialize. Keep the plain, everyday wording of the source: short sentences, no legal jargon (e.g. "the Québec Cabinet" rather than "the Government in council", "creates" rather than "enacts", "removes" rather than "repeals", "rule" rather than "provision"). If the source has bullet lines starting with "- ", keep exactly the same bullets, one idea per line, same order, in ONE string with the bullets separated by line breaks (never a JSON array). Return ONLY valid JSON (no code fence, no preamble).`;
 
 function enSignature(bill) {
   return `${bill.title || ''}${bill.summary || ''}${bill.note || ''}`;

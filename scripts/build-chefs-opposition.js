@@ -2,8 +2,8 @@
 //
 // Même fiche que scripts/build-minister-pages.js (dont elle reprend les fonctions), pour les chefs
 // et porte-parole des partis d'opposition qui siègent : data/site/chefsOpposition.json (fonctions,
-// page de la photo, réseaux relevés sur le site du parti) et data/site/chefsWiki.json (faits de
-// Wikidata, refait par node scripts/ministres-wiki.js --chefs). Photo : deputes/photos/<slug>-parti.*,
+// page de la photo, réseaux relevés sur le site du parti) et data/site/chefsWiki.json (aucun des deux n'existe encore en C.-B. : ce build ne produit rien pour l'instant) (faits de
+// Wikidata). Photo : deputes/photos/<slug>-parti.*,
 // tirée du site du parti (Martin, 3 nov. 2026). La page porte la vue « ministre » de commun/dq.js
 // (onglet Ministres actif) : la fiche est laissée telle quelle.
 
@@ -13,7 +13,9 @@ import { slugMinistre, esc, norm, lire, dateFr, dateEn, ICONES_RESEAUX, nomResea
 
 const SITE = 'https://dossierbc.ca';
 const DOSSIER = 'deputes';
-const NOMS_PARTIS = { PC: 'Parti progressiste-conservateur', VERT: 'Parti vert' };
+// Le nom long du parti, en français, pour la fiche d'un chef d'opposition. Tiré de PARTIS
+// (build-minister-pages.js), pour qu'il n'y ait qu'une seule liste de partis dans le dépôt.
+const NOMS_PARTIS = Object.fromEntries(Object.entries(PARTIS).map(([c, [fr]]) => [c, fr]));
 
 // Promesses les plus parlantes : une par thème, à tour de rôle, 8 au plus.
 function choisirPromesses(liste, max = 8) {

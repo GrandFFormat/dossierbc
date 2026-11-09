@@ -24,9 +24,10 @@
 // page officielle. Les textes lus pour écrire un résumé restent hors du dépôt.
 
 export const USER_AGENT =
-  'dossier-colombie-britannique-scraper/0.1 (projet citoyen independant, usage non commercial; +https://dossierquebec.ca)';
-// L'adresse ci-dessus est celle qui répond aujourd'hui. À remplacer par celle du site le jour de
-// la mise en ligne, pour que l'Assemblée puisse nous joindre.
+  'dossier-colombie-britannique-scraper/0.1 (projet citoyen independant, usage non commercial; +https://dossierbc.ca)';
+// Le robot se nomme et donne l'adresse du site, pour que l'Assemblée puisse nous joindre. Elle a
+// porté celle de DossierQuébec jusqu'au 9 nov. 2026, faute de domaine : dossierbc.ca répond
+// depuis la mise en ligne, et c'est lui que les journaux de leg.bc.ca doivent montrer.
 
 export const API = 'https://api.lims.leg.bc.ca';
 export const HOTE = 'https://www.leg.bc.ca';

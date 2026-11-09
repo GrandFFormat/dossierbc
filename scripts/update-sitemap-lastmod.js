@@ -27,7 +27,10 @@ let xml = readFileSync(FILE, 'utf8').replace(/\r\n/g, '\n');
 // rafraîchit. Les pages des volets municipaux (dans le sitemap depuis le 21 sept. 2026) portent la
 // date de leur décision ou de leur vote le plus récent, posée par scripts/build-section-pages.js :
 // on n'y touche pas, et on n'ajoute pas de <lastmod> à celles qui n'en ont pas.
-const VOLET = /<loc>https:\/\/dossierquebec\.ca\/(?:quebec|montreal|levis|longueuil|laval)\//;
+// Aucune ville de la Colombie-Britannique n'est couverte : ce motif ne trouve rien pour l'instant.
+// Il visait les volets de DossierQuébec (quebec, montreal, levis, longueuil, laval) sur le domaine
+// de DossierQuébec. Gardé pour le jour où une ville d'ici est couverte, mais sur le bon domaine.
+const VOLET = /<loc>https:\/\/dossierbc\.ca\/volets\//;
 let n = 0;
 xml = xml.replace(/<url>[\s\S]*?<\/url>/g, (bloc) => {
   if (VOLET.test(bloc)) return bloc;

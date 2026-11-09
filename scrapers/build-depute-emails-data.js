@@ -36,7 +36,7 @@ function main() {
     throw new Error(`Marqueurs DEPUTE_EMAILS_START/END introuvables dans ${HTML_PATH}`);
   }
 
-  const block = `${START_MARKER} — généré automatiquement par scrapers/build-depute-emails-data.js\n   à partir de data/deputes-contacts.json (voir scrapers/depute-emails.js). Courriel\n   officiel assnat.qc.ca uniquement — pas de réseaux sociaux (voir la conversation :\n   pas de façon fiable de vérifier qu'un compte Google trouvé par nom appartient\n   vraiment à la bonne personne). Ne pas éditer ce bloc à la main.\n   Généré le ${new Date().toISOString()} */\nconst deputeEmails = ${JSON.stringify(emailByNorm, null, 2)};\n`;
+  const block = `${START_MARKER} — généré automatiquement par scrapers/build-depute-emails-data.js\n   à partir de data/deputes-contacts.json (voir scrapers/depute-emails.js). Courriel\n   législatif publié par l'Assemblée uniquement — pas de réseaux sociaux (voir la conversation :\n   pas de façon fiable de vérifier qu'un compte Google trouvé par nom appartient\n   vraiment à la bonne personne). Ne pas éditer ce bloc à la main.\n   Généré le ${new Date().toISOString()} */\nconst deputeEmails = ${JSON.stringify(emailByNorm, null, 2)};\n`;
 
   const updated = html.slice(0, startIdx) + block + html.slice(endIdx);
   writeFileSync(HTML_PATH, updated);
