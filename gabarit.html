@@ -636,11 +636,8 @@ function goToFederal(evt){
     </div>
   </section>
 
-  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
-       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
-       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
-       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
-  <!-- N.-B. (Martin, 7 nov. 2026) : vue de l'abonnement retirée pour l'instant (à reprendre de DossierQuébec). -->
+  <!-- PAS de vue « Abonnement » : DossierBC est gratuit, sans abonnement. Celui de DossierQuébec est
+       sorti du dépôt le 9 nov. 2026, avec ses fonctions api/ et son code de navigateur. -->
 
   <!-- ARCHIVES (Martin, 9 novembre 2026). La 43e législature est terminée depuis le 22 septembre.
        Dès que la 44e aura publié ses député·e·s et son conseil des ministres, tout ce que le site
@@ -1033,15 +1030,9 @@ function goToFederal(evt){
     </ul>
   </section>
 
-  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
-       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
-       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
-       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
-
   <section class="view" id="view-mondossier">
-    <!-- REFONTE de Mon dossier (prototype, 3 nov. 2026) : en-tête + connexion compacte, trois compteurs,
-         « Pour commencer » ou les vraies listes, grille des outils d'abonné·e, bande « Nous écrire ».
-         Rempli par mdRefonte (commun/dq.js) ; les outils existants vivent dans #mdOutils, dépliés par tuile. -->
+    <!-- Mon dossier (3 nov. 2026) : en-tête + connexion compacte, deux compteurs, « Pour commencer »
+         ou les vraies listes, bande « Nous écrire ». Rempli par mdRefonte (commun/dq.js). -->
     <div class="mdr-tete">
       <h2 class="hero-h1 hero-h1-md mdr-titre">
         <span class="hero-sujet" data-i18n="sujet.mondossier">My file</span>
@@ -1059,25 +1050,17 @@ function goToFederal(evt){
       <div id="mdElus" class="md-bloc"></div>
     </div>
 
-    <div id="mdPlus" class="mdr-plus"></div>
-    <!-- N.-B. (Martin, 7 nov. 2026) : pas d'« Offrir un abonnement » pour l'instant. -->
-    <div id="mdOutils" class="mdr-outils">
-      <div id="mdAlertes" class="md-bloc" hidden></div>
-      <div id="mdVeille" class="md-bloc" hidden></div>
-      <div id="mdOrganismes" class="md-bloc" hidden></div>
-      <div id="mdConsultations" class="md-bloc" hidden></div>
-      <div id="mdFlux" class="md-bloc" hidden></div>
-      <div id="mdExport" class="md-bloc" hidden></div>
-    </div>
+    <!-- PAS de tuiles d'outils réservés (#mdPlus, #mdOutils) : elles ouvraient l'export, les flux
+         personnels, les alertes, la veille, les consultations et les organismes de DossierQuébec,
+         tous payants et tous branchés sur SES tables. Sortis du dépôt le 9 nov. 2026. -->
     <!-- PAS de bloc « Vos projets de ville » ici (9 nov. 2026, avant la mise en ligne). Il venait
          de DossierQuébec, où /mon-dossier liste les dossiers des villes couvertes. La C.-B. n'a
          aucun volet de ville : le bloc restait vide, allait chercher /quebec/assets/libelles-en.js
          (404 en production) et lisait les tables de ville de DQ. La Saskatchewan ne l'a pas non
          plus. À remettre le jour où une ville de la C.-B. est couverte.  -->
 
-    <!-- Vos courriels (3 nov. 2026) : Assemblée et villes, une carte chacune. Rempli par
-         boiteInfolettre (commun/infolettre.js) ; montré seulement à qui est connecté (mdRefonte). -->
-    <div class="mdc-section" id="courriels" hidden><div id="infolettre"></div></div>
+    <!-- PAS de bloc « Vos courriels » : l'infolettre est celle de DossierQuébec, par ville et par
+         arrondissement. DossierBC n'en a aucune. Sortie du dépôt le 9 nov. 2026. -->
 
     <div class="mdr-bande">
       <p data-i18n="mdr.bande"><b>An idea, an error?</b> Every message is read.</p>
@@ -1160,7 +1143,6 @@ function goToFederal(evt){
 </button>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/commun/apercu.js"></script>
 <script>
 /* MINISTERS_DATA_START — généré automatiquement par scrapers/build-ministers-data.js
    à partir de data/ministers.json (voir scrapers/ministers.js). Scrapé en direct
@@ -3479,7 +3461,7 @@ const deputeEmails = {
 
 /* NEWS_DATA_START — généré par scrapers/build-news-data.js à partir de data/bills.json
    et data/votes.json. Ne pas éditer à la main : relancer le build.
-   Généré le 2026-11-09T15:53:03.139Z */
+   Généré le 2026-11-09T17:19:51.961Z */
 const newsItems = [
   {
     "date": "2026-05-28",
@@ -4204,52 +4186,12 @@ const newsItems = [
 ];
 /* NEWS_DATA_END */
 
-/* PETITIONS_DATA_START — généré automatiquement par scrapers/build-petitions-data.js à partir de
-   data/petitions.json (voir scrapers/petitions.js). Ne pas éditer ce bloc à la main :
-   relancer `node scrapers/petitions.js && node scrapers/build-petitions-data.js`.
-   Généré le 2026-11-02T18:16:58.181Z */
-const petitions = [
-  {
-    "title": "Amélioration de la fluidité routière et maritime aux ponts du canal de Beauharnois",
-    "titleEn": "Improving road and marine traffic flow at the Beauharnois canal bridges",
-    "sponsor": "Claude Reid",
-    "start": "2026-05-29",
-    "end": "2026-08-29",
-    "count": 986,
-    "url": "https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/signer-petition/index.html",
-    "urlEn": "https://www.assnat.qc.ca/en/exprimez-votre-opinion/petition/signer-petition/index.html"
-  },
-  {
-    "title": "Tenue d’une commission d’enquête publique sur le racisme systémique et le profilage racial au sein du Service de police de la Ville de Montréal",
-    "titleEn": "Holding a public inquiry commission on systemic racism and racial profiling within the Montréal police department (SPVM)",
-    "sponsor": "Madwa-Nika Cadet",
-    "start": "2026-06-19",
-    "end": "2026-09-19",
-    "count": 145,
-    "url": "https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/signer-petition/index.html",
-    "urlEn": "https://www.assnat.qc.ca/en/exprimez-votre-opinion/petition/signer-petition/index.html"
-  },
-  {
-    "title": "Tenue d’audiences du Bureau d'audiences publiques sur l’environnement concernant la gestion des matières dangereuses résiduelles",
-    "titleEn": "Holding of Bureau d'audiences publiques sur l'environnement hearings concerning the management of residual hazardous materials",
-    "sponsor": "Etienne Grandmont",
-    "start": "2026-06-23",
-    "end": "2026-09-23",
-    "count": 503,
-    "url": "https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/signer-petition/index.html",
-    "urlEn": "https://www.assnat.qc.ca/en/exprimez-votre-opinion/petition/signer-petition/index.html"
-  },
-  {
-    "title": "Retrait de la clause de non-concurrence du REM pour un meilleur service d'autobus pour les municipalités touchées par la mise en service du REM",
-    "titleEn": "Withdrawal of the REM non-competition clause for better bus service for municipalities affected by the REM's entry into service",
-    "sponsor": "Alejandra Zaga Mendez",
-    "start": "2026-08-17",
-    "end": "2026-11-17",
-    "count": 939,
-    "url": "https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/signer-petition/index.html",
-    "urlEn": "https://www.assnat.qc.ca/en/exprimez-votre-opinion/petition/signer-petition/index.html"
-  }
-];
+/* PETITIONS_DATA_START — la Colombie-Britannique n'a PAS de pétition en ligne : son Assemblée
+   n'accepte que les pétitions sur papier, déposées par un·e député·e. Ce bloc portait les quatre
+   pétitions de l'Assemblée nationale du Québec, avec leurs liens vers assnat.qc.ca, et
+   scripts/build-section-pages.js les publiait sous /data/site/petitions.json. Vidé le 9 nov. 2026.
+   La page dit déjà ce qu'il faut quand la liste est vide (signales.avis). */
+const petitions = [];
 /* PETITIONS_DATA_END */
 
 /* PROMISES_DATA_START — généré par scrapers/build-promises-data.js à partir de

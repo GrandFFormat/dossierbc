@@ -2666,7 +2666,10 @@ body:not(.lang-en) .en-txt, body.lang-en .fr-txt{display:none;}
   #villes .vp-grille{grid-template-columns:minmax(0,1fr);}
   #villes .vp-titre{font-size:20px;}
 }
-/* Sous le bouton café d'un projet de loi : suivre en se connectant, puis Devenez DossierQuébec (4 nov. 2026). */
+/* Sous un projet de loi : suivre en se connectant (4 nov. 2026). Les règles .bill-cafe-* et
+   .bill-abo-devenir plus haut ne servent plus sur DossierBC — le bouton café et le lien vers
+   l'abonnement sont sortis du dépôt le 9 nov. 2026. Elles restent parce que dq.css est la feuille
+   COMMUNE à toute la famille : la découper ici ferait diverger DossierBC des autres sites. */
 .bill-abo{margin:14px 0 0; padding:14px 16px; border:3px solid var(--ink); background:var(--card); box-shadow:4px 4px 0 var(--ink);}
 .bill-abo-titre{display:block; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:14.5px; margin-bottom:8px;}
 .bill-abo-ligne{display:flex; gap:8px; flex-wrap:wrap;}
