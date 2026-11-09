@@ -363,11 +363,8 @@ function goToFederal(evt){
   <!-- VOTES -->
   
 
-  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
-       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
-       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
-       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
-  <!-- N.-B. (Martin, 7 nov. 2026) : vue de l'abonnement retirée pour l'instant (à reprendre de DossierQuébec). -->
+  <!-- PAS de vue « Abonnement » : DossierBC est gratuit, sans abonnement. Celui de DossierQuébec est
+       sorti du dépôt le 9 nov. 2026, avec ses fonctions api/ et son code de navigateur. -->
 
   <!-- ARCHIVES (Martin, 9 novembre 2026). La 43e législature est terminée depuis le 22 septembre.
        Dès que la 44e aura publié ses député·e·s et son conseil des ministres, tout ce que le site
@@ -409,11 +406,6 @@ function goToFederal(evt){
        présentation. Le faux vote est ÉTIQUETÉ comme une blague : ce site n'invente jamais de donnée. -->
   
 
-  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
-       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
-       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
-       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
-
   
 
   
@@ -454,7 +446,6 @@ function goToFederal(evt){
 </button>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/commun/apercu.js"></script>
 <script src="/commun/dq.js"></script>
 <!-- Vercel Web Analytics — sans cookie, sans donnée personnelle (donc pas de
      bannière de consentement requise). Le script est servi automatiquement par

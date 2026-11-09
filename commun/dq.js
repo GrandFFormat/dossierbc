@@ -1,4 +1,5 @@
-// La logique de DossierQuébec, partagée par les sept pages.
+// La logique de DossierBC, partagée par toutes les pages. Reprise de DossierQuébec, dont le site
+// est la copie : les noms dq.css et dq.js sont ceux de toute la famille Dossier, et ils restent.
 //
 // Elle vivait en ligne dans index.html, donc recopiée à l'identique dans six pages de 2 Mo.
 // Ici, le navigateur la prend une seule fois et la garde.
@@ -730,9 +731,6 @@ const translations = {
     'apercu.petitions.sub':"Click the \u201cPetitions\u201d tab for the full list",
     'quicknav.label':"Jump to:",
     'footer.regles':"The rules",
-    'footer.abonnement':"Subscription",
-    'fil.abonnement':"Subscription",
-    'sujet.abonnement':"The optional subscription",
     'abhero.l1':"The content stays free,",
     'abhero.l2':"the tools are extra.",
     'abhero.sub':"All the text on the site is free and will stay free. The subscription is optional: it gives extra tools. <b>Cancel anytime, prices in Canadian dollars.</b>",
@@ -842,7 +840,7 @@ const translations = {
 //   - dans l'ADRESSE : « ?lang=en » en anglais, rien en français (la langue par défaut). Une
 //     adresse copiée ou partagée ouvre la page dans la même langue ;
 //   - dans le NAVIGATEUR : dvq:langue, la même clé que Mes dossiers, Abonnement et le volet de
-//     Montréal (commun/langue.js) — un seul choix pour tout le site. Depuis que chaque onglet est
+//     Montréal — un seul choix pour tout le site. Depuis que chaque onglet est
 //     une vraie page (21 sept.), sans elle chaque clic ramenait au français.
 // L'adresse l'emporte sur le choix gardé, et le remplace — sauf en revenant par Précédent ou
 // Suivant : une ANCIENNE adresse « ?lang=en » ne doit pas défaire le français choisi depuis, pour
@@ -1261,13 +1259,20 @@ function displayStep(step){
 // Remplacée ici par un vrai stockage local (localStorage), avec la même interface
 // (.get(key) -> {value} | null, .set(key, value)) pour ne pas toucher aux appels
 // existants plus bas. Préfixe pour éviter les collisions avec d'autres clés.
+//
+// Le préfixe portait « dossierquebec: », repris tel quel de DossierQuébec : la clé nommait un
+// autre site dans le navigateur de quelqu'un de la Colombie-Britannique. Corrigé le 9 nov. 2026.
+// La lecture regarde encore l'ancienne clé quand la nouvelle est vide, et la réécriture suivante
+// la range sous la bonne : personne ne perd les élu·e·s qu'il suivait depuis l'ouverture du site.
+const PREFIXE_STOCKAGE = 'dossierbc:';
+const ANCIEN_PREFIXE = 'dossierquebec:';
 window.storage = {
   async get(key){
-    const value = localStorage.getItem('dossierquebec:' + key);
+    const value = localStorage.getItem(PREFIXE_STOCKAGE + key) ?? localStorage.getItem(ANCIEN_PREFIXE + key);
     return value === null ? null : { value };
   },
   async set(key, value){
-    localStorage.setItem('dossierquebec:' + key, value);
+    localStorage.setItem(PREFIXE_STOCKAGE + key, value);
   }
 };
 
@@ -1770,7 +1775,7 @@ const finBouton = () => '';
 const finBoutonDQ = (nom) => `<button class="fin-btn" type="button" title="${currentLang === 'en' ? 'Public finances' : 'Finances publiques'}" aria-label="${currentLang === 'en' ? 'Public finances of' : 'Finances publiques de'} ${nom.replace(/"/g, '&quot;')}" onclick="voirFinances('${nom.replace(/'/g, "\\'")}')">$</button>`;
 
 /* ---------------- COMPTES (Supabase) ---------------- */
-// Auth par lien magique (courriel) — voir scripts/supabase-schema.sql pour la
+// Auth par lien magique (courriel) — voir scripts/supabase-colombie-britannique.sql pour la
 // table `bc_follows` et ses règles de sécurité (chaque compte ne voit que ses
 // propres suivis). Tant que personne n'est connecté, le suivi reste dans
 // localStorage comme avant (comportement inchangé pour les visiteurs anonymes).
@@ -2009,12 +2014,11 @@ async function handlePromoLink(){
 }
 
 /* ---------------- /mon-dossier — l'espace de la personne, côté ASSEMBLÉE ----------------
-   Les villes y ont leur section depuis le 30 sept. 2026 (#villes, commun/mes-dossiers.js) ; avant, /mes-dossiers (Martin, 22 sept. 2026 : « complètement
+   Aucune ville de la Colombie-Britannique n'est couverte : pas de section des villes ici (sur
    séparés »). Ici : les projets de loi suivis, les élus suivis, les mots-clés de l'Assemblée et
    l'alerte du matin. Rien de personnel n'est écrit dans le HTML : tout arrive de Supabase, avec
    les règles de sécurité qui font que chaque compte ne voit que ses propres lignes. */
 const mdH = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
-let mdPorteeOk = null;   // la colonne portee existe-t-elle ? (scripts/supabase-schema-mots-cles-portee.sql)
 
 // Le quota de ce qu'on suit : 3 projets de loi par compte, le même pour tout le monde (pas
 // d'abonnement sur DossierBC). Les élu·e·s suivi·e·s n'en font pas partie.
@@ -2042,34 +2046,12 @@ async function renderMonDossier(){
   mdCompte(isEn, quota);
   mdLois(isEn, quota);
   mdElus(isEn);
-  // Les sept outils d'abonné·e de DossierQuébec (préoccupations, export, flux, alertes, veille,
-  // consultations, organismes) : leurs tuiles ne sont même pas dessinées quand il n'y a pas
-  // d'abonnement, et leurs blocs restent cachés. Les appeler quand même, c'était huit lectures
-  // des tables de DQ à chaque ouverture de la page, pour un écran que personne ne voit.
-  if(ASSEMBLY.abonnement !== false){
-    mdPreoccupations(isEn);
-    mdExport(isEn);
-    mdFlux(isEn);
-    mdAlertes(isEn);
-    mdVeille(isEn);
-    mdConsultations(isEn);
-    mdOrganismes(isEn);
-  }
   mdRefonte(isEn, quota);
 }
 
 // REFONTE de Mon dossier (prototype, 3 nov. 2026) : compteurs, « Pour commencer » ou les listes,
-// tuiles des outils d'abonné·e (chaque tuile déplie l'outil existant), bande « Nous écrire ».
-const MD_ICONES = {
-  cloche: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
-  theme: '<rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/>',
-  organisme: '<path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/>',
-  consult: '<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/>',
-  rss: '<path d="M5 19h.01"/><path d="M5 12a7 7 0 0 1 7 7M5 5a14 14 0 0 1 14 14"/>',
-  excel: '<rect x="4" y="3" width="16" height="18"/><path d="M8 8l8 8M16 8l-8 8"/>',
-};
-const mdIcone = (n) => `<svg class="mdr-icone" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true">${MD_ICONES[n]}</svg>`;
-let _mdOuvert = null;
+// bande « Nous écrire ». Les tuiles des outils d'abonné·e de DossierQuébec sont parties avec eux
+// le 9 nov. 2026 : DossierBC est gratuit, il n'a ni abonnement ni outil réservé.
 async function mdRefonte(isEn, quota){
   const zc = document.getElementById('mdCompteurs');
   if(!zc) return;
@@ -2083,9 +2065,8 @@ async function mdRefonte(isEn, quota){
 
   const aDesSuivis = nLois + nElus > 0;
   document.getElementById('mdSuivis').hidden = !aDesSuivis;
-  // Pas de bloc « Vos projets de ville » sur DossierBC (voir gabarit.html) : rien à montrer.
-  const courriels = document.getElementById('courriels');
-  if(courriels) courriels.hidden = !currentUser;
+  // Ni bloc « Vos projets de ville » ni bloc « Vos courriels » sur DossierBC (voir gabarit.html) :
+  // aucune ville n'est couverte, et l'infolettre était celle de DossierQuébec.
   const debut = document.getElementById('mdDebut');
   if(aDesSuivis) debut.innerHTML = '';
   else {
@@ -2100,37 +2081,7 @@ async function mdRefonte(isEn, quota){
       </div>`;
   }
 
-  // N.-B. (Martin, 7 nov. 2026) : abonnement éteint, pas de tuiles des abonné·e·s.
-  if(ASSEMBLY.abonnement === false){ const p = document.getElementById("mdPlus"); if(p){ p.innerHTML = ""; p.hidden = true; } if(location.hash === "#ecrire") mdBasculerEcrire(true); return; }
-  const abonne = await estAbonne();
-  const tuiles = [
-    ['mdAlertes', 'cloche', isEn ? 'Keyword alerts' : 'Alertes par mot-clé', isEn ? 'An email in the morning' : 'Un courriel le matin'],
-    ['mdVeille', 'theme', isEn ? 'Topic watch' : 'Veille par thème', isEn ? 'Every Monday' : 'Chaque lundi'],
-    ['mdOrganismes', 'organisme', isEn ? 'Follow an organization' : 'Suivre un organisme', isEn ? 'Its briefs filed' : 'Ses mémoires déposés'],
-    ['mdConsultations', 'consult', isEn ? 'Consultations' : 'Consultations', isEn ? 'Who filed what' : 'Qui a déposé quoi'],
-    ['mdFlux', 'rss', isEn ? 'RSS feeds' : 'Flux RSS', isEn ? 'In your reader' : 'Dans votre lecteur'],
-    ['mdExport', 'excel', isEn ? 'Excel export' : 'Export Excel', isEn ? 'Votes and attendance' : 'Votes et présences'],
-  ];
-  document.getElementById('mdPlus').innerHTML = `<div class="mdr-plus-tete"><h2 class="mdr-h2">${isEn ? 'Going further · subscribers' : 'Pour aller plus loin · abonné·e·s'}</h2>
-      <span><a class="md-lien" href="/abonnement${L}#code">${isEn ? 'Received a code?' : 'Vous avez reçu un code ?'}</a> · <a class="md-lien" href="/abonnement${L}">${isEn ? 'See the subscription →' : 'Voir l’abonnement →'}</a></span></div>
-    <div class="mdr-tuiles">${tuiles.map(([id, ic, t, st]) => abonne
-      ? `<button type="button" class="mdr-tuile" data-outil="${id}" aria-expanded="${_mdOuvert === id}" aria-controls="${id}" onclick="mdOuvrirOutil('${id}')">${mdIcone(ic)}<b>${t}</b><span>${st}</span></button>`
-      : `<a class="mdr-tuile" href="/abonnement${L}">${mdIcone(ic)}<b>${t}</b><span>${st}</span></a>`).join('')}</div>`;
-  tuiles.forEach(([id]) => { const z = document.getElementById(id); if(z) z.hidden = !(abonne && _mdOuvert === id); });
   if(location.hash === '#ecrire') mdBasculerEcrire(true);
-}
-function mdOuvrirOutil(id){
-  _mdOuvert = _mdOuvert === id ? null : id;
-  document.querySelectorAll('.mdr-tuile[data-outil]').forEach((b) => b.setAttribute('aria-expanded', String(b.dataset.outil === _mdOuvert)));
-  document.querySelectorAll('#mdOutils > .md-bloc').forEach((z) => { z.hidden = z.id !== _mdOuvert; });
-  if(_mdOuvert) document.getElementById(_mdOuvert)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-function mdBasculerOffrir(){
-  const pli = document.getElementById('mdOffrirPli');
-  if(!pli) return;
-  pli.hidden = !pli.hidden;
-  document.getElementById('mdOffrirBtn')?.setAttribute('aria-expanded', String(!pli.hidden));
-  if(!pli.hidden) pli.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 function mdBasculerEcrire(ouvrir){
   const pli = document.getElementById('mdEcrirePli'), btn = document.getElementById('mdEcrireBtn');
@@ -2139,634 +2090,6 @@ function mdBasculerEcrire(ouvrir){
   btn?.setAttribute('aria-expanded', String(!pli.hidden));
   if(!pli.hidden && ouvrir !== true) pli.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-
-// SUIVRE UNE ENTREPRISE OU UN ORGANISME (21 oct. 2026), septième outil de l'abonnement. On cherche parmi
-// les auteurs de mémoires déposés en commission (« Déposé par »), on en suit jusqu'à MD_ORG_MAX, et on
-// voit leurs mémoires. Le serveur (api/export.js?jeu=organismes, api/_organismes.js) vérifie
-// l'abonnement et fait la recherche ; la table organismes_suivis (portee « assemblee ») garde la clé
-// de chaque organisme. La base refuse un 11e organisme, ou tout organisme à qui n'est pas abonné.
-const MD_ORG_MAX = 10;
-async function organismesServeur(params){
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  const r = await fetch(`/api/export?jeu=organismes&${params}`, { headers: { Authorization: `Bearer ${session?.access_token || ''}` } });
-  if(!r.ok) throw new Error(r.status);
-  return r.json();
-}
-async function mdOrganismes(isEn){
-  const zone = document.getElementById('mdOrganismes');
-  if(!zone) return;
-  const tete = `<div class="md-carte-tete"><h2>${isEn ? 'Follow a company or an organization' : 'Suivre une entreprise ou un organisme'}</h2><span class="md-etiquette">${isEn ? 'Subscribers' : 'Abonné·e·s'}</span></div>
-    <p>${isEn ? 'What a company, union, association or professional order asks for or defends before the National Assembly: the briefs it filed in committee, in one place, and a line in the morning email for each new brief. Source: Assemblée nationale du Québec (titles in French).' : 'Ce qu’une entreprise, un syndicat, une association ou un ordre professionnel demande ou défend devant l’Assemblée nationale : ses mémoires déposés en commission, au même endroit, et une ligne dans le courriel du matin à chaque nouveau mémoire. Source : Assemblée nationale du Québec.'}</p>`;
-  if(!(await estAbonne())){
-    zone.innerHTML = `<div class="md-carte">${tete}<p class="md-note">${isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.'} <a class="md-lien" href="/abonnement">${isEn ? 'See the subscription' : 'Voir l’abonnement'}</a></p></div>`;
-    return;
-  }
-  let suivis = [], d = null;
-  try{
-    const { data, error } = await supabaseClient.from('organismes_suivis').select('id, nom').eq('portee', 'assemblee').order('created_at');
-    if(error) throw error;
-    suivis = data || [];
-    d = await organismesServeur(suivis.map((x) => 'c=' + encodeURIComponent(x.nom)).join('&'));
-  }catch(e){}
-  if(!d){
-    zone.innerHTML = `<div class="md-carte">${tete}<p class="md-note">${isEn ? 'Unavailable right now. Try again later.' : 'Indisponible pour le moment. Réessayez plus tard.'}</p></div>`;
-    return;
-  }
-  const plein = suivis.length >= MD_ORG_MAX;
-  const liste = suivis.length ? suivis.map((s) => {
-    const o = d.organismes?.[s.nom];
-    const retirer = `<button class="md-bouton-doux" onclick="mdRetirerOrganisme('${mdH(s.id)}')">${isEn ? 'Stop following' : 'Ne plus suivre'}</button>`;
-    if(!o) return `<div class="md-memoires"><p><b>${mdH(s.nom)}</b> — ${isEn ? 'no longer in the data.' : 'n’est plus dans les données.'} ${retirer}</p></div>`;
-    const memoires = `<ul class="bill-memoires-liste">${o.liste.map((m) => `<li>${m.url ? `<a href="${mdH(m.url)}" target="_blank" rel="noopener">${mdH(m.titre || m.depose)}</a>` : mdH(m.titre || m.depose)}
-        <span>${mdH(mdDateCourte(m.date, isEn))}</span>
-        <div class="md-note">${isEn ? 'Bill' : 'Projet de loi'} ${mdH(m.num)} — ${mdH(m.titrePl)}${m.commission ? ` · ${mdH(m.commission)}` : ''}</div></li>`).join('')}</ul>`;
-    return `<details class="md-memoires"><summary><b>${mdH(o.nom)}</b> (${o.memoires})</summary>
-      ${o.variantes.length ? `<p class="md-note">${isEn ? 'Also written: ' : 'Aussi écrit : '}${o.variantes.map(mdH).join(' ; ')}</p>` : ''}
-      ${memoires}<p>${retirer}</p></details>`;
-  }).join('') : `<p class="md-note">${isEn ? 'No organization followed yet.' : 'Aucun organisme suivi pour l’instant.'}</p>`;
-  const maj = d.misAJour ? String(d.misAJour).slice(0, 10) : '';
-  zone.innerHTML = `<div class="md-carte">${tete}
-    <h3 class="md-sous-titre">${isEn ? `Followed (${suivis.length} of ${MD_ORG_MAX})` : `Suivis (${suivis.length} sur ${MD_ORG_MAX})`}</h3>
-    ${liste}
-    <h3 class="md-sous-titre">${isEn ? 'Search' : 'Chercher'}</h3>
-    ${plein ? `<p class="md-note">${isEn ? `All ${MD_ORG_MAX} are used. Stop following one to add another.` : `Vos ${MD_ORG_MAX} organismes sont utilisés. Cessez d’en suivre un pour en ajouter un autre.`}</p>` : ''}
-    <div class="md-ligne"><input type="search" id="mdOrgRecherche" maxlength="120" placeholder="${isEn ? 'A name, e.g. Desjardins, Barreau' : 'Un nom, par exemple Desjardins, Barreau'}" aria-label="${isEn ? 'Search organizations' : 'Chercher un organisme'}">
-      <button class="account-btn" onclick="mdChercherOrganisme()">${isEn ? 'Search' : 'Chercher'}</button></div>
-    <p class="md-note" id="mdOrgNote" aria-live="polite"></p>
-    <ul class="md-avenir-liste" id="mdOrgResultats"></ul>
-    <p class="md-note">${isEn ? 'Names are grouped when they differ only by accents, capitals, apostrophes, hyphens, a final acronym in brackets, “inc.” or a leading article. Any other difference keeps two separate entries. A joint brief also counts for each co-signer that has filed alone. Individuals are not listed.' : 'Les noms sont regroupés quand ils ne diffèrent que par les accents, les majuscules, les apostrophes, les tirets, un sigle final entre parenthèses, « inc. » ou un article au début. Toute autre différence laisse deux entrées séparées. Un mémoire commun compte aussi pour chaque cosignataire qui a déjà déposé seul. Les particuliers ne sont pas listés.'}${maj ? (isEn ? ` Data read on ${mdH(mdDateCourte(maj, true))}.` : ` Données relues le ${mdH(mdDateCourte(maj, false))}.`) : ''}</p>
-  </div>`;
-  zone._suivis = new Set(suivis.map((s) => s.nom));
-  zone._plein = plein;
-  document.getElementById('mdOrgRecherche')?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); mdChercherOrganisme(); } });
-}
-let _mdOrgResultats = [];
-async function mdChercherOrganisme(){
-  const isEn = currentLang === 'en';
-  const zone = document.getElementById('mdOrganismes');
-  const q = (document.getElementById('mdOrgRecherche')?.value || '').trim();
-  const note = document.getElementById('mdOrgNote'), ul = document.getElementById('mdOrgResultats');
-  if(q.length < 2){ note.textContent = isEn ? 'At least 2 characters.' : 'Au moins 2 caractères.'; return; }
-  note.textContent = isEn ? 'Searching…' : 'Recherche…';
-  try{
-    const d = await organismesServeur('q=' + encodeURIComponent(q));
-    _mdOrgResultats = d.resultats || [];
-  }catch(e){ note.textContent = isEn ? 'Search unavailable. Try again later.' : 'Recherche indisponible. Réessayez plus tard.'; return; }
-  note.textContent = _mdOrgResultats.length ? '' : (isEn ? 'No organization by that name has filed a brief.' : 'Aucun organisme de ce nom n’a déposé de mémoire.');
-  ul.innerHTML = _mdOrgResultats.map((o, i) => `<li><b>${mdH(o.nom)}</b> <span class="md-note">${o.memoires} ${isEn ? (o.memoires > 1 ? 'briefs' : 'brief') : (o.memoires > 1 ? 'mémoires' : 'mémoire')}</span>
-    ${zone._suivis?.has(o.cle) ? `<span class="md-note">· ${isEn ? 'followed' : 'suivi'}</span>` : zone._plein ? '' : `<button class="md-bouton-doux" onclick="mdSuivreOrganisme(${i})">${isEn ? 'Follow' : 'Suivre'}</button>`}</li>`).join('');
-}
-async function mdSuivreOrganisme(i){
-  const isEn = currentLang === 'en';
-  const o = _mdOrgResultats[i];
-  const note = document.getElementById('mdOrgNote');
-  if(!o || !currentUser) return;
-  const { error } = await supabaseClient.from('organismes_suivis').insert({ user_id: currentUser.id, nom: o.cle, portee: 'assemblee' });
-  if(error){
-    note.textContent = /duplicate|23505/.test(error.message + error.code) ? (isEn ? 'Already followed.' : 'Déjà suivi.')
-      : /limite de \d+ organismes/.test(error.message) ? (isEn ? `All ${MD_ORG_MAX} are used.` : `Vos ${MD_ORG_MAX} organismes sont utilisés.`)
-      : /abonn/.test(error.message) ? (isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.')
-      : (isEn ? 'Could not follow it. Try again.' : 'Impossible de le suivre. Réessayez.');
-    return;
-  }
-  mdOrganismes(isEn);
-}
-async function mdRetirerOrganisme(id){
-  const isEn = currentLang === 'en';
-  const { error } = await supabaseClient.from('organismes_suivis').delete().eq('id', id);
-  if(error){ const n = document.getElementById('mdOrgNote'); if(n) n.textContent = isEn ? 'Could not remove it. Try again.' : 'Impossible de le retirer. Réessayez.'; return; }
-  mdOrganismes(isEn);
-}
-window.mdChercherOrganisme = mdChercherOrganisme;
-window.mdSuivreOrganisme = mdSuivreOrganisme;
-window.mdRetirerOrganisme = mdRetirerOrganisme;
-
-// CONSULTATIONS ET MÉMOIRES (21 oct. 2026), quatrième et cinquième outils de l'abonnement. Les
-// consultations à venir en commission (dates des séances, et la date limite quand l'Assemblée la
-// publie), puis, pour chaque projet de loi suivi, les mémoires déposés. Tout vient du serveur
-// (api/export.js?jeu=consultations), qui vérifie l'abonnement ; rien n'est dans un fichier public.
-async function mdConsultations(isEn){
-  const zone = document.getElementById('mdConsultations');
-  if(!zone) return;
-  const tete = `<div class="md-carte-tete"><h2>${isEn ? 'Consultations and briefs' : 'Consultations et mémoires'}</h2><span class="md-etiquette">${isEn ? 'Subscribers' : 'Abonné·e·s'}</span></div>
-    <p>${isEn ? 'Upcoming committee consultations on bills, and who submitted a brief on the bills you follow. Source: Assemblée nationale du Québec (titles in French).' : 'Les consultations à venir en commission parlementaire, et qui a déposé un mémoire sur les projets de loi que vous suivez. Source : Assemblée nationale du Québec.'}</p>`;
-  if(!(await estAbonne())){
-    zone.innerHTML = `<div class="md-carte">${tete}<p class="md-note">${isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.'} <a class="md-lien" href="/abonnement">${isEn ? 'See the subscription' : 'Voir l’abonnement'}</a></p></div>`;
-    return;
-  }
-  let d = null;
-  try{
-    const { data } = await supabaseClient.from('bc_dossiers_suivis').select('dossier_id').eq('ville', 'assemblee');
-    const ids = (data || []).map((x) => /^pl:(\d+)$/.exec(x.dossier_id)?.[1]).filter(Boolean);
-    d = await consultationsServeur(ids);
-  }catch(e){}
-  if(!d){
-    zone.innerHTML = `<div class="md-carte">${tete}<p class="md-note">${isEn ? 'Unavailable right now. Try again later.' : 'Indisponible pour le moment. Réessayez plus tard.'}</p></div>`;
-    return;
-  }
-  const type = (t) => t === 'generale' ? (isEn ? 'General consultation (open to all)' : 'Consultation générale (ouverte à tous)') : (isEn ? 'Special consultations (by invitation)' : 'Consultations particulières (sur invitation)');
-  const aVenir = d.aVenir.length
-    ? `<ul class="md-avenir-liste">${d.aVenir.map((c) => `<li><a class="md-lien" href="${mdH(c.url)}" target="_blank" rel="noopener">${mdH(c.titre)}</a>
-        <div class="md-note">${mdH(c.commission)} · ${type(c.type)}${c.prochaineSeance ? ` · ${isEn ? 'next hearing: ' : 'prochaine séance : '}${mdH(mdDateCourte(c.prochaineSeance, isEn))}` : ''}</div>
-        <div class="md-note">${c.dateLimite
-          ? `<b>${isEn ? 'Deadline: ' : 'Date limite : '}${mdH(mdDateCourte(c.dateLimite, isEn))}</b>`
-          : (isEn ? 'No deadline published on the Assembly’s website.' : 'Aucune date limite publiée sur le site de l’Assemblée.')}</div></li>`).join('')}</ul>`
-    : `<p class="md-note">${isEn ? 'No consultation under way or announced. None will be before the new legislature’s first bills (not before November 17, 2026).' : 'Aucune consultation en cours ni annoncée. Il n’y en aura pas avant les premiers projets de loi de la nouvelle législature (pas avant le 17 novembre 2026).'}</p>`;
-  const projets = Object.values(d.projets || {}).filter((p) => p.memoires.length);
-  const memoires = projets.length
-    ? projets.map((p) => `<details class="md-memoires"><summary><b>${isEn ? 'Bill' : 'Projet de loi'} ${mdH(p.num)}</b> — ${mdH(p.titre)} (${p.memoires.length})</summary>${listeMemoiresHtml(p.memoires, isEn)}</details>`).join('')
-    : `<p class="md-note">${isEn ? 'No briefs on the bills you follow. Follow a bill from the Bills tab to see its briefs here.' : 'Aucun mémoire sur les projets de loi que vous suivez. Suivez un projet de loi depuis l’onglet Projets de loi pour voir ses mémoires ici.'}</p>`;
-  zone.innerHTML = `<div class="md-carte">${tete}
-    <h3>${isEn ? 'Upcoming consultations' : 'Consultations à venir'}</h3>${aVenir}
-    <p class="md-note">${isEn ? 'Email reminder 7 days before a published deadline, for the bills you follow or that contain one of your keywords (in the morning alerts).' : 'Rappel par courriel 7 jours avant une date limite publiée, pour les projets de loi que vous suivez ou qui contiennent un de vos mots-clés (dans les alertes du matin).'}</p>
-    <h3>${isEn ? 'Briefs on the bills you follow' : 'Mémoires sur les projets de loi suivis'}</h3>${memoires}
-  </div>`;
-}
-
-// « CE QUI VOUS PRÉOCCUPE » (Martin, 18 oct. 2026). Une boîte de texte pour les gens connectés,
-// le nombre de messages reçus, et le tableau des sujets en pourcentage. Les messages ne sont jamais
-// affichés : une fois par jour, scrapers/preoccupations.js les classe (Claude) et publie seulement
-// le tableau, data/preoccupations.json. Pour l'instant dans Mon dossier ; l'accueil plus tard.
-let _preoc = null;
-async function mdPreoccupations(isEn){
-  const zone = document.getElementById('mdPreoccupations');
-  if(!zone) return;
-  // En direct d'abord (Martin, 19 oct. 2026 : le tableau suit ses approbations tout de suite) : la
-  // fonction Supabase preoccupations_tableau() ne rend que les totaux, jamais un message. Si elle
-  // manque ou tombe, on retombe sur le tableau publié chaque matin (data/preoccupations.json).
-  if(!_preoc){
-    try{
-      const { data, error } = await supabaseClient.rpc('preoccupations_tableau');
-      if(error || !data) throw error || new Error('vide');
-      const sujets = (data.sujets || []).map((s) => ({ fr: s.sujet, en: s.sujet, n: s.n }));
-      _preoc = { recus: data.recus || 0, mentions: sujets.reduce((t, s) => t + s.n, 0), sujets, direct: true };
-    }catch(e){
-      try{ _preoc = await (await fetch('/data/preoccupations.json')).json(); }catch(e2){ _preoc = { recus: 0, mentions: 0, sujets: [] }; }
-    }
-  }
-  const p = _preoc;
-  const h = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-  const lignes = (p.sujets || []).map((s) => {
-    const pc = p.mentions ? Math.round(s.n / p.mentions * 100) : 0;
-    return `<tr><td>${h(isEn ? (s.en || s.fr) : s.fr)}</td><td class="md-preoc-barre"><span style="width:${pc}%"></span></td><td class="md-preoc-pc">${pc} %</td></tr>`;
-  }).join('');
-  // La boîte reste visible sans compte ; c'est à l'envoi qu'on dit qu'il en faut un.
-  const formulaire = true
-    ? `<label class="md-note" for="mdPreocTexte">${isEn ? 'In your own words: a problem, a topic, something that should change.' : 'En vos mots : un problème, un sujet, quelque chose qui devrait changer.'}</label>
-       <textarea id="mdPreocTexte" class="md-preoc-texte" maxlength="2000" rows="4" oninput="mdCompterMots()" placeholder="${isEn ? 'What worries you?' : 'Qu’est-ce qui vous préoccupe ?'}"></textarea>
-       <div class="md-preoc-envoi"><button class="account-btn" id="mdPreocBtn" onclick="mdEnvoyerPreoccupation()">${isEn ? 'Send' : 'Envoyer'}</button><span class="md-note" id="mdPreocNote">${isEn ? 'Your message is never published. 300 words and 3 messages per day at most. An account is needed to send.' : 'Votre message n’est jamais publié. 300 mots et 3 messages par jour au plus. Il faut un compte pour envoyer.'}</span><span class="md-note md-preoc-mots" id="mdPreocMots"></span></div>`
-    : `<p>${isEn ? 'Sign in (above) to write what worries you.' : 'Connectez-vous (plus haut) pour écrire ce qui vous préoccupe.'}</p>`;
-  zone.innerHTML = `<div class="md-carte">
-    <div class="md-carte-tete"><h2>${isEn ? 'What worries you' : 'Ce qui vous préoccupe'}</h2><span class="md-etiquette">${p.recus || 0} ${isEn ? ((p.recus || 0) > 1 ? 'messages received' : 'message received') : ((p.recus || 0) > 1 ? 'messages reçus' : 'message reçu')}</span></div>
-    ${formulaire}
-    ${lignes ? `<table class="md-preoc-table"><tbody>${lignes}</tbody></table>` : `<p class="md-note">${isEn ? 'The table of topics will appear here once the first messages are sorted.' : 'Le tableau des sujets paraîtra ici quand les premiers messages auront été classés.'}</p>`}
-    <p class="md-note">${isEn
-      ? `Messages are read and grouped into topics by hand, from time to time. A person counts once per topic. This is not a poll: only visitors who wrote are counted.${p.direct ? ' Live count.' : p.majLe ? ` Last count: ${h(p.majLe)}.` : ''}`
-      : `Les messages sont lus et regroupés en sujets à la main, à temps perdu. Une personne compte une fois par sujet. Ce n’est pas un sondage : seuls les visiteurs qui ont écrit sont comptés.${p.direct ? ' Compte en direct.' : p.majLe ? ` Dernier compte : ${h(p.majLe)}.` : ''}`}</p>
-  </div>`;
-}
-async function mdEnvoyerPreoccupation(){
-  const isEn = currentLang === 'en';
-  const champ = document.getElementById('mdPreocTexte'), btn = document.getElementById('mdPreocBtn'), note = document.getElementById('mdPreocNote');
-  const texte = (champ?.value || '').trim();
-  if(texte.length < 3){ note.textContent = isEn ? 'Write a few words first.' : 'Écrivez quelques mots d’abord.'; return; }
-  if(nbMots(texte) > 300){ note.textContent = isEn ? `Your message has ${nbMots(texte)} words: 300 at most.` : `Votre message compte ${nbMots(texte)} mots : 300 au plus.`; return; }
-  if(!currentUser){
-    note.innerHTML = isEn
-      ? '<b>An account is needed to send your message.</b> Enter your email in “Your account”, just above: a sign-in link arrives, no password. Your text stays here in the meantime.'
-      : '<b>Il faut un compte pour envoyer votre message.</b> Entrez votre courriel dans « Votre compte », juste au-dessus : un lien de connexion arrive, sans mot de passe. Votre texte reste ici en attendant.';
-    note.classList.add('md-preoc-alerte');
-    document.getElementById('mdCompte')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-  btn.disabled = true;
-  const { error } = await supabaseClient.from('preoccupations').insert({ texte: texte.slice(0, 2000) });
-  btn.disabled = false;
-  if(error){
-    console.error('preoccupations:', error);
-    note.textContent = /limite/.test(error.message || '')
-      ? (isEn ? 'You have reached 3 messages for today. Come back tomorrow.' : 'Vous avez atteint 3 messages pour aujourd’hui. Revenez demain.')
-      : (isEn ? 'The message could not be sent. Try again later.' : 'Le message n’a pas pu partir. Réessayez plus tard.');
-    return;
-  }
-  champ.value = '';
-  note.textContent = isEn ? '✓ Received, thank you. It will be counted at the next sorting.' : '✓ Reçu, merci. Il sera compté au prochain classement.';
-}
-window.mdEnvoyerPreoccupation = mdEnvoyerPreoccupation;
-const nbMots = (t) => (String(t).trim().match(/\S+/g) || []).length;
-function mdCompterMots(){
-  const n = nbMots(document.getElementById('mdPreocTexte')?.value || ''), z = document.getElementById('mdPreocMots');
-  if(z){ z.textContent = n ? `${n} / 300 ${currentLang === 'en' ? 'words' : 'mots'}` : ''; z.classList.toggle('md-preoc-trop', n > 300); }
-}
-window.mdCompterMots = mdCompterMots;
-
-// LES MESSAGES, CÔTÉ ADMIN (Martin, 18 oct. 2026 : sous « Demandes d'explications », page Lexique).
-// Les 200 plus récents, avec leur statut et leur sujet ; un admin peut marquer un message comme spam
-// (ou l'en sortir) et le changer de sujet. Le tableau public se recalcule au classement du matin.
-// Lecture et correction permises par scripts/supabase-schema-preoccupations-admin.sql.
-async function renderAdminPreoccupations(){
-  const zone = document.getElementById('adminPreoccupations');
-  if(!zone) return;
-  if(!(await checkIsAdmin())){ zone.innerHTML = ''; return; }
-  const isEn = currentLang === 'en';
-  const { data, error } = await supabaseClient.from('preoccupations').select('id, texte, statut, sujet, created_at').order('created_at', { ascending: false }).limit(200);
-  if(error){ console.error('renderAdminPreoccupations:', error); zone.innerHTML = `<div class="account-note">${isEn ? 'Messages could not be read.' : 'Les messages n’ont pas pu être lus.'}</div>`; return; }
-  // Les sujets : ceux déjà donnés à un message, plus ceux du tableau publié. Le sujet EST son libellé
-  // (« Coût du logement ») : Martin les crée et les range lui-même, sans IA (18 oct. 2026).
-  let publies = [];
-  try{ publies = (await (await fetch('/data/preoccupations.json')).json()).sujets || []; }catch(e){}
-  const sujets = [...new Set([...(data || []).map((m) => m.sujet).filter(Boolean), ...publies.map((p) => p.fr || p.cle)])].sort((a, b) => a.localeCompare(b, 'fr'));
-  const h = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-  const choix = (m) => `<select onchange="adminPreocSujet('${m.id}', this.value, this)"><option value="">${isEn ? '— no topic —' : '— aucun sujet —'}</option>${sujets.map((t) => `<option value="${h(t)}"${t === m.sujet ? ' selected' : ''}>${h(t)}</option>`).join('')}<option value="__nouveau__">${isEn ? '➕ New topic…' : '➕ Nouveau sujet…'}</option></select>`;
-  const lignes = (data || []).map((m) => `<tr class="admin-preoc-${m.statut}">
-      <td>${h(String(m.created_at).slice(0, 10))}</td>
-      <td>${h(m.texte)}</td>
-      <td>${m.statut === 'spam' ? (isEn ? 'spam' : 'spam') : m.statut === 'classe' ? (isEn ? 'sorted' : 'classé') : (isEn ? 'new' : 'nouveau')}</td>
-      <td>${m.statut === 'classe' ? `<span class="admin-preoc-ok">✓ ${isEn ? 'Approved' : 'Approuvé'}</span>` : m.statut === 'spam' ? '—' : `<button class="account-btn" onclick="adminPreocApprouver('${m.id}', ${m.sujet ? 'true' : 'false'})">${isEn ? 'Approve' : 'Approuver'}</button>`}</td>
-      <td class="admin-preoc-actions">${choix(m)} <button class="account-btn" onclick="adminPreocSpam('${m.id}', ${m.statut === 'spam' ? 'false' : 'true'})">${m.statut === 'spam' ? (isEn ? 'Not spam' : 'Pas du spam') : 'Spam'}</button></td>
-    </tr>`).join('');
-  zone.innerHTML = `<div class="account-note" style="margin:18px 0 10px;"><b>${isEn ? 'What worries visitors (admin only)' : 'Ce qui préoccupe les visiteurs (réservé aux admins)'}</b> — ${isEn
-    ? `${(data || []).length} most recent message(s). For each message: pick a topic (or create one with « ➕ New topic… »), then « Approve » so it counts in the public table; otherwise « Spam ». The public table is recounted every morning.`
-    : `${(data || []).length > 1 ? `les ${(data || []).length} messages les plus récents` : `${(data || []).length} message`}. Pour chaque message : choisissez un sujet (ou créez-en un avec « ➕ Nouveau sujet… »), puis « Approuver » pour qu’il compte dans le tableau public ; sinon « Spam ». Le tableau public se recompte chaque matin.`}</div>
-    ${lignes ? `<div class="admin-preoc-defile"><table class="admin-preoc"><thead><tr><th>${isEn ? 'Date' : 'Date'}</th><th>Message</th><th>${isEn ? 'Status' : 'Statut'}</th><th>${isEn ? 'Approved' : 'Approuvé'}</th><th>${isEn ? 'Topic' : 'Sujet'}</th></tr></thead><tbody>${lignes}</tbody></table></div>` : `<p class="account-note">${isEn ? 'No message yet.' : 'Aucun message pour l’instant.'}</p>`}`;
-}
-async function adminPreocSpam(id, spam){
-  const { error } = await supabaseClient.from('preoccupations').update(spam ? { statut: 'spam', sujet: null } : { statut: 'nouveau', sujet: null }).eq('id', id);
-  if(error){ console.error('adminPreocSpam:', error); alert(currentLang === 'en' ? 'Not saved.' : 'Pas enregistré.'); }
-  renderAdminPreoccupations();
-}
-async function adminPreocSujet(id, sujet, menu){
-  if(sujet === '__nouveau__'){
-    const libelle = (window.prompt(currentLang === 'en' ? 'Name of the new topic (e.g. Cost of housing):' : 'Nom du nouveau sujet (ex. : Coût du logement) :') || '').trim().slice(0, 80);
-    if(libelle.length < 2){ if(menu) renderAdminPreoccupations(); return; }
-    sujet = libelle;
-  }
-  const { error } = await supabaseClient.from('preoccupations').update(sujet ? { sujet } : { statut: 'nouveau', sujet: null }).eq('id', id);
-  if(error){ console.error('adminPreocSujet:', error); alert(currentLang === 'en' ? 'Not saved.' : 'Pas enregistré.'); }
-  renderAdminPreoccupations();
-}
-async function adminPreocApprouver(id, aUnSujet){
-  if(!aUnSujet){ alert(currentLang === 'en' ? 'Pick a topic first, in the menu next to Spam.' : 'Choisissez d’abord un sujet, dans le menu à côté de Spam.'); return; }
-  const { error } = await supabaseClient.from('preoccupations').update({ statut: 'classe' }).eq('id', id);
-  if(error){ console.error('adminPreocApprouver:', error); alert(currentLang === 'en' ? 'Not saved.' : 'Pas enregistré.'); }
-  renderAdminPreoccupations();
-}
-window.adminPreocApprouver = adminPreocApprouver;
-window.adminPreocSpam = adminPreocSpam;
-window.adminPreocSujet = adminPreocSujet;
-
-// L'EXPORT DES DONNÉES (21 oct. 2026), premier outil de l'abonnement. Trois fichiers CSV des données
-// de l'Assemblée : votes nominaux (une ligne par député·e et par vote), présences, projets de loi.
-// Le serveur (api/export.js) vérifie l'abonnement avant de fabriquer le fichier ; ici, on ne fait que
-// montrer les boutons aux abonné·e·s et le lien vers /abonnement aux autres.
-function moisExport(){
-  try{ const m = new URL(location.href).searchParams.get('mois') || ''; return /^\d{4}-(0[1-9]|1[0-2])$/.test(m) ? m : null; }catch(e){ return null; }
-}
-// Les mois que le serveur accepte (api/export.js) : de novembre 2022 au mois en cours, heure de Montréal.
-function mdMoisPermis(){
-  let [a, m] = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Montreal', year: 'numeric', month: '2-digit' }).format(new Date()).split('-').map(Number);
-  const liste = [];
-  while(`${a}-${String(m).padStart(2, '0')}` >= '2022-11'){ liste.push(`${a}-${String(m).padStart(2, '0')}`); m--; if(m === 0){ m = 12; a--; } }
-  return liste;   // du plus récent au plus ancien
-}
-const mdNomMois = (m, isEn) => { const [a, n] = m.split('-').map(Number); const t = new Date(Date.UTC(a, n - 1, 15)).toLocaleDateString(isEn ? 'en-CA' : 'fr-CA', { month: 'long', year: 'numeric', timeZone: 'UTC' }); return t.charAt(0).toUpperCase() + t.slice(1); };
-async function mdExport(isEn){
-  const zone = document.getElementById('mdExport');
-  if(!zone) return;
-  let abonne = false;
-  if(currentUser){
-    try{
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      const r = await fetch('/api/abonnement', { headers: session ? { Authorization: `Bearer ${session.access_token}` } : {} });
-      abonne = r.ok && (await r.json()).abonne === true;
-    }catch(e){}
-  }
-  const jeux = [
-    ['votes', isEn ? 'Recorded votes' : 'Votes nominaux', isEn ? 'one line per vote: date, subject, totals' : 'une ligne par vote : date, sujet, totaux'],
-    ['votes-deputes', isEn ? 'Who voted what' : 'Qui a voté quoi', isEn ? 'one line per member and per vote, linked by the « vote » column' : 'une ligne par député·e et par vote, reliée par la colonne « vote »'],
-    ['presences', isEn ? 'Attendance' : 'Présences', isEn ? 'per member, at votes' : 'par député·e, aux votes'],
-    ['projets', isEn ? 'Bills' : 'Projets de loi', isEn ? 'number, title, status, dates' : 'numéro, titre, statut, dates'],
-  ];
-  zone.innerHTML = `<div class="md-carte">
-    <div class="md-carte-tete"><h2>${isEn ? 'Data export' : 'Export des données'}</h2><span class="md-etiquette">${isEn ? 'Subscribers' : 'Abonné·e·s'}</span></div>
-    <p>${isEn ? 'National Assembly data as CSV files, ready for Excel or Google Sheets. Source: Assemblée nationale du Québec.' : 'Les données de l’Assemblée nationale en fichiers CSV, prêts pour Excel ou Google Sheets. Source : Assemblée nationale du Québec.'}</p>
-    ${abonne ? `<p class="md-ligne"><label class="md-note" for="mdExportMois">${isEn ? 'Month covered:' : 'Mois couvert :'}</label> <select id="mdExportMois">${mdMoisPermis().map((m) => `<option value="${m}"${m === (moisExport() || mdMoisPermis()[0]) ? ' selected' : ''}>${mdNomMois(m, isEn)}</option>`).join('')}</select></p><p class="md-note">${isEn ? 'One month per file: pick the month, then the file. Bills: those introduced or that moved during the month.' : 'Un mois par fichier : choisissez le mois, puis le fichier. Projets de loi : ceux présentés ou qui ont bougé pendant le mois.'}</p>` : ''}
-    ${abonne
-      ? `<div class="md-export-boutons">${jeux.map(([j, t, d]) => `<button class="account-btn" onclick="mdTelecharger('${j}', this)">${t}</button><span class="md-note">${d}</span>`).join('')}</div>`
-      : `<p class="md-note">${isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.'} <a class="md-lien" href="/abonnement">${isEn ? 'See the subscription' : 'Voir l’abonnement'}</a></p>`}
-  </div>`;
-}
-async function mdTelecharger(jeu, bouton){
-  const isEn = currentLang === 'en';
-  const avant = bouton.textContent;
-  bouton.disabled = true; bouton.textContent = isEn ? 'Preparing…' : 'Préparation…';
-  try{
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    // ?mois=AAAA-MM dans l'adresse (les liens « Les fichiers du mois » de l'infolettre) : ce mois-là
-    // seulement, pour les votes et les présences.
-    const mois = document.getElementById('mdExportMois')?.value || mdMoisPermis()[0];
-    const r = await fetch(`/api/export?jeu=${jeu}&mois=${mois}`, { headers: { Authorization: `Bearer ${session?.access_token || ''}` } });
-    if(!r.ok) throw new Error(r.status);
-    const blob = await r.blob();
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = (r.headers.get('Content-Disposition') || '').match(/filename="([^"]+)"/)?.[1] || `dossierquebec-${jeu}.csv`;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-  }catch(e){
-    alert(isEn ? 'The file could not be prepared. Try again later.' : 'Le fichier n’a pas pu être préparé. Réessayez plus tard.');
-  }
-  bouton.disabled = false; bouton.textContent = avant;
-}
-window.mdTelecharger = mdTelecharger;
-
-// LES FLUX RSS (21 oct. 2026), troisième outil de l'abonnement, avec le flux général (réservé aux
-// abonné·e·s le même jour). L'adresse personnelle signée vient du serveur (api/abonnement.js,
-// ?action=flux) : le navigateur n'y ajoute que « &type=… », il ne connaît aucun secret. api/feed.js
-// revérifie l'abonnement à chaque lecture.
-let mdFluxAdresse = '';
-async function mdFlux(isEn){
-  const zone = document.getElementById('mdFlux');
-  if(!zone) return;
-  let donnees = null;
-  if(currentUser){
-    try{
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      const r = await fetch('/api/abonnement?action=flux', { headers: session ? { Authorization: `Bearer ${session.access_token}` } : {} });
-      if(r.ok) donnees = await r.json();
-    }catch(e){}
-  }
-  const tete = `<div class="md-carte-tete"><h2>${isEn ? 'Custom RSS feeds' : 'Flux RSS personnalisés'}</h2><span class="md-etiquette">${isEn ? 'Subscribers' : 'Abonné·e·s'}</span></div>
-    <p>${isEn ? 'National Assembly news in any RSS reader (Feedly, Inoreader, Thunderbird…). Source: Assemblée nationale du Québec. Feeds are in French.' : 'Les nouvelles de l’Assemblée nationale dans n’importe quel lecteur RSS (Feedly, Inoreader, Thunderbird…). Source : Assemblée nationale du Québec.'}</p>`;
-  if(!donnees?.adresse){
-    zone.innerHTML = `<div class="md-carte">${tete}<p class="md-note">${isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.'} <a class="md-lien" href="/abonnement">${isEn ? 'See the subscription' : 'Voir l’abonnement'}</a></p></div>`;
-    return;
-  }
-  mdFluxAdresse = donnees.adresse;
-  const copier = `<button class="md-bouton-doux" aria-label="${isEn ? 'Copy' : 'Copier'}" onclick="copierCourriel(this, this.previousElementSibling.value)">⧉</button>`;
-  const ligne = (titre, adresse) => `<li><b>${titre}</b><div class="md-ligne"><input type="text" readonly value="${mdH(adresse)}" aria-label="${mdH(titre)}" onfocus="this.select()">${copier}</div></li>`;
-  const min = donnees.ministeres || [];
-  zone.innerHTML = `<div class="md-carte">${tete}
-    <p class="md-note">${isEn ? 'Paste this address into your RSS reader. It is personal: do not share it.' : 'Collez cette adresse dans votre lecteur RSS. Elle est personnelle : ne la partagez pas.'}</p>
-    <ul class="md-avenir-liste">
-      ${ligne(isEn ? 'All National Assembly news' : 'Toutes les nouvelles de l’Assemblée', mdFluxAdresse)}
-      ${ligne(isEn ? 'Your keywords (bills that contain one of them)' : 'Vos mots-clés (projets de loi qui en contiennent un)', mdFluxAdresse + '&type=mots')}
-      ${ligne(isEn ? 'Your followed members (bills introduced and recorded votes)' : 'Vos élus suivis (projets de loi présentés et votes nominaux)', mdFluxAdresse + '&type=elus')}
-      ${min.length ? `<li><b>${isEn ? 'By ministry (bills it sponsors) — one feed per ministry' : 'Par ministère (projets de loi qu’il parraine) — un flux par ministère'}</b>
-        <div id="mdFluxMins"></div></li>` : ''}
-      <li><b>${isEn ? 'One keyword — one feed per keyword' : 'Un mot-clé précis — un flux par mot-clé'}</b>
-        <div id="mdFluxMots"></div></li>
-      ${(donnees.elus || []).length ? `<li><b>${isEn ? 'One member — one feed per member (bills introduced and recorded votes)' : 'Un élu précis — un flux par élu (projets de loi présentés et votes nominaux)'}</b>
-        <div id="mdFluxElus"></div></li>` : ''}
-    </ul>
-    <p class="md-note">${isEn ? 'Keywords are managed in the alerts card; followed members, from the ministers and MNAs pages.' : 'Les mots-clés se gèrent dans la carte des alertes ; les élus suivis, depuis les pages des ministres et des député·e·s.'}</p>
-  </div>`;
-  _mdMins = min;
-  _mdElus = donnees.elus || [];
-  if(min.length) mdFluxAjouterMinistere(true);
-  mdFluxAjouterMot(true);
-  if(_mdElus.length) mdFluxAjouterElu(true);
-}
-// Les flux par ministère (Martin, 21 oct. 2026 : « à gauche de ministre, un + ; s'ils veulent suivre
-// plus d'un ministre, une ligne s'additionne »). Chaque ligne : un ministère, son adresse, ⧉ copier.
-// Le + de la première ligne en ajoute une ; les lignes ajoutées ont un − pour se retirer.
-let _mdMins = [];
-function mdFluxAjouterMinistere(premiere){
-  const boite = document.getElementById('mdFluxMins');
-  if(!boite) return;
-  const isEn = currentLang === 'en';
-  const deja = [...boite.querySelectorAll('select')].map((x) => x.value);
-  const choix = _mdMins.find((m) => !deja.includes(m)) || _mdMins[0];
-  const ligne = document.createElement('div');
-  ligne.className = 'md-ligne md-flux-min';
-  ligne.innerHTML = `<button type="button" class="md-bouton-doux md-flux-plus" aria-label="${premiere ? (isEn ? 'Add a ministry' : 'Ajouter un ministère') : (isEn ? 'Remove this ministry' : 'Retirer ce ministère')}" onclick="${premiere ? 'mdFluxAjouterMinistere(false)' : 'this.parentElement.remove()'}">${premiere ? '+' : '−'}</button><select aria-label="${isEn ? 'Ministry' : 'Ministère'}" onchange="mdFluxMinistere(this)">${_mdMins.map((m) => `<option value="${mdH(m)}"${m === choix ? ' selected' : ''}>${mdH(m)}</option>`).join('')}</select><input type="text" readonly aria-label="${isEn ? 'Ministry feed' : 'Flux du ministère'}" onfocus="this.select()"><button class="md-bouton-doux" aria-label="${isEn ? 'Copy' : 'Copier'}" onclick="copierCourriel(this, this.previousElementSibling.value)">⧉</button>`;
-  boite.appendChild(ligne);
-  mdFluxMinistere(ligne.querySelector('select'));
-}
-function mdFluxMinistere(select){
-  const a = select?.parentElement?.querySelector('input');
-  if(a) a.value = mdFluxAdresse + '&type=ministere&m=' + encodeURIComponent(select.value);
-}
-window.mdFluxMinistere = mdFluxMinistere;
-window.mdFluxAjouterMinistere = mdFluxAjouterMinistere;
-
-// Même principe pour un mot-clé précis (champ libre) et un élu précis (menu) : + ajoute une ligne.
-let _mdElus = [];
-const mdBoutonPlus = (premiere, fn, isEn, quoi) => `<button type="button" class="md-bouton-doux md-flux-plus" aria-label="${premiere ? (isEn ? 'Add' : 'Ajouter') : (isEn ? 'Remove' : 'Retirer')} ${quoi}" onclick="${premiere ? fn + '(false)' : 'this.parentElement.remove()'}">${premiere ? '+' : '−'}</button>`;
-const mdBoutonCopier = (isEn) => `<button class="md-bouton-doux" aria-label="${isEn ? 'Copy' : 'Copier'}" onclick="copierCourriel(this, this.previousElementSibling.value)">⧉</button>`;
-function mdFluxAjouterMot(premiere){
-  const boite = document.getElementById('mdFluxMots');
-  if(!boite) return;
-  const isEn = currentLang === 'en';
-  const ligne = document.createElement('div');
-  ligne.className = 'md-ligne md-flux-min';
-  ligne.innerHTML = `${mdBoutonPlus(premiere, 'mdFluxAjouterMot', isEn, isEn ? 'a keyword' : 'un mot-clé')}<input type="text" class="md-flux-mot" maxlength="60" placeholder="${isEn ? 'e.g. housing' : 'ex. : logement'}" aria-label="${isEn ? 'Keyword' : 'Mot-clé'}" oninput="mdFluxMot(this)"><input type="text" readonly aria-label="${isEn ? 'Keyword feed' : 'Flux du mot-clé'}" onfocus="this.select()">${mdBoutonCopier(isEn)}`;
-  boite.appendChild(ligne);
-  mdFluxMot(ligne.querySelector('.md-flux-mot'));
-}
-function mdFluxMot(champ){
-  const a = champ?.nextElementSibling;
-  const mot = (champ?.value || '').trim();
-  if(a) a.value = mot ? mdFluxAdresse + '&type=mots&q=' + encodeURIComponent(mot) : '';
-}
-function mdFluxAjouterElu(premiere){
-  const boite = document.getElementById('mdFluxElus');
-  if(!boite) return;
-  const isEn = currentLang === 'en';
-  const deja = [...boite.querySelectorAll('select')].map((x) => x.value);
-  const choix = (_mdElus.find((e) => !deja.includes(e.cle)) || _mdElus[0]).cle;
-  const ligne = document.createElement('div');
-  ligne.className = 'md-ligne md-flux-min';
-  ligne.innerHTML = `${mdBoutonPlus(premiere, 'mdFluxAjouterElu', isEn, isEn ? 'a member' : 'un élu')}<select aria-label="${isEn ? 'Member' : 'Élu'}" onchange="mdFluxElu(this)">${_mdElus.map((e) => `<option value="${mdH(e.cle)}"${e.cle === choix ? ' selected' : ''}>${mdH(e.nom)}</option>`).join('')}</select><input type="text" readonly aria-label="${isEn ? 'Member feed' : 'Flux de l’élu'}" onfocus="this.select()">${mdBoutonCopier(isEn)}`;
-  boite.appendChild(ligne);
-  mdFluxElu(ligne.querySelector('select'));
-}
-function mdFluxElu(select){
-  const a = select?.nextElementSibling;
-  if(a) a.value = mdFluxAdresse + '&type=elus&e=' + encodeURIComponent(select.value);
-}
-window.mdFluxAjouterMot = mdFluxAjouterMot;
-window.mdFluxMot = mdFluxMot;
-window.mdFluxAjouterElu = mdFluxAjouterElu;
-window.mdFluxElu = mdFluxElu;
-
-// LES ALERTES SUR MESURE (21 oct. 2026), deuxième outil de l'abonnement. Un courriel le matin quand,
-// à l'Assemblée nationale, un projet de loi contient un mot-clé, un élu suivi présente un projet ou
-// vote, ou un projet de loi suivi change d'étape. Le serveur (api/_alertes-assemblee.js) ne lit que
-// les abonné·e·s actifs ; la base (scripts/supabase-alertes-retour.sql) refuse un mot-clé à qui n'est
-// pas abonné et en plafonne le nombre. Ici : l'écran, avec le même contrôle que l'export.
-const MD_MOTS_MAX = 10;
-async function mdAlertes(isEn){
-  const zone = document.getElementById('mdAlertes');
-  if(!zone) return;
-  let abonne = false;
-  if(currentUser){
-    try{
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      const r = await fetch('/api/abonnement', { headers: session ? { Authorization: `Bearer ${session.access_token}` } : {} });
-      abonne = r.ok && (await r.json()).abonne === true;
-    }catch(e){}
-  }
-  const tete = `<div class="md-carte-tete"><h2>${isEn ? 'Custom alerts' : 'Alertes sur mesure'}</h2><span class="md-etiquette">${isEn ? 'Subscribers' : 'Abonné·e·s'}</span></div>
-    <p>${isEn ? 'An email in the morning when, at the National Assembly, a bill contains one of your keywords, a member you follow introduces a bill or votes, or a bill you follow moves to a new stage. National Assembly only.' : 'Un courriel le matin quand, à l’Assemblée nationale, un projet de loi contient un de vos mots-clés, un élu que vous suivez présente un projet de loi ou vote, ou un projet de loi que vous suivez change d’étape. Seulement l’Assemblée nationale.'}</p>`;
-  if(!abonne){
-    zone.innerHTML = `<div class="md-carte">${tete}<p class="md-note">${isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.'} <a class="md-lien" href="/abonnement">${isEn ? 'See the subscription' : 'Voir l’abonnement'}</a></p></div>`;
-    return;
-  }
-  const [m, p] = await Promise.all([
-    supabaseClient.from('alertes_mots_cles').select('id, mot').eq('portee', 'assemblee').order('created_at'),
-    supabaseClient.from('alertes_preferences').select('actif').maybeSingle(),
-  ]);
-  const mots = m.data ?? [];
-  const actif = p.data?.actif !== false;
-  const nLois = Object.keys(followedBills).filter((id) => followedBills[id]).length;
-  const nElus = Object.keys(followed).filter((n) => followed[n]).length + deputesSuivisParNom().length;
-  const plein = mots.length >= MD_MOTS_MAX;
-  zone.innerHTML = `<div class="md-carte">${tete}
-    <p class="md-note"><b>${actif ? (isEn ? 'Alerts on.' : 'Alertes activées.') : (isEn ? 'Alerts paused.' : 'Alertes coupées.')}</b>
-      <button class="md-bouton-doux" onclick="mdAlertesActif(${actif ? 'false' : 'true'})">${actif ? (isEn ? 'Pause alerts' : 'Couper les alertes') : (isEn ? 'Turn alerts back on' : 'Rétablir les alertes')}</button></p>
-    <h3 class="md-sous-titre">${isEn ? 'What is watched' : 'Ce qui est surveillé'}</h3>
-    <ul class="md-avenir-liste">
-      <li>${isEn ? `<b>${mots.length}</b> keyword${mots.length > 1 ? 's' : ''} of ${MD_MOTS_MAX}, searched in the title and summary of bills` : `<b>${mots.length}</b> mot${mots.length > 1 ? 's' : ''}-clé${mots.length > 1 ? 's' : ''} sur ${MD_MOTS_MAX}, cherché${mots.length > 1 ? 's' : ''} dans le titre et le résumé des projets de loi`}</li>
-      <li>${isEn ? `<b>${nElus}</b> member${nElus > 1 ? 's' : ''} followed: bills introduced and recorded votes` : `<b>${nElus}</b> élu${nElus > 1 ? 's' : ''} suivi${nElus > 1 ? 's' : ''} : projets de loi présentés et votes nominaux`}</li>
-      <li>${isEn ? `<b>${nLois}</b> bill${nLois > 1 ? 's' : ''} followed: each new stage` : `<b>${nLois}</b> projet${nLois > 1 ? 's' : ''} de loi suivi${nLois > 1 ? 's' : ''} : chaque nouvelle étape`}</li>
-    </ul>
-    <h3 class="md-sous-titre">${isEn ? 'Your keywords' : 'Vos mots-clés'}</h3>
-    ${mots.length ? `<ul class="md-mots">${mots.map((x) => `<li class="md-mot"><span>${mdH(x.mot)}</span><button class="md-bouton-doux" aria-label="${isEn ? 'Remove' : 'Retirer'} ${mdH(x.mot)}" onclick="mdRetirerMot('${mdH(x.id)}')">×</button></li>`).join('')}</ul>`
-      : `<p class="md-note">${isEn ? 'No keyword yet. Click an idea below or type your own.' : 'Aucun mot-clé pour l’instant. Cliquez sur une idée ci-dessous ou tapez le vôtre.'}</p>`}
-    ${plein ? `<p class="md-note">${isEn ? `All ${MD_MOTS_MAX} keywords are used. Remove one to add another.` : `Vos ${MD_MOTS_MAX} mots-clés sont utilisés. Retirez-en un pour en ajouter un autre.`}</p>`
-      : `<div class="md-ligne"><input type="text" id="mdMot" maxlength="60" placeholder="${isEn ? 'E.g. housing' : 'Ex. : logement'}" aria-label="${isEn ? 'A keyword' : 'Un mot-clé'}">
-        <button class="account-btn" onclick="mdAjouterMot()">${isEn ? 'Add' : 'Ajouter'}</button></div>
-      <p class="md-exemples"><span>${isEn ? 'Ideas:' : 'Idées :'}</span>${(isEn ? MD_EXEMPLES_EN : MD_EXEMPLES).filter((e) => !mots.some((x) => norm(x.mot) === norm(e))).map((e) => `<button type="button" class="md-exemple" onclick="mdEssayerMot('${mdH(e)}')">+ ${mdH(e)}</button>`).join('')}</p>`}
-    <p class="md-note" id="mdMotNote" aria-live="polite"></p>
-    <p class="md-note"><button class="md-bouton-doux" onclick="mdEssaiAlertes(this)">${isEn ? 'Send me a test email' : 'M’envoyer un courriel d’essai'}</button>
-      ${isEn ? 'The most recent items for each thing you follow, to see what an alert looks like (3 per day). Alerts are in French.' : 'Les éléments les plus récents de chaque suivi, pour voir à quoi ressemble une alerte (3 par jour).'}</p>
-  </div>`;
-  document.getElementById('mdMot')?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); mdAjouterMot(); } });
-}
-// Exemples cliquables sous le champ des mots-clés (Martin, 4 nov. 2026) : un clic l'ajoute.
-const MD_EXEMPLES = ['logement', 'tramway', 'CPE', 'langue française', 'immigration', 'mines', 'santé mentale', 'forêt'];
-const MD_EXEMPLES_EN = ['housing', 'tramway', 'daycare', 'French language', 'immigration', 'mining', 'mental health', 'forest'];
-function mdEssayerMot(mot){ const champ = document.getElementById('mdMot'); if(!champ) return; champ.value = mot; mdAjouterMot(); }
-window.mdEssayerMot = mdEssayerMot;
-async function mdAjouterMot(){
-  const isEn = currentLang === 'en';
-  const champ = document.getElementById('mdMot');
-  const note = document.getElementById('mdMotNote');
-  const mot = (champ?.value || '').trim().replace(/\s+/g, ' ');
-  if(mot.length < 2 || mot.length > 60){ note.textContent = isEn ? 'Between 2 and 60 characters.' : 'Entre 2 et 60 caractères.'; return; }
-  const { error } = await supabaseClient.from('alertes_mots_cles').insert({ user_id: currentUser.id, mot, portee: 'assemblee' });
-  if(error){
-    note.textContent = /duplicate|23505/.test(error.message + error.code) ? (isEn ? 'This keyword is already in your list.' : 'Ce mot-clé est déjà dans votre liste.')
-      : /limite de \d+ mots/.test(error.message) ? (isEn ? `All ${MD_MOTS_MAX} keywords are used.` : `Vos ${MD_MOTS_MAX} mots-clés sont utilisés.`)
-      : /abonn/.test(error.message) ? (isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.')
-      : (isEn ? 'The keyword could not be added. Try again.' : 'Le mot-clé n’a pas pu être ajouté. Réessayez.');
-    return;
-  }
-  mdAlertes(isEn);
-}
-async function mdRetirerMot(id){
-  const isEn = currentLang === 'en';
-  const { error } = await supabaseClient.from('alertes_mots_cles').delete().eq('id', id);
-  if(error){ const n = document.getElementById('mdMotNote'); if(n) n.textContent = isEn ? 'Could not remove it. Try again.' : 'Impossible de le retirer. Réessayez.'; return; }
-  mdAlertes(isEn);
-}
-async function mdAlertesActif(actif){
-  const isEn = currentLang === 'en';
-  const { error } = await supabaseClient.from('alertes_preferences').upsert({ user_id: currentUser.id, actif, updated_at: new Date().toISOString() }, { onConflict: 'user_id' });
-  if(error){ const n = document.getElementById('mdMotNote'); if(n) n.textContent = isEn ? 'The change was not saved. Try again.' : 'Le changement n’a pas été enregistré. Réessayez.'; return; }
-  mdAlertes(isEn);
-}
-async function mdEssaiAlertes(bouton){
-  const isEn = currentLang === 'en';
-  const note = document.getElementById('mdMotNote');
-  bouton.disabled = true;
-  try{
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    const r = await fetch('/api/infolettre-envoi?essai=moi', { method: 'POST', headers: { Authorization: `Bearer ${session?.access_token || ''}` } });
-    const d = await r.json().catch(() => ({}));
-    note.textContent = r.status === 429 ? (isEn ? 'Limit of 3 tests per 24 hours reached.' : 'Limite de 3 essais par 24 heures atteinte.')
-      : !r.ok ? (isEn ? 'The test could not be sent. Try again later.' : 'L’essai n’a pas pu partir. Réessayez plus tard.')
-      : d.envoye ? (isEn ? 'Test sent: check your inbox.' : 'Essai envoyé : regardez votre boîte de courriel.')
-      : (isEn ? 'Nothing to show yet: add a keyword, or follow a bill or a member.' : 'Rien à montrer pour l’instant : ajoutez un mot-clé, ou suivez un projet de loi ou un élu.');
-  }catch(e){
-    note.textContent = isEn ? 'The test could not be sent. Try again later.' : 'L’essai n’a pas pu partir. Réessayez plus tard.';
-  }
-  bouton.disabled = false;
-}
-window.mdAjouterMot = mdAjouterMot;
-window.mdRetirerMot = mdRetirerMot;
-window.mdAlertesActif = mdAlertesActif;
-window.mdEssaiAlertes = mdEssaiAlertes;
-
-// LA VEILLE PAR THÈME (21 oct. 2026), sixième outil de l'abonnement. Chaque lundi, un courriel avec ce
-// qui a bougé à l'Assemblée dans les thèmes cochés (api/_veille-theme.js, envoyé par
-// api/infolettre-envoi.js). Les choix vont dans alertes_preferences.veille_themes ; la base
-// (scripts/supabase-veille.sql) refuse un thème à qui n'est pas abonné. LA MÊME LISTE DE CODES vit
-// dans api/_veille-theme.js (THEMES, avec la table ministères → mots) et dans le SQL.
-const VEILLE_THEMES = [
-  { code: 'sante', fr: 'Santé', en: 'Health' },
-  { code: 'education', fr: 'Éducation', en: 'Education' },
-  { code: 'logement', fr: 'Logement et habitation', en: 'Housing' },
-  { code: 'environnement', fr: 'Environnement et énergie', en: 'Environment and energy' },
-  { code: 'economie', fr: 'Économie et finances publiques', en: 'Economy and public finances' },
-  { code: 'travail', fr: 'Travail', en: 'Labour' },
-  { code: 'justice', fr: 'Justice et sécurité publique', en: 'Justice and public safety' },
-  { code: 'immigration', fr: 'Immigration et langue française', en: 'Immigration and French language' },
-  { code: 'transports', fr: 'Transports', en: 'Transportation' },
-  { code: 'agriculture', fr: 'Agriculture et territoire', en: 'Agriculture and land' },
-  { code: 'culture', fr: 'Culture et communications', en: 'Culture and communications' },
-  { code: 'municipal', fr: 'Affaires municipales et régions', en: 'Municipal affairs and regions' },
-  { code: 'famille', fr: 'Famille et services sociaux', en: 'Family and social services' },
-  { code: 'gouvernance', fr: 'Gouvernance et institutions', en: 'Governance and institutions' },
-];
-async function mdVeille(isEn){
-  const zone = document.getElementById('mdVeille');
-  if(!zone) return;
-  let abonne = false;
-  if(currentUser){
-    try{
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      const r = await fetch('/api/abonnement', { headers: session ? { Authorization: `Bearer ${session.access_token}` } : {} });
-      abonne = r.ok && (await r.json()).abonne === true;
-    }catch(e){}
-  }
-  const tete = `<div class="md-carte-tete"><h2>${isEn ? 'Topic watch' : 'Veille par thème'}</h2><span class="md-etiquette">${isEn ? 'Subscribers' : 'Abonné·e·s'}</span></div>
-    <p>${isEn ? 'Every Monday, one email with everything that moved at the National Assembly in the topics you pick: bills introduced or moving to a new stage, recorded votes on those bills, committee consultations and the briefs filed. Nothing is sent in a week with no news.' : 'Chaque lundi, un courriel avec tout ce qui a bougé à l’Assemblée nationale dans les thèmes choisis : projets de loi présentés ou qui changent d’étape, votes nominaux sur ces projets, consultations en commission et mémoires déposés. Aucun courriel une semaine sans nouveauté.'}</p>`;
-  if(!abonne){
-    zone.innerHTML = `<div class="md-carte">${tete}<p class="md-note">${isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.'} <a class="md-lien" href="/abonnement">${isEn ? 'See the subscription' : 'Voir l’abonnement'}</a></p></div>`;
-    return;
-  }
-  const { data, error } = await supabaseClient.from('alertes_preferences').select('veille_themes').maybeSingle();
-  if(error){
-    zone.innerHTML = `<div class="md-carte">${tete}<p class="md-note">${isEn ? 'Topic watch is not available yet. Come back soon.' : 'La veille par thème n’est pas encore ouverte. Revenez bientôt.'}</p></div>`;
-    return;
-  }
-  const choisis = new Set(data?.veille_themes ?? []);
-  zone.innerHTML = `<div class="md-carte">${tete}
-    <fieldset class="md-themes"><legend class="md-sous-titre">${isEn ? 'Your topics' : 'Vos thèmes'}</legend>
-      ${VEILLE_THEMES.map((t) => `<label class="md-case"><input type="checkbox" value="${t.code}" ${choisis.has(t.code) ? 'checked' : ''} onchange="mdVeilleChoix()"> <span>${isEn ? t.en : t.fr}</span></label>`).join('')}
-    </fieldset>
-    <p class="md-note" id="mdVeilleNote" aria-live="polite">${choisis.size
-      ? (isEn ? `${choisis.size} topic${choisis.size > 1 ? 's' : ''} chosen. Next email: Monday morning, if there is news. Emails are in French.` : `${choisis.size} thème${choisis.size > 1 ? 's' : ''} choisi${choisis.size > 1 ? 's' : ''}. Prochain courriel : lundi matin, s’il y a du neuf.`)
-      : (isEn ? 'No topic chosen: no email.' : 'Aucun thème choisi : aucun courriel.')}</p>
-    <p class="md-note">${isEn ? 'A bill is placed in a topic by the ministry that introduces it, or else by the words of its title, without AI. A bill with no clear topic is placed nowhere. Votes, consultations and briefs follow their bill.' : 'Un projet de loi entre dans un thème par le ministère qui le présente, sinon par les mots de son titre, sans IA. Un projet sans thème clair n’est classé nulle part. Les votes, les consultations et les mémoires suivent leur projet de loi.'}</p>
-  </div>`;
-}
-async function mdVeilleChoix(){
-  const isEn = currentLang === 'en';
-  const note = document.getElementById('mdVeilleNote');
-  const themes = [...document.querySelectorAll('#mdVeille input[type="checkbox"]:checked')].map((c) => c.value);
-  const { error } = await supabaseClient.from('alertes_preferences').upsert({ user_id: currentUser.id, veille_themes: themes, updated_at: new Date().toISOString() }, { onConflict: 'user_id' });
-  if(error){
-    if(note) note.textContent = /abonn/.test(error.message) ? (isEn ? 'Reserved for subscribers.' : 'Réservé aux abonné·e·s.') : (isEn ? 'The change was not saved. Try again.' : 'Le changement n’a pas été enregistré. Réessayez.');
-    return;
-  }
-  if(note) note.textContent = themes.length
-    ? (isEn ? `Saved: ${themes.length} topic${themes.length > 1 ? 's' : ''}. Next email: Monday morning, if there is news.` : `Enregistré : ${themes.length} thème${themes.length > 1 ? 's' : ''}. Prochain courriel : lundi matin, s’il y a du neuf.`)
-    : (isEn ? 'Saved: no topic, no email.' : 'Enregistré : aucun thème, aucun courriel.');
-}
-window.mdVeilleChoix = mdVeilleChoix;
 
 function mdCompte(isEn, quota){
   const zone = document.getElementById('mdCompte');
@@ -2794,388 +2117,6 @@ function mdCompte(isEn, quota){
     <div id="mdAbonnement"></div>
   </div>`;
   mdAbonnement(isEn);
-}
-
-// L'ABONNEMENT FACULTATIF (remis le 21 oct. 2026). L'état vient TOUJOURS du serveur
-// (api/abonnement.js), qui lit la table écrite par le webhook Stripe : le navigateur ne décide
-// jamais seul qui est abonné. Le suivi reste à 3 pour tout le monde, abonné ou non.
-async function abEtatServeur(){
-  try{
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    const r = await fetch('/api/abonnement', { headers: session ? { Authorization: `Bearer ${session.access_token}` } : {} });
-    return r.ok ? await r.json() : null;
-  }catch(e){ return null; }
-}
-const abDate = (iso, isEn) => new Date(iso).toLocaleDateString(isEn ? 'en-CA' : 'fr-CA', { year:'numeric', month:'long', day:'numeric' });
-
-// Les boutons Gérer / Annuler, communs à Mon dossier et à /abonnement. « Annuler mon abonnement » :
-// le bouton que la loi exige pour un abonnement conclu en ligne (Loi 10, Québec).
-function abBoutonsGestion(etat, isEn){
-  return `${etat.gerable ? `<button type="button" class="account-btn" onclick="abAction('portail', this)">${isEn ? 'Manage my subscription' : 'Gérer mon abonnement'}</button> ` : ''}
-    ${etat.annulable ? `<button type="button" class="md-bouton-doux" onclick="abAction('annuler', this)">${isEn ? 'Cancel my subscription' : 'Annuler mon abonnement'}</button>` : ''}`;
-}
-function abPhraseActive(etat, isEn){
-  // Un abonnement offert par quelqu'un d'autre (21 oct. 2026) : il suit les paiements du donateur.
-  if(etat.source === 'offert' && etat.fin) return etat.annulationPrevue
-    ? (isEn ? `Your subscription is a gift. The person giving it has cancelled it: it stays active until ${abDate(etat.fin, isEn)}.` : `Votre abonnement est offert. La personne qui vous l’offre l’a annulé : il reste actif jusqu’au ${abDate(etat.fin, isEn)}.`)
-    : (isEn ? `Your subscription is a gift: it renews as long as the person giving it keeps paying (next renewal around ${abDate(etat.fin, isEn)}).` : `Votre abonnement est offert : il se renouvelle tant que la personne qui vous l’offre le paie (prochaine échéance vers le ${abDate(etat.fin, isEn)}).`);
-  if(etat.annulationPrevue && etat.fin) return isEn
-    ? `Cancelled: it stays active until ${abDate(etat.fin, isEn)}, then stops with no further charge.`
-    : `Annulé : il reste actif jusqu’au ${abDate(etat.fin, isEn)}, puis il s’arrête sans autres frais.`;
-  // Un abonnement offert (code cadeau) ne se renouvelle pas : sa date de fin se dit.
-  if(!etat.gerable && etat.fin) return isEn
-    ? `Your subscription is active until ${abDate(etat.fin, isEn)}.`
-    : `Votre abonnement est actif jusqu’au ${abDate(etat.fin, isEn)}.`;
-  return isEn ? 'Your subscription is active. Thank you.' : 'Votre abonnement est actif. Merci.';
-}
-
-async function mdAbonnement(isEn, avisCode){
-  const zone = document.getElementById('mdAbonnement');
-  if(ASSEMBLY.abonnement === false){ if(zone){ zone.innerHTML = ''; zone.hidden = true; } return; }   // N.-B. : abonnement éteint
-  if(!zone) return;
-  const [etat, codes] = await Promise.all([abEtatServeur(), abMesCodes(isEn)]);
-  if(!document.body.contains(zone)) return;   // la carte a été redessinée entre-temps
-  // « Offrir » sous « Votre compte », pour tout compte connecté (Martin, 21 oct. 2026).
-  const merci = new URLSearchParams(location.search).get('cadeau') === 'merci'
-    ? `<p class="md-note"><b>${isEn ? 'Thank you.' : 'Merci.'}</b> ${isEn ? 'Your gift code is on its way by email; it also appears below within a minute.' : 'Votre code cadeau part par courriel ; il paraît aussi ci-dessous d’ici une minute.'}</p>`
-    : ({
-      merci: `<p class="md-note"><b>${isEn ? 'Thank you.' : 'Merci.'}</b> ${isEn ? 'The code of the subscription you are giving is on its way by email; it also appears below within a minute.' : 'Le code de l’abonnement que vous offrez part par courriel ; il paraît aussi ci-dessous d’ici une minute.'}</p>`,
-      annulation: `<p class="md-note">${isEn ? 'The subscription you were giving is cancelled: no further charge after the current period.' : 'L’abonnement que vous offriez est annulé : plus aucun débit après la période en cours.'}</p>`,
-    }[new URLSearchParams(location.search).get('offert')] || '');
-  // Offrir et faire valoir un code (remis le 21 oct. 2026) : la même case que sur /abonnement.
-  const cadeau = `${merci}<div class="md-ligne"><input type="text" class="ab-code-champ" autocomplete="off" spellcheck="false" maxlength="40" placeholder="${isEn ? 'Enter your code here' : 'Mettez votre code ici'}" aria-label="${isEn ? 'Enter your code here' : 'Mettez votre code ici'}"> <button type="button" class="account-btn" onclick="abUtiliserCode(this)">${isEn ? 'Use the code' : 'Utiliser le code'}</button></div>
-    <p class="md-note ab-code-etat" aria-live="polite">${avisCode ? mdH(avisCode) : ''}</p>
-    ${codes}`;
-  if(etat?.abonne){
-    zone.innerHTML = `<p class="md-note"><a class="md-lien" href="/abonnement${isEn ? '?lang=en' : ''}"><b>${isEn ? 'Subscriber' : 'Abonné·e'}</b></a> — ${abPhraseActive(etat, isEn)}</p>
-      <p class="md-ligne">${abBoutonsGestion(etat, isEn)}</p><p class="md-note ab-action-etat" aria-live="polite"></p>${cadeau}`;
-  }else{
-    zone.innerHTML = `<p class="md-note">${isEn ? 'Free account.' : 'Compte gratuit.'} <a class="md-lien" href="/abonnement${isEn ? '?lang=en' : ''}"><b>${isEn ? 'Subscribe' : 'Abonnez-vous'}</b></a></p>${cadeau}`;
-  }
-}
-
-async function renderAbonnement(){
-  const zone = document.getElementById('abEtat');
-  if(!zone) return;   // pas sur cette page
-  const isEn = currentLang === 'en';
-  const q = new URLSearchParams(location.search).get('abonnement');
-  const etat = await abEtatServeur();
-  const avis = q === 'annule'
-    ? `<p class="md-note">${isEn ? 'Payment interrupted: nothing was charged.' : 'Paiement interrompu : rien n’a été débité.'}</p>`
-    : q === 'annulation'
-      ? `<p class="md-note">${isEn ? 'Cancellation sent to Stripe. If this page still says the subscription is active, the confirmation is a few seconds away: reload it. Access stays open until the end of the period already paid for.' : 'Annulation transmise à Stripe. Si cette page dit encore que l’abonnement est actif, la confirmation arrive dans quelques secondes : rechargez-la. L’accès reste ouvert jusqu’à la fin de la période déjà payée.'}</p>`
-      : '';
-  let corps;
-  if(!etat){
-    corps = `<p>${isEn ? 'Payment is not responding right now. Reload the page in a moment.' : 'Le paiement ne répond pas pour l’instant. Rechargez la page dans un moment.'}</p>`;
-  }else if(etat.abonne){
-    corps = `<p>${abPhraseActive(etat, isEn)}</p><p class="md-ligne">${abBoutonsGestion(etat, isEn)}</p>`;
-  }else if(etat.peutPayer){
-    const nom = { mensuel: isEn ? '$9.99 a month' : '9,99 $ par mois', trimestriel: isEn ? '$26.99 every 3 months' : '26,99 $ tous les 3 mois', annuel: isEn ? '$99 a year' : '99 $ par an' };
-    const boutons = ['mensuel', 'trimestriel', 'annuel'].filter((f) => etat.forfaits?.[f])
-      .map((f) => `<button type="button" class="account-btn" onclick="abAction('paiement', this, '${f}')">${isEn ? 'Subscribe' : 'S’abonner'} — ${nom[f]}</button>`).join(' ');
-    corps = `${etat.mode === 'test' ? `<p class="md-note"><b>${isEn ? 'Test mode' : 'Mode essai'}</b> : ${isEn ? 'no real card is charged. Test card 4242 4242 4242 4242, any future date, any code.' : 'aucune vraie carte n’est débitée. Carte d’essai 4242 4242 4242 4242, une date future, n’importe quel code.'}</p>` : ''}
-      <p class="md-ligne">${boutons}</p>`;
-  }else if(etat.ouvert && !etat.connecte){
-    // La connexion sur place (Martin, 21 oct. 2026) : on choisit un forfait, on entre son courriel ici.
-    corps = `<p>${isEn ? 'Enter your email: a sign-in link arrives, no password. Then pick your plan above.' : 'Entrez votre courriel : un lien de connexion arrive, sans mot de passe. Ensuite, choisissez votre forfait plus haut.'}</p>
-      <div class="md-ligne"><input type="email" id="abEmail" placeholder="${isEn ? 'Your email' : 'Votre courriel'}" aria-label="${isEn ? 'Your email' : 'Votre courriel'}"> <button type="button" class="account-btn" id="abLienBtn" onclick="abEnvoyerLien()">${isEn ? 'Get the link' : 'Recevoir le lien'}</button></div>
-      <p class="md-note">${isEn ? 'Open the link in this same browser, then come back to this page.' : 'Ouvrez le lien dans ce même navigateur, puis revenez sur cette page.'}</p>`;
-  }else{
-    corps = `<p>${isEn ? 'Payment is not open yet. Everything on the site stays free in the meantime.' : 'Le paiement n’est pas encore ouvert. Tout le site reste gratuit d’ici là.'}</p>`;
-  }
-  zone.innerHTML = `<div class="md-carte">
-    <div class="md-carte-tete"><h2>${etat?.abonne ? (isEn ? 'Your subscription' : 'Votre abonnement') : etat && !etat.connecte ? (isEn ? 'Sign in' : 'S’identifier') : (isEn ? 'Subscribe' : 'S’abonner')}</h2></div>
-    ${avis}${corps}<p class="md-note ab-action-etat" aria-live="polite"></p>
-  </div>`;
-  // Pas connecté : la case du code le dit aussi, avant qu'on la remplisse.
-  { const carte = document.querySelector('#code .md-carte');
-    carte?.querySelector('.ab-code-connexion')?.remove();
-    if(carte && etat && !etat.connecte) carte.querySelector('.md-carte-tete')?.insertAdjacentHTML('beforeend', `<span class="md-etiquette ab-code-connexion">${isEn ? 'Sign in first' : 'Identifiez-vous d’abord'}</span>`); }
-  // Pas connecté : chaque case de forfait le dit (Martin, 21 oct. 2026).
-  document.querySelectorAll('.ab-forfaits').forEach((u) => { u.classList.toggle('ab-sans-compte', Boolean(etat && !etat.connecte)); u.querySelectorAll('.ab-forfait').forEach((li) => { li.dataset.avis = isEn ? 'Sign in first' : 'Identifiez-vous d’abord'; }); });
-  _abEtat = etat;
-  // Un forfait choisi avant la connexion reste marqué au retour du lien.
-  let garde = null; try{ garde = localStorage.getItem('dossierquebec:forfait'); }catch(e){}
-  if(garde) abMarquerForfait(garde);
-}
-
-// LES CASES DES FORFAITS, CLIQUABLES (Martin, 21 oct. 2026 : « je pensais que ces cases allaient
-// devenir jaunes au survol pour la sélection »). Abonné : rien à choisir. Connecté : Stripe s'ouvre
-// sur ce forfait. Pas connecté : le forfait est retenu et la case de connexion prend le relais.
-let _abEtat = null;
-function abMarquerForfait(f){
-  document.querySelectorAll('.ab-forfait').forEach((li) => li.classList.toggle('ab-forfait-choisi', li.dataset.forfait === f));
-}
-function abChoisirForfait(f){
-  const isEn = currentLang === 'en';
-  abMarquerForfait(f);
-  const zone = document.getElementById('abEtat');
-  const note = zone?.querySelector('.ab-action-etat');
-  if(_abEtat?.abonne){ zone?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
-  if(_abEtat?.peutPayer && _abEtat.forfaits?.[f]){
-    abAction('paiement', document.querySelector(`.ab-forfait[data-forfait="${f}"]`), f);
-    return;
-  }
-  try{ localStorage.setItem('dossierquebec:forfait', f); }catch(e){}
-  zone?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  document.getElementById('abEmail')?.focus();
-  if(note && !_abEtat?.ouvert) note.textContent = isEn ? 'Payment is not open yet.' : 'Le paiement n’est pas encore ouvert.';
-}
-async function abEnvoyerLien(){
-  const isEn = currentLang === 'en';
-  const champ = document.getElementById('abEmail'), btn = document.getElementById('abLienBtn');
-  const note = document.querySelector('#abEtat .ab-action-etat');
-  const email = (champ?.value || '').trim();
-  if(!email || !champ.checkValidity()){ champ?.focus(); return; }
-  btn.disabled = true;
-  const erreur = await signInWithMagicLink(email);
-  btn.disabled = false;
-  if(note) note.textContent = erreur
-    ? (isEn ? 'The link could not be sent. Try again in a moment.' : 'Le lien n’a pas pu partir. Réessayez dans un moment.')
-    : (isEn ? '✓ Check your email: the sign-in link is on its way.' : '✓ Vérifiez vos courriels : le lien de connexion est en route.');
-}
-window.abChoisirForfait = abChoisirForfait;
-window.abEnvoyerLien = abEnvoyerLien;
-
-// Ouvre Stripe (paiement, portail ou annulation). L'adresse vient du serveur, jamais du navigateur.
-async function abAction(action, bouton, forfait){
-  const isEn = currentLang === 'en';
-  const note = bouton?.closest('.md-carte')?.querySelector('.ab-action-etat') || document.querySelector('#abEtat .ab-action-etat');
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if(!session){ location.assign('/mon-dossier'); return; }
-  if(bouton) bouton.disabled = true;
-  if(note) note.textContent = isEn ? 'Opening Stripe…' : 'Ouverture de Stripe…';
-  const r = await fetch(`/api/abonnement?action=${encodeURIComponent(action)}`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ langue: isEn ? 'en' : 'fr', forfait: forfait || 'mensuel' }),
-  }).catch(() => null);
-  const d = r ? await r.json().catch(() => ({})) : {};
-  if(d.url){ try{ localStorage.removeItem('dossierquebec:forfait'); }catch(e){} location.assign(d.url); return; }
-  if(bouton) bouton.disabled = false;
-  if(note) note.textContent = r?.status === 409
-    ? (isEn ? 'Your subscription is already active.' : 'Votre abonnement est déjà actif.')
-    : (d.erreur === 'prix mal configuré' || d.erreur === 'forfait indisponible')
-      ? (isEn ? 'Payment is being set up: nothing was charged. Try again a little later.' : 'Le paiement est en cours de configuration : rien n’a été débité. Réessayez un peu plus tard.')
-      : (isEn ? 'Stripe is not responding right now. Try again in a minute.' : 'Stripe ne répond pas pour l’instant. Réessayez dans une minute.');
-}
-window.abAction = abAction;
-
-// OFFRIR UN ABONNEMENT (remis le 21 oct. 2026). Un paiement unique chez Stripe ; le webhook
-// fabrique le code et l'envoie par courriel à l'acheteur. Le navigateur n'envoie que le NOM de la
-// durée : le montant est fixé par le serveur (api/_cadeau.js).
-async function abOffrir(duree, case_){
-  const isEn = currentLang === 'en';
-  const carte = case_?.closest('.md-carte');
-  const note = carte?.querySelector('.ab-cadeau-etat') || case_?.closest('.md-cadeau-discret')?.querySelector('.ab-cadeau-etat');
-  document.querySelectorAll('.ab-cadeau').forEach((li) => li.classList.toggle('ab-forfait-choisi', li === case_));
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if(!session){
-    if(note) note.innerHTML = isEn
-      ? 'Sign in first: <a class="md-lien" href="/mon-dossier">My file</a>, then come back to this page.'
-      : 'Connectez-vous d’abord : <a class="md-lien" href="/mon-dossier">Mon dossier</a>, puis revenez sur cette page.';
-    return;
-  }
-  if(_abEtat && !_abEtat.peutOffrir){
-    if(note) note.textContent = isEn ? 'Payment is not open yet.' : 'Le paiement n’est pas encore ouvert.';
-    return;
-  }
-  if(note) note.textContent = isEn ? 'Opening Stripe…' : 'Ouverture de Stripe…';
-  const r = await fetch('/api/abonnement?action=cadeau', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ duree, quantite: case_?.closest('.md-cadeau-puces')?.querySelector('.md-cadeau-qte')?.value || 1, langue: isEn ? 'en' : 'fr' }),
-  }).catch(() => null);
-  const d = r ? await r.json().catch(() => ({})) : {};
-  if(d.url){ location.assign(d.url); return; }
-  if(note) note.textContent = r?.status === 403
-    ? (isEn ? 'Payment is not open yet.' : 'Le paiement n’est pas encore ouvert.')
-    : (isEn ? 'Stripe is not responding right now. Try again in a minute.' : 'Stripe ne répond pas pour l’instant. Réessayez dans une minute.');
-}
-window.abOffrir = abOffrir;
-
-// OFFRIR UN ABONNEMENT RÉCURRENT (21 oct. 2026). Un abonnement Stripe ordinaire, payé par le
-// donateur au profit de quelqu'un d'autre, jusqu'à ce qu'il annule. Le navigateur n'envoie que le
-// NOM du forfait (api/abonnement.js, action « offrir »).
-async function abOffrirAbonnement(forfait, case_){
-  const isEn = currentLang === 'en';
-  const carte = case_?.closest('.md-carte');
-  const note = carte?.querySelector('.ab-offert-etat') || case_?.closest('.md-cadeau-discret')?.querySelector('.ab-cadeau-etat');
-  document.querySelectorAll('.ab-offert').forEach((li) => li.classList.toggle('ab-forfait-choisi', li === case_));
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if(!session){
-    if(note) note.innerHTML = isEn
-      ? 'Sign in first: <a class="md-lien" href="/mon-dossier">My file</a>, then come back to this page.'
-      : 'Connectez-vous d’abord : <a class="md-lien" href="/mon-dossier">Mon dossier</a>, puis revenez sur cette page.';
-    return;
-  }
-  if(_abEtat && !_abEtat.peutOffrir){
-    if(note) note.textContent = isEn ? 'Payment is not open yet.' : 'Le paiement n’est pas encore ouvert.';
-    return;
-  }
-  if(note) note.textContent = isEn ? 'Opening Stripe…' : 'Ouverture de Stripe…';
-  const r = await fetch('/api/abonnement?action=offrir', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ forfait, quantite: case_?.closest('.md-cadeau-puces')?.querySelector('.md-cadeau-qte')?.value || 1, langue: isEn ? 'en' : 'fr' }),
-  }).catch(() => null);
-  const d = r ? await r.json().catch(() => ({})) : {};
-  if(d.url){ location.assign(d.url); return; }
-  if(note) note.textContent = r?.status === 403
-    ? (isEn ? 'Payment is not open yet.' : 'Le paiement n’est pas encore ouvert.')
-    : (d.erreur === 'prix mal configuré' || d.erreur === 'forfait indisponible')
-      ? (isEn ? 'Payment is being set up: nothing was charged. Try again a little later.' : 'Le paiement est en cours de configuration : rien n’a été débité. Réessayez un peu plus tard.')
-      : (isEn ? 'Stripe is not responding right now. Try again in a minute.' : 'Stripe ne répond pas pour l’instant. Réessayez dans une minute.');
-}
-window.abOffrirAbonnement = abOffrirAbonnement;
-
-// Gérer ou annuler un abonnement offert : le portail Stripe du donateur, ouvert sur celui-ci.
-async function abGererOffert(action, bouton){
-  const isEn = currentLang === 'en';
-  const note = bouton?.closest('#mdAbonnement')?.querySelector('.ab-offert-etat');
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if(!session) return;
-  bouton.disabled = true;
-  if(note) note.textContent = isEn ? 'Opening Stripe…' : 'Ouverture de Stripe…';
-  const r = await fetch(`/api/abonnement?action=${action === 'annuler' ? 'annuler' : 'portail'}`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ offert: bouton.dataset.code, langue: isEn ? 'en' : 'fr' }),
-  }).catch(() => null);
-  const d = r ? await r.json().catch(() => ({})) : {};
-  if(d.url){ location.assign(d.url); return; }
-  bouton.disabled = false;
-  if(note) note.textContent = isEn ? 'Stripe is not responding right now. Try again in a minute.' : 'Stripe ne répond pas pour l’instant. Réessayez dans une minute.';
-}
-window.abGererOffert = abGererOffert;
-
-// Le lien de la carte cadeau (courriel) : /abonnement?code=XXXX remplit la case.
-function abCodeDuLien(){
-  // Gardé le temps de s'identifier : le lien de connexion ramène sans le ?code=.
-  let c = new URLSearchParams(location.search).get('code');
-  try{ if(c) localStorage.setItem('dossierquebec:code', c); else c = localStorage.getItem('dossierquebec:code'); }catch(e){}
-  if(!c) return;
-  const champ = document.querySelector('#code .ab-code-champ');
-  if(champ && !champ.value){ champ.value = c.replace(/[^A-Za-z0-9-]/g, '').slice(0, 40); champ.closest('#code')?.scrollIntoView({ block: 'center' }); }
-}
-document.addEventListener('DOMContentLoaded', () => setTimeout(abCodeDuLien, 300));
-
-// La case « Mettez votre code ici », sur /abonnement et dans Mon dossier. Le serveur vérifie tout
-// (code inconnu ou déjà servi, 10 essais par heure) et écrit l'abonnement.
-function abRaisonCode(d, isEn){
-  const t = {
-    inconnu: ['Ce code n’existe pas. Vérifiez-le et réessayez.', 'This code does not exist. Check it and try again.'],
-    utilise: ['Ce code a déjà servi.', 'This code has already been used.'],
-    stripe: ['Vous avez déjà un abonnement payé par carte : le code ne peut pas s’y ajouter. Gardez-le pour plus tard, ou offrez-le.', 'You already have a subscription paid by card: the code cannot be added to it. Keep it for later, or give it away.'],
-    permanent: ['Votre accès est déjà permanent : gardez le code, ou offrez-le.', 'Your access is already permanent: keep the code, or give it away.'],
-    soi_meme: ['C’est vous qui offrez cet abonnement : donnez le code à la personne que vous abonnez.', 'You are the one giving this subscription: give the code to the person you are subscribing.'],
-    termine: ['Cet abonnement offert a été annulé : le code ne vaut plus.', 'This gift subscription was cancelled: the code is no longer valid.'],
-    deja_abonne: ['Votre abonnement est déjà actif : le code reste neuf. Gardez-le pour la fin de votre abonnement, ou rendez-le à la personne qui vous l’a donné.', 'Your subscription is already active: the code stays unused. Keep it for when your subscription ends, or give it back to the person who gave it to you.'],
-    offert: ['Votre abonnement vous est déjà offert par quelqu’un : le code ne peut pas s’y ajouter. Gardez-le pour plus tard.', 'Your subscription is already a gift from someone: the code cannot be added to it. Keep it for later.'],
-    trop: ['Trop d’essais. Réessayez dans une heure.', 'Too many tries. Try again in an hour.'],
-    connexion: ['Connectez-vous d’abord.', 'Sign in first.'],
-  }[d?.raison];
-  return t ? t[isEn ? 1 : 0] : (isEn ? 'The code could not be used. Try again in a moment.' : 'Le code n’a pas pu servir. Réessayez dans un moment.');
-}
-async function abUtiliserCode(bouton){
-  const isEn = currentLang === 'en';
-  const carte = bouton.closest('.md-carte, #mdAbonnement');
-  const champ = carte?.querySelector('.ab-code-champ');
-  const note = carte?.querySelector('.ab-code-etat');
-  const code = (champ?.value || '').trim();
-  if(!code){ champ?.focus(); return; }
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if(!session){
-    if(note) note.innerHTML = isEn
-      ? 'Sign in first: <a class="md-lien" href="/mon-dossier">My file</a>, then come back with your code.'
-      : 'Connectez-vous d’abord : <a class="md-lien" href="/mon-dossier">Mon dossier</a>, puis revenez avec votre code.';
-    return;
-  }
-  bouton.disabled = true;
-  const r = await fetch('/api/abonnement?action=code', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code }),
-  }).catch(() => null);
-  const d = r ? await r.json().catch(() => ({})) : {};
-  bouton.disabled = false;
-  if(d.ok){ try{ localStorage.removeItem('dossierquebec:code'); }catch(e){}
-    const fait = d.offert
-      ? (isEn
-        ? '✓ Done: your subscription is active. It renews as long as the person giving it keeps paying.'
-        : '✓ C’est fait : votre abonnement est actif. Il se renouvelle tant que la personne qui vous l’offre le paie.')
-      : isEn
-        ? `✓ Done: your subscription is active until ${abDate(d.fin, true)}.`
-        : `✓ C’est fait : votre abonnement est actif jusqu’au ${abDate(d.fin, false)}.`;
-    if(champ) champ.value = '';
-    if(note) note.textContent = fait;
-    renderAbonnement();
-    if(carte?.id === 'mdAbonnement') mdAbonnement(isEn, fait);
-    return;
-  }
-  if(note) note.textContent = abRaisonCode(d, isEn);
-}
-window.abUtiliserCode = abUtiliserCode;
-
-// Les codes achetés par ce compte (Mon dossier), utilisés ou non.
-// ✉ et ⧉ à côté d'un code pas encore utilisé (Martin, 21 oct. 2026) : le message tout prêt, avec le lien
-// qui remplit la case du code, à envoyer par courriel ou à coller où l'on veut.
-function abMessageCode(code, quoi, isEn){
-  const lien = `${location.origin}/abonnement?code=${encodeURIComponent(code.replace(/-/g, ''))}${isEn ? '&lang=en' : ''}#code`;
-  return {
-    sujet: isEn ? 'A DossierBC subscription for you' : 'Un abonnement à DossierBC pour vous',  // N.-B.
-    corps: isEn
-      ? `I am giving you ${quoi} of DossierBC: bills, votes and MLAs of the British Columbia Legislative Assembly, with the subscriber tools.
-
-Click to activate it (the code is already filled in):
-${lien}
-
-Code: ${code}`
-      : `Je vous offre ${quoi} à DossierBC : projets de loi, votes et élu·e·s de l’Assemblée législative de la Colombie-Britannique, avec les outils des abonné·e·s.
-
-Cliquez pour l’activer (le code est déjà inscrit) :
-${lien}
-
-Code : ${code}`,
-  };
-}
-function abBoutonsCode(code, quoi, isEn){
-  const m = abMessageCode(code, quoi, isEn);
-  const mail = `mailto:?subject=${encodeURIComponent(m.sujet)}&body=${encodeURIComponent(m.corps)}`;
-  return ` <a class="md-bouton-doux" href="${mail}" title="${isEn ? 'Send by email' : 'Envoyer par courriel'}">✉</a> <button type="button" class="md-bouton-doux" data-texte="${mdH(m.corps)}" title="${isEn ? 'Copy the message' : 'Copier le message'}" onclick="abCopierCode(this)">⧉</button>`;
-}
-function abCopierCode(b){
-  const isEn = currentLang === 'en';
-  const fait = () => { b.textContent = '✓'; setTimeout(() => { b.textContent = '⧉'; }, 1500); };
-  (navigator.clipboard ? navigator.clipboard.writeText(b.dataset.texte) : Promise.reject()).then(fait).catch(() => window.prompt(isEn ? 'Copy:' : 'Copiez :', b.dataset.texte));
-}
-window.abCopierCode = abCopierCode;
-
-async function abMesCodes(isEn){
-  try{
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if(!session) return '';
-    const r = await fetch('/api/abonnement?action=codes', { headers: { Authorization: `Bearer ${session.access_token}` } });
-    const d = r.ok ? await r.json() : {};
-    const codes = d.codes || [], offerts = d.offerts || [];
-    const duree = (m) => isEn ? (m === 1 ? '1 month' : m === 12 ? '1 year' : `${m} months`) : (m === 1 ? '1 mois' : m === 12 ? '1 an' : `${m} mois`);
-    const utilise = (u) => u ? (isEn ? 'used' : 'utilisé') : (isEn ? 'not used yet' : 'pas encore utilisé');
-    const listeCodes = codes.length ? `<p class="md-note"><b>${isEn ? 'Your gift codes' : 'Vos codes cadeaux'}</b></p><ul class="ab-mes-codes">${codes.map((c) =>
-      `<li><code>${mdH(c.code)}</code> — ${duree(c.mois)} — ${utilise(c.utilise)}${c.utilise ? '' : abBoutonsCode(c.code, isEn ? duree(c.mois) : `${duree(c.mois)} d’abonnement`, isEn)}</li>`).join('')}</ul>` : '';
-    // Les abonnements RÉCURRENTS offerts (21 oct. 2026) : le donateur les gère et les annule d'ici.
-    const rythme = { mensuel: isEn ? 'every month' : 'chaque mois', trimestriel: isEn ? 'every 3 months' : 'chaque trimestre', annuel: isEn ? 'every year' : 'chaque année' };
-    const etatOffert = (o) => !o.actif
-      ? (isEn ? 'ended' : 'terminé')
-      : o.annulationPrevue && o.fin
-        ? (isEn ? `cancelled, ends on ${abDate(o.fin, true)}` : `annulé, se termine le ${abDate(o.fin, false)}`)
-        : '';
-    const listeOfferts = offerts.length ? `<p class="md-note"><b>${isEn ? 'Subscriptions you are giving' : 'Vos abonnements offerts'}</b></p><ul class="ab-mes-codes">${offerts.map((o) =>
-      `<li><code>${mdH(o.code)}</code> — ${isEn ? 'gift subscription, renewed' : 'abonnement offert, renouvelé'} ${rythme[o.forfait] || ''} — ${utilise(o.utilise)}${!o.utilise && o.actif ? abBoutonsCode(o.code, isEn ? 'a subscription' : 'un abonnement', isEn) : ''}${etatOffert(o) ? ` — ${etatOffert(o)}` : ''}${o.actif
-        ? ` <button type="button" class="md-bouton-doux" data-code="${mdH(o.code)}" onclick="abGererOffert('portail', this)">${isEn ? 'Manage' : 'Gérer'}</button>${o.annulationPrevue ? '' : ` <button type="button" class="md-bouton-doux" data-code="${mdH(o.code)}" onclick="abGererOffert('annuler', this)">${isEn ? 'Cancel' : 'Annuler'}</button>`}`
-        : ''}</li>`).join('')}</ul><p class="md-note ab-offert-etat" aria-live="polite"></p>` : '';
-    return listeCodes + listeOfferts;
-  }catch(e){ return ''; }
 }
 
 async function mdEnvoyerLien(){
@@ -3286,7 +2227,6 @@ async function mdRetirerElu(type, cle){
 function renderAccountBox(){
   renderPromoCompte();
   renderMonDossier();   // page /mon-dossier : elle se redessine à la connexion et au changement de langue
-  renderAbonnement();   // page /abonnement : même chose
   if(!document.getElementById('accountBox')) return;   // vue absente de cette page
   const box = document.getElementById('accountBox');
   if(!box) return;
@@ -3358,13 +2298,13 @@ async function initAuth(){
 }
 
 /* ---------------- DEMANDES D'EXPLICATIONS (bc_bill_flags) ---------------- */
-// Voir scripts/supabase-schema-flags.sql. Contrainte unique côté base de
+// Voir scripts/supabase-colombie-britannique.sql. Contrainte unique côté base de
 // données : un compte ne peut demander qu'une fois par projet de loi. Le
 // numéro entré est toujours vérifié contre les vraies données `bills` avant
 // d'accepter la demande — jamais de projet de loi deviné ou inventé.
 
 // Réservé aux comptes listés dans la table `admins` (voir
-// scripts/supabase-schema-flags.sql) — les vrais chiffres de demandes par
+// scripts/supabase-colombie-britannique.sql) — les vrais chiffres de demandes par
 // projet de loi, rien d'autre que ça. Compté côté navigateur à partir des
 // lignes que la politique de sécurité autorise un·e admin à voir en entier
 // (tout le monde d'autre ne voit que ses propres demandes).
@@ -3379,7 +2319,6 @@ async function checkIsAdmin(){
 const PETITION_TIERS = [1000, 5000, 25000];
 
 async function renderAdminFlagCounts(){
-  renderAdminPreoccupations();   // le panneau des préoccupations suit celui des demandes, sur la même page
   if(!document.getElementById('adminFlagCounts')) return;   // vue absente de cette page
   const container = document.getElementById('adminFlagCounts');
   if(!container) return;
@@ -4390,8 +3329,10 @@ const ASSEMBLY = {
   dissolved: false,
   challenge: true,     // le bouton « Demander une explication » et la bande jaune restent sur les projets
   filtreChallenge: false,   // … mais pas de filtre « 🔥 Challengés »
-  abonnement: false,   // gratuit, sans abonnement : les conditions de l'Assemblée l'exigent (page des règles)
-  cafe: false,
+  // Ni « abonnement » ni « cafe » : DossierBC est gratuit, les conditions de l'Assemblée l'exigent
+  // (page des règles). Le 9 nov. 2026, l'abonnement de DossierQuébec et ses boutons café sont
+  // sortis du dépôt plutôt que d'y dormir derrière un interrupteur. Rien à rallumer : il n'y a
+  // plus rien derrière.
   dissolvedOn: null,
   electionOn: null,
   // Le premier dépôt de la législature montrée, pour reconnaître un projet encore vivant
@@ -4418,7 +3359,7 @@ const ASSEMBLY = {
 // Un résultat écrit dans ASSEMBLY.resultat s'affiche aussi, quelle que soit l'heure.
 // C.-B. : il n'y a pas de phase électorale à deviner. Le site ne tient pas de calendrier
 // d'élection — l'état des législatures est lu dans les données (etatLegislature). Ce champ ne
-// reste que pour les fonctions de DossierQuébec qui l'interrogent encore.
+// reste que parce que des fonctions reprises de DossierQuébec l'interrogent encore.
 ASSEMBLY.phase = ASSEMBLY.dissolved ? 'entre-deux' : 'legislature';
 
 function statusLabel(s, step){
@@ -4584,7 +3525,7 @@ function billCard(b, ctx){
   const shareRow = `<div class="bill-share-row">
       <span class="bill-share-label">${isEn ? 'Share:' : 'Partager :'}</span>
       ${shareCtrls}
-    </div>${boutonCafe(b, isEn)}${boiteAbonnement(isEn)}`;
+    </div>${boiteAbonnement(isEn)}`;
   // Les votes ne sont plus affichés sur les cartes de projets de loi — le
   // détail complet (décomptes + qui a voté quoi) vit dans l'onglet Votes.
   return `
@@ -4676,7 +3617,8 @@ async function remplirResume(el){
   corps.innerHTML = texte
     || `<p><em>${isEn ? 'No plain-language summary for this bill yet: the official text, on leg.bc.ca, is the reference.' : 'Pas encore de résumé en langage clair pour ce projet : le texte officiel, sur leg.bc.ca, fait foi.'}</em></p>`;   // N.-B. : les résumés viendront plus tard (guide, étape 8)
   if(texte) el.dataset.rempli = '1';
-  remplirMemoires(corps);
+  // Plus de remplirMemoires() ici : les mémoires déposés en commission sont un outil d'abonné·e de
+  // DossierQuébec, servi par api/export.js. Les deux sont sortis du dépôt le 9 nov. 2026.
   remplirVotesProjet(corps);
 }
 
@@ -4735,44 +3677,13 @@ async function remplirCartesVotes(d){
   }
 }
 
-// « Mémoires déposés » sous un projet de loi (21 oct. 2026). Le fichier public ne contient que le
-// nombre ; un·e abonné·e reçoit la liste du serveur (api/export.js?jeu=consultations&pl=…), qui
-// vérifie l'abonnement. Les autres gardent la phrase avec le lien vers /abonnement.
+
 // DossierBC est gratuit, sans abonnement (ASSEMBLY.abonnement = false) et sans bouton café
-// (ASSEMBLY.cafe = false). Il n'y a donc personne à reconnaître comme abonné·e, et la fonction
-// api/abonnement.js du Québec a été retirée du dépôt le 9 nov. 2026 : interroger cette adresse ne
-// ferait plus qu'un 404 à chaque ouverture de page pour une personne connectée. On répond false
-// sans rien demander au serveur. body.connecte continue de marquer la session.
+// (ASSEMBLY.cafe = false). Il n'y a personne à reconnaître comme abonné·e : body.connecte marque
+// la session, et body.abonne ne sert plus à rien. Tout ce que l'abonnement de DossierQuébec
+// apportait — export, flux personnels, alertes par mot-clé, veille, consultations, organismes,
+// codes cadeaux — est sorti du dépôt le 9 nov. 2026 avec les fonctions api/ qui le servaient.
 function marquerAbonne(){ document.body.classList.toggle('connecte', !!currentUser); document.body.classList.remove('abonne'); }
-function estAbonne(){ return Promise.resolve(false); }
-async function consultationsServeur(ids){
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  const r = await fetch(`/api/export?jeu=consultations&pl=${encodeURIComponent(ids.join(','))}`, { headers: { Authorization: `Bearer ${session?.access_token || ''}` } });
-  if(!r.ok) throw new Error(r.status);
-  return r.json();
-}
-const mdDateCourte = (iso, isEn) => iso ? new Date(iso + 'T12:00:00').toLocaleDateString(isEn ? 'en-CA' : 'fr-CA', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
-function listeMemoiresHtml(memoires, isEn){
-  return `<ul class="bill-memoires-liste">${memoires.map((m) => `<li>${m.url
-    ? `<a href="${mdH(m.url)}" target="_blank" rel="noopener">${mdH(m.depose)}</a>`
-    : mdH(m.depose)} <span>${mdH(mdDateCourte(m.date, isEn))}</span></li>`).join('')}</ul>`;
-}
-async function remplirMemoires(corps){
-  const boite = corps && corps.querySelector('.bill-memoires');
-  if(!boite || boite.dataset.charge) return;
-  if(!(await estAbonne())) return;
-  boite.dataset.charge = '1';
-  // Abonné·e : la pastille jaune « Réservé aux abonné·e·s » n'a plus lieu d'être.
-  boite.querySelectorAll('.pastille-abonnes').forEach((p) => p.remove());
-  const isEn = currentLang === 'en';
-  const zone = boite.querySelector('.bill-memoires-corps');
-  try{
-    const d = await consultationsServeur([boite.dataset.memoires]);
-    const p = d.projets?.[boite.dataset.memoires];
-    if(!p || !p.memoires.length) return;
-    zone.innerHTML = `<p class="bill-votes-note">${isEn ? 'Briefs as listed by the National Assembly (official titles, in French). The link opens the official brief.' : 'Les mémoires tels que l’Assemblée nationale les publie. Le lien ouvre le mémoire officiel.'}</p>${listeMemoiresHtml(p.memoires, isEn)}`;
-  }catch(e){ delete boite.dataset.charge; }
-}
 
 function toggleBillSummary(domId, evt){
   if(evt) evt.stopPropagation();
@@ -4994,7 +3905,6 @@ function renderBillsQuickFilters(){
 function renderBills(keyword){
   if(!document.getElementById('billsList')) return;   // vue absente de cette page
   renderArchivesNote();
-  _rangCafe = 0;   // les libellés du bouton café repartent du premier (boutonCafe)
   keyword = keyword !== undefined ? keyword : (document.getElementById('searchBills')?.value || '');
   const kw = norm(keyword);
   const isEn = currentLang === 'en';
@@ -5206,7 +4116,7 @@ const PETITION_THRESHOLD = 1000;
 // besoin d'attendre 500) — pour montrer l'élan et laisser les gens « piler »
 // dessus directement depuis l'accueil. ⚠️ Nécessite que la fonction SQL
 // bc_flag_counts() renvoie aussi les projets sous 500 : voir
-// scripts/supabase-schema-campaign.sql (having count(*) >= 1).
+// scripts/supabase-colombie-britannique.sql (having count(*) >= 1).
 const CHALLENGE_DISPLAY_MIN = 1;
 const CHALLENGE_DISPLAY_MAX = 9; // cap total (pagine par 3 via « Voir plus »)
 // Pagination en carrousel : 3 cartes affichées à la fois. « Voir plus »
@@ -5326,54 +4236,16 @@ function copierLien(texte, evt, isEn){
 // Partage d'un projet de loi (onglet Projets). Message neutre + lien profond
 // /projets-de-loi?pl=NUM qui ouvre directement le projet à l'arrivée.
 // Trois destinations : 𝕏, Facebook, copier.
-// LE BOUTON CAFÉ sous « Partager » (Martin, 18 oct. 2026) : bleu poudre, vers le même lien de don
-// que les volets de Québec et de Montréal. Sur tous les projets, ceux de la 43e
-// compris (30 oct. 2026) : archivés, ils gardent leur bouton.
-// Les libellés défilent un projet après l'autre, sans répétition (« je veux pas que le client voie
-// Appuyez-nous, Appuyez-nous, Appuyez-nous à chaque PL ») : renderBills remet le compteur à zéro,
-// chaque bouton affiché prend le libellé suivant.
-const LIEN_CAFE = 'https://donate.stripe.com/6oU5kDg8b91a3sY8RK9fW00';
-const LIBELLES_CAFE = [
-  ['Soutenez-nous !', 'Support us!'],
-  ['Aidez DQ à rester gratuit !', 'Help keep DQ free!'],
-  ['Gardez DQ vivant !', 'Keep DQ alive!'],
-  ['Vive DQ libre !', 'Long live a free DQ!'],
-  ['Contribuez au site !', 'Contribute to the site!'],
-  ['Vive l’information publique !', 'Long live public information!'],
-  ['Donnez un coup de pouce !', 'Give us a hand!'],
-  ['Soutenez la cause !', 'Support the cause!'],
-  ['Un café pour l’équipe ?', 'A coffee for the team?'],
-  ['Cappuccino ou espresso ?', 'Cappuccino or espresso?'],
-  ['Appuyez-nous !', 'Back us!'],
-  ['La démocratie, lisible !', 'Democracy, readable!'],
-  ['Un petit geste !', 'A small gesture!'],
-  ['Appuyez la cause !', 'Back the cause!'],
-  ['Croyez au projet !', 'Believe in the project!'],
-  ['Allongé ou serré ?', 'Long or short?'],
-  ['Latté ou espresso ?', 'Latte or espresso?'],
-  ['Un double, peut-être ?', 'A double, maybe?'],
-];
-// Mélangés une fois par chargement de page (Martin : « un shuffle à chaque fois ») : l'ordre change
-// d'une visite à l'autre, mais reste le même quand la liste se redessine, et jamais deux pareils de suite.
-const ORDRE_CAFE = LIBELLES_CAFE.map((_, i) => i);
-for(let i = ORDRE_CAFE.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [ORDRE_CAFE[i], ORDRE_CAFE[j]] = [ORDRE_CAFE[j], ORDRE_CAFE[i]]; }
-const ICONES_CAFE = ['cafe-croissant', 'cafe-carafe', 'cafe-moulin', 'cafe-filtre', 'cafe-coeur',
-  'cafe-machine4', 'cafe-terrasse', 'cafe-tasse-or', 'cafe-latte', 'cafe-the', 'cafe-pastille'].map((n) => `/commun/${n}.png`);
-// Chaque case ouvre sur une icône différente de ses voisines (Martin, 3 nov. 2026), comme les textes.
-const ORDRE_ICONES = ICONES_CAFE.map((_, i) => i);
-for(let i = ORDRE_ICONES.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [ORDRE_ICONES[i], ORDRE_ICONES[j]] = [ORDRE_ICONES[j], ORDRE_ICONES[i]]; }
-let _rangCafe = 0;
-// Sous le bouton café des projets de loi (Martin, 4 nov. 2026) : une boîte pour suivre en se
+// Sous chaque projet de loi (Martin, 4 nov. 2026) : une boîte pour suivre en se
 // connectant sur place (champ courriel, lien qui ramène sur cette page ; cachée une fois connecté,
-// body.connecte), puis un simple bouton « Devenez DossierQuébec » vers l'abonnement. Rien pour les
-// abonné·e·s (body.abonne).
+// body.connecte). Rien d'autre : DossierBC est gratuit, il n'y a pas d'abonnement à proposer.
 function boiteAbonnement(isEn){
   return `<form class="bill-abo bill-abo-suivre" onclick="event.stopPropagation()" onsubmit="event.preventDefault(); billEnvoyerLien(this)">
     <b class="bill-abo-titre">${isEn ? 'Follow this bill: sign in' : 'Suivez ce projet en vous identifiant'}</b>
     <div class="bill-abo-ligne"><input type="email" required autocomplete="email" placeholder="${isEn ? 'Your email' : 'Votre courriel'}" aria-label="${isEn ? 'Your email' : 'Votre courriel'}">
     <button type="submit" class="bill-abo-btn">${isEn ? 'Get the link' : 'Recevoir le lien'}</button></div>
     <p class="bill-abo-note" aria-live="polite">${isEn ? 'Free. No password: a link arrives by email.' : 'Gratuit. Pas de mot de passe : un lien arrive par courriel.'}</p></form>
-  ` + (ASSEMBLY.abonnement === false ? '' : `<a class="bill-more bill-abo-devenir" href="/abonnement${isEn ? '?lang=en' : ''}" onclick="event.stopPropagation()">${isEn ? 'Become DossierBC' : 'Devenez DossierBC'} →</a>`);   // N.-B. : nom du site
+  `;
 }
 async function billEnvoyerLien(form){
   const isEn = currentLang === 'en';
@@ -5394,54 +4266,6 @@ async function billEnvoyerLien(form){
   note.textContent = isEn ? `Check your inbox (${email}). The link brings you back here.` : `Vérifiez vos courriels (${email}). Le lien vous ramène ici.`;
 }
 window.billEnvoyerLien = billEnvoyerLien;
-function boutonCafe(b, isEn){
-  if(ASSEMBLY.cafe === false) return '';   // N.-B. : pastilles éteintes
-  const rangIcone = ORDRE_ICONES[_rangCafe % ORDRE_ICONES.length];
-  const [fr, en] = LIBELLES_CAFE[ORDRE_CAFE[_rangCafe++ % ORDRE_CAFE.length]];
-  return `<div class="bill-cafe-row"><a class="bill-cafe-btn" href="${LIEN_CAFE}" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="${isEn ? 'Buy us a coffee (opens in a new tab)' : 'Offrez-nous un café (s’ouvre dans un nouvel onglet)'}"><img class="icone" src="${ICONES_CAFE[rangIcone]}" data-rang="${rangIcone}" width="24" height="24" alt="">${isEn ? en : fr}<span class="bulle" aria-hidden="true">${'<i class="pt" style="animation:none"></i>'.repeat(5)}</span></a></div>`;
-}
-
-// La bulle du bouton café (Martin, 3 nov. 2026) : toutes les 8 s, à un moment propre à chaque bouton,
-// une file de 1 à 3 cafés tirés au hasard traverse la bulle ; les points jaunes mangés virent au brun,
-// puis redeviennent jaunes. Une seule horloge pour toute la page ; rien si l'appareil coupe les animations.
-const DUREE_CAFE = 8;
-const CAFE_tasse = `<svg width="18" height="18" viewBox="0 0 18 18"><g class="couvercle"><rect x="1" y="3" width="12" height="3" fill="#131313"/></g><path d="M2 7h10v7a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3z" fill="#fff" stroke="#131313" stroke-width="1.6"/><path d="M12 9h2a2 2 0 0 1 0 4h-2" fill="none" stroke="#131313" stroke-width="1.6"/></svg>`;
-const CAFE_emporter = `<svg width="14" height="18" viewBox="0 0 14 18"><rect x="1" y="1" width="12" height="3" rx="1" fill="#6B4A3A" stroke="#3A2A22" stroke-width="1"/><path d="M2 4h10l-1.3 13H3.3z" fill="#F6D7A7" stroke="#3A2A22" stroke-width="1"/><path d="M2.5 7.5h9l-.5 5h-8z" fill="#C88A55"/><ellipse cx="7" cy="10" rx="1.4" ry="2" fill="#5A3A2A"/></svg>`;
-const CAFE_brune = `<svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 4c-1-1.5 1-2 0-3.5M8 4c-1-1.5 1-2 0-3.5" fill="none" stroke="#9A9A9A" stroke-width="1.1"/><path d="M2 6h10v8a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3z" fill="#8A5A3B" stroke="#3A2A22" stroke-width="1"/><path d="M12 8h1.5a2 2 0 0 1 0 4H12" fill="none" stroke="#8A5A3B" stroke-width="1.8"/><ellipse cx="7" cy="6.3" rx="4.4" ry=".8" fill="#fff"/></svg>`;
-const CAFE_glace = `<svg width="14" height="19" viewBox="0 0 14 19"><path d="M8 6l2-5h2" fill="none" stroke="#555" stroke-width="1.4"/><path d="M2 7a5 4 0 0 1 10 0z" fill="#E4E4E4" stroke="#131313" stroke-width="1"/><rect x="1" y="7" width="12" height="2" fill="#D0D0D0" stroke="#131313" stroke-width="1"/><path d="M2 9h10l-1 9H3z" fill="#fff" stroke="#131313" stroke-width="1"/><path d="M2.4 12h9.2l-.7 6H3.1z" fill="#C9A27E"/><rect x="4" y="13" width="2" height="2" fill="#fff" stroke="#131313" stroke-width=".6"/><rect x="7.5" y="14.5" width="2" height="2" fill="#fff" stroke="#131313" stroke-width=".6"/></svg>`;
-const CAFES_BULLE = [CAFE_tasse, CAFE_emporter, CAFE_brune, CAFE_glace];
-// L'icône de gauche flippe toutes les 8 s, comme la feuille d'érable (Martin, 3 nov. 2026), 4 s après
-// le passage des cafés dans la bulle, jamais en même temps :
-// croissant et tasse d'abord, puis carafe, moulin, filtre, tasse au cœur, et on recommence.
-// Préchargées : sans ça, la première fois, l'icône clignotait le temps que l'image arrive.
-if(ASSEMBLY.cafe !== false) ICONES_CAFE.forEach((u) => { const p = new Image(); p.src = u; });   // N.-B. : rien à précharger sans pastilles
-function flipIcone(bouton){
-  const i = bouton.querySelector('.icone');
-  if(!i) return;
-  // Au hasard, jamais la même deux fois de suite (le croissant reste la première).
-  const avant = Number(i.dataset.rang || 0);
-  const rang = (avant + 1 + Math.floor(Math.random() * (ICONES_CAFE.length - 1))) % ICONES_CAFE.length;
-  i.dataset.rang = rang;
-  i.classList.add('tourne');
-  setTimeout(() => { i.src = ICONES_CAFE[rang]; i.classList.remove('tourne'); }, 300);
-}
-function passageCafe(bulle){
-  const file = CAFES_BULLE.slice().sort(() => Math.random() - .5).slice(0, 1 + Math.floor(Math.random() * 3));
-  bulle.innerHTML = '<i class="pt"></i>'.repeat(5)
-    + file.map((ic, i) => `<span class="passant" style="--suite:${i}">${ic}</span>`).reverse().join('');
-}
-setInterval(() => {
-  if(document.hidden || document.body.classList.contains('abonne') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const maintenant = Date.now();
-  document.querySelectorAll('.bill-cafe-btn .bulle').forEach((bulle) => {
-    if(!bulle.dataset.prochain) bulle.dataset.prochain = maintenant + Math.random() * DUREE_CAFE * 1000;
-    else if(maintenant >= Number(bulle.dataset.prochain)){
-      bulle.dataset.prochain = maintenant + DUREE_CAFE * 1000;
-      passageCafe(bulle);
-      setTimeout(() => flipIcone(bulle.closest('.bill-cafe-btn')), DUREE_CAFE * 500);
-    }
-  });
-}, 400);
 
 function shareBill(billId, platform, evt){
   if(evt) evt.stopPropagation();
@@ -6094,8 +4918,8 @@ async function rtvEnvoyer(f){
   }
 }
 
-const VIEW_SLUGS = { apercu:'/', ministres:'/ministres', ministre:'/ministres', projets:'/projets-de-loi', votes:'/votes', archives:'/archives', ancien:'/archives', lexique:'/lexique', represente:'/represente-ta-ville', promesses:'/promesses', bd:'/sources', mondossier:'/mon-dossier', regles:'/regles', abonnement:'/abonnement' };
-const SLUG_VIEWS = { '':'apercu', 'ministres':'ministres', 'ministres/':'ministre', 'projets-de-loi':'projets', 'votes':'votes', 'archives':'archives', 'archives/':'ancien', 'represente-ta-ville':'represente', 'deputes/':'ministre', 'lexique':'lexique', 'promesses':'promesses', 'sources':'bd', 'mon-dossier':'mondossier', 'regles':'regles', 'abonnement':'abonnement' };
+const VIEW_SLUGS = { apercu:'/', ministres:'/ministres', ministre:'/ministres', projets:'/projets-de-loi', votes:'/votes', archives:'/archives', ancien:'/archives', lexique:'/lexique', represente:'/represente-ta-ville', promesses:'/promesses', bd:'/sources', mondossier:'/mon-dossier', regles:'/regles' };
+const SLUG_VIEWS = { '':'apercu', 'ministres':'ministres', 'ministres/':'ministre', 'projets-de-loi':'projets', 'votes':'votes', 'archives':'archives', 'archives/':'ancien', 'represente-ta-ville':'represente', 'deputes/':'ministre', 'lexique':'lexique', 'promesses':'promesses', 'sources':'bd', 'mon-dossier':'mondossier', 'regles':'regles' };
 // Titres FRANÇAIS seulement — l'inverse de DossierQuébec, et pour la même raison : ici le <title>
 // du HTML est l'ANGLAIS. C'est lui que Google lit, c'est lui que le build écrit page par page et
 // qu'il vérifie (unicité, 65 caractères, « Sujet — DossierBC »). Le français n'existe nulle part
@@ -6479,8 +5303,7 @@ function renderTicker(){
 
 // « Ce qui est sur DQ reste sur DQ » (Martin, 21 sept. 2026) : les pages communes (Mes dossiers,
 // Abonnement) prennent la marque du DERNIER site visité. Les volets y inscrivent leur ville
-// (commun/abonnes.js, memoriserVolet) ; le provincial y inscrit « assemblee » — même clé, lue par
-// commun/navigation.js (dernierVolet, vientDuProvincial) et par le <head> de abonnement.html.
+// Les volets y inscrivent leur ville ; le provincial y inscrit « assemblee ».
 // Sauf quand l'adresse nomme une ville (/mon-dossier?ville=montreal, venu d'un volet) : depuis la
 // fusion du 30 sept. 2026, Mon dossier EST une page du provincial, et cette ligne effaçait le volet
 // d'où l'on arrivait — on repartait sur DQ.

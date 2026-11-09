@@ -249,9 +249,8 @@ function goToFederal(evt){
   <!-- APERÇU -->
   <section class="view active" id="view-mondossier">
     <nav class="fil-ariane" aria-label="Fil d'Ariane"><a href="/" data-i18n="fil.accueil">Accueil</a><span class="sep" aria-hidden="true">›</span><span aria-current="page" data-i18n="fil.mondossier">My file</span></nav>
-    <!-- REFONTE de Mon dossier (prototype, 3 nov. 2026) : en-tête + connexion compacte, trois compteurs,
-         « Pour commencer » ou les vraies listes, grille des outils d'abonné·e, bande « Nous écrire ».
-         Rempli par mdRefonte (commun/dq.js) ; les outils existants vivent dans #mdOutils, dépliés par tuile. -->
+    <!-- Mon dossier (3 nov. 2026) : en-tête + connexion compacte, deux compteurs, « Pour commencer »
+         ou les vraies listes, bande « Nous écrire ». Rempli par mdRefonte (commun/dq.js). -->
     <div class="mdr-tete">
       <h1 class="hero-h1 hero-h1-md mdr-titre">
         <span class="hero-sujet" data-i18n="sujet.mondossier">My file</span>
@@ -269,25 +268,17 @@ function goToFederal(evt){
       <div id="mdElus" class="md-bloc"></div>
     </div>
 
-    <div id="mdPlus" class="mdr-plus"></div>
-    <!-- N.-B. (Martin, 7 nov. 2026) : pas d'« Offrir un abonnement » pour l'instant. -->
-    <div id="mdOutils" class="mdr-outils">
-      <div id="mdAlertes" class="md-bloc" hidden></div>
-      <div id="mdVeille" class="md-bloc" hidden></div>
-      <div id="mdOrganismes" class="md-bloc" hidden></div>
-      <div id="mdConsultations" class="md-bloc" hidden></div>
-      <div id="mdFlux" class="md-bloc" hidden></div>
-      <div id="mdExport" class="md-bloc" hidden></div>
-    </div>
+    <!-- PAS de tuiles d'outils réservés (#mdPlus, #mdOutils) : elles ouvraient l'export, les flux
+         personnels, les alertes, la veille, les consultations et les organismes de DossierQuébec,
+         tous payants et tous branchés sur SES tables. Sortis du dépôt le 9 nov. 2026. -->
     <!-- PAS de bloc « Vos projets de ville » ici (9 nov. 2026, avant la mise en ligne). Il venait
          de DossierQuébec, où /mon-dossier liste les dossiers des villes couvertes. La C.-B. n'a
          aucun volet de ville : le bloc restait vide, allait chercher /quebec/assets/libelles-en.js
          (404 en production) et lisait les tables de ville de DQ. La Saskatchewan ne l'a pas non
          plus. À remettre le jour où une ville de la C.-B. est couverte.  -->
 
-    <!-- Vos courriels (3 nov. 2026) : Assemblée et villes, une carte chacune. Rempli par
-         boiteInfolettre (commun/infolettre.js) ; montré seulement à qui est connecté (mdRefonte). -->
-    <div class="mdc-section" id="courriels" hidden><div id="infolettre"></div></div>
+    <!-- PAS de bloc « Vos courriels » : l'infolettre est celle de DossierQuébec, par ville et par
+         arrondissement. DossierBC n'en a aucune. Sortie du dépôt le 9 nov. 2026. -->
 
     <div class="mdr-bande">
       <p data-i18n="mdr.bande"><b>An idea, an error?</b> Every message is read.</p>
@@ -307,11 +298,8 @@ function goToFederal(evt){
   <!-- VOTES -->
   
 
-  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
-       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
-       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
-       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
-  <!-- N.-B. (Martin, 7 nov. 2026) : vue de l'abonnement retirée pour l'instant (à reprendre de DossierQuébec). -->
+  <!-- PAS de vue « Abonnement » : DossierBC est gratuit, sans abonnement. Celui de DossierQuébec est
+       sorti du dépôt le 9 nov. 2026, avec ses fonctions api/ et son code de navigateur. -->
 
   <!-- ARCHIVES (Martin, 9 novembre 2026). La 43e législature est terminée depuis le 22 septembre.
        Dès que la 44e aura publié ses député·e·s et son conseil des ministres, tout ce que le site
@@ -353,11 +341,6 @@ function goToFederal(evt){
        présentation. Le faux vote est ÉTIQUETÉ comme une blague : ce site n'invente jamais de donnée. -->
   
 
-  <!-- L'ABONNEMENT FACULTATIF (retiré le 27 sept. 2026, remis le 21 oct. 2026). Le texte du site et
-       le suivi restent gratuits ; l'abonnement vend des outils en plus, aucun municipal. Chaque outil
-       porte son état : « Disponible » seulement s'il est réellement livré. La zone #abEtat (s'abonner,
-       gérer, annuler) est remplie par renderAbonnement (commun/dq.js) depuis /api/abonnement. -->
-
   
 
   
@@ -398,7 +381,6 @@ function goToFederal(evt){
 </button>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/commun/apercu.js"></script>
 <script src="/commun/dq.js"></script>
 <!-- Vercel Web Analytics — sans cookie, sans donnée personnelle (donc pas de
      bannière de consentement requise). Le script est servi automatiquement par
