@@ -8,15 +8,19 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
 </script>
-<!-- Mesure d'audience : AUCUNE pour l'instant. La propriété Google Analytics de la
-     Colombie-Britannique n'existe pas encore, et celle du Nouveau-Brunswick a été retirée d'ici
-     pour qu'elle ne reçoive pas ce trafic. Pour la brancher : remettre le bloc gtag.js des autres
-     sites de la famille avec l'identifiant de la nouvelle propriété. Le consentement
-     (commun/consentement.js) et la bande de témoins sont déjà en place et n'attendent que ça. -->
-<!-- Pas de bannière de témoins : il n'y a aucune mesure d'audience sur ce site pour l'instant,
-     donc rien à faire accepter. Elle revient avec le bloc gtag.js, le jour où la propriété
-     Google Analytics de la Colombie-Britannique existera.
-<script src="/commun/consentement.js" defer></script> -->
+<!-- Google tag (gtag.js) — propriété « Dossierbc.ca » du compte Analytics « dossier », créée le
+     9 nov. 2026. Elle est À PART de celle du Nouveau-Brunswick (G-6CZX26581K) : chaque site de la
+     famille a la sienne, sinon les deux trafics se mélangent et aucun chiffre ne veut rien dire.
+     Fuseau Vancouver, devise canadienne. Le bloc de consentement ci-dessus s'exécute AVANT :
+     tant que personne n'a accepté, analytics_storage vaut « denied » et aucun témoin n'est posé. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVMNKLDBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JVMNKLDBCQ', { content_group: 'Assembly' });
+</script>
+<script src="/commun/consentement.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
@@ -702,47 +706,56 @@ function goToFederal(evt){
 
         <details class="rtv-menu"><summary class="rtv-menu-titre"><span class="en-txt">British Columbia cities and their prices</span><span class="fr-txt">Les villes de la Colombie-Britannique et leurs prix</span></summary>
         <p class="rtv-villes-titre"><b class="en-txt">Every municipality over 50,000</b><b class="fr-txt">Toutes les municipalités de plus de 50 000</b>
-          <span class="rtv-archaique-legende"><span class="en-txt">Marked “blocked”: the city's own website turns automated reading away. We do not get around that.</span><span class="fr-txt">Marquées « bloquée » : le site de la Ville refuse la lecture automatisée. On ne contourne pas.</span></span></p>
+          <span class="rtv-archaique-legende"><span class="en-txt">In red: the city's own website turns automated reading away. We do not get around that.</span><span class="fr-txt">En rouge : le site de la Ville refuse la lecture automatisée. On ne contourne pas.</span></span></p>
         <table class="rtv-villes">
           <tr><th>#</th><th><span class="en-txt">City</span><span class="fr-txt">Ville</span></th><th><span class="en-txt">Population (2021)</span><span class="fr-txt">Population (2021)</span></th><th><span class="en-txt">Price per month</span><span class="fr-txt">Prix par mois</span></th></tr>
-          <tr class="rtv-bloquee"><td>1</td><td>Vancouver</td><td><span class="en-txt">662,248</span><span class="fr-txt">662 248</span></td><td><span class="rtv-bloc"><span class="en-txt">Blocked</span><span class="fr-txt">Bloquée</span></span></td></tr>
-          <tr><td>2</td><td>Surrey</td><td><span class="en-txt">568,322</span><span class="fr-txt">568 322</span></td><td><span class="en-txt">$300</span><span class="fr-txt">300 $</span></td></tr>
-          <tr><td>3</td><td>Burnaby</td><td><span class="en-txt">249,125</span><span class="fr-txt">249 125</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
-          <tr><td>4</td><td>Richmond</td><td><span class="en-txt">209,937</span><span class="fr-txt">209 937</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
-          <tr><td>5</td><td>Abbotsford</td><td><span class="en-txt">153,524</span><span class="fr-txt">153 524</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
-          <tr><td>6</td><td>Coquitlam</td><td><span class="en-txt">148,625</span><span class="fr-txt">148 625</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr class="rtv-bloquee"><td>7</td><td>Kelowna</td><td><span class="en-txt">144,576</span><span class="fr-txt">144 576</span></td><td><span class="rtv-bloc"><span class="en-txt">Blocked</span><span class="fr-txt">Bloquée</span></span></td></tr>
+          <tr class="rtv-bloquee"><td>1</td><td>Vancouver</td><td><span class="en-txt">662,248</span><span class="fr-txt">662 248</span></td><td><span class="en-txt">$300</span><span class="fr-txt">300 $</span></td></tr>
+          <tr class="rtv-permission"><td>2</td><td>Surrey</td><td><span class="en-txt">568,322</span><span class="fr-txt">568 322</span></td><td><span class="en-txt">$300</span><span class="fr-txt">300 $</span></td></tr>
+          <tr class="rtv-permission"><td>3</td><td>Burnaby</td><td><span class="en-txt">249,125</span><span class="fr-txt">249 125</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
+          <tr class="rtv-permission"><td>4</td><td>Richmond</td><td><span class="en-txt">209,937</span><span class="fr-txt">209 937</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
+          <tr class="rtv-inconnu"><td>5</td><td>Abbotsford</td><td><span class="en-txt">153,524</span><span class="fr-txt">153 524</span></td><td><span class="en-txt">$200</span><span class="fr-txt">200 $</span></td></tr>
+          <tr class="rtv-permission"><td>6</td><td>Coquitlam</td><td><span class="en-txt">148,625</span><span class="fr-txt">148 625</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-bloquee"><td>7</td><td>Kelowna</td><td><span class="en-txt">144,576</span><span class="fr-txt">144 576</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
         </table>
         <details class="rtv-villes-plus"><summary><span class="en-txt">See the 13 other cities over 50,000</span><span class="fr-txt">Voir les 13 autres villes de plus de 50 000</span></summary>
         <table class="rtv-villes">
           <tr><th>#</th><th><span class="en-txt">City</span><span class="fr-txt">Ville</span></th><th><span class="en-txt">Population (2021)</span><span class="fr-txt">Population (2021)</span></th><th><span class="en-txt">Price per month</span><span class="fr-txt">Prix par mois</span></th></tr>
-          <tr class="rtv-bloquee"><td>8</td><td>Langley <span class="pr-meta">(district)</span></td><td><span class="en-txt">132,603</span><span class="fr-txt">132 603</span></td><td><span class="rtv-bloc"><span class="en-txt">Blocked</span><span class="fr-txt">Bloquée</span></span></td></tr>
-          <tr><td>9</td><td>Saanich</td><td><span class="en-txt">117,735</span><span class="fr-txt">117 735</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>10</td><td>Delta</td><td><span class="en-txt">108,455</span><span class="fr-txt">108 455</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>11</td><td>Nanaimo</td><td><span class="en-txt">99,863</span><span class="fr-txt">99 863</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>12</td><td>Kamloops</td><td><span class="en-txt">97,902</span><span class="fr-txt">97 902</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>13</td><td>Chilliwack</td><td><span class="en-txt">93,203</span><span class="fr-txt">93 203</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>14</td><td>Victoria</td><td><span class="en-txt">91,867</span><span class="fr-txt">91 867</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>15</td><td>Maple Ridge</td><td><span class="en-txt">90,990</span><span class="fr-txt">90 990</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>16</td><td>North Vancouver <span class="pr-meta">(district)</span></td><td><span class="en-txt">88,168</span><span class="fr-txt">88 168</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>17</td><td>New Westminster</td><td><span class="en-txt">78,916</span><span class="fr-txt">78 916</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>18</td><td>Prince George</td><td><span class="en-txt">76,708</span><span class="fr-txt">76 708</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>19</td><td>Port Coquitlam</td><td><span class="en-txt">61,498</span><span class="fr-txt">61 498</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
-          <tr><td>20</td><td>North Vancouver <span class="pr-meta">(city)</span></td><td><span class="en-txt">58,120</span><span class="fr-txt">58 120</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-bloquee"><td>8</td><td>Langley <span class="pr-meta">(district)</span></td><td><span class="en-txt">132,603</span><span class="fr-txt">132 603</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-inconnu"><td>9</td><td>Saanich</td><td><span class="en-txt">117,735</span><span class="fr-txt">117 735</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-permission"><td>10</td><td>Delta</td><td><span class="en-txt">108,455</span><span class="fr-txt">108 455</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-permission"><td>11</td><td>Nanaimo</td><td><span class="en-txt">99,863</span><span class="fr-txt">99 863</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-permission"><td>12</td><td>Kamloops</td><td><span class="en-txt">97,902</span><span class="fr-txt">97 902</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-inconnu"><td>13</td><td>Chilliwack</td><td><span class="en-txt">93,203</span><span class="fr-txt">93 203</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-permission"><td>14</td><td>Victoria</td><td><span class="en-txt">91,867</span><span class="fr-txt">91 867</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-permission"><td>15</td><td>Maple Ridge</td><td><span class="en-txt">90,990</span><span class="fr-txt">90 990</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-bloquee"><td>16</td><td>North Vancouver <span class="pr-meta">(district)</span></td><td><span class="en-txt">88,168</span><span class="fr-txt">88 168</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-inconnu"><td>17</td><td>New Westminster</td><td><span class="en-txt">78,916</span><span class="fr-txt">78 916</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-permission"><td>18</td><td>Prince George</td><td><span class="en-txt">76,708</span><span class="fr-txt">76 708</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-inconnu"><td>19</td><td>Port Coquitlam</td><td><span class="en-txt">61,498</span><span class="fr-txt">61 498</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
+          <tr class="rtv-inconnu"><td>20</td><td>North Vancouver <span class="pr-meta">(city)</span></td><td><span class="en-txt">58,120</span><span class="fr-txt">58 120</span></td><td><span class="en-txt">$100</span><span class="fr-txt">100 $</span></td></tr>
         </table>
         </details>
         <details class="rtv-villes-plus"><summary><span class="en-txt">Just under the line, at $50 a month</span><span class="fr-txt">Juste sous la barre, à 50 $ par mois</span></summary>
         <table class="rtv-villes">
           <tr><th>#</th><th><span class="en-txt">City</span><span class="fr-txt">Ville</span></th><th><span class="en-txt">Population (2021)</span><span class="fr-txt">Population (2021)</span></th><th><span class="en-txt">Price per month</span><span class="fr-txt">Prix par mois</span></th></tr>
-          <tr><td>21</td><td>Langford</td><td><span class="en-txt">46,584</span><span class="fr-txt">46 584</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
-          <tr><td>22</td><td>Vernon</td><td><span class="en-txt">44,519</span><span class="fr-txt">44 519</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
-          <tr><td>23</td><td>West Vancouver</td><td><span class="en-txt">44,122</span><span class="fr-txt">44 122</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
-          <tr><td>24</td><td>Mission</td><td><span class="en-txt">41,519</span><span class="fr-txt">41 519</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+          <tr class="rtv-permission"><td>21</td><td>Langford</td><td><span class="en-txt">46,584</span><span class="fr-txt">46 584</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+          <tr class="rtv-permission"><td>22</td><td>Vernon</td><td><span class="en-txt">44,519</span><span class="fr-txt">44 519</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+          <tr class="rtv-bloquee"><td>23</td><td>West Vancouver</td><td><span class="en-txt">44,122</span><span class="fr-txt">44 122</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
+          <tr class="rtv-inconnu"><td>24</td><td>Mission</td><td><span class="en-txt">41,519</span><span class="fr-txt">41 519</span></td><td><span class="en-txt">$50</span><span class="fr-txt">50 $</span></td></tr>
         </table>
         <p class="rtv-note"><span class="en-txt">Langford grew 31.8% between 2016 and 2021 — it has most likely crossed 50,000 since.</span><span class="fr-txt">Langford a grandi de 31,8 % entre 2016 et 2021 — elle a très probablement passé les 50 000 depuis.</span></p>
         </details>
         <p class="rtv-note"><span class="en-txt">Population from the 2021 Census of Canada. Any city not listed here is under 50,000, at $50 a month.</span><span class="fr-txt">Population du recensement de 2021. Une ville absente de ces listes est sous les 50 000, à 50 $ par mois.</span></p>
-        <p class="rtv-note"><span class="en-txt"><b>Vancouver, Kelowna and the Township of Langley cannot be delivered today.</b> Their websites answer an automated reader with a challenge page instead of the document, and we do not work around those. If one of them is your city, raise your hand anyway: a single email from the city usually settles it, and we will take it from there.</span><span class="fr-txt"><b>Vancouver, Kelowna et le district de Langley ne peuvent pas être livrées aujourd'hui.</b> Leurs sites répondent à un robot par une page de vérification plutôt que par le document, et on ne contourne pas ça. Si c'est votre ville, levez la main quand même : un courriel de la Ville règle habituellement la chose, et on s'occupe du reste.</span></p>
+        <div class="rtv-legende">
+          <p class="rtv-legende-titre"><span class="en-txt">Reading the colours</span><span class="fr-txt">Lire les couleurs</span></p>
+          <ul>
+          <li class="rtv-l-rouge"><span class="en-txt">The city’s website turns automated reading away. We do not get around that, so we do not sell these. The price is what they would cost if we could.</span><span class="fr-txt">Le site de la Ville refuse la lecture automatisée. On ne contourne pas, donc on ne les vend pas. Le prix est ce qu’elles coûteraient si on pouvait.</span></li>
+          <li class="rtv-l-jaune"><span class="en-txt">The city requires written permission before anyone republishes its records. We ask before we sell.</span><span class="fr-txt">La Ville exige une permission écrite avant qu’on republie ses documents. On demande avant de vendre.</span></li>
+          <li class="rtv-l-gris"><span class="en-txt">No clause found either way. Nothing allows us, nothing forbids us — and silence is not permission. We ask too.</span><span class="fr-txt">Aucune clause trouvée, ni dans un sens ni dans l’autre. Rien ne nous autorise, rien ne nous interdit — et le silence n’est pas une permission. On demande aussi.</span></li>
+          </ul>
+          <p class="rtv-legende-source"><span class="en-txt">Terms of use read on each city’s own website on 9 November 2026.</span><span class="fr-txt">Conditions d’utilisation lues sur le site de chaque ville le 9 novembre 2026.</span></p>
+        </div>
+        <p class="rtv-note"><span class="en-txt"><b>Vancouver, Kelowna, the Township of Langley, West Vancouver and the District of North Vancouver cannot be delivered today.</b> Their websites answer an automated reader with a challenge page instead of the document, and we do not work around those. If one of them is your city, raise your hand anyway: a single email from the city usually settles it, and we will take it from there.</span><span class="fr-txt"><b>Vancouver, Kelowna, le district de Langley, West Vancouver et le district de North Vancouver ne peuvent pas être livrées aujourd'hui.</b> Leurs sites répondent à un robot par une page de vérification plutôt que par le document, et on ne contourne pas ça. Si c'est votre ville, levez la main quand même : un courriel de la Ville règle habituellement la chose, et on s'occupe du reste.</span></p>
         </details>
 
         <details class="rtv-menu"><summary class="rtv-menu-titre"><span class="en-txt">Terms</span><span class="fr-txt">Conditions</span></summary>
