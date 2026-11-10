@@ -56,6 +56,11 @@
   --bc-surface:#f1f1ef;
   --bc-filet:rgba(23,32,43,.2);
   --bc-estompe:rgba(23,32,43,.65);
+  /* Le rouge de la famille Dossier (dq.css), repris tel quel : une ville bloquée se lit
+     pareil d'un site à l'autre, et ces deux valeurs ont déjà passé le relevé de contraste. */
+  --bc-rouge:#C22B1D;
+  --bc-jaune-fond:#f7e9b4;     /* l'or du cahier, éclairci : un fond de rangée, pas un aplat */
+  --bc-gris-fond:#e3e5e7;     /* aucune clause trouvée : ni oui, ni non */
   /* Le bleu quand il sert d'ENCRE (un lien, un numéro, un filet) et non de fond plein. Les deux
      usages ne peuvent pas partager un jeton : en thème sombre l'encre doit s'éclaircir, le fond
      doit rester profond pour garder son texte clair. */
@@ -106,6 +111,9 @@
    couleur qui ne se repeint pas en sombre est un jeton cassé : ils y passent tous. */
 html[data-theme="dark"]{
   --bc-estompe:rgba(238,240,242,.62);
+  --bc-rouge:#FF8172;          /* le rouge éclairci, lisible sur la nuit */
+  --bc-jaune-fond:#f7e9b4;     /* inchangé : la rangée garde son encre foncée dans les deux thèmes */
+  --bc-gris-fond:#e3e5e7;     /* aucune clause trouvée : ni oui, ni non */
   --bc-filet:rgba(238,240,242,.24);
   --bc-bleu-encre:#8fb4e4;     /* le bleu héraldique éclairci, pour rester lisible sur la nuit */
   --bc-bleu-fonce:#9cc0e8;     /* le cran d'accent : en sombre il monte au lieu de descendre */
@@ -159,6 +167,7 @@ html[data-theme="dark"] .bc-cellule-or{
   --slate:#4c545e;
   --card:#fbfbfa;
   --bc-estompe:rgba(23,32,43,.68);
+  --bc-rouge:#C22B1D;
   --bc-filet:rgba(23,32,43,.25);
   --bc-bleu-encre:#193f6e;
   --bc-bleu-fonce:#193f6e;
@@ -989,18 +998,59 @@ nav.tabs .villes-menu ul{left:auto; right:0;}
    (Vancouver, Kelowna, district de Langley : page de vérification Cloudflare au lieu du
    document). On ne contourne pas, donc on ne les vend pas — et on le dit sur la page plutôt que
    d'encaisser une commandite qu'on ne pourrait pas honorer. La rangée s'estompe, le prix cède la
-   place à une étiquette. Pas de rouge : la palette du cahier n'en a pas, et l'encre suffit. */
-.rtv-bloquee td{color:var(--bc-estompe);}
-.rtv-bloc{
-  display:inline-block;
-  padding:2px 7px;
-  border:1px solid var(--ink) !important;
-  font:600 10px/1.4 'Barlow',sans-serif;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--ink);
-  white-space:nowrap;
-}
+   place à une étiquette.
+
+   9 nov. 2026 : la rangée était ESTOMPÉE, sans rouge — le cahier Horizon n'a pas de rouge dans sa
+   palette. Martin préfère le code de couleur des autres sites : une couleur s'explique d'un coup
+   d'œil, un gris pâle ne dit rien de lui-même. On reprend donc le rouge de la famille et on ajoute
+   la légende qui va avec. L'étiquette écrite reste : couleur ET mot, parce qu'une couleur seule
+   laisse tomber qui ne la distingue pas. */
+/* ROUGE : le site de la Ville refuse la lecture automatisée. La rangée garde son prix, comme
+   chez DossierQuébec — il dit ce que la ville coûterait si on pouvait la livrer.
+
+   PAS DE BARRÉ ICI (Martin, 9 nov. 2026). Le barré de la famille Dossier veut dire autre chose :
+   la ville ne publie PLUS ses procès-verbaux, ou ils sont illisibles — le document lui-même
+   manque (au N.-B. : Shediac, Campbellton, Cap-Acadie, rien depuis avril 2023). Un mur
+   anti-robot n'est pas un document absent : les procès-verbaux de Vancouver existent et sont
+   publics, c'est l'accès automatisé qui est fermé. Mélanger les deux fait mentir la légende.
+   Aucune ville de la C.-B. n'est barrée pour l'instant : personne n'a vérifié lesquelles
+   publient encore. */
+.rtv-bloquee td{color:var(--bc-rouge); font-weight:700;}
+/* La légende, sous les tableaux : elle porte la couleur qu'elle explique. */
+
+/* LE JAUNE : la ville n'autorise pas la republication sans écrit, OU ne dit rien du tout.
+   Relevé du 9 nov. 2026 sur les 24 sites : douze villes exigent un écrit, sept n'ont aucune
+   clause. On les peint pareil parce que la conséquence est la même — on demande avant de vendre.
+   « Rien trouvé » n'est pas « libre » : rien ne nous autorise.
+
+   Le fond et l'encre sont FIXES dans les deux thèmes, comme chez DossierQuébec : un fond jaune
+   pâle avec l'encre éclaircie du thème sombre écrirait en blanc sur jaune. */
+.rtv-permission td{background:var(--bc-jaune-fond); color:#17202b; font-weight:600;}
+
+/* GRIS : aucune clause trouvée, ni dans un sens ni dans l'autre. Sept villes sur vingt-quatre.
+   Il a fallu le séparer du jaune (Martin, 10 nov. 2026) : « exige une permission écrite » et
+   « ne dit rien du tout » ne sont pas la même chose, et les peindre pareil effaçait la seule
+   nuance qui compte quand on écrit à une ville. Le silence n'est pas une permission.
+
+   Ce gris n'est PAS le .rtv-archaique de DossierQuébec, qui veut dire « publication archaïque ».
+   Même couleur, autre sens : ne pas les confondre si on porte ce code ailleurs. */
+.rtv-inconnu td{background:var(--bc-gris-fond); color:#17202b;}
+
+/* Le bloc de légende, sous les tableaux. Avant, c'étaient deux lignes perdues dans les notes :
+   on ne les retrouvait pas. Chaque entrée porte sa pastille, de la couleur qu'elle explique. */
+.rtv-legende{margin:18px 0 0; padding:14px 16px; border:1px solid var(--bc-filet);}
+.rtv-legende-titre{margin:0 0 10px; font:700 11px/1 'Barlow Condensed','Archivo Narrow',sans-serif;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--bc-bleu-encre);}
+.rtv-legende ul{margin:0; padding:0; list-style:none;}
+.rtv-legende li{position:relative; padding:0 0 0 24px; margin:0 0 8px;
+  font-size:13.5px; line-height:1.55; color:var(--ink);}
+.rtv-legende li:last-child{margin-bottom:0;}
+.rtv-legende li::before{content:""; position:absolute; left:0; top:4px; width:12px; height:12px;
+  border:1px solid var(--bc-filet);}
+.rtv-l-rouge::before{background:var(--bc-rouge); border-color:var(--bc-rouge) !important;}
+.rtv-l-jaune::before{background:var(--bc-jaune-fond);}
+.rtv-l-gris::before{background:var(--bc-gris-fond);}
+.rtv-legende-source{margin:12px 0 0; font-size:12px; color:var(--bc-estompe);}
 
 
 /* ---------- 7.15 L'ÉCHELLE DE PRÉSENCE QUAND LA MÉDIANE EST À 100 % ----------

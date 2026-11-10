@@ -8,15 +8,19 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
 </script>
-<!-- Mesure d'audience : AUCUNE pour l'instant. La propriété Google Analytics de la
-     Colombie-Britannique n'existe pas encore, et celle du Nouveau-Brunswick a été retirée d'ici
-     pour qu'elle ne reçoive pas ce trafic. Pour la brancher : remettre le bloc gtag.js des autres
-     sites de la famille avec l'identifiant de la nouvelle propriété. Le consentement
-     (commun/consentement.js) et la bande de témoins sont déjà en place et n'attendent que ça. -->
-<!-- Pas de bannière de témoins : il n'y a aucune mesure d'audience sur ce site pour l'instant,
-     donc rien à faire accepter. Elle revient avec le bloc gtag.js, le jour où la propriété
-     Google Analytics de la Colombie-Britannique existera.
-<script src="/commun/consentement.js" defer></script> -->
+<!-- Google tag (gtag.js) — propriété « Dossierbc.ca » du compte Analytics « dossier », créée le
+     9 nov. 2026. Elle est À PART de celle du Nouveau-Brunswick (G-6CZX26581K) : chaque site de la
+     famille a la sienne, sinon les deux trafics se mélangent et aucun chiffre ne veut rien dire.
+     Fuseau Vancouver, devise canadienne. Le bloc de consentement ci-dessus s'exécute AVANT :
+     tant que personne n'a accepté, analytics_storage vaut « denied » et aucun témoin n'est posé. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVMNKLDBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JVMNKLDBCQ', { content_group: 'Assembly' });
+</script>
+<script src="/commun/consentement.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
