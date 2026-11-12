@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-11-11",
+    "volet": "assemblee",
+    "fr": {
+      "titre": "Réseaux sociaux des ministres",
+      "texte": "Les fiches de 16 ministres affichent leurs comptes Facebook, X ou Instagram, relevés sur le site officiel du NPD de la C.-B."
+    },
+    "en": {
+      "titre": "Ministers on social media",
+      "texte": "The pages of 16 ministers now show their Facebook, X or Instagram accounts, taken from the BC NDP official website."
+    }
+  },
+  {
     "date": "2026-11-09",
     "volet": "assemblee",
     "fr": {
