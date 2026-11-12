@@ -100,7 +100,7 @@ export function construirePagesMinistres() {
   const deputes = lire('data/site/deputesRaw.json', []);
   const courriels = lire('data/site/deputeEmails.json', {});
   const presences = lire('data/site/presences.json', {});
-  // Réseaux sociaux relevés sur pq.org/notre-equipe (3 nov. 2026).
+  // Réseaux sociaux relevés sur bcndp.ca/team (11 nov. 2026), source de chaque lien dans ministresReseaux-sources.json.
   const reseaux = lire('data/site/ministresReseaux.json', {});
   // Même pastille que la page Ministres (tauxPresence de dq.js) : vert à la médiane de l'Assemblée ou
   // au-dessus, jaune jusqu'à la médiane de ceux qui sont sous, sans couleur en dessous.
