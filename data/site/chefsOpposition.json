@@ -1,0 +1,24 @@
+[
+ {
+  "name": "Lorne Doerkson",
+  "party": "CON",
+  "femme": false,
+  "roles": [
+   "Chef du Parti conservateur de la Colombie-Britannique, premier ministre désigné"
+  ],
+  "rolesEn": [
+   "Leader of the Conservative Party of BC, Premier-designate"
+  ],
+  "bandeau": [
+   "Chef du Parti conservateur",
+   "Leader of the Conservative Party"
+  ],
+  "source": "https://conservativebc.ca/",
+  "reseaux": [
+   "https://www.facebook.com/MLALorneDoerkson",
+   "https://www.instagram.com/lornedoerksoncariboochilcotin",
+   "https://x.com/LDoerkson"
+  ],
+  "reseauxSource": "https://conservativebc.ca/candidate/lorne-doerkson/"
+ }
+]

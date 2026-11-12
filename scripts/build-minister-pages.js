@@ -102,6 +102,9 @@ export function construirePagesMinistres() {
   const presences = lire('data/site/presences.json', {});
   // Réseaux sociaux relevés sur bcndp.ca/team (11 nov. 2026), source de chaque lien dans ministresReseaux-sources.json.
   const reseaux = lire('data/site/ministresReseaux.json', {});
+  // Chef·fe de parti qui est aussi ministre (le premier ministre) : la mention s'ajoute à SA fiche,
+  // pas de seconde fiche (data/site/chefsGouvernement.json, source notée dans le fichier).
+  const chefsGouv = lire('data/site/chefsGouvernement.json', {});
   // Même pastille que la page Ministres (tauxPresence de dq.js) : vert à la médiane de l'Assemblée ou
   // au-dessus, jaune jusqu'à la médiane de ceux qui sont sous, sans couleur en dessous.
   const classePresence = classeurPresence(deputes, presences);
@@ -184,7 +187,7 @@ export function construirePagesMinistres() {
     <div class="view-hero min-hero">
       <div class="min-colphoto">${photo}${(reseaux[slug] || []).length ? `<p class="min-reseaux">${reseaux[slug].map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener" title="${nomReseau(u)}" aria-label="${nomReseau(u)}">${ICONES_RESEAUX[nomReseau(u)] || nomReseau(u)}</a>`).join('')}</p>` : ''}</div>
       <div class="min-tete">
-        <h1 class="hero-h1 hero-h1-md"><span class="hero-sujet">${deux('Ministre de la Colombie-Britannique', 'British Columbia minister')}</span><span>${esc(m.name)}</span></h1>
+        <h1 class="hero-h1 hero-h1-md"><span class="hero-sujet">${chefsGouv[slug] ? deux(esc(chefsGouv[slug].fr), esc(chefsGouv[slug].en)) : deux('Ministre de la Colombie-Britannique', 'British Columbia minister')}</span><span>${esc(m.name)}</span></h1>
         <p class="view-hero-sub">${deux(
           finLeg
             ? `${esc(m.name)} était ${esc(joint)} au Conseil exécutif de la ${LEG}<sup>e</sup> législature${premier ? `, dirigé par le premier ministre ${esc(premier)}` : ''}. Cette législature a pris fin le ${dateFr(finLeg)}.`

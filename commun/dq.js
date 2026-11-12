@@ -3028,7 +3028,7 @@ function renderDeputes(filter){
 // a changé quatre fois de chef de l'opposition en dix mois. Tant que la 44e n'a pas publié ses
 // député·e·s, aucune fiche de chef n'est fabriquée : un nom ici fabrique un lien vers une page
 // qui n'existe pas.
-const CHEFS_OPPOSITION = [];
+const CHEFS_OPPOSITION = ['Lorne Doerkson'];
 // Même slug que scripts/build-minister-pages.js (slugMinistre).
 function slugMinistre(nom){ return String(nom).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
 function personCard(p){
