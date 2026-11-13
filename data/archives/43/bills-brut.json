@@ -18,7 +18,7 @@
       "fin": "2026-09-22"
     }
   ],
-  "scrapedAt": "2026-11-13T21:51:19.061Z",
+  "scrapedAt": "2026-11-13T22:32:37.711Z",
   "avis": "La version imprimée reste la version officielle (avis de l'Assemblée législative de la Colombie-Britannique). Les titres sont ceux de l'Assemblée, en anglais : la province ne publie pas de version française.",
   "avisDates": "Quand le tableau des étapes ne donne pas la date d'une lecture, c'est la date de publication du texte de cette lecture, publiée par l'Assemblée, qui est retenue.",
   "count": 102,
@@ -4040,11 +4040,11 @@
       ],
       "sponsor": "Rob Botterell",
       "sponsorId": 396,
-      "summary": null,
-      "summaryEn": null,
-      "summaryAiGenerated": false,
-      "summarySource": null,
-      "summaryGeneratedAt": null,
+      "summary": "- Les propriétaires ne pourraient plus fixer un loyer plus élevé lorsqu'un logement locatif devient vacant.\n- Le loyer du prochain locataire ne pourrait pas dépasser ce que le propriétaire aurait pu exiger du locataire précédent selon la Residential Tenancy Act, qui encadre la location résidentielle.\n- La limite repose sur le loyer permis si le locataire qui a quitté le logement y était resté.\n- Le changement entrerait en vigueur à la date de la sanction royale.",
+      "summaryEn": "- Landlords could no longer reset the rent to a higher amount when a rental unit becomes vacant.\n- The rent for the next tenant could not be more than the landlord could have charged the previous tenant under the Act.\n- The limit applies when the unit became vacant after a tenant left, based on the rent allowed had that tenant stayed.\n- The change would take effect on the date the bill receives Royal Assent.",
+      "summaryAiGenerated": true,
+      "summarySource": "https://api.lims.leg.bc.ca/pdms/ldp/43rd1st/1st_read/m218-1.htm",
+      "summaryGeneratedAt": "2026-11-13T22:32:42.071Z",
       "summaryTronque": false
     },
     {
@@ -4923,11 +4923,11 @@
       ],
       "sponsor": "Elenore Sturko",
       "sponsorId": 82,
-      "summary": null,
-      "summaryEn": null,
-      "summaryAiGenerated": false,
-      "summarySource": null,
-      "summaryGeneratedAt": null,
+      "summary": "- Avant de remplir un certificat médical pour admettre une personne dans un établissement désigné, un médecin ou une infirmière praticienne doit prendre des mesures raisonnables pour consulter un proche parent.\n- Il ou elle peut plutôt consulter une personne qui a fourni des renseignements ayant mené à l'appréhension de la personne.\n- Le médecin ou l'infirmière praticienne doit tenir compte de ce qu'il ou elle apprend, y compris les antécédents de trouble mental.\n- Le certificat médical doit contenir une déclaration distincte attestant que cette obligation de consultation a été respectée.\n- Le directeur d'un établissement désigné doit aviser un proche parent avant de donner son congé à un patient.\n- Si un patient retire son consentement à communiquer des renseignements à un proche parent, le directeur doit en aviser ce proche et consigner que l'avis a été donné.\n- Les avis doivent être donnés de la manière prévue par une règle du gouvernement, sans nouveau vote à l'Assemblée.\n- Les changements entrent en vigueur à la sanction royale.",
+      "summaryEn": "- Before completing a medical certificate to admit a person to a designated facility, a physician or nurse practitioner must take reasonable steps to consult a near relative.\n- They may instead consult a person who provided information leading to the person's apprehension.\n- The physician or nurse practitioner must consider what they learn, including any history of mental disorder.\n- The medical certificate must include a separate statement that the doctor or nurse practitioner complied with this consultation requirement.\n- The director of a designated facility must give a near relative notice before discharging a patient.\n- If a patient withdraws consent to share information with a near relative, the director must notify that relative and document that the notice was given.\n- The notices must be given in the way set by regulation.\n- The changes take effect on the date of Royal Assent.",
+      "summaryAiGenerated": true,
+      "summarySource": "https://api.lims.leg.bc.ca/pdms/ldp/43rd1st/1st_read/m205-1.htm",
+      "summaryGeneratedAt": "2026-11-13T22:32:49.066Z",
       "summaryTronque": false
     },
     {
