@@ -1,7 +1,7 @@
 {
   "source": "https://api.lims.leg.bc.ca/graphql",
   "repertoire": "https://www.leg.bc.ca/members/find-mla-by-constituency",
-  "scrapedAt": "2026-11-13T21:19:16.614Z",
+  "scrapedAt": "2026-11-13T21:39:06.114Z",
   "legislature": 43,
   "legislatureEnCours": 44,
   "legislatureEnCoursDebut": "2026-10-26",
