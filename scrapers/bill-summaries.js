@@ -26,7 +26,7 @@ const BILLS = 'data/bills.json';
 const SORTIE = 'data/resumes.json';
 // Haiku : le moins cher qui fait bien ce travail (résumer un texte court en puces factuelles).
 const MODELE = 'claude-sonnet-5-5';   // Sonnet plutôt que Haiku : meilleur français, moins d'erreurs (Martin, 13 nov. 2026)
-const PRIX = { entree: 3 / 1e6, sortie: 15 / 1e6 };   // $ US par jeton, Sonnet
+const PRIX = { entree: 2 / 1e6, sortie: 10 / 1e6 };   // $ US par jeton, Sonnet 5.5
 const MAX_SIGNES = 60000;
 const DELAI = 1500;   // politesse envers api.lims.leg.bc.ca, comme bc-commun.js
 const USER_AGENT = 'dossierbc-resumes/1.0 (projet citoyen independant; +https://dossierbc.ca)';
@@ -63,6 +63,9 @@ const OUTIL = {
     required: ['en', 'fr', 'sansContenu'],
     additionalProperties: false,
   },
+  // strict : l'API garantit que l'entrée de l'outil respecte le schéma. Remplace le
+  // tool_choice forcé, que claude-sonnet-5-5 refuse (400) — voir l'appel plus bas.
+  strict: true,
 };
 
 const attendre = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -108,10 +111,17 @@ async function main() {
       if (ESTIMATION) { console.log(`  ${b.numAffiche} (${b.introSession}e session) : ${texte.length} signes`); await attendre(DELAI); continue; }
       const rep = await client.messages.create({
         model: MODELE,
-        max_tokens: 2000,
+        // 8000 et non 2000 : claude-sonnet-5-5 réfléchit avant de répondre, et cette
+        // réflexion compte dans max_tokens. À 2000, le budget pouvait être épuisé avant
+        // le résumé. L'effort « low » suffit pour résumer un texte en puces.
+        max_tokens: 8000,
+        output_config: { effort: 'low' },
         system: CONSIGNE,
         tools: [OUTIL],
-        tool_choice: { type: 'tool', name: 'resume' },
+        // auto, PAS { type: 'tool' } : claude-sonnet-5-5 rejette le tool_choice forcé
+        // (400 « tool_choice: type "tool" and "any" are not supported for this model »,
+        // 13 nov. 2026 — 102 projets de loi perdus). L'outil est nommé dans le message.
+        tool_choice: { type: 'auto' },
         messages: [{ role: 'user', content: `Bill ${b.numAffiche}: ${b.title}\n${tronque ? `[Text cut at the first ${MAX_SIGNES} characters: the bill is longer.]\n` : ''}\n<official_text>\n${texte}\n</official_text>\n\nEnd of the official text. Now call the tool: English bullets in "en", Québec French bullets in "fr".` }],
       });
       jetonsE += rep.usage.input_tokens; jetonsS += rep.usage.output_tokens;
