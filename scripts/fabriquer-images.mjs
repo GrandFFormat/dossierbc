@@ -21,11 +21,12 @@
 // n'ont pas de sens : les PNG sont donc rastérisés à la main, et zlib (livré avec Node) les
 // comprime. Le dessin est décrit UNE fois, en unités de 64, et sert aux deux formats.
 //
-// Ce qui n'est PAS ici : dossierbc-cover.png, l'image de partage (1702 × 630). Elle porte du
+// Ce qui n'est PAS ici : dossierbc-partage.png, l'image de partage (1200 × 630 ; l'ancienne
+// dossierbc-cover.png de 1702 px reste en place). Elle porte du
 // texte composé, donc une police à rendre — il faut un navigateur. Elle est faite par
 // design/cover-bc.html : la page dessine l'image dans un canvas, avec les polices du site, puis
 // l'envoie en PUT à un petit serveur qui l'écrit. Refaire : servir design/cover-bc.html et
-// dossierbc-cover.png sort à côté. Aucune dépendance là non plus — Playwright n'est pas installé.
+// dossierbc-partage.png sort à côté. Aucune dépendance là non plus — Playwright n'est pas installé.
 
 import { writeFileSync, readFileSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
@@ -163,4 +164,4 @@ for (const taille of [48, 180, 512]) {
 }
 writeFileSync('favicon.ico', ico(readFileSync('commun/bc-48.png'), 48));
 console.log('✓ favicon.ico');
-console.log("  (dossierbc-cover.png, l'image de partage, demande une police rendue : elle n'est pas faite ici)");
+console.log("  (dossierbc-partage.png, l'image de partage, demande une police rendue : elle n'est pas faite ici)");
