@@ -56,8 +56,10 @@ const OUTIL = {
   input_schema: {
     type: 'object',
     properties: {
-      en: { type: 'array', items: { type: 'string' }, maxItems: 8, description: 'The bullets, written IN ENGLISH. No leading dash.' },
-      fr: { type: 'array', items: { type: 'string' }, maxItems: 8, description: 'Les mêmes puces, rédigées EN FRANÇAIS du Québec. Sans tiret au début. Jamais de virgule devant « et ».' },
+      // Pas de maxItems : en mode strict l'API le refuse (« For 'array' type, property
+      // 'maxItems' is not supported », 13 nov. 2026). La limite vit dans la consigne.
+      en: { type: 'array', items: { type: 'string' }, description: 'The bullets, written IN ENGLISH. 8 at most. No leading dash.' },
+      fr: { type: 'array', items: { type: 'string' }, description: 'Les mêmes puces, rédigées EN FRANÇAIS du Québec. 8 au maximum. Sans tiret au début. Jamais de virgule devant « et ».' },
       sansContenu: { type: 'boolean', description: 'true if the text cannot be summarised honestly / vrai si le texte ne se résume pas honnêtement.' },
     },
     required: ['en', 'fr', 'sansContenu'],
@@ -102,6 +104,10 @@ async function main() {
   const client = ESTIMATION ? null : new (await import('@anthropic-ai/sdk')).default();
 
   let fait = 0, vides = 0, erreurs = 0, jetonsE = 0, jetonsS = 0, signes = 0;
+  // Coupe-circuit : si les 3 premiers échouent sans qu'aucun n'ait réussi, la requête
+  // elle-même est en cause (schéma refusé, clé rejetée). Inutile de la répéter 99 fois :
+  // on arrête et l'erreur reste lisible en haut du journal. (13 nov. 2026)
+  let echecsDAffilee = 0;
   for (const b of aFaire.slice(0, limite)) {
     try {
       const brut = await lireTexte(b.texteApi);
@@ -129,6 +135,7 @@ async function main() {
       if (!bloc) throw new Error('aucune sortie d’outil');
       const vide = bloc.sansContenu || !bloc.en?.length || !bloc.fr?.length;
       if (vide) vides++; else fait++;
+      echecsDAffilee = 0;
       cache.resumes[b.billId] = {
         en: vide ? null : puces(bloc.en),
         fr: vide ? null : sansVirguleEt(puces(bloc.fr)),
@@ -142,6 +149,10 @@ async function main() {
     } catch (e) {
       erreurs++;
       console.error(`  ⚠ ${b.numAffiche} (billId ${b.billId}) : ${e.message}`);
+      if (!fait && !vides && ++echecsDAffilee >= 3) {
+        console.error('  ✖ 3 échecs d’affilée sans un seul succès : la requête elle-même est en cause. On arrête ici.');
+        break;
+      }
     }
     await attendre(DELAI);
   }
