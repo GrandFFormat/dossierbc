@@ -33,8 +33,7 @@ function runOrThrow(label, nodeArgs) {
 }
 
 
-// Colombie-Britannique : pas de pétitions en ligne, pas encore de résumés IA ni de promesses (étapes
-// à venir, comme en Saskatchewan à ses débuts).
+// Colombie-Britannique : pas de pétitions en ligne ni de promesses. Résumés IA depuis le 13 nov. 2026.
 const doPetitions = false;
 
 // 1) Scrapers (source -> data/*.json) — TOLÉRANT. L'ordre compte : les projets de loi rattachent
@@ -47,6 +46,10 @@ const SCRAPERS = [
   ["Scrape : député·e·s, courriels et mandats (API de l'Assemblée)", ['scrapers/deputes.js']],
   ["Scrape : conseil des ministres (API de l'Assemblée)", ['scrapers/ministers.js']],
   ["Scrape : projets de loi et étapes (API de l'Assemblée)", ['scrapers/bills.js']],
+  // Résumés en langage clair EN + FR (13 nov. 2026), juste après bills.js qui pose texteApi. Seuls
+  // les projets sans résumé (nouveaux projets de la 44e) coûtent : data/resumes.json sert de cache.
+  // Sans ANTHROPIC_API_KEY, l'étape ne fait rien. Doux : un échec garde les résumés de la veille.
+  ['Résumés en langage clair EN + FR (Claude Haiku)', ['--env-file-if-exists=api.env', 'scrapers/bill-summaries.js'], { soft: true }],
   ['Scrape : votes nominatifs (procès-verbaux)', ['scrapers/votes.js']],
   ['Scrape : calendrier parlementaire (leg.bc.ca)', ['scrapers/calendrier.js'], { soft: true }],
 ];

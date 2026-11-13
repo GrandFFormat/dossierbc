@@ -1,410 +1,155 @@
-// Scraper — Résumés IA des projets de loi (texte intégral)
+// Résumés en langage clair des projets de loi de la C.-B., en anglais ET en français (13 nov. 2026).
 //
-// Contrairement aux autres scrapers, celui-ci ne fait pas que lire des pages :
-// il télécharge le PDF du texte "tel que présenté" de chaque projet de loi actif
-// (URL captée par bill-details.js dans `presentationPdfUrl`), en extrait le texte,
-// puis demande à Claude (API payante, clé séparée de tout abonnement Claude Code/
-// Claude Pro) un résumé factuel en 2-4 phrases.
+// Martin : « les projets de loi doivent être lisibles en français, c'est le but des sites Dossier ».
+// Même mécanique que DossierOntario (scrapers/resumes.js) : le TEXTE OFFICIEL du projet, lu sur
+// l'API de l'Assemblée (texteApi, posé par bills.js), un appel au modèle avec sortie forcée par un
+// outil à schéma strict, et « sansContenu » quand le texte ne permet pas un résumé honnête.
+// Différence : la C.-B. ne légifère qu'en anglais. Un seul appel par projet rend donc les deux
+// langues, chacune écrite à partir du texte anglais (pas une traduction du résumé anglais).
+// Leçon de l'Ontario : la langue de sortie s'écrit dans la consigne ET dans le schéma de l'outil.
 //
-// ⚠️ Le résumé porte sur le texte TEL QUE PRÉSENTÉ, pas nécessairement la version
-// finale (des amendements peuvent avoir été adoptés en commission depuis). Chaque
-// résumé est marqué `summaryAiGenerated: true` et daté — jamais présenté comme
-// une donnée officielle, conformément à la règle du projet : jamais de donnée
-// inventée, toujours transparent sur les limites.
+// Droit d'auteur (leg.bc.ca/copyright) : le texte est lu en mémoire, jamais enregistré. Seul notre
+// résumé est gardé, dans data/resumes.json ({ resumes: { <billId>: { en, fr, source, faitLe,
+// tronque, modele } } }), que bills.js relit à chaque passage.
 //
-// Ne touche pas aux projets `laisse_de_cote` : ce sont des dossiers morts, hors du
-// champ "affaires en cours" que ce site couvre en priorité.
+// CACHE : un projet déjà résumé à partir de la même adresse de texte n'est jamais repayé.
 //
-// Nécessite la variable d'environnement ANTHROPIC_API_KEY (clé API, PAS un
-// abonnement Claude Pro/Code — voir la conversation pour le pourquoi).
+// Usage :
+//   node scrapers/bill-summaries.js              résume ce qui manque (exige ANTHROPIC_API_KEY)
+//   node scrapers/bill-summaries.js --estimation lit les textes, compte, estime le coût (gratuit)
+//   SCRAPE_LIMIT=3 node scrapers/bill-summaries.js
+// Sans clé, le script le dit et sort à 0 : refresh.js continue.
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { pathToFileURL } from 'node:url';
-import Anthropic from '@anthropic-ai/sdk';
-import pdfParse from 'pdf-parse';
 
-const BILLS_PATH = 'data/bills.json';
-const PETITIONS_PATH = 'data/petitions.json';
-const REQUEST_DELAY_MS = 500;
-const USER_AGENT = 'dossier-colombie-britannique-scraper/0.1 (projet citoyen independant, usage non commercial; +https://dossierbc.ca)';
-const MAX_PDF_CHARS = 60000; // ~15k tokens — au-delà, on tronque (projets de loi omnibus)
-const MODEL = 'claude-sonnet-5';
+const BILLS = 'data/bills.json';
+const SORTIE = 'data/resumes.json';
+// Haiku : le moins cher qui fait bien ce travail (résumer un texte court en puces factuelles).
+const MODELE = 'claude-haiku-4-5';
+const PRIX = { entree: 1 / 1e6, sortie: 5 / 1e6 };   // $ US par jeton, Haiku 4.5
+const MAX_SIGNES = 60000;
+const DELAI = 1500;   // politesse envers api.lims.leg.bc.ca, comme bc-commun.js
+const USER_AGENT = 'dossierbc-resumes/1.0 (projet citoyen independant; +https://dossierbc.ca)';
+const ESTIMATION = process.argv.includes('--estimation');
 
-const SYSTEM_PROMPT = `Tu résumes des projets de loi de l'Assemblée législative de la Colombie-Britannique pour un site citoyen indépendant de veille parlementaire, pensé pour des lecteurs pressés ou ayant de la difficulté à lire de longs blocs de texte.
+const CONSIGNE = `You summarise bills of the Legislative Assembly of British Columbia for an independent, non-partisan citizen website. Readers are in a hurry or find long text hard to read.
 
-Format obligatoire :
-- Pas de plafond fixe de puces (« - »), mais seulement les GRANDES LIGNES : ce qu'un citoyen doit savoir pour comprendre le projet. Vise 5 à 10 puces ; au-delà de 12, c'est que tu détailles trop. Laisse tomber : les pouvoirs des inspecteurs, la récidive, les moyens de défense, les dates d'entrée en vigueur, les exceptions mineures, les ajustements de concordance, les définitions sauf si elles changent qui est touché.
-- Minimum 3 puces.
-- Chaque ligne = une seule idée concrète, en langage simple, une quinzaine de mots maximum.
-- Pas de phrase d'intro ni de conclusion — seulement les puces.
+You return the SAME summary twice through the tool: once in English (field "en"), once in Québec French (field "fr"). Both are written from the official English text.
 
-Règles de fond :
-- Résume UNIQUEMENT ce que le texte fourni dit réellement. N'invente et ne suppose jamais de contenu absent du texte.
-- Reste neutre : jamais de jugement de valeur (bon/mauvais, positif/négatif), jamais d'opinion.
-- Ne mentionne pas le processus législatif (ça, c'est déjà affiché ailleurs sur le site) — concentre-toi sur CE QUE FAIT la loi.
-- Priorise les changements concrets qui affectent les gens (chiffres, obligations, interdictions, nouveaux organismes) plutôt que le jargon juridique.
-- Si le texte est trop technique ou tronqué pour permettre un résumé fiable, dis-le en une seule ligne plutôt que d'inventer.
+Content rules (both languages):
+- Only what the text actually says. Never invent, never assume, never add a qualifier absent from the text.
+- Neutral: no opinion, no judgement.
+- No procedure: not who introduced it, when, or at what stage it is.
+- Say WHO is affected and WHAT CHANGES for them first, then the numbers (amounts, fines, deadlines).
+- 3 to 8 bullets, one idea each, about 20 words at most, everyday words. No intro, no conclusion.
+- Fines: one bullet naming each person targeted with the amount.
+- A short amending bill may get only 2 or 3 bullets. If the text is procedural, too short or too technical to summarise honestly, set sansContenu to true and return empty lists.
 
-Lisibilité (impératif — le site existe pour ça) :
-- Écris pour quelqu'un qui lit au niveau de la fin du primaire ou du début du secondaire. Phrases de 20 mots au plus. Mots de tous les jours.
-- Dis d'abord QUI est touché et CE QUI CHANGE pour cette personne ou cette organisation, puis les chiffres.
-- Aucune puce de procédure : ne dis pas qui a présenté le projet, quand, ni à quelle étape il est.
-- Remplace le jargon par des mots courants. Exemples à appliquer :
-  « par règlement » → « par une règle du gouvernement, sans nouveau vote à l'Assemblée » ; « le gouvernement » (le Conseil des ministres) plutôt que « le gouvernement en conseil » ;
-  « édicte la Loi sur X » → « crée une nouvelle loi, la Loi sur X » ; « abroge » → « supprime » ; « disposition » → « règle » ;
-  « entrée en vigueur » → « s'applique à partir de » ; « annexe » → « liste officielle » ; « assujetti » → « soumis » ; « municipalité régionale de comté » → « MRC (le regroupement des municipalités d'une région) ».
-- Un nom de loi ou d'organisme peut rester tel quel, mais la PREMIÈRE fois, dis en quelques mots à quoi il sert (« la Commission d'accès à l'information, qui protège les renseignements personnels »).
-- « personne physique » → « un particulier » ; « personne morale », ou « dans les autres cas » après une personne physique → « une entreprise ou un organisme ».
-- Simplifier n'est jamais ajouter : aucun qualificatif absent du texte (« grande » entreprise, « petit » commerce, « riche »…). Ex. : une amende « de 5 000 $ à 62 500 $ dans les autres cas » vise toute entreprise ou tout organisme, pas les grandes entreprises.
-- Les amendes : UNE puce, deux au plus, qui nomme chaque personne visée avec son montant (« Amendes : 100 $ pour un jeune, 500 $ à 1 500 $ pour un adulte, 2 500 $ à 62 500 $ pour un commerce »). N'en laisse tomber aucune. La récidive et l'entrave à un inspecteur ne méritent pas de puce à part.
-- Une seule idée par puce. Si une phrase contient « et » deux fois, coupe-la en deux puces.
+French rules (field "fr"):
+- Québec French, clear and simple. Keep Act names in English (« la Police Act, qui encadre les services de police »), and say in a few words what they do the first time.
+- Never put a comma before « et ».
+- « regulation » → « une règle du gouvernement, sans nouveau vote à l'Assemblée » ; « repeal » → « supprime » ; « Lieutenant Governor in Council » → « le Conseil des ministres ».`;
 
-Réponds uniquement avec les puces, sans préambule.`;
-// La lisibilité ci-dessus vient de DossierCanada (16 oct. 2026) : Martin, 17 oct. : « les
-// prochains projets de loi vont s'écrire de cette façon ». Les résumés existants restent tels quels.
+const OUTIL = {
+  name: 'resume',
+  description: 'Returns the plain-language summary of the bill: English bullets in "en", Québec French bullets in "fr". / Rend le résumé : puces anglaises dans « en », puces en français du Québec dans « fr ».',
+  input_schema: {
+    type: 'object',
+    properties: {
+      en: { type: 'array', items: { type: 'string' }, maxItems: 8, description: 'The bullets, written IN ENGLISH. No leading dash.' },
+      fr: { type: 'array', items: { type: 'string' }, maxItems: 8, description: 'Les mêmes puces, rédigées EN FRANÇAIS du Québec. Sans tiret au début. Jamais de virgule devant « et ».' },
+      sansContenu: { type: 'boolean', description: 'true if the text cannot be summarised honestly / vrai si le texte ne se résume pas honnêtement.' },
+    },
+    required: ['en', 'fr', 'sansContenu'],
+    additionalProperties: false,
+  },
+};
 
-const client = new Anthropic();
+const attendre = (ms) => new Promise((r) => setTimeout(r, ms));
+const decoder = (s) => s.replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&nbsp;/g, ' ')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;|&rsquo;/g, '’');
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+async function lireTexte(url) {
+  const r = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const html = await r.text();
+  if (!/<html/i.test(html)) throw new Error('réponse inattendue (pas une page de projet de loi)');
+  // Le texte seul : sans l'en-tête (avertissement), la table des matières ni les scripts.
+  const corps = html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<div id="contents">[\s\S]*?<\/table>/i, '')
+    .replace(/<div id="header">[\s\S]*?<\/div>/i, '');
+  return decoder(corps.replace(/<(br|p|div|tr|h\d)[^>]*>/gi, '\n').replace(/<[^>]+>/g, ' ')).replace(/[ \t]+/g, ' ').replace(/\n\s*\n+/g, '\n').trim();
 }
 
-async function downloadPdfRaw(url) {
-  const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
-  if (!res.ok) throw new Error(`HTTP ${res.status} en téléchargeant le PDF`);
-  const buffer = Buffer.from(await res.arrayBuffer());
-  return (await pdfParse(buffer)).text;
-}
-async function downloadPdfText(url) {
-  return (await downloadPdfRaw(url)).replace(/\s+/g, ' ').trim();
-}
-
-// --- Omnibus (25 sept. 2026) ------------------------------------------------
-// Un projet de loi québécois se termine par la liste officielle de ce qu'il touche :
-// « LOIS MODIFIÉES PAR CE PROJET DE LOI : », « RÈGLEMENTS MODIFIÉS… », « LOI ABROGÉE… ».
-// On la relève pour tous les projets (texte public, aucun coût d'API) : la carte dit
-// « Touche N lois ». Presque tout projet modifie quelques lois au passage ; on ne parle
-// d'omnibus que quand l'Assemblée l'annonce elle-même dans le titre (« diverses
-// dispositions », « d'autres dispositions ») ET que la liste compte au moins 3 textes, ou
-// quand elle en compte au moins 10 (un titre « diverses dispositions » sur 2 lois n'en est pas un).
-// Pour ceux-là, et pour tout texte trop long pour être lu en entier, le résumé part des
-// NOTES EXPLICATIVES, qui décrivent officiellement tout le projet, au lieu d'un texte
-// coupé à 60 000 caractères : un résumé tronqué laissait croire au lecteur qu'il avait
-// tout le projet (PL 11 : 74 lois touchées, 92 000 caractères).
-const ENTETE_LISTE = /(LOIS?|RÈGLEMENTS?|CODES?|CHARTES?|DÉCRETS?)[^\n]{0,40}(MODIFIÉ|ABROGÉ|ÉDICTÉ|REMPLAC)[^\n]*PAR CE PROJET DE LOI\s*:?/g;
-const SEUIL_OMNIBUS = 10;
-export function analyserTexteLoi(brut, titre) {
-  const entetes = [...brut.matchAll(ENTETE_LISTE)];
-  const lois = [];
-  for (const [i, m] of entetes.entries()) {
-    const debut = m.index + m[0].length;
-    const fin = i + 1 < entetes.length ? entetes[i + 1].index : Math.min(brut.length, debut + 8000);
-    for (const morceau of brut.slice(debut, fin).split(/\n(?=\s*[–—-]\s)/)) {
-      const x = morceau.replace(/\s+/g, ' ').trim().replace(/^[–—-]\s*/, '');
-      if (/^(Loi|Code|Charte|Règlement|Décret)/.test(x)) lois.push(x.split(/ ?\((chapitre|RLRQ|c\. )/)[0].trim().slice(0, 200));
-    }
-  }
-  const uniques = [...new Set(lois)];
-  const d = brut.search(/NOTES? EXPLICATIVES?/i);
-  const f = entetes.length ? entetes[0].index : -1;
-  const notes = d >= 0 && f > d ? brut.slice(d, f).replace(/\s+/g, ' ').trim() : null;
-  const annonce = /diverses dispositions|d[’']autres dispositions/i.test(titre || '');
-  return { lois: uniques, notes, omnibus: (annonce && uniques.length >= 3) || uniques.length >= SEUIL_OMNIBUS };
-}
-
-// Le texte entre balises, puis la consigne répétée après lui : sur DossierCanada, un long texte
-// de loi coupé au milieu d'une énumération était CONTINUÉ par le modèle au lieu d'être résumé.
-const FIN_DU_TEXTE = 'Fin du texte officiel. Rédige maintenant le résumé selon les consignes : seulement les puces « - ».';
-
-async function summarizeText(title, text) {
-  const truncated = text.length > MAX_PDF_CHARS;
-  const clipped = truncated ? text.slice(0, MAX_PDF_CHARS) : text;
-
-  const userContent = truncated
-    ? `Titre : ${title}\n\n[Texte tronqué aux ${MAX_PDF_CHARS} premiers caractères — le projet de loi est plus long que ça]\n\n<texte_officiel>\n${clipped}\n</texte_officiel>\n\n${FIN_DU_TEXTE}`
-    : `Titre : ${title}\n\n<texte_officiel>\n${clipped}\n</texte_officiel>\n\n${FIN_DU_TEXTE}`;
-
-  const response = await client.messages.create({
-    model: MODEL,
-    max_tokens: 2000,   // sans plafond de puces, les grandes lignes seulement (Martin, 17 oct. 2026)
-    thinking: { type: 'disabled' },
-    output_config: { effort: 'low' },
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userContent }],
-  });
-
-  const textBlock = response.content.find((b) => b.type === 'text');
-  return textBlock ? textBlock.text.trim() : null;
-}
-
-// Un omnibus, ou un texte trop long pour être lu en entier : on résume les notes explicatives,
-// qui couvrent tout le projet, avec la liste officielle des lois touchées.
-const doitPartirDesNotes = (bill, longueur) => (bill.omnibus || longueur > MAX_PDF_CHARS);
-
-// Un omnibus n'a PAS de plafond de puces (Martin, 25 sept. 2026 : « sur ON, les omnibus, on
-// met les annexes et on étend le texte passé 10 lignes ») : un aperçu, puis les changements
-// regroupés par loi touchée. Chaque puce reste une ligne « - » : l'affichage n'a rien à apprendre.
-const SYSTEM_OMNIBUS = SYSTEM_PROMPT
-  .replace(/Format obligatoire :[\s\S]*?Pas de phrase d'intro ni de conclusion — seulement les puces\./,
-    `Format obligatoire (projet de loi OMNIBUS : il touche plusieurs lois) :
-- D'abord 1 ou 2 puces d'aperçu : ce que le projet fait dans l'ensemble.
-- Puis, pour chaque loi ou groupe de lois dont le changement compte pour le public, une puce qui commence par le nom court de la loi suivi de « : » (ex. « - Loi sur le bâtiment : … »). Plusieurs puces par loi si nécessaire.
-- Pas de plafond de puces : couvre TOUT le projet, pas seulement ce que le titre annonce. Regroupe en une puce les simples ajustements techniques de concordance.
-- Chaque ligne = une seule idée concrète, en langage simple, 25 mots au plus.
-- Pas de phrase d'intro ni de conclusion — seulement les puces.`);
-
-async function summarizeFromNotes(title, notes, lois, omnibus) {
-  const userContent = `Titre : ${title}\n\n[Projet de loi qui touche ${lois.length} lois ou règlements. Tu reçois ses NOTES EXPLICATIVES officielles, qui décrivent tout le projet, et la liste des textes touchés. Couvre l'ensemble du projet, pas seulement son sujet principal : si le titre n'annonce qu'une partie, les puces doivent aussi dire le reste.]\n\nNOTES EXPLICATIVES :\n${notes.slice(0, MAX_PDF_CHARS)}\n\nTEXTES TOUCHÉS :\n${lois.map((l) => `- ${l}`).join('\n')}\n\n${FIN_DU_TEXTE}`;
-  const response = await client.messages.create({
-    model: MODEL,
-    max_tokens: omnibus ? 3000 : 2000,
-    thinking: { type: 'disabled' },
-    output_config: { effort: 'low' },
-    system: omnibus ? SYSTEM_OMNIBUS : SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userContent }],
-  });
-  const textBlock = response.content.find((b) => b.type === 'text');
-  return textBlock ? textBlock.text.trim() : null;
-}
-
-// Relève la liste officielle des lois touchées (sans API). Refait seulement si le PDF change.
-async function releverLois(bill) {
-  if (!bill.presentationPdfUrl) return null;
-  if (bill.loisSource === bill.presentationPdfUrl && Array.isArray(bill.loisTouchees)) return null;
-  const brut = await downloadPdfRaw(bill.presentationPdfUrl);
-  const a = analyserTexteLoi(brut, bill.title);
-  bill.loisTouchees = a.lois;
-  bill.omnibus = a.omnibus;
-  bill.loisSource = bill.presentationPdfUrl;
-  return { brut, ...a };
-}
-
-async function summarizeBill(bill) {
-  if (!bill.presentationPdfUrl) return { skipped: 'pas de PDF trouvé' };
-
-  const brut = await downloadPdfRaw(bill.presentationPdfUrl);
-  const pdfText = brut.replace(/\s+/g, ' ').trim();
-  if (pdfText.length < 200) return { skipped: 'texte extrait trop court/vide' };
-  const a = analyserTexteLoi(brut, bill.title);
-  bill.loisTouchees = a.lois;
-  bill.omnibus = a.omnibus;
-  bill.loisSource = bill.presentationPdfUrl;
-
-  const parNotes = doitPartirDesNotes(bill, pdfText.length) && a.notes && a.notes.length > 300;
-  const summary = parNotes ? await summarizeFromNotes(bill.title, a.notes, a.lois, a.omnibus) : await summarizeText(bill.title, pdfText);
-  if (!summary) return { skipped: 'réponse vide du modèle' };
-
-  bill.summary = summary;
-  bill.summaryAiGenerated = true;
-  bill.summaryFrom = parNotes ? 'notes' : (pdfText.length > MAX_PDF_CHARS ? 'texte-tronque' : 'texte');
-  bill.summarySource = parNotes
-    ? 'notes explicatives du texte tel que présenté (PDF), qui couvrent tout le projet ; peut différer de la version finale amendée'
-    : 'texte tel que présenté (PDF), peut différer de la version finale amendée';
-  bill.summaryGeneratedAt = new Date().toISOString();
-  return { summarized: true };
-}
-
-// --- Traduction EN (titre + résumé + note) -------------------------------
-// Le titre et la note officiels sont en français ; le résumé est déjà généré
-// par IA en français. On les traduit vers l'anglais pour l'affichage bilingue.
-// Incrémental : on ne (re)traduit un projet que si son contenu source a changé
-// (signature enSource), donc pas de coût ni de churn quotidien inutile.
-const TRANSLATE_SYSTEM = `You are a professional French-to-English translator for an independent, non-partisan citizen watchdog site about the Legislative Assembly of British Columbia. Translate faithfully, neutrally and into clear, natural Canadian English. Do NOT add, omit, interpret or editorialize. Keep the plain, everyday wording of the source: short sentences, no legal jargon (e.g. "the Québec Cabinet" rather than "the Government in council", "creates" rather than "enacts", "removes" rather than "repeals", "rule" rather than "provision"). If the source has bullet lines starting with "- ", keep exactly the same bullets, one idea per line, same order, in ONE string with the bullets separated by line breaks (never a JSON array). Return ONLY valid JSON (no code fence, no preamble).`;
-
-function enSignature(bill) {
-  return `${bill.title || ''}${bill.summary || ''}${bill.note || ''}`;
-}
-
-async function translateBill(bill) {
-  const source = enSignature(bill);
-  if (bill.enSource === source && bill.titleEn) return { skipped: 'déjà à jour' };
-
-  const parts = [`French title: ${bill.title || ''}`];
-  if (bill.summary) parts.push(`French summary (keep the "- " bullets, one idea per line):\n${bill.summary}`);
-  if (bill.note) parts.push(`French status note: ${bill.note}`);
-  const wanted = ['"titleEn"'];
-  if (bill.summary) wanted.push('"summaryEn"');
-  if (bill.note) wanted.push('"noteEn"');
-  parts.push(`Return a JSON object with exactly these keys: ${wanted.join(', ')}.`);
-
-  const response = await client.messages.create({
-    model: MODEL,
-    // Un résumé d'omnibus peut compter une trentaine de puces : 700 jetons le coupaient.
-    max_tokens: bill.omnibus ? 3500 : 2000,
-    thinking: { type: 'disabled' },
-    output_config: { effort: 'low' },
-    system: TRANSLATE_SYSTEM,
-    messages: [{ role: 'user', content: parts.join('\n\n') }],
-  });
-
-  const textBlock = response.content.find((b) => b.type === 'text');
-  if (!textBlock) return { skipped: 'réponse vide du modèle' };
-  let parsed;
-  try {
-    parsed = JSON.parse(textBlock.text.trim().replace(/^```(?:json)?\s*|\s*```$/g, ''));
-  } catch (e) {
-    return { skipped: 'JSON invalide' };
-  }
-
-  // Le modèle renvoie parfois les puces en LISTE plutôt qu'en texte : String(liste) les collait avec
-  // des virgules (« ….,- … »), et 35 résumés anglais s'affichaient en un seul bloc (16 oct. 2026).
-  const puces = (v) => (Array.isArray(v)
-    ? v.map((x) => String(x).trim()).filter(Boolean).map((x) => (x.startsWith('- ') ? x : '- ' + x)).join('\n')
-    : String(v ?? '').trim());
-  bill.titleEn = (parsed.titleEn && String(parsed.titleEn).trim()) || bill.title;
-  bill.summaryEn = bill.summary ? (puces(parsed.summaryEn) || null) : null;
-  bill.noteEn = bill.note ? ((parsed.noteEn && String(parsed.noteEn).trim()) || null) : null;
-  bill.enSource = source;
-  return { translated: true };
-}
-
-// Traduit le titre d'une pétition (best effort, incrémental via enSource=titre).
-async function translatePetitionTitle(p) {
-  if (p.enSource === p.title && p.titleEn) return { skipped: 'déjà à jour' };
-  const response = await client.messages.create({
-    model: MODEL,
-    max_tokens: 300,
-    thinking: { type: 'disabled' },
-    output_config: { effort: 'low' },
-    system: TRANSLATE_SYSTEM,
-    messages: [{ role: 'user', content: `French petition title: ${p.title}\n\nReturn a JSON object with exactly this key: "titleEn".` }],
-  });
-  const textBlock = response.content.find((b) => b.type === 'text');
-  if (!textBlock) return { skipped: 'réponse vide du modèle' };
-  let parsed;
-  try {
-    parsed = JSON.parse(textBlock.text.trim().replace(/^```(?:json)?\s*|\s*```$/g, ''));
-  } catch {
-    return { skipped: 'JSON invalide' };
-  }
-  p.titleEn = (parsed.titleEn && String(parsed.titleEn).trim()) || p.title;
-  p.enSource = p.title;
-  return { translated: true };
-}
-
-// Passe best effort : traduit les titres de pétitions (data/petitions.json).
-// Séparée de main() sur les projets de loi ; ne bloque jamais si le fichier
-// n'existe pas encore (le scraper petitions.js tourne avant, mais on reste sûr).
-async function translatePetitions() {
-  if (!existsSync(PETITIONS_PATH)) return;
-  const pdata = JSON.parse(readFileSync(PETITIONS_PATH, 'utf-8'));
-  const targets = (pdata.petitions || []).filter((p) => p.enSource !== p.title || !p.titleEn);
-  if (targets.length === 0) return;
-  console.log(`\n${targets.length} titre(s) de pétition à traduire en anglais.`);
-  let done = 0;
-  for (const p of targets) {
-    try {
-      const r = await translatePetitionTitle(p);
-      if (r.translated) done++;
-    } catch (err) {
-      console.error(`  ⚠ pétition ${p.id} : ${err.message}`);
-    }
-    await sleep(REQUEST_DELAY_MS);
-  }
-  writeFileSync(PETITIONS_PATH, JSON.stringify(pdata, null, 2));
-  console.log(`Traduction des pétitions terminée. ${done} traduit(s).`);
-}
+const sansVirguleEt = (s) => s.replace(/,\s+et\b/g, ' et');
+const puces = (liste) => liste.map((p) => String(p).trim().replace(/^[-•]\s*/, '')).filter(Boolean).map((p) => `- ${p}`).join('\n');
 
 async function main() {
-  const data = JSON.parse(readFileSync(BILLS_PATH, 'utf-8'));
+  const data = JSON.parse(readFileSync(BILLS, 'utf-8'));
+  const cache = existsSync(SORTIE) ? JSON.parse(readFileSync(SORTIE, 'utf-8')) : { resumes: {} };
+  cache.resumes ??= {};
+  const aFaire = data.bills.filter((b) => b.texteApi && cache.resumes[b.billId]?.source !== b.texteApi);
+  const limite = process.env.SCRAPE_LIMIT ? Number(process.env.SCRAPE_LIMIT) : aFaire.length;
+  console.log(`${aFaire.length} projet(s) sans résumé à jour (sur ${data.bills.length}).`);
+  if (!aFaire.length) return;
 
-  // --- Passe 0 : les lois touchées, pour TOUS les projets (texte public, sans API) ---
-  const aRelever = data.bills.filter((b) => b.presentationPdfUrl && !(b.loisSource === b.presentationPdfUrl && Array.isArray(b.loisTouchees)));
-  if (aRelever.length) console.log(`${aRelever.length} projet(s) : relevé des lois touchées.`);
-  const texteLong = new Set();   // ids dont le texte dépasse ce que le résumé lit
-  for (const [i, bill] of aRelever.entries()) {
-    try {
-      const r = await releverLois(bill);
-      if (r && r.brut.replace(/\s+/g, ' ').length > MAX_PDF_CHARS) texteLong.add(bill.id);
-    } catch (err) {
-      console.error(`  ⚠ lois de PL ${bill.num} (id ${bill.id}) : ${err.message}`);
-    }
-    if ((i + 1) % 20 === 0) writeFileSync(BILLS_PATH, JSON.stringify(data, null, 2));
-    await sleep(REQUEST_DELAY_MS);
+  if (!ESTIMATION && !process.env.ANTHROPIC_API_KEY) {
+    console.log('ANTHROPIC_API_KEY absente : aucun résumé fait (lancer le workflow GitHub, qui a le secret).');
+    return;
   }
-  if (aRelever.length) writeFileSync(BILLS_PATH, JSON.stringify(data, null, 2));
+  const client = ESTIMATION ? null : new (await import('@anthropic-ai/sdk')).default();
 
-  // Un résumé déjà fait sur un texte coupé, ou sur un omnibus lu en entier au lieu de ses notes :
-  // on le refait une fois depuis les notes explicatives (summaryFrom le retient ensuite).
-  const aRefaire = (b) => b.summary && b.summaryFrom !== 'notes' && (b.omnibus || texteLong.has(b.id) || b.summaryFrom === 'texte-tronque');
-  const targets = data.bills.filter((b) => b.status !== 'laisse_de_cote' && (!b.summary || aRefaire(b)));
-  const limit = process.env.SCRAPE_LIMIT ? Number(process.env.SCRAPE_LIMIT) : targets.length;
-  const bills = targets.slice(0, limit);
-
-  console.log(`${bills.length} projets de loi à résumer (sur ${targets.length} candidats, ${data.bills.length} au total).`);
-
-  let done = 0;
-  let skipped = 0;
-  let errors = 0;
-
-  for (const [i, bill] of bills.entries()) {
+  let fait = 0, vides = 0, erreurs = 0, jetonsE = 0, jetonsS = 0, signes = 0;
+  for (const b of aFaire.slice(0, limite)) {
     try {
-      const result = await summarizeBill(bill);
-      if (result.summarized) done++;
-      else {
-        skipped++;
-        console.log(`  ⏭ PL ${bill.num} (id ${bill.id}) : ${result.skipped}`);
-      }
-    } catch (err) {
-      errors++;
-      console.error(`  ⚠ PL ${bill.num} (id ${bill.id}) : ${err.message}`);
+      const brut = await lireTexte(b.texteApi);
+      const tronque = brut.length > MAX_SIGNES;
+      const texte = brut.slice(0, MAX_SIGNES);
+      signes += texte.length;
+      if (ESTIMATION) { console.log(`  ${b.numAffiche} (${b.introSession}e session) : ${texte.length} signes`); await attendre(DELAI); continue; }
+      const rep = await client.messages.create({
+        model: MODELE,
+        max_tokens: 2000,
+        system: CONSIGNE,
+        tools: [OUTIL],
+        tool_choice: { type: 'tool', name: 'resume' },
+        messages: [{ role: 'user', content: `Bill ${b.numAffiche}: ${b.title}\n${tronque ? `[Text cut at the first ${MAX_SIGNES} characters: the bill is longer.]\n` : ''}\n<official_text>\n${texte}\n</official_text>\n\nEnd of the official text. Now call the tool: English bullets in "en", Québec French bullets in "fr".` }],
+      });
+      jetonsE += rep.usage.input_tokens; jetonsS += rep.usage.output_tokens;
+      const bloc = rep.content.find((c) => c.type === 'tool_use')?.input;
+      if (!bloc) throw new Error('aucune sortie d’outil');
+      const vide = bloc.sansContenu || !bloc.en?.length || !bloc.fr?.length;
+      if (vide) vides++; else fait++;
+      cache.resumes[b.billId] = {
+        en: vide ? null : puces(bloc.en),
+        fr: vide ? null : sansVirguleEt(puces(bloc.fr)),
+        source: b.texteApi,
+        faitLe: new Date().toISOString(),
+        tronque,
+        modele: MODELE,
+      };
+      writeFileSync(SORTIE, JSON.stringify(cache, null, 2));
+      console.log(`  ✓ ${b.numAffiche} (${b.introSession}e session)${vide ? ' : sans contenu' : ''}`);
+    } catch (e) {
+      erreurs++;
+      console.error(`  ⚠ ${b.numAffiche} (billId ${b.billId}) : ${e.message}`);
     }
-
-    if ((i + 1) % 10 === 0) {
-      writeFileSync(BILLS_PATH, JSON.stringify(data, null, 2));
-      console.log(`  ...${i + 1}/${bills.length} (sauvegardé)`);
-    }
-    await sleep(REQUEST_DELAY_MS);
-  }
-
-  writeFileSync(BILLS_PATH, JSON.stringify(data, null, 2));
-  console.log(`Terminé. ${done} résumés générés, ${skipped} ignorés, ${errors} erreurs.`);
-
-  // --- Passe 2 : traduction EN (incrémentale) ---
-  // Limite propre à cette passe : NE PAS réutiliser `limit` (calculé sur les
-  // candidats FR, souvent 0 puisque les résumés existent déjà).
-  const trLimit = process.env.SCRAPE_LIMIT ? Number(process.env.SCRAPE_LIMIT) : data.bills.length;
-  // Contrairement au résumé (qu'on ne génère pas pour les projets « laissés de
-  // côté »), on traduit le TITRE de TOUS les projets : ils apparaissent dans la
-  // liste « Tous » et afficheraient sinon un titre français en mode anglais.
-  const trTargets = data.bills.filter((b) => enSignature(b) !== b.enSource);
-  const trBills = trTargets.slice(0, trLimit);
-  console.log(`\n${trBills.length} projets de loi à traduire en anglais (titre/résumé/note).`);
-
-  let trDone = 0;
-  let trSkipped = 0;
-  let trErrors = 0;
-
-  for (const [i, bill] of trBills.entries()) {
-    try {
-      const result = await translateBill(bill);
-      if (result.translated) trDone++;
-      else {
-        trSkipped++;
-        console.log(`  ⏭ PL ${bill.num} (id ${bill.id}) : ${result.skipped}`);
-      }
-    } catch (err) {
-      trErrors++;
-      console.error(`  ⚠ PL ${bill.num} (id ${bill.id}) : ${err.message}`);
-    }
-
-    if ((i + 1) % 10 === 0) {
-      writeFileSync(BILLS_PATH, JSON.stringify(data, null, 2));
-      console.log(`  ...${i + 1}/${trBills.length} (sauvegardé)`);
-    }
-    await sleep(REQUEST_DELAY_MS);
+    await attendre(DELAI);
   }
 
-  writeFileSync(BILLS_PATH, JSON.stringify(data, null, 2));
-  console.log(`Traduction EN terminée. ${trDone} traduits, ${trSkipped} ignorés, ${trErrors} erreurs.`);
-
-  // --- Passe 3 : titres de pétitions (best effort) ---
-  await translatePetitions();
+  if (ESTIMATION) {
+    // La prose juridique fait environ 3 signes par jeton (leçon de l'Ontario : 4 sous-estimait).
+    const e = signes / 3 + 1200 * Math.min(limite, aFaire.length), s = 450 * Math.min(limite, aFaire.length);
+    console.log(`Estimation : ~${Math.round(e)} jetons lus, ~${s} écrits → ~${(e * PRIX.entree + s * PRIX.sortie).toFixed(2)} $ US (${MODELE}).`);
+    return;
+  }
+  // Recopie dans data/bills.json, pour un build immédiat sans relancer bills.js.
+  for (const b of data.bills) {
+    const r = cache.resumes[b.billId];
+    if (!r) continue;
+    Object.assign(b, { summary: r.fr, summaryEn: r.en, summaryAiGenerated: true, summarySource: r.source, summaryGeneratedAt: r.faitLe, summaryTronque: r.tronque });
+  }
+  writeFileSync(BILLS, JSON.stringify(data, null, 2));
+  console.log(`Terminé : ${fait} résumés, ${vides} sans contenu, ${erreurs} erreur(s). Coût réel : ${(jetonsE * PRIX.entree + jetonsS * PRIX.sortie).toFixed(3)} $ US (${jetonsE} jetons lus, ${jetonsS} écrits, ${MODELE}).`);
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((err) => {
-    console.error('Échec du scraper bill-summaries.js :', err);
-    process.exitCode = 1;
-  });
-}
+main().catch((e) => { console.error('bill-summaries.js :', e); process.exitCode = 1; });

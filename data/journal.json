@@ -1,6 +1,18 @@
 [
   {
     "date": "2026-11-13",
+    "volet": "assemblee",
+    "fr": {
+      "titre": "Projets de loi en français",
+      "texte": "Chaque projet de loi reçoit un résumé en langage clair, en français et en anglais, écrit à partir du texte officiel de l’Assemblée. Les nouveaux projets de la 44e législature auront le leur dès leur dépôt."
+    },
+    "en": {
+      "titre": "Bills in plain language",
+      "texte": "Each bill gets a plain-language summary, in English and in French, written from the Assembly’s official text. New bills of the 44th Parliament will get theirs as soon as they are introduced."
+    }
+  },
+  {
+    "date": "2026-11-13",
     "volet": "site",
     "fr": {
       "titre": "Image de partage",
