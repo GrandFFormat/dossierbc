@@ -25,8 +25,8 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 const BILLS = 'data/bills.json';
 const SORTIE = 'data/resumes.json';
 // Haiku : le moins cher qui fait bien ce travail (résumer un texte court en puces factuelles).
-const MODELE = 'claude-haiku-4-5';
-const PRIX = { entree: 1 / 1e6, sortie: 5 / 1e6 };   // $ US par jeton, Haiku 4.5
+const MODELE = 'claude-sonnet-5-5';   // Sonnet plutôt que Haiku : meilleur français, moins d'erreurs (Martin, 13 nov. 2026)
+const PRIX = { entree: 3 / 1e6, sortie: 15 / 1e6 };   // $ US par jeton, Sonnet
 const MAX_SIGNES = 60000;
 const DELAI = 1500;   // politesse envers api.lims.leg.bc.ca, comme bc-commun.js
 const USER_AGENT = 'dossierbc-resumes/1.0 (projet citoyen independant; +https://dossierbc.ca)';
