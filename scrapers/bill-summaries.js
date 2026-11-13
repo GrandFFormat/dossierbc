@@ -74,8 +74,23 @@ const attendre = (ms) => new Promise((r) => setTimeout(r, ms));
 const decoder = (s) => s.replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&nbsp;/g, ' ')
   .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;|&rsquo;/g, '’');
 
+// Trois tentatives, espacées : le 13 nov. 2026, M 218 et M 205 ont été perdus sur un
+// « fetch failed » — deux hoquets réseau sur 102 lectures, les mêmes adresses répondant
+// 200 la minute d'après. Une lecture ratée n'avait aucune seconde chance et le projet
+// sautait pour toute la semaine. Un échec de lecture arrive AVANT l'appel payant :
+// réessayer ne coûte rien. Un 404 ou un 403, eux, ne s'arrangeront pas en réessayant.
 async function lireTexte(url) {
-  const r = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
+  let r;
+  for (let essai = 1; ; essai++) {
+    try {
+      r = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
+      break;
+    } catch (e) {
+      if (essai >= 3) throw e;
+      console.error(`    (lecture ratée, essai ${essai}/3 : ${e.message}) — on réessaie`);
+      await attendre(DELAI * essai * 2);
+    }
+  }
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const html = await r.text();
   if (!/<html/i.test(html)) throw new Error('réponse inattendue (pas une page de projet de loi)');
