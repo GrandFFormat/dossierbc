@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-11-13",
+    "volet": "site",
+    "fr": {
+      "titre": "Image de partage",
+      "texte": "Un lien vers le site partagé sur Facebook montre l’image de partage en entier, refaite au format de 1200 × 630 pixels, sans rien de rogné sur les côtés."
+    },
+    "en": {
+      "titre": "Sharing image",
+      "texte": "A link to the site shared on Facebook now shows the full sharing image, redone at 1200 × 630 pixels, with nothing cropped on the sides."
+    }
+  },
+  {
     "date": "2026-11-12",
     "volet": "assemblee",
     "fr": {

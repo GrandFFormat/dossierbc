@@ -1,35 +1,38 @@
 <!doctype html>
 <html lang="en">
 <meta charset="utf-8">
-<title>dossierbc-cover.png</title>
+<title>dossierbc-partage.png</title>
 <style>
   @font-face { font-family:'Barlow'; src:url('/commun/polices/barlow-400.woff2') format('woff2'); font-weight:400; font-display:block; }
   @font-face { font-family:'Barlow'; src:url('/commun/polices/barlow-500.woff2') format('woff2'); font-weight:500; font-display:block; }
   @font-face { font-family:'Barlow'; src:url('/commun/polices/barlow-700.woff2') format('woff2'); font-weight:700; font-display:block; }
   @font-face { font-family:'Barlow Condensed'; src:url('/commun/polices/barlow-condensed-700.woff2') format('woff2'); font-weight:700; font-display:block; }
   body { margin:0; background:#555; font:14px system-ui; color:#fff; }
-  canvas { display:block; width:851px; height:315px; margin:20px auto; }
+  canvas { display:block; width:600px; height:315px; margin:20px auto; }
   p { text-align:center; }
 </style>
-<canvas id="c" width="1702" height="630"></canvas>
+<canvas id="c" width="1200" height="630"></canvas>
 <p id="etat">…</p>
 <script>
-// L'image de partage de DossierBC, 1702 × 630. Identité « Sun & waves » : papier, bleu héraldique,
+// L'image de partage de DossierBC, 1200 × 630 : le format exact de Facebook, qui rognait l'ancienne
+// (dossierbc-cover.png, 1702 × 630, gardée telle quelle). Nouveau nom pour vider le cache de Facebook.
+// Identité « Sun & waves » : papier, bleu héraldique,
 // or soleil, Barlow Condensed, AUCUNE ombre — des filets d'un pixel, comme le reste du site.
 const BLEU = '#1f4f8a', OR = '#e3b528', PAPIER = '#fbfbfa', ENCRE = '#17202b', ARDOISE = '#4c545e';
-const W = 1702, H = 630;
+const W = 1200, H = 630;
 
 async function dessiner() {
   await document.fonts.load('700 1em "Barlow Condensed"');
   await document.fonts.load('700 1em Barlow');
   await document.fonts.load('500 1em Barlow');
+  await document.fonts.load('400 1em Barlow');
   await document.fonts.ready;
 
   const g = document.getElementById('c').getContext('2d');
   g.fillStyle = PAPIER; g.fillRect(0, 0, W, H);
 
   // --- Le soleil et l'eau, à droite : le même motif que l'affiche de l'accueil.
-  const cx = 1310, horizon = 395, r = 168;
+  const cx = 960, horizon = 380, r = 140;
   g.save();
   g.beginPath(); g.rect(0, 0, W, horizon); g.clip();
   g.fillStyle = OR; g.beginPath(); g.arc(cx, horizon, r, 0, Math.PI * 2); g.fill();
@@ -37,7 +40,7 @@ async function dessiner() {
 
   // La ligne d'horizon, d'un pixel, sur toute la largeur du bloc de droite.
   g.strokeStyle = BLEU; g.lineWidth = 2;
-  g.beginPath(); g.moveTo(1010, horizon); g.lineTo(W - 70, horizon); g.stroke();
+  g.beginPath(); g.moveTo(760, horizon); g.lineTo(W - 48, horizon); g.stroke();
 
   // Trois lignes d'eau sous l'horizon.
   const vague = (y, amp, lam, de, a) => {
@@ -49,36 +52,36 @@ async function dessiner() {
     g.stroke();
   };
   g.lineWidth = 4; g.strokeStyle = BLEU;
-  vague(horizon + 42, 7, 150, 1010, W - 70);
-  vague(horizon + 86, 7, 150, 1050, W - 110);
+  vague(horizon + 40, 6, 130, 760, W - 48);
+  vague(horizon + 80, 6, 130, 795, W - 83);
   g.lineWidth = 3; g.strokeStyle = 'rgba(31,79,138,.45)';
-  vague(horizon + 128, 6, 150, 1010, W - 70);
+  vague(horizon + 118, 5, 130, 760, W - 48);
 
   // --- Le texte, à gauche.
   g.textBaseline = 'alphabetic';
   g.fillStyle = BLEU;
-  g.font = '700 196px "Barlow Condensed"';
-  g.fillText('DossierBC', 92, 290);
+  g.font = '700 156px "Barlow Condensed"';
+  g.fillText('DossierBC', 60, 262);
 
   g.fillStyle = ENCRE;
-  g.font = '500 54px Barlow';
-  g.fillText("British Columbia's Legislative", 96, 372);
-  g.fillText('Assembly, in plain language', 96, 436);
+  g.font = '500 40px Barlow';
+  g.fillText("British Columbia's Legislative", 64, 340);
+  g.fillText('Assembly, in plain language', 64, 390);
 
   // Le filet or, puis la ligne de contenu.
-  g.fillStyle = OR; g.fillRect(96, 474, 300, 6);
+  g.fillStyle = OR; g.fillRect(64, 424, 240, 5);
   g.fillStyle = ARDOISE;
-  g.font = '400 36px Barlow';
-  g.fillText('Bills · Recorded votes · Cabinet and MLAs', 96, 532);
+  g.font = '400 27px Barlow';
+  g.fillText('Bills · Recorded votes · Cabinet and MLAs', 64, 474);
 
   // --- Le bandeau or du bas : la grammaire de la famille Dossier.
-  g.fillStyle = OR; g.fillRect(0, H - 54, W, 54);
+  g.fillStyle = OR; g.fillRect(0, H - 50, W, 50);
   g.fillStyle = '#17202b';
-  g.font = '700 32px Barlow';
-  g.fillText('dossierbc.ca', 96, H - 17);
-  g.font = '500 30px Barlow';
+  g.font = '700 28px Barlow';
+  g.fillText('dossierbc.ca', 60, H - 16);
+  g.font = '500 22px Barlow';
   const avis = 'Independent and unofficial · Free · Sources named on every page';
-  g.fillText(avis, W - 70 - g.measureText(avis).width, H - 17);
+  g.fillText(avis, W - 48 - g.measureText(avis).width, H - 16);
 
   // --- Récupérer l'image. Servie par le petit serveur d'écriture (PUT /ecrire), elle tombe
   // directement dans le dépôt ; servie par n'importe quel autre serveur, le lien la télécharge.
@@ -89,8 +92,8 @@ async function dessiner() {
   if (ecrit) { etat.textContent = `Écrit dans le dépôt : ${blob.size} octets (${W} × ${H}).`; return; }
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'dossierbc-cover.png';
-  a.textContent = `Télécharger dossierbc-cover.png (${blob.size} octets, ${W} × ${H})`;
+  a.download = 'dossierbc-partage.png';
+  a.textContent = `Télécharger dossierbc-partage.png (${blob.size} octets, ${W} × ${H})`;
   a.style.color = '#e3b528';
   etat.textContent = '';
   etat.append(a);
