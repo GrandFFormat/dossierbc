@@ -57,9 +57,9 @@ export function construirePagesProjets() {
   const enDirect = JSON.parse(readFileSync('data/bills.json', 'utf8')).bills;
   const archive = archiverLegislature(enDirect);
   // Les projets en direct d'abord, puis ceux des législatures archivées, chacun avec ses résumés.
-  const lots = [{ bills: enDirect, resumes: lire('data/bills-resumes-fr.json', {}) }];
+  const lots = [{ bills: enDirect, resumes: lire('data/bills-resumes-fr.json', {}), resumesEn: lire('data/bills-resumes-en.json', {}) }];
   for (const leg of archive?.anciennes ?? []) {
-    lots.push({ bills: lire(`${ARCHIVES}/${leg}/bills-brut.json`, { bills: [] }).bills, resumes: lire(`${ARCHIVES}/${leg}/bills-resumes-fr.json`, {}) });
+    lots.push({ bills: lire(`${ARCHIVES}/${leg}/bills-brut.json`, { bills: [] }).bills, resumes: lire(`${ARCHIVES}/${leg}/bills-resumes-fr.json`, {}), resumesEn: lire(`${ARCHIVES}/${leg}/bills-resumes-en.json`, {}) });
   }
 
   // On refait le dossier à neuf : aucune page orpheline d'un projet retiré.
@@ -68,7 +68,7 @@ export function construirePagesProjets() {
 
   const vues = new Set();
   const adresses = [];
-  for (const { bills, resumes } of lots) for (const b of bills) {
+  for (const { bills, resumes, resumesEn } of lots) for (const b of bills) {
     const slug = slugProjet(b);
     if (!slug || vues.has(slug)) continue;
     vues.add(slug);
@@ -77,7 +77,11 @@ export function construirePagesProjets() {
     // Les sous-titres du résumé (h4 à h6) passent en h3 sous le h2 du projet : un moteur lit un plan
     // sans niveau sauté. Seule la copie écrite dans la page change ; commun/dq.js refait la carte.
     const resumePage = resumeHtml.replace(/<(\/?)h[4-6]\b/g, '<$1h3');
-    const resume = texte(resumeHtml);
+    // La description vient du résumé ANGLAIS (le HTML servi est en anglais, comme le <title>). Le
+    // texte d'attente (« No plain-language summary… ») n'en est pas un : on prend alors la phrase
+    // générique (13 nov. 2026 : 102 descriptions mêlaient « Bill 1: » et l'attente en français).
+    const resumeEn = texte(resumesEn[b.id] ?? '');
+    const resume = /^(No plain-language summary|Pas encore de résumé)/.test(resumeEn) ? '' : resumeEn;
     // Le site est anglophone : le titre, la description et le fil d'Ariane écrits dans la page
     // sont en anglais. Le numéro est celui de l'Assemblée (« M 249 » pour un projet de député·e).
     const numero = b.numAffiche ?? String(b.num);
