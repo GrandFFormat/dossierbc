@@ -270,6 +270,8 @@ const translations = {
     "legend.label": "Le chemin d'un projet de loi :",
     "legend.link": "C'est quoi ces étapes ? → Lexique",
     "lex.1.d": "Le texte qu'un député ou le gouvernement soumet à l'Assemblée pour qu'il devienne une loi. Il devient une vraie loi seulement une fois adopté puis sanctionné.",
+    "lex.vie.t": "La vie d’un projet de loi",
+    "lex.vie.d": "Six étapes, du dépôt à la loi :<ol style=\"margin:8px 0 0; padding-left:20px;\"><li><b>Dépôt et première lecture</b> : le texte devient public, sans débat.</li><li><b>Deuxième lecture</b> : débat sur le principe en Chambre, puis vote.</li><li><b>Étude en comité</b> : article par article, avec les amendements. En C.-B., presque toujours en <b>Committee of the Whole</b> (tous les député·e·s, dans la Chambre, siégeant en comité) ; plus rarement dans un comité permanent. C’est la grande différence avec le Québec, où les commissions parlementaires font cette étape.</li><li><b>Rapport</b> : le comité rapporte le projet à la Chambre, modifié ou non.</li><li><b>Troisième lecture</b> : vote final sur la version complète.</li><li><b>Sanction royale</b> : la lieutenante-gouverneure signe ; le projet devient loi. Certaines parties peuvent entrer en vigueur plus tard, à une date fixée par le gouvernement.</li></ol><p style=\"margin:8px 0 0;\">Un <b>projet de loi privé</b> (qui touche un organisme ou une personne en particulier) passe par le comité des projets de loi privés. Un projet qui n’a pas fini son parcours <b>meurt au feuilleton</b> quand la session se termine ; il doit alors repartir de zéro.</p>",
     "lex.1.t": "Projet de loi",
     "lex.10.d": "Le député responsable d'organiser les travaux de son groupe à l'Assemblée — un peu le chef d'orchestre du calendrier et des débats pour son parti.",
     "lex.10.t": "Leader parlementaire",
@@ -632,6 +634,7 @@ const translations = {
     'cal.p1':"The Assembly doesn't sit year-round. Its Standing Orders set two working periods: a spring period starting the 2nd Tuesday of February (16 weeks, plus 2 intensive weeks), and a fall period starting the 3rd Tuesday of September (10 weeks, plus 2 intensive weeks). Outside these periods the Assembly is adjourned — barring a special sitting called by the Premier.",
     'cal.p2':"This page outlines the main working periods, not the daily schedule. For a day-by-day view of upcoming sittings and committees, the Assembly's official calendar remains the reference.",
     // Lexicon
+    'lex.vie.t':"The life of a bill", 'lex.vie.d':"Six steps, from tabling to law:<ol style=\"margin:8px 0 0; padding-left:20px;\"><li><b>Introduction and first reading</b>: the text becomes public, with no debate.</li><li><b>Second reading</b>: debate on the principle in the House, then a vote.</li><li><b>Committee stage</b>: clause by clause, with amendments. In B.C., almost always in <b>Committee of the Whole</b> (every MLA, in the Chamber, sitting as a committee); more rarely in a standing committee.</li><li><b>Report</b>: the committee reports the bill back to the House, amended or not.</li><li><b>Third reading</b>: the final vote on the complete version.</li><li><b>Royal Assent</b>: the Lieutenant Governor signs; the bill becomes law. Some parts may come into force later, on a date set by the government.</li></ol><p style=\"margin:8px 0 0;\">A <b>private bill</b> (one that affects a particular organization or person) goes through the private bills committee. A bill that has not finished its journey <b>dies on the order paper</b> when the session ends and must start over.</p>",
     'lex.1.t':"Bill", 'lex.1.d':"The text a member or the government submits to the Assembly to become a law. It only becomes a real law once passed and then assented to.",
     'lex.2.t':"Second reading", 'lex.2.d':"The first big step: the Assembly debates the general idea of the bill and votes on whether it accepts it, before studying the details clause by clause.",
     'lex.3.t':"Committee stage", 'lex.3.d':"The step where the bill is gone over clause by clause, most often in Committee of the Whole (the entire Assembly sitting as a committee), sometimes by a standing committee. Amendments can be proposed there.",
@@ -1396,9 +1399,10 @@ const loiVivante = (b) => !ASSEMBLY.dissolved && String(b.lastActivity || '') >=
 // gens veulent des explications. On laisse donc challenger les projets morts au feuilleton :
 // la demande est enregistrée, comptée, et elle dira à la rentrée ce que les gens voulaient
 // voir expliqué. Seul un projet SANCTIONNÉ (devenu loi) ne se challenge pas.
-const peutEtreChallenge = (b) => !ASSEMBLY.challenge ? false : archiveLeg !== null ? false : ASSEMBLY.dissolved
-  ? b.status !== 'sanctionne'
-  : (b.status === 'encours' && loiVivante(b));
+// Martin, 15 nov. 2026 : un bouton par projet, quel que soit son sort. Une loi sanctionnée ou un
+// projet mort au feuilleton se comprend mal tout autant qu'un projet à l'étude ; la demande reste
+// un compteur citoyen. Seules les législatures archivées (vue d'archive) n'en ont pas.
+const peutEtreChallenge = (b) => !!ASSEMBLY.challenge && archiveLeg === null;
 
 /* ---------------- FINANCES PUBLIQUES ---------------- */
 // Le tableau de la bande bleue (page Ministres et député·e·s) : une personne, trois blocs. Tout sort
@@ -4357,15 +4361,13 @@ async function renderChallenged(){
   // possible. Législature terminée, plus un seul projet ne peut être signalé : le titre devient
   // alors une trace, pas une invitation.
   const finie = legislatureFinie();
-  if(titleEl) titleEl.textContent = finie
-    ? (isEn ? 'Bills citizens had challenged' : 'Projets que les citoyen·ne·s avaient challengés')
-    : (isEn ? 'Challenge a bill' : 'Signaler un projet');
+  if(titleEl) titleEl.textContent = isEn ? 'Challenge a bill' : 'Signaler un projet';
   // Pendant la dissolution, on ne promet plus de pétition : ces projets sont morts
   // au feuilleton, on présente donc la section comme une trace de la législature.
   if(subEl) subEl.textContent = finie
     ? (isEn
-        ? 'Flagged before the legislature ended — these bills died with it and would have to start over'
-        : 'Signalés avant la fin de la législature — ces projets sont morts avec elle et devraient repartir de zéro')
+        ? 'The legislature has ended, but you can still ask for an explanation of any bill, passed or not'
+        : 'La législature est terminée, mais vous pouvez encore demander une explication sur n’importe quel projet, adopté ou non')
     : (isEn
         ? `The moment one person asks for an explanation, the bill appears here — pile on in one click; at ${fmt(PETITION_THRESHOLD)}, we push for a petition`
         : `Dès qu'une personne demande une explication, le projet apparaît ici — appuyez en un clic ; à ${fmt(PETITION_THRESHOLD)}, on pousse pour une pétition`);

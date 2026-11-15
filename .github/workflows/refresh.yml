@@ -40,7 +40,7 @@
 # lundi 16 est trop tôt et celui du 23 arriverait cinq jours après. Ce jour-là, lancer le robot à
 # la main avec « Run workflow », ou le laisser attendre le lundi suivant.
 
-name: Rafraîchissement des données (une fois par semaine)
+name: Rafraîchissement des données (chaque jour)
 
 on:
   schedule:

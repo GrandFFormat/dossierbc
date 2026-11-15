@@ -338,27 +338,24 @@ function goToFederal(evt){
          titre, l'avertissement et le pager ; les trois autres sont les projets, écrits par
          renderChallenged() (commun/dq.js) sous forme de .ch-card. Les classes de DossierQuébec
          restent : c'est elles que le JavaScript écrit, bc.css les remeuble. -->
-    <div class="bc-signales cadre-plan cadre-encre" id="band-comites">
-      <!-- LES SÉANCES DE COMITÉS (Martin, 15 nov. 2026) : remplacent les projets signalés. Le robot
-           scrapers/comites.js garde les 12 plus récentes (data/comites.json) ; renderComites()
-           (commun/dq.js) en montre 3 à la fois, et les flèches tournent en boucle. -->
+    <div class="bc-signales cadre-plan cadre-encre" id="band-challenged">
       <div class="bc-signales-intro">
-        <div class="kicker"><span data-i18n="comites.kicker">Committees</span> · <span id="comitesTotal">—</span></div>
-        <div class="section-head" id="sec-comites">
+        <div class="kicker"><span data-i18n="signales.sur">Flagged by citizens</span> · <span id="challengedTotal">—</span></div>
+        <div class="section-head" id="sec-challenged">
           <div>
-            <h2 data-i18n="comites.titre">Latest committee sittings</h2>
-            <div class="sub" data-i18n="comites.sub">Where MLAs work in smaller groups: studying a bill, a budget or a question in depth.</div>
+            <h2 id="challengedTitle">Challenge a bill</h2>
+            <div class="sub" id="challengedSub"></div>
           </div>
         </div>
-        <p class="bc-signales-avis" id="comitesAvis"></p>
-        <div class="bc-pager" id="comitesPager" hidden>
-          <button type="button" id="comitesPrev" onclick="pagerComites(-1)">&#8249;</button>
-          <button type="button" id="comitesNext" onclick="pagerComites(1)">&#8250;</button>
-          <span class="bc-rang" id="comitesRange"></span>
+        <p class="bc-signales-avis"><span data-i18n="signales.avis"><b>No online petitions in British Columbia.</b> The Assembly only accepts paper petitions, tabled by an MLA. Flagging a bill here has no official value: it is a citizen counter that shows what worries people, and points you to how to act.</span></p>
+        <div class="bc-pager" id="challengedPager" hidden>
+          <button type="button" id="challengedPrev" onclick="pagerChallenged(-1)">&#8249;</button>
+          <button type="button" id="challengedNext" onclick="pagerChallenged(1)">&#8250;</button>
+          <span class="bc-rang" id="challengedRange"></span>
         </div>
-        <p class="nb-agir"><a href="https://www.leg.bc.ca/parliamentary-business/committees/committee-meetings" target="_blank" rel="noopener" data-i18n="comites.officiel">Official committee meetings page &#8599;</a></p>
+        <p class="nb-agir"><span data-i18n="signales.agir">To act officially:</span> <a href="/ministres" data-i18n="signales.depute">write to your MLA</a></p>
       </div>
-      <div id="comitesList"></div>
+      <div id="challengedList"></div>
       <div class="cadre-plan-bas"></div>
     </div>
 
