@@ -52,6 +52,11 @@ const SCRAPERS = [
   ['Résumés en langage clair EN + FR (Claude Haiku)', ['--env-file-if-exists=api.env', 'scrapers/bill-summaries.js'], { soft: true }],
   ['Scrape : votes nominatifs (procès-verbaux)', ['scrapers/votes.js']],
   ['Scrape : calendrier parlementaire (leg.bc.ca)', ['scrapers/calendrier.js'], { soft: true }],
+  // Séances des comités (15 nov. 2026) : la fenêtre de l'accueil. Doux : un échec garde celles de la veille.
+  ['Scrape : séances des comités (API de l'Assemblée)', ['scrapers/comites.js'], { soft: true }],
+  // Résumés des séances de comités (15 nov. 2026), à partir des transcriptions FINALES seulement. Cache :
+  // une séance déjà résumée ne coûte plus rien. Sans ANTHROPIC_API_KEY, ne fait rien. Doux.
+  ['Résumés des séances de comités EN + FR (Claude Sonnet)', ['--env-file-if-exists=api.env', 'scrapers/comites-resumes.js'], { soft: true }],
 ];
 
 const failed = [];      // sources critiques → déclenchent l'alerte (run rouge)

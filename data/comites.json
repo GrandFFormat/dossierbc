@@ -1,0 +1,139 @@
+{
+  "source": "https://www.leg.bc.ca/parliamentary-business/committees/committee-meetings",
+  "lu": "2026-11-15T22:44:27.043Z",
+  "comites": 18,
+  "seances": [
+    {
+      "id": 3783,
+      "comite": "Special Committee to Review Provisions of the Insurance (Vehicle) Act",
+      "comiteCourt": "Insurance (Vehicle) Act",
+      "debut": "2026-09-22T08:30:00",
+      "fin": "2026-09-22T16:30:00",
+      "lieu": "Douglas Fir Committee Room (Room 226), Parliament Buildings",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-iva",
+      "transcription": "https://www.leg.bc.ca/hansard-content/Committees/43rd2nd/iva/20260922am-IVAReview-Victoria-n6.html",
+      "transcriptionTexte": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/iva/20260922am-IVAReview-Victoria-n6.html"
+    },
+    {
+      "id": 3782,
+      "comite": "Special Committee to Review Provisions of the Insurance (Vehicle) Act",
+      "comiteCourt": "Insurance (Vehicle) Act",
+      "debut": "2026-09-21T08:30:00",
+      "fin": "2026-09-21T16:30:00",
+      "lieu": "Douglas Fir Committee Room (Room 226), Parliament Buildings",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-iva",
+      "transcription": "https://www.leg.bc.ca/hansard-content/Committees/43rd2nd/iva/20260921am-IVAReview-Victoria-n5.html",
+      "transcriptionTexte": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/iva/20260921am-IVAReview-Victoria-n5.html"
+    },
+    {
+      "id": 3780,
+      "comite": "Select Standing Committee on Private Bills and Private Members' Bills",
+      "comiteCourt": "Private Bills and Private Members' Bills",
+      "debut": "2026-09-10T13:30:00",
+      "fin": "2026-09-10T16:30:00",
+      "lieu": "Douglas Fir Committee Room (Room 226), Parliament Buildings",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-pbpmb",
+      "transcription": null,
+      "transcriptionTexte": null
+    },
+    {
+      "id": 3791,
+      "comite": "Special Committee on Police Complaints ",
+      "comiteCourt": "Police Complaints ",
+      "debut": "2026-09-10T09:00:00",
+      "fin": "2026-09-10T12:00:00",
+      "lieu": "Douglas Fir Committee Room (Room 226), Parliament Buildings ",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-pc",
+      "transcription": null,
+      "transcriptionTexte": null
+    },
+    {
+      "id": 3833,
+      "comite": "Special Committee on Police Complaints ",
+      "comiteCourt": "Police Complaints ",
+      "debut": "2026-08-18T11:00:00",
+      "fin": "2026-08-18T12:00:00",
+      "lieu": "Virtual",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-pc",
+      "transcription": null,
+      "transcriptionTexte": null
+    },
+    {
+      "id": 3799,
+      "comite": "Select Standing Committee on Finance and Government Services",
+      "comiteCourt": "Finance and Government Services",
+      "debut": "2026-07-30T10:00:00",
+      "fin": "2026-07-30T16:30:00",
+      "lieu": "Virtual Meeting, Victoria",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-fgs",
+      "transcription": null,
+      "transcriptionTexte": null
+    },
+    {
+      "id": 3798,
+      "comite": "Select Standing Committee on Finance and Government Services",
+      "comiteCourt": "Finance and Government Services",
+      "debut": "2026-07-29T10:00:00",
+      "fin": "2026-07-29T16:30:00",
+      "lieu": "Virtual Meeting, Victoria",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-fgs",
+      "transcription": null,
+      "transcriptionTexte": null
+    },
+    {
+      "id": 3781,
+      "comite": "Special Committee to Review Provisions of the Insurance (Vehicle) Act",
+      "comiteCourt": "Insurance (Vehicle) Act",
+      "debut": "2026-07-20T08:30:00",
+      "fin": "2026-07-20T12:30:00",
+      "lieu": "Douglas Fir Committee Room (Room 226), Parliament Buildings",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-iva",
+      "transcription": "https://www.leg.bc.ca/hansard-content/Committees/43rd2nd/iva/20260720am-IVAReview-Victoria-n4.html",
+      "transcriptionTexte": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/iva/20260720am-IVAReview-Victoria-n4.html"
+    },
+    {
+      "id": 3800,
+      "comite": "Legislative Assembly Management Committee",
+      "comiteCourt": "Legislative Assembly Management Committee",
+      "debut": "2026-06-25T14:00:00",
+      "fin": "2026-06-25T15:00:00",
+      "lieu": "Virtual, Victoria",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-lamc",
+      "transcription": null,
+      "transcriptionTexte": null
+    },
+    {
+      "id": 3790,
+      "comite": "Special Committee on Police Complaints ",
+      "comiteCourt": "Police Complaints ",
+      "debut": "2026-06-03T13:00:00",
+      "fin": "2026-06-03T16:00:00",
+      "lieu": "Birch Committee Room (Room 339), Parliament Buildings ",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-pc",
+      "transcription": "https://www.leg.bc.ca/hansard-content/Committees/43rd2nd/pc/20260603pm-PoliceComplaints-Victoria-n6.html",
+      "transcriptionTexte": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/pc/20260603pm-PoliceComplaints-Victoria-n6.html"
+    },
+    {
+      "id": 3789,
+      "comite": "Select Standing Committee on Children and Youth",
+      "comiteCourt": "Children and Youth",
+      "debut": "2026-05-27T09:30:00",
+      "fin": "2026-05-27T10:00:00",
+      "lieu": "Birch Committee Room (Room 339), Parliament Buildings",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-cay",
+      "transcription": "https://www.leg.bc.ca/hansard-content/Committees/43rd2nd/cay/20260527am-ChildrenYouth-Victoria-n9.html",
+      "transcriptionTexte": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/cay/20260527am-ChildrenYouth-Victoria-n9.html"
+    },
+    {
+      "id": 3745,
+      "comite": "Select Standing Committee on Private Bills and Private Members' Bills",
+      "comiteCourt": "Private Bills and Private Members' Bills",
+      "debut": "2026-05-27T09:00:00",
+      "fin": "2026-05-27T11:30:00",
+      "lieu": "Douglas Fir Committee Room (Room 226), Parliament Buildings",
+      "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-pbpmb",
+      "transcription": "https://www.leg.bc.ca/hansard-content/Committees/43rd2nd/pbpmb/20260527am-PrivateBills-Victoria-n25.html",
+      "transcriptionTexte": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/pbpmb/20260527am-PrivateBills-Victoria-n25.html"
+    }
+  ]
+}

@@ -5,11 +5,12 @@
 # déclenche le redéploiement automatique du site sur Vercel — donc un nouveau projet de loi ou un
 # nouveau vote apparu dans la semaine se retrouve en ligne sans intervention.
 #
-# POURQUOI UNE FOIS PAR SEMAINE et non par jour, comme le Québec : l'Assemblée législative de la
+# (Historique : jusqu'au 15 nov. 2026, le robot passait une fois par semaine. Raison d'alors : l'Assemblée législative de la
 # Colombie-Britannique ne siège pas. La 43e a été dissoute le 22 septembre 2026, la 44e est ouverte
 # depuis le 26 octobre mais n'a ni session, ni député·e, ni ministre. Rien ne bouge d'un jour à
 # l'autre, et chaque passage coûte un redéploiement Vercel. Quand la Chambre siégera de nouveau,
-# passer au quotidien : il suffit de changer le cron.
+# passer au quotidien : il suffit de changer le cron. Martin a choisi le quotidien le 15 nov. 2026
+# pour que le site bouge chaque jour.)
 #
 # leg.bc.ca, dyn.leg.bc.ca et api.lims.leg.bc.ca n'imposent pas de crawl-delay : le passage est
 # court. Le robot s'identifie honnêtement et s'arrête si une source répond autre chose que la page
@@ -44,8 +45,9 @@ name: Rafraîchissement des données (une fois par semaine)
 on:
   schedule:
     # La Colombie-Britannique est à UTC−8 l'hiver (UTC−7 l'été). 15:00 UTC = 7 h ou 8 h à Victoria,
-    # le LUNDI : la semaine commence avec des données fraîches.
-    - cron: '0 15 * * 1'
+    # CHAQUE JOUR depuis le 15 nov. 2026 (Martin : « pour amener plus de monde sur le site on a
+    # daily base »), en début de journée.
+    - cron: '0 15 * * *'
   workflow_dispatch: {} # permet aussi de lancer à la main (bouton « Run workflow »)
 
 # Nécessaire pour que le job puisse committer et pousser les données mises à jour.

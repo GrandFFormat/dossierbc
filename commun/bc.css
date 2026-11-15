@@ -537,6 +537,23 @@ mark, .surligne{
 /* Les cartes deviennent les cellules du cadre : le conteneur s'effface (display:contents), ses
    enfants prennent sa place dans la grille. */
 .bc-signales #challengedList{display:contents;}
+/* Le carrousel des comités (15 nov. 2026) : la liste occupe les cellules à droite de l'intro, et
+   un rail de cartes y glisse de côté. Deux vues sur le rail pendant le glissement, une ensuite. */
+.bc-signales #comitesList{grid-column:span 3; overflow:hidden; min-width:0;}
+.com-rail{display:flex; height:100%;}
+.com-rail.com-glisse{transition:transform .75s cubic-bezier(.45,.05,.25,1);}
+.com-rail > .ch-card{flex:0 0 calc(100% / var(--par-vue, 3)); box-sizing:border-box; text-decoration:none; color:inherit; cursor:pointer;}
+.bc-signales a.ch-card:hover .ch-title{text-decoration:underline;}
+.com-vide{padding:24px 28px;}
+.com-puces{margin:2px 0 0; padding-left:18px; font:400 13px/1.5 'Barlow',sans-serif;}
+.com-puces li{margin:0 0 4px;}
+.com-note{font:400 11px/1.4 'Barlow',sans-serif; color:var(--bc-estompe); flex:1;}
+.com-etiquette{align-self:flex-start; font:600 11px/1 'Barlow',sans-serif; letter-spacing:.06em; text-transform:uppercase; background:var(--yellow); color:var(--ink); padding:4px 7px;}
+.com-rail > .ch-card{position:relative;}
+.com-rail > .ch-card.com-jaune::before{content:""; position:absolute; left:0; right:0; top:0; height:6px; background:var(--yellow);}
+@media (max-width:1000px){ .bc-signales #comitesList{grid-column:span 2;} }
+@media (max-width:620px){ .bc-signales #comitesList{grid-column:span 1;} }
+.bc-signales a.ch-card:hover .ch-title{text-decoration:underline;}
 .bc-signales .ch-card{
   padding:24px 28px;
   margin:0;

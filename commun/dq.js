@@ -455,6 +455,10 @@ const translations = {
     "regleshero.sub": "Le site ne publie que ce qu'une institution ou un parti a lui-même publié, tel quel, avec un lien vers l'original. <b>Et il dit clairement ce qui manque.</b>",
     "signales.agir": "Pour agir officiellement :",
     "signales.sur": "Signalés par les citoyen·ne·s",
+    "comites.kicker": "Comités",
+    "comites.titre": "Dernières séances de comités",
+    "comites.sub": "Là où les député·e·s travaillent en petits groupes : un projet de loi, un budget ou une question étudiés à fond.",
+    "comites.officiel": "Page officielle des séances de comités ↗",
     "signales.avis": "<b>Pas de pétition en ligne en Colombie-Britannique.</b> L'Assemblée n'accepte que les pétitions sur papier, déposées par un·e député·e. Signaler un projet ici n'a aucune valeur officielle : c'est un compteur citoyen qui montre ce qui préoccupe, et vous indique comment agir.",
     "signales.depute": "écrire à votre député·e",
     "stat.deputes": "Député·e·s",
@@ -487,6 +491,7 @@ const translations = {
   },
   en: {
     'nav.close':"Close",'nav.villes':"Cities",'nav.rtv':"Represent your city",
+    'comites.kicker':"Committees",'comites.titre':"Latest committee sittings",'comites.sub':"Where MLAs work in smaller groups: studying a bill, a budget or a question in depth.",'comites.officiel':"Official committee meetings page ↗",
     'signales.sur':"Flagged by citizens",'kicker.projets':"Bills",'kicker.journal':"Journal",'promo.courriel':"Your email",
     'signales.avis':"<b>No online petitions in British Columbia.</b> The Assembly only accepts paper petitions, tabled by an MLA. Flagging a bill here has no official value: it is a citizen counter that shows what worries people, and points you to how to act.",
     'signales.agir':"To act officially:",'signales.depute':"write to your MLA",'quoideneuf.fil':"A timeline, newest first.",'nav.apercu':"Overview",'nav.ministres':"Ministers",'nav.projets':"Bills",
@@ -1022,6 +1027,7 @@ function applyLanguage(){
   renderApercuPetitions();
   renderNews();
   renderChallenged();
+  renderComites();
   renderPromises();
   renderJournal();
   renderArchives();
@@ -4457,6 +4463,123 @@ function pagerChallenged(dir){
     }
   });
   majPagerChallenged(cards.length, currentLang === 'en');
+}
+
+/* ---------------- SÉANCES DE COMITÉS (accueil) ---------------- */
+// Martin, 15 nov. 2026 : la fenêtre remplace les projets signalés. data/comites.json vient de
+// scrapers/comites.js (12 séances au plus). Un carrousel : 3 cartes à la fois (2 sur tablette,
+// 1 sur téléphone). Une flèche pousse les cartes de côté pendant que les nouvelles arrivent du
+// côté opposé pour prendre leur place, sans fondu ; ça tourne en boucle aux deux bouts.
+// Seuls des faits : le comité, la date, les heures, le lieu, et le lien vers sa page officielle.
+let _comites = null, _comitesP = null, comitesDebut = 0, comitesEnCours = false;
+function chargerComites(){
+  if(!_comitesP) _comitesP = fetch('/data/comites.json').then(r => r.ok ? r.json() : null).catch(() => null)
+    .then(d => { _comites = d; if(!d) _comitesP = null; return d; });
+  return _comitesP;
+}
+const comitesParVue = () => matchMedia('(max-width:620px)').matches ? 1 : matchMedia('(max-width:1000px)').matches ? 2 : 3;
+// jaune : une séance sur deux porte une barre jaune en haut (Martin, 15 nov. 2026). Le rang
+// vient de la liste entière, pas de la vue : la barre suit sa carte pendant le glissement.
+function carteComite(m, isEn, jaune){
+  const loc = isEn ? 'en-CA' : 'fr-CA';
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  const heure = t => new Date(t).toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit' });
+  const jour = new Date(m.debut).toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const heures = heure(m.debut) + (m.fin ? ' – ' + heure(m.fin) : '');
+  // Le résumé est le nôtre, écrit à partir de la transcription FINALE (scrapers/comites-resumes.js).
+  // Sans transcription finale, on le dit plutôt que de rien montrer.
+  const res = isEn ? m.resumeEn : m.resumeFr;
+  const puces = res && res.length
+    ? `<ul class="com-puces">${res.map(p => `<li>${esc(p)}</li>`).join('')}</ul><span class="com-note">${isEn ? 'Summary written by DossierBC from the official transcript' : 'Résumé écrit par DossierBC à partir de la transcription officielle'}</span>`
+    : `<span class="com-note">${m.transcription
+        ? (isEn ? 'Summary coming soon.' : 'Résumé à venir.')
+        : (isEn ? 'The official transcript of this sitting is not final yet.' : 'La transcription officielle de cette séance n’est pas encore finale.')}</span>`;
+  return `<a class="ch-card${jaune ? ' com-jaune' : ''}" href="${esc(m.page)}" target="_blank" rel="noopener">
+      <div class="ch-top"><span class="ch-num">${esc(jour)}</span></div>
+      <div class="ch-title">${esc(m.comite)}</div>
+      ${m.huisClos ? `<span class="com-etiquette">${isEn ? 'In camera' : 'À huis clos'}</span>` : ''}
+      ${puces}
+      <div class="ch-stage">${esc(heures)}${m.lieu ? ' · ' + esc(m.lieu) : ''}</div>
+    </a>`;
+}
+// Les cartes d'une vue qui commence à debut (en boucle).
+function vueComites(debut){
+  const liste = _comites.seances, n = liste.length, k = Math.min(comitesParVue(), n), isEn = currentLang === 'en';
+  let h = '';
+  for(let i = 0; i < k; i++){ const x = (debut + i) % n; h += carteComite(liste[x], isEn, x % 2 === 1); }
+  return h;
+}
+async function renderComites(){
+  const el = document.getElementById('comitesList');
+  if(!el) return;
+  await chargerComites();
+  const isEn = currentLang === 'en';
+  const liste = (_comites && _comites.seances) || [];
+  const total = document.getElementById('comitesTotal');
+  if(total) total.textContent = liste.length.toLocaleString(isEn ? 'en-CA' : 'fr-CA');
+  const avis = document.getElementById('comitesAvis');
+  if(avis) avis.textContent = legislatureFinie()
+    ? (isEn ? 'Committees ended with the legislature. They will resume after the 44th Parliament opens; these are the last sittings held.'
+            : 'Les comités ont pris fin avec la législature. Ils reprendront après l’ouverture de la 44e ; voici les dernières séances tenues.')
+    : '';
+  if(!liste.length){
+    el.innerHTML = `<div class="com-vide">${isEn ? 'No committee sitting published yet.' : 'Aucune séance de comité publiée pour l’instant.'}</div>`;
+    majPagerComites(0, isEn); return;
+  }
+  comitesDebut = comitesDebut % liste.length;
+  el.innerHTML = `<div class="com-rail" style="--par-vue:${comitesParVue()}">${vueComites(comitesDebut)}</div>`;
+  majPagerComites(liste.length, isEn);
+  if(!renderComites._resize){
+    let dernier = comitesParVue();
+    renderComites._resize = true;
+    addEventListener('resize', () => { const v = comitesParVue(); if(v !== dernier){ dernier = v; renderComites(); } });
+  }
+}
+function pagerComites(dir){
+  const el = document.getElementById('comitesList');
+  const liste = (_comites && _comites.seances) || [];
+  const k = comitesParVue(), n = liste.length;
+  if(!el || n <= k || comitesEnCours) return;
+  const ancien = comitesDebut;
+  comitesDebut = ((comitesDebut + dir * k) % n + n) % n;
+  // Le rail porte deux vues côte à côte : l'actuelle et la suivante (ou la précédente avant elle).
+  // Il glisse d'une largeur de vue ; à la fin, on ne garde que la nouvelle.
+  const reduire = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rail = document.createElement('div');
+  rail.className = 'com-rail';
+  rail.style.setProperty('--par-vue', k);
+  rail.innerHTML = dir > 0 ? vueComites(ancien) + vueComites(comitesDebut) : vueComites(comitesDebut) + vueComites(ancien);
+  rail.style.transform = dir > 0 ? 'translateX(0)' : 'translateX(-100%)';
+  el.replaceChildren(rail);
+  majPagerComites(n, currentLang === 'en');
+  if(reduire){ rail.innerHTML = vueComites(comitesDebut); rail.style.transform = ''; return; }
+  comitesEnCours = true;
+  void rail.offsetWidth;
+  rail.classList.add('com-glisse');
+  rail.style.transform = dir > 0 ? 'translateX(-100%)' : 'translateX(0)';
+  const fini = () => {
+    if(!comitesEnCours) return;
+    rail.removeEventListener('transitionend', fini);
+    rail.classList.remove('com-glisse');
+    rail.innerHTML = vueComites(comitesDebut);
+    rail.style.transform = '';
+    comitesEnCours = false;
+  };
+  rail.addEventListener('transitionend', fini);
+  setTimeout(fini, 1200);   // filet si transitionend ne vient pas
+}
+function majPagerComites(total, isEn){
+  const pager = document.getElementById('comitesPager');
+  if(!pager) return;
+  const k = Math.min(comitesParVue(), total);
+  pager.hidden = total <= k;
+  document.getElementById('comitesPrev')?.setAttribute('aria-label', isEn ? 'Previous sittings' : 'Séances précédentes');
+  document.getElementById('comitesNext')?.setAttribute('aria-label', isEn ? 'Next sittings' : 'Séances suivantes');
+  const rang = document.getElementById('comitesRange');
+  if(!rang) return;
+  const d = comitesDebut + 1, f = comitesDebut + k;
+  const txt = f <= total ? `${d}–${f}` : `${d}–${total}, 1–${f - total}`;
+  rang.textContent = total ? (isEn ? `${txt} of ${total}` : `${txt} sur ${total}`) : '';
 }
 
 // Le reste de la famille appelle encore « voir plus » : c'est la page suivante.
