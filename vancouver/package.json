@@ -1,0 +1,19 @@
+{
+  "name": "dossierbc-vancouver",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Volet Vancouver de DossierBC : les votes nominatifs du conseil municipal, à partir des données ouvertes de la Ville. Maquette, non publiée.",
+  "type": "module",
+  "scripts": {
+    "refresh": "node scripts/refresh.js",
+    "scrape:votes": "node scrapers/votes.js",
+    "scrape:lexique": "node scrapers/lexique.js",
+    "scrape:contrats": "node scrapers/contrats.js",
+    "scrape:budget": "node scrapers/budget.js",
+    "scrape:pres-de-chez-moi": "node scrapers/pres-de-chez-moi.js",
+    "serve": "node ../scripts/serveur-local.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

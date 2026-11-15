@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVMNKLDBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JVMNKLDBCQ', { content_group: 'Vancouver' });
+</script>
+<script src="/commun/consentement.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-fr="Contrats de la Ville de Vancouver : qui a gagné, qui a soumissionné | DossierBC">Contracts of the City of Vancouver: who won, who bid | DossierBC</title>
+<meta name="description" content="Contracts awarded by the City of Vancouver over the last twelve months in its open data: supplier, amount, bid type, and every company that bid. Independent citizen site." data-fr-content="Les contrats attribués par la Ville de Vancouver dans les douze derniers mois de ses données ouvertes : fournisseur, montant, type d’appel, et chaque entreprise qui a soumissionné. Site citoyen indépendant.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://dossierbc.ca/vancouver/contracts-of-the-city-of-vancouver">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="en_CA">
+<meta property="og:title" content="Contracts of the City of Vancouver: who won, who bid | DossierBC">
+<meta property="og:description" content="Contracts awarded by the City of Vancouver: supplier, amount, bid type, and every company that bid. From the City's open data.">
+<meta property="og:url" content="https://dossierbc.ca/vancouver/contracts-of-the-city-of-vancouver">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@400..700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('dvq:theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'sombre' : 'clair';
+      document.documentElement.dataset.theme = t;
+      var z = parseInt(localStorage.getItem('dvq:zoom'), 10);
+      if (z >= 80 && z <= 150) document.documentElement.style.zoom = z + '%';
+    } catch (e) {}
+  })();
+</script>
+<link rel="icon" href="/commun/bc.svg" type="image/svg+xml">
+<link rel="icon" href="/commun/bc-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/commun/bc-180.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DossierBC", "item": "https://dossierbc.ca/" },
+    { "@type": "ListItem", "position": 2, "name": "City of Vancouver", "item": "https://dossierbc.ca/vancouver/" },
+    { "@type": "ListItem", "position": 3, "name": "Contracts", "item": "https://dossierbc.ca/vancouver/contracts-of-the-city-of-vancouver" }
+  ]
+}
+</script>
+<script>
+  /* Français choisi (?lang=fr ou dvq:langue) : la page est cachée le temps que assets/langue.js la traduise. */
+  (function () { try { var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('dvq:langue'); if (l === 'fr') { document.documentElement.lang = 'fr'; document.documentElement.classList.add('dvq-fr'); } } catch (e) {} })();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="contrats" data-ville="vancouver">
+<header>
+  <div class="contenu">
+    <div class="titre-ligne">
+      <a href="./"><p class="logo-titre">Dossier<span class="marque">Vancouver</span></p></a><a class="lien-dq" href="/" title="DossierBC — the Legislative Assembly of British Columbia in plain language" aria-label="DossierBC — the Legislative Assembly of British Columbia in plain language" data-fr-title="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair" data-fr-aria-label="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair">DossierBC</a>
+    </div>
+    <p class="sous-titre" data-fr="Les votes du conseil municipal de Vancouver, rendus lisibles. Des données publiques, prises telles quelles sur le portail de données ouvertes de la Ville de Vancouver.">
+      Vancouver City Council votes, made readable. Public data, taken as is from the City of
+      Vancouver’s open data portal.
+    </p>
+    <nav>
+      <a href="./" data-fr="Accueil">Home</a>
+      <a href="decisions-of-vancouver-city-council" data-fr="Décisions">Decisions</a>
+      <a href="vancouver-city-council" data-fr="Conseil municipal">City Council</a>
+      <a href="near-me-in-vancouver" data-fr="Près de chez moi">Near me</a>
+      <a href="contracts-of-the-city-of-vancouver" aria-current="page" data-fr="Contrats">Contracts</a>
+      <a href="vancouver-capital-budget" data-fr="Budget">Budget</a>
+      <a href="vancouver-council-glossary" data-fr="Lexique">Glossary</a>
+      <div class="outils">
+        <div class="taille-texte" role="group" aria-label="Text size" data-fr-aria-label="Taille du texte">
+          <button type="button" id="texte-moins" aria-label="Smaller text" data-fr-aria-label="Réduire le texte">A−</button>
+          <span id="texte-pct" aria-live="polite">100%</span>
+          <button type="button" id="texte-plus" aria-label="Larger text" data-fr-aria-label="Agrandir le texte">A+</button>
+        </div>
+        <button type="button" id="bascule-theme" class="bascule-theme" aria-pressed="false"
+                title="Switch to dark theme" aria-label="Switch to dark theme"></button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="contenu prose">
+  <div id="chargement" class="avis" hidden data-fr="Chargement des données…"></div>
+  <h1 class="page" data-fr="Contrats attribués par la Ville de Vancouver">Contracts awarded by the City of Vancouver</h1>
+  <p data-fr="Chaque contrat attribué par la Ville de Vancouver dans les douze derniers mois de ses données ouvertes, avec les entreprises qui ont soumissionné. &lt;strong&gt;Aucun chiffre ici ne pointe une faute.&lt;/strong&gt; Une seule soumission peut vouloir dire un marché étroit ou des exigences très précises ; un gagnant qui n’est pas le moins cher a pu être le seul conforme. Le registre de la Ville pour chaque appel est à un clic.">
+    Every contract the City of Vancouver awarded over the last twelve months in its open data, with the companies that bid
+    for it. <strong>No figure here points to any fault.</strong> A single bid can mean a narrow market or very specific
+    requirements; a winner that is not the lowest bidder may have been the only compliant one. The City’s own record of each
+    call is one click away.
+  </p>
+  <div id="chiffres" class="grille-chiffres"></div>
+  <h2 data-fr="Les 15 plus gros fournisseurs">The 15 largest suppliers</h2>
+  <p class="compte" id="intro-palmares">Total of contracts awarded in the period. Click a name to see its contracts.</p>
+  <div id="palmares" class="tableau-defile"></div>
+  <h2 data-fr="Tous les contrats">All contracts</h2>
+  <div class="barre-outils">
+    <input id="recherche" type="search" placeholder="Supplier or subject" aria-label="Search a supplier or subject" data-fr-placeholder="Fournisseur ou objet" data-fr-aria-label="Chercher un fournisseur ou un objet">
+    <select id="choix-contrat" aria-label="Pick a contract" data-fr-aria-label="Choisir un contrat"><option value="" data-fr="Choisir un contrat (de A à Z)">Pick a contract (A to Z)</option></select>
+    <select id="filtre-mode" aria-label="Bid type" data-fr-aria-label="Type d’appel">
+      <option value="" data-fr="Tous les types d’appel">All bid types</option>
+      <option value="seule" data-fr="Une seule soumission">Single bid only</option>
+    </select>
+  </div>
+  <p id="compte-liste" class="compte" aria-live="polite"></p>
+  <div id="liste" class="tableau-defile"></div>
+  <p><button type="button" id="voir-plus" class="bouton-lien" hidden data-fr="Afficher plus">Show more</button></p>
+  <h2 data-fr="Comment lire cette page">How to read this page</h2>
+  <ul>
+    <li data-fr="&lt;strong&gt;Le montant&lt;/strong&gt; est celui de la soumission gagnante, tel que la Ville le publie. Les modifications faites ensuite au contrat ne sont pas dans ces données : le coût final peut être différent."><strong>The amount</strong> is the bid amount of the winning submission, as the City publishes it. Later changes to the contract are not in this data: the final cost may differ.</li>
+    <li data-fr="&lt;strong&gt;Le type d’appel&lt;/strong&gt; est la voie d’approvisionnement de la Ville : demande de propositions (Request for Proposal), appel d’offres (Invitation to Tender), demande de prix (Request for Quotation), demande de qualification (Request for Application), appel d’intérêt (Expression of Interest)."><strong>The bid type</strong> is the City’s procurement route: Request for Proposal, Invitation to Tender, Request for Quotation, Request for Application (pre-qualification), Expression of Interest.</li>
+    <li data-fr="&lt;strong&gt;Qui a soumissionné&lt;/strong&gt; : la Ville publie chaque soumission de chaque appel, avec « awarded: Yes » pour le gagnant et « No » pour les autres. Ouvrir un contrat les montre toutes, avec l’écart au montant gagnant."><strong>Who bid</strong>: the City publishes every submission on each call, with “awarded: Yes” for the winner and “No” for the others. Opening a contract shows them all, with the gap to the winning amount.</li>
+    <li data-fr="&lt;strong&gt;Ce qui n’est pas ici&lt;/strong&gt; : les contrats attribués sans appel public, les modifications de contrat, et le lien entre un contrat et une décision du conseil. La Ville ne les publie pas dans ce jeu de données, donc cette page ne les montre pas."><strong>What is not here</strong>: contracts awarded without a public call, contract amendments, and the link between a contract and a Council decision. The City does not publish those in this data set, so this page does not show them.</li>
+    <li data-fr="&lt;strong&gt;Les données ont du retard.&lt;/strong&gt; La Ville rafraîchit ce jeu quelques fois par année ; la dernière attribution qu’il contient est indiquée au bas de la page. Une période récente vide veut dire que les données n’ont pas été rafraîchies, pas que rien n’a été attribué."><strong>The data lags.</strong> The City refreshes this data set a few times a year; the last award it contains is shown at the bottom of the page. An empty recent period means the data has not been refreshed, not that nothing was awarded.</li>
+  </ul>
+  <h2 data-fr="Sources">Sources</h2>
+  <ul>
+    <li data-fr="&lt;strong&gt;Données&lt;/strong&gt; : &lt;a href=&quot;https://opendata.vancouver.ca/explore/assets/awarded-contracts/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;« Awarded contracts »&lt;/a&gt;, portail de données ouvertes de la Ville de Vancouver, &lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt;."><strong>Data</strong>: <a href="https://opendata.vancouver.ca/explore/assets/awarded-contracts/" target="_blank" rel="noopener">“Awarded contracts”</a>, City of Vancouver open data portal, <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>.</li>
+  </ul>
+  <p id="maj" class="compte"></p>
+</main>
+<style>
+  .grille-chiffres { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 20px 0; }
+  .grille-chiffres > div { background: var(--carte); border: var(--bordure-carte); border-radius: var(--rayon); padding: 12px 14px; }
+  .grille-chiffres strong { display: block; font-size: 1.5rem; line-height: 1.2; }
+  .grille-chiffres span { color: var(--doux); font-size: .9rem; }
+  .tableau-defile { overflow-x: auto; }
+  .tableau-defile table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  .tableau-defile th, .tableau-defile td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--ligne); vertical-align: top; }
+  .tableau-defile .n { text-align: right; white-space: nowrap; }
+  .tableau-defile .motif { display: block; color: var(--doux); font-size: .85rem; margin-top: 2px; }
+  .barre-outils input, .barre-outils select { font: inherit; padding: 6px 8px; border: 1px solid var(--ligne-forte); border-radius: var(--rayon); background: var(--carte); color: var(--encre); }
+  .barre-outils input { flex: 1; min-width: 200px; }
+  #choix-contrat { flex: 1 1 100%; order: 3; width: 100%; max-width: 100%; min-width: 0; text-overflow: ellipsis; }
+  .ouvrir { font: inherit; font-size: .85rem; background: none; border: 0; padding: 2px 0; margin-top: 4px; color: var(--lien, var(--encre)); cursor: pointer; text-decoration: underline; display: block; text-align: left; }
+  tr.detail > td { background: var(--carte); padding: 12px 14px 14px; }
+  .detail h3 { font-size: 1rem; margin: 10px 0 6px; }
+  .detail h3:first-child { margin-top: 0; }
+  .tableau-defile .detail table.soum { width: auto; min-width: min(100%, 560px); font-size: .9rem; }
+  .tableau-defile .detail table.soum th, .tableau-defile .detail table.soum td { padding: 5px 8px; }
+  .detail tr.gagnant td { font-weight: 700; }
+  .detail .note { color: var(--doux); font-size: .85rem; margin: 8px 0 0; }
+</style>
+<script type="module">
+  // Copie adaptée de la page Contrats de Montréal (15 nov. 2026). Ce qui change : la source est le jeu
+  // « Awarded contracts » de Vancouver, où chaque ligne est une soumission — il n'y a ni gré à gré ni motif,
+  // mais un TYPE d'appel, et la liste complète des soumissionnaires est déjà dans le jeu.
+  import { EN, tr } from './assets/langue.js';
+  const nf = new Intl.NumberFormat(EN ? 'en-CA' : 'fr-CA', { maximumFractionDigits: 0 });
+  const nf1 = new Intl.NumberFormat(EN ? 'en-CA' : 'fr-CA', { maximumFractionDigits: 1 });
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const argent = (n) => (n == null ? '—' : EN ? '$' + nf.format(n) : nf.format(n) + ' $');
+  const millions = (n) => (n >= 1e6 ? (EN ? '$' + nf1.format(n / 1e6) + ' M' : nf1.format(n / 1e6) + ' M$') : argent(n));
+  const lienAppel = (num) => `https://opendata.vancouver.ca/explore/assets/awarded-contracts/view/?refine=bid_number%3A${encodeURIComponent(num)}`;
+  const d = await (await fetch('data/contrats-page.json')).json().catch(() => null);
+  if (!d) {
+    $('#chargement').hidden = false;
+    $('#chargement').innerHTML = tr('<strong>Aucune donnée.</strong> Lancez <code>node scripts/refresh.js</code> dans le dossier <code>vancouver/</code>, puis rechargez la page.', '<strong>No data.</strong> Run <code>node scripts/refresh.js</code> in the <code>vancouver/</code> folder, then reload this page.');
+    throw new Error('contrats-page.json absent');
+  }
+  let D = null, C_i = 0; // contrats-details.json, chargé au premier clic
+  const C = d.c.map(([date, montant, type, soum, fournisseur, titre, bid, det]) => ({
+    i: C_i++, date, montant, soum, fournisseur, titre, bid, det, type: d.types[type], typeIdx: type, seule: soum === 1,
+  }));
+  const somme = (l) => l.reduce((s, c) => s + (c.montant || 0), 0);
+  const total = somme(C);
+  const S = C.filter((c) => c.seule);
+  const pct = (a, b) => (b ? Math.round((100 * a) / b) : 0) + '%';
+  $('#chiffres').innerHTML = [
+    [nf.format(C.length), tr('contrats attribués', 'contracts awarded')],
+    [millions(total), tr('au total', 'in total')],
+    [`${nf.format(S.length)} (${pct(S.length, C.length)})`, tr(`à une seule soumission, ${millions(somme(S))}`, `with a single bid, ${millions(somme(S))}`)],
+    [nf.format(d.nombreLots), tr('appels', 'calls for bids')],
+  ].map(([a, b]) => `<div><strong>${a}</strong><span>${b}</span></div>`).join('');
+  $('#intro-palmares').textContent = tr(`Total des contrats attribués du ${d.depuis} au ${d.jusqua}. Cliquez sur un nom pour voir ses contrats.`, `Total of contracts awarded from ${d.depuis} to ${d.jusqua}. Click a name to see its contracts.`);
+  // Le filtre par type, rempli d'après les données.
+  d.types.forEach((t, i) => $('#filtre-mode').insertAdjacentHTML('beforeend', `<option value="t${i}">${esc(t)} (${C.filter((c) => c.typeIdx === i).length})</option>`));
+  const parF = new Map();
+  for (const c of C) {
+    const f = parF.get(c.fournisseur) || { n: 0, m: 0, s: 0 };
+    f.n++; f.m += c.montant || 0; if (c.seule) f.s++;
+    parF.set(c.fournisseur, f);
+  }
+  const top = [...parF].sort((a, b) => b[1].m - a[1].m).slice(0, 15);
+  $('#palmares').innerHTML = `<table><thead><tr><th>${tr('Fournisseur', 'Supplier')}</th><th class="n">${tr('Contrats', 'Contracts')}</th><th class="n">${tr('Soumission unique', 'Single bid')}</th><th class="n">Total</th><th class="n">${tr('Part', 'Share')}</th></tr></thead><tbody>${
+    top.map(([nom, f]) => `<tr><td><a href="#liste" data-f="${esc(nom)}">${esc(nom)}</a></td><td class="n">${f.n}</td><td class="n">${f.s || ''}</td><td class="n">${argent(f.m)}</td><td class="n">${pct(f.m, total)}</td></tr>`).join('')
+  }</tbody></table>`;
+  $('#palmares').addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-f]'); if (!a) return;
+    e.preventDefault(); $('#recherche').value = a.dataset.f; $('#filtre-mode').value = ''; montrer(true);
+    $('#recherche').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  let limite = 50;
+  function montrer(neuf) {
+    if (neuf) limite = 50;
+    const q = norm($('#recherche').value.trim()), m = $('#filtre-mode').value;
+    const l = C.filter((c) => (!m || (m === 'seule' ? c.seule : c.typeIdx === Number(m.slice(1)))) && (!q || norm(c.fournisseur + ' ' + c.titre + ' ' + c.bid).includes(q)));
+    $('#compte-liste').textContent = `${nf.format(l.length)} ${tr('contrat(s)', 'contract(s)')}, ${argent(somme(l))}`;
+    $('#liste').innerHTML = `<table><thead><tr><th>Date</th><th>${tr('Objet', 'Subject')}</th><th>${tr('Fournisseur', 'Supplier')}</th><th class="n">${tr('Montant', 'Amount')}</th></tr></thead><tbody>${
+      l.slice(0, limite).map((c) => `<tr data-i="${c.i}"><td class="n">${c.date}</td><td><a href="${lienAppel(c.bid)}" target="_blank" rel="noopener">${esc(c.titre || c.bid)}</a><span class="motif"><span class="puce">${esc(c.type)}</span> ${esc(c.bid)}${c.seule ? ` <span class="puce">${tr('Soumission unique', 'Single bid')}</span>` : ''}</span><button type="button" class="ouvrir" aria-expanded="false">${tr(`${c.soum} soumission${c.soum > 1 ? 's' : ''} — voir qui`, `${c.soum} bid${c.soum > 1 ? 's' : ''} — see who bid`)}</button></td><td>${esc(c.fournisseur)}</td><td class="n">${argent(c.montant)}</td></tr>`).join('')
+    }</tbody></table>`;
+    $('#voir-plus').hidden = l.length <= limite;
+  }
+  async function detail(c) {
+    if (!D) D = await (await fetch('data/contrats-details.json')).json();
+    const [num, soums] = D[c.det] || ['', []];
+    const g = soums.find((b) => b[2]);
+    const ecart = (b) => {
+      if (b[2] || !g || g[1] == null || b[1] == null) return '';
+      const e = b[1] - g[1], s = e >= 0 ? '+' : '−';
+      return `${s}${argent(Math.abs(e))} (${s}${nf1.format(Math.abs((100 * e) / g[1]))}%)`;
+    };
+    let h = `<h3>${tr('Soumissionnaires', 'Bidders')} (${soums.length}) ${tr('sur', 'on')} ${esc(num)}</h3><table class="soum"><thead><tr><th>${tr('Entreprise', 'Company')}</th><th class="n">${tr('Montant', 'Amount')}</th><th class="n">${tr('Écart au gagnant', 'Gap to winner')}</th></tr></thead><tbody>${
+      soums.map((b) => `<tr${b[2] ? ' class="gagnant"' : ''}><td>${esc(b[0])}${b[2] ? ` <span class="puce">${tr('Gagnant', 'Awarded')}</span>` : ''}</td><td class="n">${argent(b[1])}</td><td class="n">${ecart(b)}</td></tr>`).join('')
+    }</tbody></table>`;
+    // Gagnant qui n'est pas le moins cher : sans explication, ça a l'air d'une irrégularité (Montréal, 13 nov. 2026).
+    if (g && g[1] != null && soums.some((b) => !b[2] && b[1] != null && b[1] < g[1])) h += `<p class="note">${tr('Une soumission plus basse a pu être jugée non conforme, ou l’appel peut peser autre chose que le prix (c’est en général le cas d’une demande de propositions). La raison n’est pas dans les données ouvertes.', 'A lower bid may have been judged non-compliant, or the call may weigh more than price (a Request for Proposal usually does). The reason is not in the open data.')}</p>`;
+    h += `<p><a href="${lienAppel(num)}" target="_blank" rel="noopener">${tr('Voir cet appel dans les données de la Ville', 'See this call in the City’s data')} ↗</a></p>`;
+    return h;
+  }
+  $('#liste').addEventListener('click', async (e) => {
+    const b = e.target.closest('button.ouvrir'); if (!b) return;
+    const ligne = b.closest('tr'), suiv = ligne.nextElementSibling;
+    if (suiv?.classList.contains('detail')) { suiv.remove(); b.setAttribute('aria-expanded', 'false'); return; }
+    const n = document.createElement('tr'); n.className = 'detail';
+    n.innerHTML = `<td colspan="4">${await detail(C[+ligne.dataset.i])}</td>`;
+    ligne.after(n); b.setAttribute('aria-expanded', 'true');
+  });
+  const params = new URLSearchParams(location.search), qInit = params.get('q');
+  if (qInit) $('#recherche').value = qInit;
+  $('#recherche').addEventListener('input', () => montrer(true));
+  $('#filtre-mode').addEventListener('change', () => montrer(true));
+  const titres = [...new Set(C.map((c) => (c.titre || '').replace(/^[^\p{L}\p{N}]+/u, '').trim()).filter(Boolean))].sort((x, y) => x.localeCompare(y, 'en', { sensitivity: 'base' }));
+  $('#choix-contrat').insertAdjacentHTML('beforeend', titres.map((t) => `<option>${esc(t.length > 110 ? t.slice(0, 107) + '…' : t)}</option>`).join(''));
+  $('#choix-contrat').addEventListener('change', (e) => {
+    const i = e.target.selectedIndex; if (!i) return;
+    $('#recherche').value = titres[i - 1]; $('#filtre-mode').value = ''; montrer(true);
+    document.querySelector('#liste button.ouvrir')?.click();
+  });
+  $('#voir-plus').addEventListener('click', () => { limite += 100; montrer(); });
+  montrer(true);
+  if (qInit && params.has('ouvrir')) document.querySelector('#liste button.ouvrir')?.click();
+  $('#maj').textContent = tr(`Dernière attribution dans les données de la Ville : ${d.jusqua}. Jeu modifié par la Ville le ${(d.jeuModifieLe || '').slice(0, 10)}. Lu le ${d.extraction.slice(0, 10)}.`, `Last award in the City’s data: ${d.jusqua}. Data set last modified by the City: ${(d.jeuModifieLe || '').slice(0, 10)}. Read on ${d.extraction.slice(0, 10)}.`);
+</script>
+<footer>
+  <div class="contenu">
+    <p data-fr="Site citoyen indépendant. Aucun lien avec la Ville de Vancouver, aucun caractère officiel. En cas d’écart, le registre de la Ville fait foi. &lt;a href=&quot;sources-of-the-vancouver-data&quot;&gt;Sources&lt;/a&gt;.">Independent citizen site. No connection with the City of Vancouver, no official status. If anything differs, the City’s record prevails. <a href="sources-of-the-vancouver-data">Sources</a>.</p>
+    <p data-fr="Contient de l’information visée par la &lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt; (licence du gouvernement ouvert de Vancouver).">Contains information licensed under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>.</p>
+    <p class="lien-dq-pied" data-fr="&lt;a href=&quot;/&quot;&gt;DossierBC — l’Assemblée législative de la Colombie-Britannique en clair&lt;/a&gt; · &lt;a href=&quot;/regles&quot;&gt;Les règles du site&lt;/a&gt;"><a href="/">DossierBC — the Legislative Assembly of British Columbia in plain language</a> · <a href="/regles">Rules of the site</a></p>
+  </div>
+</footer>
+<script type="module" src="assets/app.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="assets/avis-pause.js" defer></script>
+<script type="module" src="assets/langue.js"></script>
+</body>
+</html>

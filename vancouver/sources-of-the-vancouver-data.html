@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVMNKLDBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JVMNKLDBCQ', { content_group: 'Vancouver' });
+</script>
+<script src="/commun/consentement.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-fr="Sources des données de Vancouver : d’où vient chaque chiffre | DossierBC">Sources of the Vancouver data: where every number comes from | DossierBC</title>
+<meta name="description" content="Where the Vancouver City Council votes on this site come from, under which licence, what the data does not contain, and what a machine can miss. Independent citizen site." data-fr-content="D’où viennent les votes du conseil municipal de Vancouver affichés sur ce site, sous quelle licence, ce que les données ne contiennent pas, et ce qu’une machine peut manquer. Site citoyen indépendant.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://dossierbc.ca/vancouver/sources-of-the-vancouver-data">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="en_CA">
+<meta property="og:title" content="Sources of the Vancouver data: where every number comes from | DossierBC">
+<meta property="og:description" content="Where the Vancouver City Council votes on this site come from, under which licence, and what the data does not contain.">
+<meta property="og:url" content="https://dossierbc.ca/vancouver/sources-of-the-vancouver-data">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@400..700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('dvq:theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'sombre' : 'clair';
+      document.documentElement.dataset.theme = t;
+      var z = parseInt(localStorage.getItem('dvq:zoom'), 10);
+      if (z >= 80 && z <= 150) document.documentElement.style.zoom = z + '%';
+    } catch (e) {}
+  })();
+</script>
+<link rel="icon" href="/commun/bc.svg" type="image/svg+xml">
+<link rel="icon" href="/commun/bc-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/commun/bc-180.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DossierBC", "item": "https://dossierbc.ca/" },
+    { "@type": "ListItem", "position": 2, "name": "City of Vancouver", "item": "https://dossierbc.ca/vancouver/" },
+    { "@type": "ListItem", "position": 3, "name": "Sources", "item": "https://dossierbc.ca/vancouver/sources-of-the-vancouver-data" }
+  ]
+}
+</script>
+<script>
+  /* Français choisi (?lang=fr ou dvq:langue) : la page est cachée le temps que assets/langue.js la traduise. */
+  (function () { try { var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('dvq:langue'); if (l === 'fr') { document.documentElement.lang = 'fr'; document.documentElement.classList.add('dvq-fr'); } } catch (e) {} })();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="sources" data-ville="vancouver">
+<header>
+  <div class="contenu">
+    <div class="titre-ligne">
+      <a href="./"><p class="logo-titre">Dossier<span class="marque">Vancouver</span></p></a><a class="lien-dq" href="/" title="DossierBC — the Legislative Assembly of British Columbia in plain language" aria-label="DossierBC — the Legislative Assembly of British Columbia in plain language" data-fr-title="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair" data-fr-aria-label="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair">DossierBC</a>
+    </div>
+    <p class="sous-titre" data-fr="Les votes du conseil municipal de Vancouver, rendus lisibles. Des données publiques, prises telles quelles sur le portail de données ouvertes de la Ville de Vancouver.">
+      Vancouver City Council votes, made readable. Public data, taken as is from the City of
+      Vancouver’s open data portal.
+    </p>
+    <nav>
+      <a href="./" data-fr="Accueil">Home</a>
+      <a href="decisions-of-vancouver-city-council" data-fr="Décisions">Decisions</a>
+      <a href="vancouver-city-council" data-fr="Conseil municipal">City Council</a>
+      <a href="near-me-in-vancouver" data-fr="Près de chez moi">Near me</a>
+      <a href="contracts-of-the-city-of-vancouver" data-fr="Contrats">Contracts</a>
+      <a href="vancouver-capital-budget" data-fr="Budget">Budget</a>
+      <a href="vancouver-council-glossary" data-fr="Lexique">Glossary</a>
+      <div class="outils">
+        <div class="taille-texte" role="group" aria-label="Text size" data-fr-aria-label="Taille du texte">
+          <button type="button" id="texte-moins" aria-label="Smaller text" data-fr-aria-label="Réduire le texte">A−</button>
+          <span id="texte-pct" aria-live="polite">100%</span>
+          <button type="button" id="texte-plus" aria-label="Larger text" data-fr-aria-label="Agrandir le texte">A+</button>
+        </div>
+        <button type="button" id="bascule-theme" class="bascule-theme" aria-pressed="false"
+                title="Switch to dark theme" aria-label="Switch to dark theme"></button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="contenu prose">
+  <div id="chargement" class="avis" hidden data-fr="Chargement des données…"></div>
+  <h1 class="page" data-fr="Sources des données de Vancouver">Sources of the Vancouver data</h1>
+  <p data-fr="Voici les sources des données de Vancouver. Ce site n’est pas la Ville de Vancouver et n’a aucun caractère officiel. En cas d’écart, le registre de la Ville fait foi — il est à un clic sur chaque fiche. Ces sources alimentent les &lt;a href=&quot;decisions-of-vancouver-city-council&quot;&gt;décisions du conseil municipal de Vancouver&lt;/a&gt; et les &lt;a href=&quot;vancouver-city-council&quot;&gt;fiches des membres&lt;/a&gt;.">
+    Here are the sources of the Vancouver data. This site is not the City of Vancouver and has no official status.
+    If anything differs, the City’s own record prevails — it is one click away on every card. These sources feed
+    the <a href="decisions-of-vancouver-city-council">decisions of Vancouver City Council</a> and the
+    <a href="vancouver-city-council">members’ pages</a>.
+  </p>
+
+  <h2 data-fr="D’où viennent les données">Where the data comes from</h2>
+  <ul>
+    <li data-fr="Décisions, votes, séances et membres viennent tous d’&lt;strong&gt;un seul jeu de données&lt;/strong&gt; publié par la Ville sur son portail de données ouvertes : &lt;a href=&quot;https://opendata.vancouver.ca/explore/assets/council-voting-records/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;« &lt;span class=&quot;nom-propre&quot;&gt;Council voting records&lt;/span&gt; »&lt;/a&gt;. Depuis avril 2016, le conseil vote avec un système électronique, et chaque ligne du jeu est le vote d’un membre sur un point : la séance, son type, la date, la ligne d’ordre du jour du point, le membre, le vote (&lt;em&gt;In Favour, In Opposition, Abstain, Absent, Declared Conflict, Ineligible, No Vote&lt;/em&gt;) et le résultat (&lt;em&gt;Carried, Carried Unanimously, Lost&lt;/em&gt;). 83 824 lignes au 11 novembre 2026, rafraîchies par la Ville environ toutes les deux semaines.">Decisions, votes, meetings and members all come from <strong>one data set</strong> published by the City on its open data portal:
+      <a href="https://opendata.vancouver.ca/explore/assets/council-voting-records/" target="_blank" rel="noopener">“<span class="nom-propre">Council voting records</span>”</a>.
+      Since April 2016, Council votes with an electronic system, and each line of the data set is one member’s vote on one item:
+      the meeting, its type, the date, the agenda line of the item, the member, the vote (<em>In Favour, In Opposition, Abstain,
+      Absent, Declared Conflict, Ineligible, No Vote</em>) and the result (<em>Carried, Carried Unanimously, Lost</em>).
+      83,824 lines as of November 11, 2026, refreshed by the City about every two weeks.</li>
+    <li data-fr="La note de la Ville sur ce jeu dit : « &lt;em&gt;Please consult corresponding meeting minutes for official vote records.&lt;/em&gt; » (consultez les procès-verbaux correspondants pour le registre officiel des votes). Les procès-verbaux sont publiés à part par le greffe ; ce site ne les lit pas.">The City’s own note on this data set reads: “<em>Please consult corresponding meeting minutes for official vote records.</em>”
+      The minutes are published separately by the City Clerk; this site does not read them.</li>
+    <li data-fr="Le jeu est publié sous l’&lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;span class=&quot;nom-propre&quot;&gt;Open Government Licence – Vancouver&lt;/span&gt;&lt;/a&gt;, version 1.0, lue au complet le 15 novembre 2026. Elle accorde « &lt;em&gt;a worldwide, royalty-free, perpetual, non-exclusive licence to use the Information, including for commercial purposes&lt;/em&gt; » (une licence mondiale, gratuite, perpétuelle et non exclusive d’utiliser l’information, y compris à des fins commerciales), à deux conditions qui concernent ce site : citer la source — d’où la ligne au pied de chaque page, « &lt;em&gt;Contains information licensed under the Open Government Licence – Vancouver&lt;/em&gt; » — et ne jamais laisser croire que la Ville appuie ce site ou qu’il a un caractère officiel. Ce n’est pas le cas.">The data set is published under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener"><span class="nom-propre">Open Government Licence – Vancouver</span></a>,
+      version 1.0, read in full on November 15, 2026. It grants “<em>a worldwide, royalty-free, perpetual, non-exclusive licence to use the Information,
+      including for commercial purposes</em>”, on two conditions that concern this site: to acknowledge the source — hence the line at the foot of
+      every page, “<em>Contains information licensed under the Open Government Licence – Vancouver</em>” — and never to suggest that the City endorses
+      this site or that it has any official status. It does not.</li>
+  </ul>
+
+  <h2 data-fr="Ce que les données ne contiennent pas">What the data does not contain</h2>
+  <ul>
+    <li data-fr="&lt;strong&gt;Le texte des décisions.&lt;/strong&gt; La Ville publie la ligne d’ordre du jour de chaque point (une cinquantaine de caractères), pas la motion, pas le rapport, pas le procès-verbal. C’est pourquoi il n’y a &lt;strong&gt;aucun résumé en langage clair&lt;/strong&gt; dans ce volet, contrairement aux volets de Québec et de Montréal : il n’y a rien à résumer honnêtement, et on n’écrit rien à la place. Le jeu d’archives des procès-verbaux de la Ville (« &lt;span class=&quot;nom-propre&quot;&gt;council-meeting-minutes-archival&lt;/span&gt; ») est vide depuis 2014."><strong>The text of the decisions.</strong> The City publishes the agenda line of each item (about fifty characters), not the motion, not the
+      report, not the minutes. That is why there are <strong>no plain-language summaries</strong> in this section, unlike the Québec and Montréal
+      sections: there is nothing to summarize honestly, and we write nothing in its place. The City’s archival data set of council minutes
+      (“<span class="nom-propre">council-meeting-minutes-archival</span>”) has been empty since 2014.</li>
+    <li data-fr="&lt;strong&gt;Les séances sans vote enregistré.&lt;/strong&gt; Une séance n’apparaît ici que si au moins un point a été mis aux voix électroniquement. Une séance où tout a passé par consentement, ou une séance à huis clos, n’existe pas dans ces données, donc pas ici."><strong>Meetings without a recorded vote.</strong> A meeting appears here only if at least one item was put to an electronic vote. A meeting
+      where everything passed by consent, or a meeting in camera, does not exist in this data and therefore does not exist here.</li>
+    <li data-fr="&lt;strong&gt;Les districts.&lt;/strong&gt; Vancouver élit son conseil à l’échelle de la ville — toute la ville élit le maire et les dix conseillers. Il n’y a pas de districts, donc pas de carte, et pas de « votre conseiller » à montrer."><strong>Districts.</strong> Vancouver elects its Council at large — the whole city elects the Mayor and the ten Councillors. There are no
+      wards, so there is no map, and no “your councillor” to point to.</li>
+    <li data-fr="&lt;strong&gt;Partis, dossiers, coordonnées.&lt;/strong&gt; Le jeu donne le titre d’un membre, une initiale et un nom de famille, exactement comme sur chaque fiche (« Councillor P Fry »). Rien d’autre n’y est publié, donc rien d’autre n’est affiché."><strong>Parties, portfolios, contact details.</strong> The data set gives a member’s title, an initial and a family name, exactly as shown
+      on each card (“Councillor P Fry”). Nothing else is published in it, so nothing else is shown.</li>
+  </ul>
+
+  <h2 data-fr="Ce que fait une machine, et ce qu’elle peut manquer">What a machine does, and what it can miss</h2>
+  <ul>
+    <li data-fr="&lt;strong&gt;Le regroupement.&lt;/strong&gt; Les lignes de la Ville sont regroupées par séance et par numéro de vote, en une fiche par motion. Les noms sous « Pour », « Contre », « Abstentions », « Absents » et « Conflit déclaré » sont les valeurs mêmes de la Ville, copiées telles quelles. Aucun nom n’est extrait d’un texte."><strong>Grouping.</strong> The City’s lines are grouped by meeting and by vote number into one card per motion. The names under
+      “For”, “Against”, “Abstained”, “Absent” and “Declared conflict” are the City’s own values, copied as they are. No name is extracted from a text.</li>
+    <li data-fr="&lt;strong&gt;Les étiquettes de sujet&lt;/strong&gt; (zonage, subventions, transport…) n’existent pas dans les données de la Ville : c’est un classement ajouté ici, par mots-clés, sur la seule ligne d’ordre du jour. Avec cinquante caractères pour travailler, il est plus grossier qu’à Montréal, où la décision entière est lue. Une mauvaise étiquette est une erreur de notre part, pas de la Ville."><strong>The subject tags</strong> (zoning, grants, transportation…) do not exist in the City’s data: they are a classification added here,
+      by keywords, on the agenda line alone. With fifty characters to go on, it is coarser than in Montréal, where the whole decision is read.
+      A wrong tag is a mistake of ours, not of the City.</li>
+    <li data-fr="&lt;strong&gt;Le « parcours » d’un point.&lt;/strong&gt; Quand plusieurs votes partagent la même ligne d’ordre du jour — une motion de retrait, un amendement, puis la motion telle qu’approuvée — les fiches sont reliées en un seul dossier. Le lien se fait sur le libellé : une suite libellée autrement ne sera pas reliée."><strong>The “path” of an item.</strong> When several votes share the same agenda line — a withdrawal motion, an amendment, then the motion as
+      approved — the cards are linked as one file. The link is made on the wording, so a differently worded follow-up will not be caught.</li>
+    <li data-fr="&lt;strong&gt;Les heures.&lt;/strong&gt; La Ville consigne l’heure de début de chaque vote en temps universel (UTC) ; l’heure affichée pour une séance est convertie à l’heure de Vancouver."><strong>Times.</strong> The City records the start time of each vote in UTC; the hour shown on a meeting is converted to Vancouver time.</li>
+    <li data-fr="&lt;strong&gt;« No Vote ».&lt;/strong&gt; La Ville a changé la définition de ce statut le 21 septembre 2021 (voir son journal des modifications). Les lignes plus anciennes peuvent ne pas vouloir dire la même chose que les récentes."><strong>“No Vote”.</strong> The City changed the definition of this status on September 21, 2021 (see its change log). Earlier lines may
+      not mean the same thing as later ones.</li>
+  </ul>
+
+  <h2 data-fr="À savoir">Things to know</h2>
+  <ul>
+    <li data-fr="&lt;strong&gt;C’est un aperçu.&lt;/strong&gt; Il couvre &lt;strong&gt;du 1er juin au 31 juillet 2026&lt;/strong&gt; — les deux derniers mois où le conseil a siégé avant l’élection municipale du 17 octobre 2026. Dans les données de la Ville, septembre et novembre 2026 n’ont aucun vote, et octobre en a onze, sur un seul point : le conseil était en relâche. La fenêtre est un réglage de notre outil ; les données de la Ville remontent au 5 avril 2016."><strong>This is a preview.</strong> It covers <strong>June 1 to July 31, 2026</strong> — the last two months in which Council sat
+      before the municipal election of October 17, 2026. In the City’s data, September and November 2026 have no vote at all, and October
+      has eleven, on a single item: Council was in recess. The window is a setting of our tool; the City’s data goes back to April 5, 2016.</li>
+    <li data-fr="&lt;strong&gt;Unanime ne veut pas dire que tout le monde était là.&lt;/strong&gt; « Carried Unanimously » veut dire que tous les membres qui ont voté étaient pour. Les membres absents sont indiqués comme tels sur la fiche."><strong>Unanimous does not mean everyone was there.</strong> “Carried Unanimously” means every member who voted was in favour. Absent
+      members are listed as such on the card.</li>
+    <li data-fr="&lt;strong&gt;Un même point peut être voté deux fois&lt;/strong&gt; : une fois en comité permanent (Policy &amp;amp; Strategic Priorities, City Finance &amp;amp; Services), puis de nouveau quand le conseil le rend définitif. Les deux votes sont réels, et les deux sont affichés."><strong>The same item can be voted twice</strong>: once in a standing committee (Policy &amp; Strategic Priorities, City Finance &amp; Services),
+      then again when Council makes it final. Both votes are real, and both are shown.</li>
+    <li data-fr="&lt;strong&gt;Ce qu’on a lu avant d’utiliser les données.&lt;/strong&gt; La licence, au complet. La description du jeu et ses notes de modification. Et le &lt;a href=&quot;https://opendata.vancouver.ca/robots.txt&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;robots.txt&lt;/a&gt; du portail, qui demande aux robots génériques de ne pas parcourir &lt;code&gt;/api/&lt;/code&gt;. Ce fichier régit l’indexation par les moteurs de recherche ; l’API est l’interface documentée du portail pour les programmes, et la licence permet l’usage. On le note ici quand même, et le tableau « État des données » plus bas dit quelle porte a servi pour cet aperçu."><strong>What we read before using the data.</strong> The licence, in full. The data set’s description and change notes. And the portal’s
+      <a href="https://opendata.vancouver.ca/robots.txt" target="_blank" rel="noopener">robots.txt</a>, which asks generic robots not to crawl <code>/api/</code>.
+      That file governs indexing by search engines; the API is the portal’s documented interface for programs, and the licence allows the use.
+      We note it here all the same, and the “Data status” table below says which door was used for this preview.</li>
+  </ul>
+
+  <h2 data-fr="Ce qu’on a demandé à la Ville, et ce qu’elle a répondu">What we asked the City, and what it answered</h2>
+  <p data-fr="Rien pour l’instant. La licence n’exige aucune permission, et cet aperçu n’a pas été publié. Si ce volet ouvre, on écrira au greffe de la Ville pour dire ce qu’on lit, à quel rythme, et comment nous joindre — comme à Montréal — et ce paragraphe dira ce qui est revenu.">Nothing yet. The licence requires no permission, and this preview has not been published. If this section goes live, we will write to the
+    City Clerk’s office to say what we read, how often, and how to reach us — as we did in Montréal — and this paragraph will say what came back.</p>
+
+  <h2 data-fr="État des données">Data status</h2>
+  <div id="etat-donnees"></div>
+  <div id="etat-archive"></div>
+
+  <h2 id="mises-a-jour" data-fr="Mises à jour">Updates</h2>
+  <ul class="journal-ville">
+    <li data-fr="&lt;span class=&quot;pr-meta&quot;&gt;15 novembre 2026&lt;/span&gt; &lt;strong&gt;Aperçu de Vancouver construit.&lt;/strong&gt; Votes de juin et juillet 2026 lus dans les données ouvertes de la Ville ; pages des décisions, des membres et du lexique ; rien de publié."><span class="pr-meta">November 15, 2026</span> <strong>Vancouver preview built.</strong> Votes of June and July 2026 read from the City’s open data; decisions, members and glossary pages; nothing published.</li>
+  </ul>
+</main>
+<footer>
+  <div class="contenu">
+    <p data-fr="Site citoyen indépendant. Aucun lien avec la Ville de Vancouver, aucun caractère officiel. En cas d’écart, le registre de la Ville fait foi. &lt;a href=&quot;sources-of-the-vancouver-data&quot;&gt;Sources&lt;/a&gt;.">Independent citizen site. No connection with the City of Vancouver, no official status. If anything differs, the City’s record prevails.</p>
+    <p data-fr="Contient de l’information visée par la &lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt; (licence du gouvernement ouvert de Vancouver).">Contains information licensed under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>.</p>
+    <p class="lien-dq-pied" data-fr="&lt;a href=&quot;/&quot;&gt;DossierBC — l’Assemblée législative de la Colombie-Britannique en clair&lt;/a&gt; · &lt;a href=&quot;/regles&quot;&gt;Les règles du site&lt;/a&gt;"><a href="/">DossierBC — the Legislative Assembly of British Columbia in plain language</a> · <a href="/regles">Rules of the site</a></p>
+  </div>
+</footer>
+<script type="module" src="assets/app.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="assets/avis-pause.js" defer></script>
+<script type="module" src="assets/langue.js"></script>
+</body>
+</html>

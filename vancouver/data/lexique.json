@@ -1,0 +1,608 @@
+{
+ "generatedAt": "2026-11-15T12:24:15.557Z",
+ "source": "https://opendata.vancouver.ca/explore/assets/council-voting-records/",
+ "avertissement": "The definitions in this glossary are written by DossierBC — they are not the City of Vancouver’s texts nor legal definitions. What comes from the official record is the count of occurrences and the example under each term.",
+ "categories": {
+  "instances": "Who decides",
+  "vote": "Voting and results",
+  "documents": "Motions and by-laws",
+  "urbanisme": "Zoning and development",
+  "argent": "Money and property"
+ },
+ "parametres": {
+  "annee": "2026",
+  "depuis": "2026-06-01",
+  "jusqua": "2026-07-31"
+ },
+ "nombre": 35,
+ "entrees": [
+  {
+   "terme": "City Council",
+   "categorie": "instances",
+   "recherche": "^(?:Regular )?Council$",
+   "definition": "The Mayor and ten Councillors, all elected city-wide for four years. Council decides by motion: the question is put, each member votes, and the motion is carried or lost.",
+   "ouVousLeVoyez": "The meeting type on most cards. Vancouver has no wards: every member represents the whole city.",
+   "occurrences": {
+    "seances": 6,
+    "points": 96,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11932",
+    "objet": "NEW BUSINESS - Emancipation Day Motion",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Regular Council",
+   "categorie": "instances",
+   "recherche": "^Regular Council$",
+   "definition": "A Council meeting held on the regular schedule, where reports, by-laws and motions are decided.",
+   "ouVousLeVoyez": "A meeting type in the City’s record.",
+   "occurrences": {
+    "seances": 0,
+    "points": 0,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Special Council",
+   "categorie": "instances",
+   "recherche": "^Special Council$",
+   "definition": "A Council meeting called outside the regular schedule, usually for one matter.",
+   "ouVousLeVoyez": "A meeting type in the City’s record.",
+   "occurrences": {
+    "seances": 1,
+    "points": 7,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11759",
+    "objet": "Continuing the Success of the Granville Street Pedestrian Zone Pilot and Temporary Patios throughout the City - final motion as amended",
+    "date": "2026-07-02",
+    "instance": "Special Council"
+   }
+  },
+  {
+   "terme": "Public Hearing",
+   "categorie": "instances",
+   "recherche": "^Public Hearing$",
+   "definition": "Council sitting to hear speakers before deciding on rezoning, heritage and certain other by-laws. The vote at the end of a hearing is a Council vote.",
+   "ouVousLeVoyez": "Most rezoning decisions are made at a public hearing, often late in the evening.",
+   "occurrences": {
+    "seances": 6,
+    "points": 19,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11920",
+    "objet": "Item 4. CD-1 Rezoning: 1905 Ogden Avenue",
+    "date": "2026-07-28",
+    "instance": "Public Hearing"
+   }
+  },
+  {
+   "terme": "Standing committee",
+   "categorie": "instances",
+   "aussi": "Policy & Strategic Priorities; City Finance & Services",
+   "recherche": "^(?:Policy & Strategic Priorities|City Finance & Services)$",
+   "definition": "A committee made up of all Council members that hears staff reports and speakers first. Its decisions are referred to the next Council meeting to be made final.",
+   "ouVousLeVoyez": "Two of Vancouver’s meeting types. The same item can therefore be voted twice: once in committee, once in Council.",
+   "occurrences": {
+    "seances": 2,
+    "points": 42,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11806",
+    "objet": "Motion 14. Policy Framework for Overdose Prevention and Harm Reduction Facilities",
+    "date": "2026-07-15",
+    "instance": "City Finance & Services"
+   }
+  },
+  {
+   "terme": "Courts of Revision",
+   "categorie": "instances",
+   "recherche": "^Courts of Revision$",
+   "definition": "Council sitting as a court to hear appeals about local improvement charges and parcel taxes.",
+   "ouVousLeVoyez": "A rare meeting type in the City’s record.",
+   "occurrences": {
+    "seances": 0,
+    "points": 0,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Auditor General Committee",
+   "categorie": "instances",
+   "recherche": "^Auditor General Committee$",
+   "definition": "The Council committee that oversees the City’s independent Auditor General.",
+   "ouVousLeVoyez": "A rare meeting type in the City’s record.",
+   "occurrences": {
+    "seances": 0,
+    "points": 0,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Mayor",
+   "categorie": "instances",
+   "recherche": "^Mayor\\b",
+   "definition": "Elected city-wide. Chairs Council meetings and votes like every other member.",
+   "ouVousLeVoyez": "One line per vote in the City’s record, like the ten Councillors.",
+   "occurrences": {
+    "bulletins": 164,
+    "membres": 1,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Councillor",
+   "categorie": "instances",
+   "recherche": "^Councillor\\b",
+   "definition": "One of ten members elected city-wide. No Councillor represents a neighbourhood: each one represents all of Vancouver.",
+   "ouVousLeVoyez": "The City writes the title, an initial and the family name: “Councillor P Fry”.",
+   "occurrences": {
+    "bulletins": 1640,
+    "membres": 10,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Recorded vote",
+   "categorie": "vote",
+   "recherche": ".",
+   "definition": "A vote in which each member’s choice is written down. Since 2016 Vancouver records every Council vote electronically, member by member — in many councils a recorded vote has to be requested.",
+   "ouVousLeVoyez": "Every card on this site. The City notes that the official record remains the meeting minutes.",
+   "occurrences": {
+    "points": 164,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11932",
+    "objet": "NEW BUSINESS - Emancipation Day Motion",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "In Favour",
+   "categorie": "vote",
+   "recherche": "^In Favour$",
+   "definition": "The member voted for the motion.",
+   "ouVousLeVoyez": "The “for” count on each card.",
+   "occurrences": {
+    "bulletins": 1372,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11932",
+    "objet": "NEW BUSINESS - Emancipation Day Motion",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "In Opposition",
+   "categorie": "vote",
+   "recherche": "^In Opposition$",
+   "definition": "The member voted against the motion.",
+   "ouVousLeVoyez": "The “against” count, and the names under “Against”.",
+   "occurrences": {
+    "bulletins": 228,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11929",
+    "objet": "CD-1 Rezoning: 2345-2349 Main Street - Amendment",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Abstain",
+   "categorie": "vote",
+   "recherche": "^Abstain$",
+   "definition": "The member was present and did not vote for or against. The record gives the status, not the reason.",
+   "ouVousLeVoyez": "Listed under “Abstained” when a card is opened.",
+   "occurrences": {
+    "bulletins": 31,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11931",
+    "objet": "CD-1 Rezoning: 5027-5053 Boundary Road",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Absent",
+   "categorie": "vote",
+   "recherche": "^Absent$",
+   "definition": "The member was not in the room when this vote was taken.",
+   "ouVousLeVoyez": "Listed under “Absent” when a card is opened. Absence from one vote is not absence from the meeting.",
+   "occurrences": {
+    "bulletins": 167,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11932",
+    "objet": "NEW BUSINESS - Emancipation Day Motion",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Declared Conflict",
+   "categorie": "vote",
+   "recherche": "^Declared Conflict$",
+   "definition": "The member declared a conflict of interest on this item, left the room and did not vote.",
+   "ouVousLeVoyez": "The gold tag on a card and on a member’s profile. The rarest status in the record.",
+   "occurrences": {
+    "bulletins": 2,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11676",
+    "objet": "Decision Re: Integrity Commissioner Investigation Report",
+    "date": "2026-06-02",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Ineligible",
+   "categorie": "vote",
+   "recherche": "^Ineligible$",
+   "definition": "The member was not eligible to vote on this item. The record gives the status, not the reason.",
+   "ouVousLeVoyez": "Rare. Shown when a card is opened.",
+   "occurrences": {
+    "bulletins": 4,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11898",
+    "objet": "UB4. CD-1 Rezoning: 75 East 8th Avenue",
+    "date": "2026-07-28",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "No Vote",
+   "categorie": "vote",
+   "recherche": "^No Vote$",
+   "definition": "No vote was registered for the member. The City changed the definition of this status on September 21, 2021; see its change log.",
+   "ouVousLeVoyez": "Rare in recent years.",
+   "occurrences": {
+    "bulletins": 0,
+    "surTotal": 1804,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Carried",
+   "categorie": "vote",
+   "recherche": "^Carried$",
+   "definition": "More members voted for the motion than against it: it passed.",
+   "ouVousLeVoyez": "The result tag on a card.",
+   "occurrences": {
+    "points": 38,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11929",
+    "objet": "CD-1 Rezoning: 2345-2349 Main Street - Amendment",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Carried Unanimously",
+   "categorie": "vote",
+   "recherche": "^Carried Unanimously$",
+   "definition": "Every member who voted was in favour.",
+   "ouVousLeVoyez": "The most common result. Unanimous does not mean everyone was present.",
+   "occurrences": {
+    "points": 103,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11932",
+    "objet": "NEW BUSINESS - Emancipation Day Motion",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Lost",
+   "categorie": "vote",
+   "recherche": "^Lost$",
+   "definition": "The motion did not get a majority: it failed.",
+   "ouVousLeVoyez": "The red result tag. Often an amendment or a member’s motion.",
+   "occurrences": {
+    "points": 23,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11928",
+    "objet": "CD-1 Rezoning: 2345-2349 Main Street - Withdrawal Motion on the Main Motion",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Motion",
+   "categorie": "documents",
+   "recherche": "\\bmotion\\b",
+   "definition": "The question Council votes on. A staff report’s recommendations, a by-law, or a member’s own proposal become a motion once moved and seconded.",
+   "ouVousLeVoyez": "Every card is one motion put to a vote.",
+   "occurrences": {
+    "points": 43,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11932",
+    "objet": "NEW BUSINESS - Emancipation Day Motion",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Amendment",
+   "categorie": "documents",
+   "recherche": "\\bamend",
+   "definition": "A motion to change the wording of the motion on the floor. It is voted first; if it carries, the main motion is then voted as amended.",
+   "ouVousLeVoyez": "A card whose subject ends with “– Amendment”. The same item then appears again as the main motion.",
+   "occurrences": {
+    "points": 67,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11929",
+    "objet": "CD-1 Rezoning: 2345-2349 Main Street - Amendment",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Referral",
+   "categorie": "documents",
+   "recherche": "\\brefer",
+   "definition": "A motion to send the matter to staff, to a committee or to a later meeting instead of deciding now.",
+   "ouVousLeVoyez": "A card whose subject ends with “– Referral”.",
+   "occurrences": {
+    "points": 3,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11791",
+    "objet": "Motion 6 - Protecting and Planning Vancouver's Waterfront Precinct - Referred",
+    "date": "2026-07-15",
+    "instance": "City Finance & Services"
+   }
+  },
+  {
+   "terme": "By-law",
+   "categorie": "documents",
+   "recherche": "\\bby-?law",
+   "definition": "A City law. Council votes to enact it after a report and, for zoning and heritage, after a public hearing.",
+   "ouVousLeVoyez": "Enactment votes, often several at once near the end of a Council meeting.",
+   "occurrences": {
+    "points": 12,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11919",
+    "objet": "Item 2. Modification to Conditions of Approval and By-law Enactment for 450-496 Prior Street, 550 Malkin Avenue, 1002 Station Street and 1050 Gore Ave",
+    "date": "2026-07-28",
+    "instance": "Public Hearing"
+   }
+  },
+  {
+   "terme": "New Business",
+   "categorie": "documents",
+   "aussi": "Member’s motion",
+   "recherche": "\\bnew business\\b",
+   "definition": "Items brought by a Councillor or the Mayor rather than by staff, raised at the end of a meeting.",
+   "ouVousLeVoyez": "A card whose subject starts with “NEW BUSINESS”.",
+   "occurrences": {
+    "points": 1,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11932",
+    "objet": "NEW BUSINESS - Emancipation Day Motion",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Rezoning",
+   "categorie": "urbanisme",
+   "recherche": "\\brezon",
+   "definition": "Changing which uses and buildings are allowed on a site, by amending the Zoning and Development By-law. Decided after a public hearing.",
+   "ouVousLeVoyez": "The most frequent subject at public hearings, usually with the street address.",
+   "occurrences": {
+    "points": 60,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11931",
+    "objet": "CD-1 Rezoning: 5027-5053 Boundary Road",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "CD-1",
+   "categorie": "urbanisme",
+   "aussi": "Comprehensive Development district",
+   "recherche": "\\bCD-?1\\b",
+   "definition": "A zoning district written for one site, with its own rules, instead of a standard zone that applies across the city.",
+   "ouVousLeVoyez": "“CD-1 Rezoning: 5229-5249 Ash Street”.",
+   "occurrences": {
+    "points": 53,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11931",
+    "objet": "CD-1 Rezoning: 5027-5053 Boundary Road",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Text Amendment",
+   "categorie": "urbanisme",
+   "recherche": "\\btext amendment\\b",
+   "definition": "A change to the wording of a zoning district’s rules, rather than to the zoning map.",
+   "ouVousLeVoyez": "Public hearing items without a single address.",
+   "occurrences": {
+    "points": 2,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11883",
+    "objet": "Item 5. CD-1 (708) Text Amendment: 2538-2550 Birch Street and 1290-1298 West Broadway",
+    "date": "2026-07-27",
+    "instance": "Public Hearing"
+   }
+  },
+  {
+   "terme": "Heritage designation",
+   "categorie": "urbanisme",
+   "recherche": "\\bheritage\\b",
+   "definition": "Legal protection of a building or site by by-law. Changes to it then need a heritage alteration permit.",
+   "ouVousLeVoyez": "Public hearing items that pair a heritage by-law with a rezoning.",
+   "occurrences": {
+    "points": 0,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Development Permit",
+   "categorie": "urbanisme",
+   "recherche": "\\bdevelopment permit\\b",
+   "definition": "The City’s approval of a specific building project under the zoning that already applies. Most are decided by staff; Council sees policy and appeals.",
+   "ouVousLeVoyez": "Occasionally in Council items about process and timelines.",
+   "occurrences": {
+    "points": 0,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Grant",
+   "categorie": "argent",
+   "recherche": "\\bgrants?\\b",
+   "definition": "Money the City gives to an organization for a stated purpose. Council approves grants, often by the dozen in one report.",
+   "ouVousLeVoyez": "Items from Arts, Culture and Community Services.",
+   "occurrences": {
+    "points": 6,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11921",
+    "objet": "Arts, Culture and Community Services Sublease, Lease and Licence Agreements and Grant Approvals",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Lease and licence",
+   "categorie": "argent",
+   "recherche": "\\b(?:sub)?lease\\b|\\blicen[cs]e agreement",
+   "definition": "The City renting out, or renting, a property. A licence agreement gives a right to use a space without a lease.",
+   "ouVousLeVoyez": "Real estate items, often bundled with grants to community groups.",
+   "occurrences": {
+    "points": 5,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": {
+    "numero": "Vote 11921",
+    "objet": "Arts, Culture and Community Services Sublease, Lease and Licence Agreements and Grant Approvals",
+    "date": "2026-07-29",
+    "instance": "Council"
+   }
+  },
+  {
+   "terme": "Tax Sale",
+   "categorie": "argent",
+   "recherche": "\\btax sale\\b",
+   "definition": "The yearly auction of properties whose property taxes have been unpaid for years. Council can cancel a sale.",
+   "ouVousLeVoyez": "A short Council item each fall.",
+   "occurrences": {
+    "points": 0,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "Capital plan and budget",
+   "categorie": "argent",
+   "recherche": "\\bcapital (?:plan|budget|project)",
+   "definition": "The multi-year plan of what the City will build, buy and repair, and the yearly budget that funds it.",
+   "ouVousLeVoyez": "Finance committee and Council items, mostly in the fall and winter.",
+   "occurrences": {
+    "points": 0,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  },
+  {
+   "terme": "DCL and CAC",
+   "categorie": "argent",
+   "aussi": "Development Cost Levies; Community Amenity Contributions",
+   "recherche": "\\bDCL\\b|\\bdevelopment cost lev|\\bCAC\\b|\\bcommunity amenity contribution",
+   "definition": "What developers pay the City when they build: a levy set by by-law (DCL), and a contribution negotiated with a rezoning (CAC).",
+   "ouVousLeVoyez": "Rezoning reports and by-law updates.",
+   "occurrences": {
+    "points": 0,
+    "surTotal": 164,
+    "periode": "2026-06-01 → 2026-07-31"
+   },
+   "exemple": null
+  }
+ ]
+}

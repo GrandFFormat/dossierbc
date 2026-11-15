@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVMNKLDBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JVMNKLDBCQ', { content_group: 'Vancouver' });
+</script>
+<script src="/commun/consentement.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-fr="Décisions du conseil municipal de Vancouver, vote par vote | DossierBC">Decisions of Vancouver City Council, vote by vote | DossierBC</title>
+<meta name="description" content="Every motion put to a vote at Vancouver City Council, meeting by meeting: result, who voted for and against, abstentions and declared conflicts. From the City's open data." data-fr-content="Chaque motion mise aux voix au conseil municipal de Vancouver, séance par séance : le résultat, qui a voté pour et contre, les abstentions et les conflits déclarés. D’après les données ouvertes de la Ville.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://dossierbc.ca/vancouver/decisions-of-vancouver-city-council">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="en_CA">
+<meta property="og:title" content="Decisions of Vancouver City Council, vote by vote | DossierBC">
+<meta property="og:description" content="Every motion put to a vote at Vancouver City Council, meeting by meeting, with who voted for and against. From the City's open data.">
+<meta property="og:url" content="https://dossierbc.ca/vancouver/decisions-of-vancouver-city-council">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@400..700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('dvq:theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'sombre' : 'clair';
+      document.documentElement.dataset.theme = t;
+      var z = parseInt(localStorage.getItem('dvq:zoom'), 10);
+      if (z >= 80 && z <= 150) document.documentElement.style.zoom = z + '%';
+    } catch (e) {}
+  })();
+</script>
+<link rel="icon" href="/commun/bc.svg" type="image/svg+xml">
+<link rel="icon" href="/commun/bc-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/commun/bc-180.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DossierBC", "item": "https://dossierbc.ca/" },
+    { "@type": "ListItem", "position": 2, "name": "City of Vancouver", "item": "https://dossierbc.ca/vancouver/" },
+    { "@type": "ListItem", "position": 3, "name": "Decisions", "item": "https://dossierbc.ca/vancouver/decisions-of-vancouver-city-council" }
+  ]
+}
+</script>
+<script>
+  /* Français choisi (?lang=fr ou dvq:langue) : la page est cachée le temps que assets/langue.js la traduise. */
+  (function () { try { var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('dvq:langue'); if (l === 'fr') { document.documentElement.lang = 'fr'; document.documentElement.classList.add('dvq-fr'); } } catch (e) {} })();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="decisions" data-ville="vancouver">
+<header>
+  <div class="contenu">
+    <div class="titre-ligne">
+      <a href="./"><p class="logo-titre">Dossier<span class="marque">Vancouver</span></p></a><a class="lien-dq" href="/" title="DossierBC — the Legislative Assembly of British Columbia in plain language" aria-label="DossierBC — the Legislative Assembly of British Columbia in plain language" data-fr-title="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair" data-fr-aria-label="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair">DossierBC</a>
+    </div>
+    <p class="sous-titre" data-fr="Les votes du conseil municipal de Vancouver, rendus lisibles. Des données publiques, prises telles quelles sur le portail de données ouvertes de la Ville de Vancouver.">
+      Vancouver City Council votes, made readable. Public data, taken as is from the City of
+      Vancouver’s open data portal.
+    </p>
+    <nav>
+      <a href="./" data-fr="Accueil">Home</a>
+      <a href="decisions-of-vancouver-city-council" aria-current="page" data-fr="Décisions">Decisions</a>
+      <a href="vancouver-city-council" data-fr="Conseil municipal">City Council</a>
+      <a href="near-me-in-vancouver" data-fr="Près de chez moi">Near me</a>
+      <a href="contracts-of-the-city-of-vancouver" data-fr="Contrats">Contracts</a>
+      <a href="vancouver-capital-budget" data-fr="Budget">Budget</a>
+      <a href="vancouver-council-glossary" data-fr="Lexique">Glossary</a>
+      <div class="outils">
+        <div class="taille-texte" role="group" aria-label="Text size" data-fr-aria-label="Taille du texte">
+          <button type="button" id="texte-moins" aria-label="Smaller text" data-fr-aria-label="Réduire le texte">A−</button>
+          <span id="texte-pct" aria-live="polite">100%</span>
+          <button type="button" id="texte-plus" aria-label="Larger text" data-fr-aria-label="Agrandir le texte">A+</button>
+        </div>
+        <button type="button" id="bascule-theme" class="bascule-theme" aria-pressed="false"
+                title="Switch to dark theme" aria-label="Switch to dark theme"></button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="contenu">
+  <div id="chargement" class="avis" data-fr="Chargement des données…">Loading data…</div>
+  <!-- En attente de la Ville (Martin, 15 nov. 2026) : avec les procès-verbaux, les décisions changeront du tout au tout.
+       Vrai seulement une fois le courriel au greffe envoyé (courriel-greffe.md). -->
+  <section class="avis avis-attente" data-fr="&lt;p&gt;&lt;strong&gt;En attente de la permission de la Ville de Vancouver.&lt;/strong&gt; Aujourd’hui, les données ouvertes de la Ville ne nous donnent que le registre des votes : qui a voté quoi, et un titre d’une ligne pour chaque point. C’est pourquoi les décisions ici nomment les points sans les expliquer. Dès que la Ville nous laissera lire les procès-verbaux du conseil, chaque décision aura un résumé en langage clair de ce qu’elle fait — montants, adresses, conditions — et le récapitulatif de chaque séance expliquera ce qui a été décidé, comme dans nos autres volets de ville. &lt;a href=&quot;https://dossierquebec.ca/montreal/decisions-de-la-ville-de-montreal&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Voyez de quoi ça aura l’air : les décisions de Montréal →&lt;/a&gt;&lt;/p&gt;"><p><strong>Awaiting the City of Vancouver’s permission.</strong> Today the City’s open data gives us only the vote record: who voted what, and a one-line title for each item. That is why the decisions here name items without explaining them. Once the City lets us read its council minutes, each decision will get a plain-language summary of what it does — amounts, addresses, conditions — and the recap of each meeting will explain what was decided, as in our other city sections. <a href="https://dossierquebec.ca/montreal/decisions-de-la-ville-de-montreal?lang=en" target="_blank" rel="noopener">See what it will look like: Montréal’s decisions →</a></p></section>
+  <h1 class="page" data-fr="Décisions et votes nominaux du conseil municipal de Vancouver">Decisions and recorded votes of Vancouver City Council</h1>
+  <p data-fr="Voici les décisions du conseil municipal de Vancouver : chaque fiche est une &lt;strong&gt;motion mise aux voix&lt;/strong&gt; — une recommandation de l’administration, un règlement, un amendement ou la motion d’un membre — telle que le registre électronique des votes de la Ville la nomme, regroupée par séance. Ouvrez une fiche pour voir qui a voté pour, qui a voté contre, qui s’est abstenu, qui était absent et qui a déclaré un conflit. Les membres sont sur la page &lt;a href=&quot;vancouver-city-council&quot;&gt;Conseil municipal&lt;/a&gt;.">
+    Here are the decisions of Vancouver City Council: each card is a <strong>motion put to a vote</strong> — a
+    staff recommendation, a by-law, an amendment or a member’s motion — as the City’s electronic voting record
+    names it, grouped by meeting. Open a card to see who voted for, who voted against, who abstained, who was
+    absent and who declared a conflict. The members are on the <a href="vancouver-city-council">City Council</a> page.
+  </p>
+  <!-- In brief: the latest meeting of each body (assets/seances-en-bref.js). Computed, not AI-written. -->
+  <section id="en-bref" class="en-bref" hidden></section>
+  <div class="barre-outils">
+    <input type="search" id="rech-decisions" placeholder="Search motions, or a member’s name…" data-fr-placeholder="Chercher une motion, ou le nom d’un membre…">
+    <!-- Un seul type ici (tout est une motion votée) : le sélecteur existe pour app.js, mais caché. -->
+    <select id="filtre-type" hidden><option value="" data-fr="Tous les types">All types</option></select>
+    <select id="filtre-theme"><option value="" data-fr="Tous les sujets">All subjects</option></select>
+    <select id="affichage" title="Display mode" data-fr-title="Mode d’affichage">
+      <option value="seance" data-fr="Regrouper par séance">Group by meeting</option>
+      <option value="liste" data-fr="Liste continue">Continuous list</option>
+    </select>
+    <select id="filtre-instance"><option value="" data-fr="Tous les types de séance">All meeting types</option></select>
+    <label class="case" id="case-resume" hidden><input type="checkbox" id="filtre-resume"> With summary only</label>
+  </div>
+  <p class="compte" id="compte-decisions"></p>
+  <div class="avis" data-fr="&lt;strong&gt;Ce que contient une fiche.&lt;/strong&gt; La Ville publie la ligne d’ordre du jour de chaque point et le vote de chaque membre — pas le texte de la motion, pas le procès-verbal. Il n’y a donc pas de résumé en langage clair ici, et rien n’est écrit à sa place. Le lien de chaque fiche mène au registre de la Ville pour les votes de cette séance ; le procès-verbal officiel est publié à part par le greffe.">
+    <strong>What a card contains.</strong> The City publishes the agenda line of each item and every member’s vote —
+    not the text of the motion, not the minutes. So there is no plain-language summary here, and nothing is written
+    in its place. The link on each card leads to the City’s own record of that meeting’s votes; the official minutes
+    are published separately by the City Clerk.
+  </div>
+  <!-- Sponsor thank-you, as on Montréal and Laval (9 Nov. 2026). seances-en-bref.js moves it right under the In brief box. -->
+  <aside class="merci-commanditaire">
+    <p data-fr="Les décisions de la Ville de Vancouver sont financées par &lt;strong&gt;DAFR Solution&lt;/strong&gt;.">City of Vancouver decisions are funded by <strong>DAFR Solution</strong>.</p>
+    <a href="https://www.dafrsolution.com/en" data-fr-href="https://www.dafrsolution.com" rel="sponsored noopener" target="_blank" data-fr="Visitez-les →">Visit them →</a>
+    <a href="https://www.dafrsolution.com/en" rel="sponsored noopener" target="_blank" aria-label="QR code to dafrsolution.com" data-fr-aria-label="Code QR vers dafrsolution.com"><img src="assets/qr-dafr.svg" alt="QR code to dafrsolution.com" width="96" height="96" data-fr-alt="Code QR vers dafrsolution.com"></a>
+  </aside>
+  <div id="liste-decisions"></div>
+  <button class="plus" id="plus-decisions" hidden data-fr="Afficher plus">Show more</button>
+</main>
+<footer>
+  <div class="contenu">
+    <p data-fr="Site citoyen indépendant. Aucun lien avec la Ville de Vancouver, aucun caractère officiel. En cas d’écart, le registre de la Ville fait foi. &lt;a href=&quot;sources-of-the-vancouver-data&quot;&gt;Sources&lt;/a&gt;.">Independent citizen site. No connection with the City of Vancouver, no official status. If anything differs, the City’s record prevails. <a href="sources-of-the-vancouver-data">Sources</a>.</p>
+    <p data-fr="Contient de l’information visée par la &lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt; (licence du gouvernement ouvert de Vancouver).">Contains information licensed under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>.</p>
+    <p class="lien-dq-pied" data-fr="&lt;a href=&quot;/&quot;&gt;DossierBC — l’Assemblée législative de la Colombie-Britannique en clair&lt;/a&gt; · &lt;a href=&quot;/regles&quot;&gt;Les règles du site&lt;/a&gt;"><a href="/">DossierBC — the Legislative Assembly of British Columbia in plain language</a> · <a href="/regles">Rules of the site</a></p>
+  </div>
+</footer>
+<script type="module" src="assets/app.js"></script>
+<script type="module" src="assets/seances-en-bref.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="assets/avis-pause.js" defer></script>
+<script type="module" src="assets/langue.js"></script>
+</body>
+</html>

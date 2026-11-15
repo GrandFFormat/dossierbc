@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVMNKLDBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JVMNKLDBCQ', { content_group: 'Vancouver' });
+</script>
+<script src="/commun/consentement.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-fr="Budget d’immobilisations de Vancouver : ce que la Ville construit et achète en 2026 | DossierBC">Vancouver capital budget: what the City builds and buys in 2026 | DossierBC</title>
+<meta name="description" content="The City of Vancouver's 2026 capital budget, project by project and category by category, with the forecasts to 2030, plus the budgets of the Mayor's and Councillors' offices. From the City's open data." data-fr-content="Le budget d’immobilisations 2026 de la Ville de Vancouver, projet par projet et catégorie par catégorie, avec les prévisions jusqu’en 2030, et les fichiers annuels du budget des bureaux du maire et des conseillers. D’après les données ouvertes de la Ville.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://dossierbc.ca/vancouver/vancouver-capital-budget">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="en_CA">
+<meta property="og:title" content="Vancouver capital budget: what the City builds and buys in 2026 | DossierBC">
+<meta property="og:description" content="The City of Vancouver's 2026 capital budget, project by project, with the forecasts to 2030. From the City's open data.">
+<meta property="og:url" content="https://dossierbc.ca/vancouver/vancouver-capital-budget">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@400..700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('dvq:theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'sombre' : 'clair';
+      document.documentElement.dataset.theme = t;
+      var z = parseInt(localStorage.getItem('dvq:zoom'), 10);
+      if (z >= 80 && z <= 150) document.documentElement.style.zoom = z + '%';
+    } catch (e) {}
+  })();
+</script>
+<link rel="icon" href="/commun/bc.svg" type="image/svg+xml">
+<link rel="icon" href="/commun/bc-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/commun/bc-180.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DossierBC", "item": "https://dossierbc.ca/" },
+    { "@type": "ListItem", "position": 2, "name": "City of Vancouver", "item": "https://dossierbc.ca/vancouver/" },
+    { "@type": "ListItem", "position": 3, "name": "Capital budget", "item": "https://dossierbc.ca/vancouver/vancouver-capital-budget" }
+  ]
+}
+</script>
+<script>
+  /* Français choisi (?lang=fr ou dvq:langue) : la page est cachée le temps que assets/langue.js la traduise. */
+  (function () { try { var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('dvq:langue'); if (l === 'fr') { document.documentElement.lang = 'fr'; document.documentElement.classList.add('dvq-fr'); } } catch (e) {} })();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="budget" data-ville="vancouver">
+<header>
+  <div class="contenu">
+    <div class="titre-ligne">
+      <a href="./"><p class="logo-titre">Dossier<span class="marque">Vancouver</span></p></a><a class="lien-dq" href="/" title="DossierBC — the Legislative Assembly of British Columbia in plain language" aria-label="DossierBC — the Legislative Assembly of British Columbia in plain language" data-fr-title="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair" data-fr-aria-label="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair">DossierBC</a>
+    </div>
+    <p class="sous-titre" data-fr="Les votes du conseil municipal de Vancouver, rendus lisibles. Des données publiques, prises telles quelles sur le portail de données ouvertes de la Ville de Vancouver.">
+      Vancouver City Council votes, made readable. Public data, taken as is from the City of
+      Vancouver’s open data portal.
+    </p>
+    <nav>
+      <a href="./" data-fr="Accueil">Home</a>
+      <a href="decisions-of-vancouver-city-council" data-fr="Décisions">Decisions</a>
+      <a href="vancouver-city-council" data-fr="Conseil municipal">City Council</a>
+      <a href="near-me-in-vancouver" data-fr="Près de chez moi">Near me</a>
+      <a href="contracts-of-the-city-of-vancouver" data-fr="Contrats">Contracts</a>
+      <a href="vancouver-capital-budget" aria-current="page" data-fr="Budget">Budget</a>
+      <a href="vancouver-council-glossary" data-fr="Lexique">Glossary</a>
+      <div class="outils">
+        <div class="taille-texte" role="group" aria-label="Text size" data-fr-aria-label="Taille du texte">
+          <button type="button" id="texte-moins" aria-label="Smaller text" data-fr-aria-label="Réduire le texte">A−</button>
+          <span id="texte-pct" aria-live="polite">100%</span>
+          <button type="button" id="texte-plus" aria-label="Larger text" data-fr-aria-label="Agrandir le texte">A+</button>
+        </div>
+        <button type="button" id="bascule-theme" class="bascule-theme" aria-pressed="false"
+                title="Switch to dark theme" aria-label="Switch to dark theme"></button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="contenu prose">
+  <div id="chargement" class="avis" hidden data-fr="Chargement des données…"></div>
+  <h1 class="page" data-fr="Budget d’immobilisations de Vancouver">Vancouver capital budget</h1>
+  <p data-fr="Ce que la Ville de Vancouver prévoit de &lt;strong&gt;construire, acheter et réparer&lt;/strong&gt; en 2026 — logement, rues, parcs, eau, centres communautaires — projet par projet, avec ce qui était déjà approuvé et ce qui est prévu jusqu’en 2030. Les chiffres sont ceux de la Ville, tirés de ses données ouvertes. Plus bas, les fichiers annuels de la Ville sur le budget des bureaux du maire et des conseillers.">
+    What the City of Vancouver plans to <strong>build, buy and repair</strong> in 2026 — housing, streets, parks, water, community
+    centres — project by project, with what was already approved and what is forecast to 2030. The figures are the City’s own,
+    from its open data. Below, the City’s yearly files on the budgets of the Mayor’s and Councillors’ offices.
+  </p>
+  <div id="chiffres" class="grille-chiffres"></div>
+  <h2 id="titre-repartition" data-fr="Où va l’argent des immobilisations en 2026">Where the capital money goes in 2026</h2>
+  <p id="intro-repartition" class="compte"></p>
+  <div id="repartition"></div>
+  <h2 id="titre-previsions" data-fr="Les années à venir">The years ahead</h2>
+  <p id="intro-previsions" class="compte"></p>
+  <div id="previsions"></div>
+  <h2 id="titre-conseil" data-fr="Le budget des bureaux du maire et des conseillers">The budget of the Mayor’s and Councillors’ offices</h2>
+  <p id="intro-conseil" class="compte"></p>
+  <div id="conseil" class="tableau-defile"></div>
+  <h2 data-fr="Comment lire cette page">How to read this page</h2>
+  <ul>
+    <li data-fr="&lt;strong&gt;Le budget d’immobilisations&lt;/strong&gt; n’est pas tout le budget de la Ville. Il couvre les investissements — ce qui se construit ou s’achète — et pas les activités courantes (salaires, police, pompiers, collecte des ordures), qui sont dans le budget de fonctionnement."><strong>The capital budget</strong> is not the whole City budget. It covers investments — what gets built or bought — and not day-to-day operations (salaries, police, fire, garbage collection), which are in the operating budget.</li>
+    <li data-fr="&lt;strong&gt;« Dépense 2026 »&lt;/strong&gt;, c’est ce que la Ville prévoit de dépenser vraiment en 2026 sur chaque projet. &lt;strong&gt;« Budget ouvert »&lt;/strong&gt;, c’est le total approuvé pour le projet sur plusieurs années, dont une partie peut être déjà dépensée. Un projet peut avoir un gros budget ouvert et une petite dépense 2026 : les travaux s’étalent sur plusieurs années."><strong>“2026 expenditure”</strong> is what the City plans to actually spend in 2026 on each project. <strong>“Open budget”</strong> is the total approved for the project across years, part of which may already be spent. A project can show a large open budget and a small 2026 expenditure: the work is spread over several years.</li>
+    <li data-fr="&lt;strong&gt;Les prévisions&lt;/strong&gt; de 2027 à 2030 sont les chiffres de planification de la Ville au moment du budget 2026. Elles changent chaque année."><strong>The forecasts</strong> for 2027 to 2030 are the City’s planning figures at the time of the 2026 budget. They change every year.</li>
+    <li data-fr="&lt;strong&gt;Ce qui n’est pas ici&lt;/strong&gt; : le budget de fonctionnement et les taux de taxe foncière. La Ville ne les publie pas en données ouvertes ; ils sont dans ses documents budgétaires. Cette page n’estime pas votre compte de taxes, parce qu’il faudrait inventer le taux."><strong>What is not here</strong>: the operating budget and the property tax rates. The City does not publish them as open data; they are in its budget documents. This page does not estimate your tax bill, because it would have to invent the rate.</li>
+  </ul>
+  <h2 data-fr="Sources">Sources</h2>
+  <ul>
+    <li data-fr="&lt;strong&gt;Budget d’immobilisations&lt;/strong&gt; : &lt;a href=&quot;https://opendata.vancouver.ca/explore/assets/2026-multi-year-capital-project-budget-requests-and-capital-expenditure-budget/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;« 2026 Multi-Year Capital Project Budget requests and Capital Expenditure Budget »&lt;/a&gt;, portail de données ouvertes de la Ville de Vancouver."><strong>Capital budget</strong>: <a href="https://opendata.vancouver.ca/explore/assets/2026-multi-year-capital-project-budget-requests-and-capital-expenditure-budget/" target="_blank" rel="noopener">“2026 Multi-Year Capital Project Budget requests and Capital Expenditure Budget”</a>, City of Vancouver open data portal.</li>
+    <li data-fr="&lt;strong&gt;Budget du conseil&lt;/strong&gt; : &lt;a href=&quot;https://opendata.vancouver.ca/explore/assets/council-budget-and-expenses/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;« Council budget and expenses »&lt;/a&gt;, même portail. Les deux sous l’&lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt;."><strong>Council budget</strong>: <a href="https://opendata.vancouver.ca/explore/assets/council-budget-and-expenses/" target="_blank" rel="noopener">“Council budget and expenses”</a>, same portal. Both under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>.</li>
+  </ul>
+  <p id="maj" class="compte"></p>
+</main>
+<style>
+  .grille-chiffres { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 20px 0; }
+  .grille-chiffres > div { background: var(--carte); border: var(--bordure-carte); border-radius: var(--rayon); padding: 12px 14px; }
+  .grille-chiffres strong { display: block; font-size: 1.5rem; line-height: 1.2; }
+  .grille-chiffres span { color: var(--doux); font-size: .9rem; }
+  .barre-service { margin: 10px 0; }
+  .barre-service .tete { display: flex; justify-content: space-between; gap: 12px; font-size: .95rem; }
+  .barre-service .tete strong { font-weight: 600; }
+  .barre-service .piste { height: 10px; background: var(--fond-2); border-radius: 5px; margin-top: 4px; overflow: hidden; }
+  .barre-service .rempli { height: 100%; background: var(--accent); border-radius: 5px; }
+  .barre-service details { margin-top: 4px; }
+  .barre-service summary { cursor: pointer; font-size: .85rem; color: var(--doux); }
+  .barre-service ul { margin: 4px 0 0; padding-left: 18px; font-size: .9rem; }
+  .barre-service li { margin: 3px 0; }
+  .barre-service li .compte { display: inline; margin-left: 4px; }
+  .tableau-defile { overflow-x: auto; }
+  .tableau-defile table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  .tableau-defile th, .tableau-defile td { text-align: left; padding: 7px 6px; border-bottom: 1px solid var(--ligne); vertical-align: top; }
+  .tableau-defile .n { text-align: right; white-space: nowrap; }
+</style>
+<script type="module">
+  // Copie adaptée de la page Budget de Montréal (15 nov. 2026). Ce qui change : pas de calculateur de
+  // taxes (Vancouver ne publie pas ses taux en données ouvertes) ; les barres montrent le budget
+  // d'immobilisations 2026 par catégorie, puis les prévisions 2027–2030, puis le budget des élus.
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  import { EN, tr } from './assets/langue.js';
+  const LOC = EN ? 'en-CA' : 'fr-CA';
+  const nf = new Intl.NumberFormat(LOC, { maximumFractionDigits: 0 });
+  const argent = (n) => (EN ? '$' + nf.format(Math.round(n)) : nf.format(Math.round(n)) + ' $');
+  const m1 = (n) => new Intl.NumberFormat(LOC, { maximumFractionDigits: 1 }).format(n / 1e6);
+  const millions = (n) => (EN ? '$' + m1(n) + ' M' : m1(n) + ' M$');
+  const pct = (a, b) => (b ? new Intl.NumberFormat(LOC, { maximumFractionDigits: 1 }).format((100 * a) / b) : '0') + (EN ? '%' : ' %');
+  const d = await (await fetch('data/budget.json')).json().catch(() => null);
+  if (!d) {
+    $('#chargement').hidden = false;
+    $('#chargement').innerHTML = tr('<strong>Aucune donnée.</strong> Lancez <code>node scripts/refresh.js</code> dans le dossier <code>vancouver/</code>, puis rechargez la page.', '<strong>No data.</strong> Run <code>node scripts/refresh.js</code> in the <code>vancouver/</code> folder, then reload this page.');
+    throw new Error('budget.json absent');
+  }
+  const im = d.immobilisations;
+  $('#chiffres').innerHTML = [
+    [millions(im.totalDepense), tr(`budget de dépenses d’immobilisations, ${im.annee}`, `capital expenditure budget, ${im.annee}`)],
+    [millions(im.totalOuvert), tr('total des budgets de projets ouverts', 'total open project budgets')],
+    [nf.format(im.nombreProjets), tr('projets et programmes', 'projects and programs')],
+    [millions(im.totalDemande), tr(`nouveau budget demandé en ${im.annee}`, `new budget requested in ${im.annee}`)],
+  ].map(([a, b]) => `<div><strong>${a}</strong><span>${b}</span></div>`).join('');
+  function barre(nom, valeur, part, details = '') {
+    return `<div class="barre-service"><div class="tete"><strong>${esc(nom)}</strong><span>${valeur}</span></div>
+      <div class="piste"><div class="rempli" style="width:${Math.max(1, Math.round(part * 100))}%"></div></div>${details}</div>`;
+  }
+  $('#intro-repartition').textContent = tr(`${millions(im.totalDepense)} prévus pour ${im.annee}, par catégorie de service. Ouvrez une catégorie pour voir ses programmes et ses dix plus gros projets.`, `${millions(im.totalDepense)} planned for ${im.annee}, by service category. Open a category to see its programs and its ten largest projects.`);
+  const plusGrosse = im.categories[0]?.depense || 1;
+  $('#repartition').innerHTML = im.categories.map((c) => {
+    const sous = c.sousCategories.filter((s) => s.depense > 0).map((s) => `<li><strong>${esc(s.nom || tr('(sans nom)', '(unnamed)'))}</strong> <span class="compte">${millions(s.depense)}</span></li>`).join('');
+    const projets = c.sousCategories.flatMap((s) => s.projets).sort((a, b) => b.depense - a.depense).slice(0, 10)
+      .map((p) => `<li>${esc(p.nom)}${p.cat3 ? ` <span class="compte">(${esc(p.cat3)})</span>` : ''} — ${tr(`${millions(p.depense)} en ${im.annee}, budget ouvert de ${millions(p.ouvert)}`, `${millions(p.depense)} in ${im.annee}, ${millions(p.ouvert)} open budget`)}</li>`).join('');
+    return barre(c.nom, `${millions(c.depense)} · ${pct(c.depense, im.totalDepense)}`, c.depense / plusGrosse,
+      `<details><summary>${tr('Détail', 'Detail')}</summary>${sous ? `<p class="compte" style="margin:6px 0 0">${tr('Programmes', 'Programs')}</p><ul>${sous}</ul>` : ''}${projets ? `<p class="compte" style="margin:6px 0 0">${tr(`Les dix plus gros projets en ${im.annee}`, `Ten largest projects in ${im.annee}`)}</p><ul>${projets}</ul>` : ''}</details>`);
+  }).join('');
+  const annees = Object.keys(im.previsions).sort();
+  const maxPrev = Math.max(im.totalDepense, ...annees.map((a) => im.previsions[a])) || 1;
+  $('#intro-previsions').textContent = tr(`Les dépenses d’immobilisations prévues par la Ville pour les années après ${im.annee}, telles que planifiées au budget ${im.annee}.`, `The City’s forecast of capital spending for the years after ${im.annee}, as planned in the ${im.annee} budget.`);
+  $('#previsions').innerHTML = barre(String(im.annee), millions(im.totalDepense), im.totalDepense / maxPrev) + annees.map((a) => barre(a + tr(' (prévision)', ' (forecast)'), millions(im.previsions[a]), im.previsions[a] / maxPrev)).join('');
+  // Le budget des élus : tableau générique, colonnes telles que la Ville les nomme.
+  if (d.conseil?.lignes?.length) {
+    const c = d.conseil;
+    const lisible = (s) => String(s).replace(/_/g, ' ').replace(/\b\w/g, (m) => m.toUpperCase());
+    const estNombre = (nom) => /int|double|decimal|number/i.test(c.types?.[nom] ?? '');
+    const cLien = c.champs.find((f) => /xls/i.test(f)), cCsv = c.champs.find((f) => /csv/i.test(f));
+    if (cLien || cCsv) {
+      // La Ville ne publie pas de chiffres dans ce jeu : une ligne par année, avec le lien vers son fichier.
+      const lignes = [...c.lignes].sort((a, b) => String(b.year ?? '').localeCompare(String(a.year ?? '')));
+      $('#intro-conseil').textContent = tr(`La Ville ne publie pas ces chiffres sous forme de tableau : son jeu « ${c.titre} » est un chiffrier par année, de ${lignes[lignes.length - 1]?.year ?? ''} à ${lignes[0]?.year ?? ''}, avec les salaires, allocations et dépenses de chaque bureau. Les fichiers sont ceux de la Ville, en anglais ; on les montre tels quels, sans les lire.`, `The City does not publish these figures as a table: its data set “${c.titre}” is one spreadsheet per year, ${lignes[lignes.length - 1]?.year ?? ''} to ${lignes[0]?.year ?? ''}, with the salaries, allowances and expenses of each office. The files are the City’s; we show them as they are, without reading them.`);
+      $('#conseil').innerHTML = `<table><thead><tr><th>${tr('Année', 'Year')}</th><th>${tr('Contenu', 'Contents')}</th><th>${tr('Fichier', 'File')}</th><th>${tr('Note de la Ville', 'City’s note')}</th></tr></thead><tbody>${
+        lignes.map((l) => `<tr><td>${esc(l.year ?? '')}</td><td>${esc(l.file_contents ?? '')}</td><td>${[cLien && l[cLien] ? `<a href="${esc(l[cLien])}" rel="noopener">Excel ↗</a>` : '', cCsv && l[cCsv] ? `<a href="${esc(l[cCsv])}" rel="noopener">CSV ↗</a>` : ''].filter(Boolean).join(' · ')}</td><td>${esc(l.note ?? '')}</td></tr>`).join('')
+      }</tbody></table>`;
+    } else {
+    $('#intro-conseil').textContent = tr(`${c.lignes.length} lignes du jeu « ${c.titre} » de la Ville, telles que publiées.`, `${c.lignes.length} lines from the City’s data set “${c.titre}”, shown as published.`);
+    $('#conseil').innerHTML = `<table><thead><tr>${c.champs.map((f) => `<th${estNombre(f) ? ' class="n"' : ''}>${esc(lisible(f))}</th>`).join('')}</tr></thead><tbody>${
+      c.lignes.map((l) => `<tr>${c.champs.map((f) => `<td${estNombre(f) ? ' class="n"' : ''}>${estNombre(f) && l[f] != null && l[f] !== '' ? argent(Number(l[f])) : esc(l[f] ?? '')}</td>`).join('')}</tr>`).join('')
+    }</tbody></table>`;
+    }
+  } else {
+    $('#intro-conseil').textContent = tr('Le jeu du budget du conseil n’a pas pu être lu au dernier rafraîchissement.', 'The Council budget data set could not be read on the last refresh.');
+  }
+  $('#maj').textContent = tr(`Jeu du budget d’immobilisations modifié par la Ville le ${(im.jeuModifieLe || '').slice(0, 10)}${d.conseil?.jeuModifieLe ? ` ; budget du conseil : ${d.conseil.jeuModifieLe.slice(0, 10)}` : ''}. Lu le ${d.extraction.slice(0, 10)}.`, `Capital budget data set last modified by the City: ${(im.jeuModifieLe || '').slice(0, 10)}${d.conseil?.jeuModifieLe ? `; Council budget: ${d.conseil.jeuModifieLe.slice(0, 10)}` : ''}. Read on ${d.extraction.slice(0, 10)}.`);
+</script>
+<footer>
+  <div class="contenu">
+    <p data-fr="Site citoyen indépendant. Aucun lien avec la Ville de Vancouver, aucun caractère officiel. En cas d’écart, le registre de la Ville fait foi. &lt;a href=&quot;sources-of-the-vancouver-data&quot;&gt;Sources&lt;/a&gt;.">Independent citizen site. No connection with the City of Vancouver, no official status. If anything differs, the City’s record prevails. <a href="sources-of-the-vancouver-data">Sources</a>.</p>
+    <p data-fr="Contient de l’information visée par la &lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt; (licence du gouvernement ouvert de Vancouver).">Contains information licensed under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>.</p>
+    <p class="lien-dq-pied" data-fr="&lt;a href=&quot;/&quot;&gt;DossierBC — l’Assemblée législative de la Colombie-Britannique en clair&lt;/a&gt; · &lt;a href=&quot;/regles&quot;&gt;Les règles du site&lt;/a&gt;"><a href="/">DossierBC — the Legislative Assembly of British Columbia in plain language</a> · <a href="/regles">Rules of the site</a></p>
+  </div>
+</footer>
+<script type="module" src="assets/app.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="assets/avis-pause.js" defer></script>
+<script type="module" src="assets/langue.js"></script>
+</body>
+</html>

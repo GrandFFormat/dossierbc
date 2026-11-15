@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVMNKLDBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JVMNKLDBCQ', { content_group: 'Vancouver' });
+</script>
+<script src="/commun/consentement.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-fr="Conseil municipal de Vancouver : les onze membres et leurs votes | DossierBC">Vancouver City Council: the eleven members and their votes | DossierBC</title>
+<meta name="description" content="The Mayor and ten Councillors of Vancouver, with each member's votes for, against, abstentions, absences and declared conflicts, from the City's open data." data-fr-content="Le maire et les dix conseillers de Vancouver, avec les votes de chaque membre : pour, contre, abstentions, absences et conflits déclarés, d’après les données ouvertes de la Ville.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://dossierbc.ca/vancouver/vancouver-city-council">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="en_CA">
+<meta property="og:title" content="Vancouver City Council: the eleven members and their votes | DossierBC">
+<meta property="og:description" content="The Mayor and ten Councillors of Vancouver, with each member's recorded votes, from the City's open data.">
+<meta property="og:url" content="https://dossierbc.ca/vancouver/vancouver-city-council">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@400..700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('dvq:theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'sombre' : 'clair';
+      document.documentElement.dataset.theme = t;
+      var z = parseInt(localStorage.getItem('dvq:zoom'), 10);
+      if (z >= 80 && z <= 150) document.documentElement.style.zoom = z + '%';
+    } catch (e) {}
+  })();
+</script>
+<link rel="icon" href="/commun/bc.svg" type="image/svg+xml">
+<link rel="icon" href="/commun/bc-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/commun/bc-180.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DossierBC", "item": "https://dossierbc.ca/" },
+    { "@type": "ListItem", "position": 2, "name": "City of Vancouver", "item": "https://dossierbc.ca/vancouver/" },
+    { "@type": "ListItem", "position": 3, "name": "City Council", "item": "https://dossierbc.ca/vancouver/vancouver-city-council" }
+  ]
+}
+</script>
+<script>
+  /* Français choisi (?lang=fr ou dvq:langue) : la page est cachée le temps que assets/langue.js la traduise. */
+  (function () { try { var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('dvq:langue'); if (l === 'fr') { document.documentElement.lang = 'fr'; document.documentElement.classList.add('dvq-fr'); } } catch (e) {} })();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="conseil" data-ville="vancouver">
+<header>
+  <div class="contenu">
+    <div class="titre-ligne">
+      <a href="./"><p class="logo-titre">Dossier<span class="marque">Vancouver</span></p></a><a class="lien-dq" href="/" title="DossierBC — the Legislative Assembly of British Columbia in plain language" aria-label="DossierBC — the Legislative Assembly of British Columbia in plain language" data-fr-title="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair" data-fr-aria-label="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair">DossierBC</a>
+    </div>
+    <p class="sous-titre" data-fr="Les votes du conseil municipal de Vancouver, rendus lisibles. Des données publiques, prises telles quelles sur le portail de données ouvertes de la Ville de Vancouver.">
+      Vancouver City Council votes, made readable. Public data, taken as is from the City of
+      Vancouver’s open data portal.
+    </p>
+    <nav>
+      <a href="./" data-fr="Accueil">Home</a>
+      <a href="decisions-of-vancouver-city-council" data-fr="Décisions">Decisions</a>
+      <a href="vancouver-city-council" aria-current="page" data-fr="Conseil municipal">City Council</a>
+      <a href="near-me-in-vancouver" data-fr="Près de chez moi">Near me</a>
+      <a href="contracts-of-the-city-of-vancouver" data-fr="Contrats">Contracts</a>
+      <a href="vancouver-capital-budget" data-fr="Budget">Budget</a>
+      <a href="vancouver-council-glossary" data-fr="Lexique">Glossary</a>
+      <div class="outils">
+        <div class="taille-texte" role="group" aria-label="Text size" data-fr-aria-label="Taille du texte">
+          <button type="button" id="texte-moins" aria-label="Smaller text" data-fr-aria-label="Réduire le texte">A−</button>
+          <span id="texte-pct" aria-live="polite">100%</span>
+          <button type="button" id="texte-plus" aria-label="Larger text" data-fr-aria-label="Agrandir le texte">A+</button>
+        </div>
+        <button type="button" id="bascule-theme" class="bascule-theme" aria-pressed="false"
+                title="Switch to dark theme" aria-label="Switch to dark theme"></button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="contenu">
+  <div id="chargement" class="avis" data-fr="Chargement des données…">Loading data…</div>
+  <h1 class="page" data-fr="Conseil municipal de Vancouver">Vancouver City Council</h1>
+  <nav class="raccourcis" aria-label="Sections of this page" data-fr-aria-label="Sections de cette page">
+    <a href="#membres" data-fr="Les membres">The members</a>
+    <a href="#votes-nominatifs" data-fr="Les votes contre, par membre">Votes against, by member</a>
+  </nav>
+  <p data-fr="Le conseil municipal de Vancouver compte &lt;strong&gt;onze membres&lt;/strong&gt; : le maire et dix conseillers, tous élus par l’ensemble de la ville pour quatre ans. Il n’y a ni quartiers électoraux ni districts — chaque membre répond à tous les électeurs. Les membres ci-dessous sont ceux qui ont voté pendant la période ; leurs votes viennent du registre électronique des votes de la Ville, pas d’un registre des présences. Le registre ne publie ni appartenance politique ni coordonnées, donc rien de cela n’est affiché. Leurs décisions sont sur la page &lt;a href=&quot;decisions-of-vancouver-city-council&quot;&gt;Décisions&lt;/a&gt;.">
+    Vancouver City Council has <strong>eleven members</strong>: the Mayor and ten Councillors, all elected by the
+    whole city for four years. There are no wards and no districts — every member answers to every voter. The
+    members below are the people who cast votes in the period; their votes come from the City’s electronic voting
+    record, not from a register of attendance. The record publishes no party affiliation and no contact
+    information, so none is shown. Their decisions are on the <a href="decisions-of-vancouver-city-council">Decisions</a> page.
+  </p>
+  <h2 class="page" id="membres" style="margin-top:34px" data-fr="Les membres">The members</h2>
+  <p class="compte" id="compte-elus"></p>
+  <div id="liste-elus"></div>
+  <h2 class="page" id="votes-nominatifs" style="margin-top:34px" data-fr="Les votes contre, par membre">Votes against, by member</h2>
+  <p class="compte" data-fr="À Vancouver, chaque vote est consigné : ce tableau compte donc chaque fois qu’un membre a voté &lt;em&gt;In Opposition&lt;/em&gt; (contre) pendant la période, et le type de séance où c’est arrivé le plus souvent. Les noms sous chaque fiche de la page Décisions disent la même chose, motion par motion.">In Vancouver every vote is recorded, so this table counts every time a member voted <em>In Opposition</em> in the period, and the meeting type where it happened most. The names under each card on the Decisions page say the same thing, motion by motion.</p>
+  <details class="carte pliante bloc-tableau">
+    <summary>
+      <div class="meta">
+        <span class="puce" data-fr="tableau">table</span>
+        <span id="resume-dissidence"></span>
+      </div>
+      <p class="objet" data-fr="Les votes contre, par personne">Votes against, by person</p>
+    </summary>
+    <div class="corps">
+      <p class="compte" data-fr="Décompte brut, sans interprétation. Voter contre n’est ni un défaut ni une qualité : c’est une position.">Raw count, without interpretation. Voting against is neither a flaw nor a merit: it is a position.</p>
+      <table id="table-dissidence">
+        <thead><tr><th data-fr="Personne">Person</th><th data-fr="Type de séance le plus fréquent">Most frequent meeting type</th><th class="n" data-fr="Votes contre">Votes against</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+</main>
+<footer>
+  <div class="contenu">
+    <p data-fr="Site citoyen indépendant. Aucun lien avec la Ville de Vancouver, aucun caractère officiel. En cas d’écart, le registre de la Ville fait foi. &lt;a href=&quot;sources-of-the-vancouver-data&quot;&gt;Sources&lt;/a&gt;.">Independent citizen site. No connection with the City of Vancouver, no official status. If anything differs, the City’s record prevails. <a href="sources-of-the-vancouver-data">Sources</a>.</p>
+    <p data-fr="Contient de l’information visée par la &lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt; (licence du gouvernement ouvert de Vancouver).">Contains information licensed under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>.</p>
+    <p class="lien-dq-pied" data-fr="&lt;a href=&quot;/&quot;&gt;DossierBC — l’Assemblée législative de la Colombie-Britannique en clair&lt;/a&gt; · &lt;a href=&quot;/regles&quot;&gt;Les règles du site&lt;/a&gt;"><a href="/">DossierBC — the Legislative Assembly of British Columbia in plain language</a> · <a href="/regles">Rules of the site</a></p>
+  </div>
+</footer>
+<script type="module" src="assets/app.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="assets/avis-pause.js" defer></script>
+<script type="module" src="assets/langue.js"></script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { analytics_storage: (function(){ try { return localStorage.getItem('dq:temoins') === 'oui' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(), ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVMNKLDBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JVMNKLDBCQ', { content_group: 'Vancouver' });
+</script>
+<script src="/commun/consentement.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-fr="Près de chez moi à Vancouver : votre quartier, les permis et les chantiers | DossierBC">Near me in Vancouver: your neighbourhood, permits and roadwork | DossierBC</title>
+<meta name="description" content="Type a Vancouver address: your neighbourhood, the building and demolition permits issued around you in the last twelve months, and the City's roadwork nearby. All from the City's open data; nothing leaves your browser." data-fr-content="Tapez une adresse de Vancouver : votre quartier, les permis de construction et de démolition délivrés autour de vous dans les douze derniers mois, et les chantiers de la Ville tout près. D’après les données ouvertes de la Ville ; rien ne quitte votre navigateur.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://dossierbc.ca/vancouver/near-me-in-vancouver">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DossierBC">
+<meta property="og:locale" content="en_CA">
+<meta property="og:title" content="Near me in Vancouver: your neighbourhood, permits and roadwork | DossierBC">
+<meta property="og:description" content="Type a Vancouver address: your neighbourhood, recent building permits and the City's roadwork nearby. From the City's open data.">
+<meta property="og:url" content="https://dossierbc.ca/vancouver/near-me-in-vancouver">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@400..700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('dvq:theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'sombre' : 'clair';
+      document.documentElement.dataset.theme = t;
+      var z = parseInt(localStorage.getItem('dvq:zoom'), 10);
+      if (z >= 80 && z <= 150) document.documentElement.style.zoom = z + '%';
+    } catch (e) {}
+  })();
+</script>
+<link rel="icon" href="/commun/bc.svg" type="image/svg+xml">
+<link rel="icon" href="/commun/bc-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/commun/bc-180.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DossierBC", "item": "https://dossierbc.ca/" },
+    { "@type": "ListItem", "position": 2, "name": "City of Vancouver", "item": "https://dossierbc.ca/vancouver/" },
+    { "@type": "ListItem", "position": 3, "name": "Near me", "item": "https://dossierbc.ca/vancouver/near-me-in-vancouver" }
+  ]
+}
+</script>
+<script>
+  /* Français choisi (?lang=fr ou dvq:langue) : la page est cachée le temps que assets/langue.js la traduise. */
+  (function () { try { var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('dvq:langue'); if (l === 'fr') { document.documentElement.lang = 'fr'; document.documentElement.classList.add('dvq-fr'); } } catch (e) {} })();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="pres" data-ville="vancouver">
+<header>
+  <div class="contenu">
+    <div class="titre-ligne">
+      <a href="./"><p class="logo-titre">Dossier<span class="marque">Vancouver</span></p></a><a class="lien-dq" href="/" title="DossierBC — the Legislative Assembly of British Columbia in plain language" aria-label="DossierBC — the Legislative Assembly of British Columbia in plain language" data-fr-title="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair" data-fr-aria-label="DossierBC — l’Assemblée législative de la Colombie-Britannique en clair">DossierBC</a>
+    </div>
+    <p class="sous-titre" data-fr="Les votes du conseil municipal de Vancouver, rendus lisibles. Des données publiques, prises telles quelles sur le portail de données ouvertes de la Ville de Vancouver.">
+      Vancouver City Council votes, made readable. Public data, taken as is from the City of
+      Vancouver’s open data portal.
+    </p>
+    <nav>
+      <a href="./" data-fr="Accueil">Home</a>
+      <a href="decisions-of-vancouver-city-council" data-fr="Décisions">Decisions</a>
+      <a href="vancouver-city-council" data-fr="Conseil municipal">City Council</a>
+      <a href="near-me-in-vancouver" aria-current="page" data-fr="Près de chez moi">Near me</a>
+      <a href="contracts-of-the-city-of-vancouver" data-fr="Contrats">Contracts</a>
+      <a href="vancouver-capital-budget" data-fr="Budget">Budget</a>
+      <a href="vancouver-council-glossary" data-fr="Lexique">Glossary</a>
+      <div class="outils">
+        <div class="taille-texte" role="group" aria-label="Text size" data-fr-aria-label="Taille du texte">
+          <button type="button" id="texte-moins" aria-label="Smaller text" data-fr-aria-label="Réduire le texte">A−</button>
+          <span id="texte-pct" aria-live="polite">100%</span>
+          <button type="button" id="texte-plus" aria-label="Larger text" data-fr-aria-label="Agrandir le texte">A+</button>
+        </div>
+        <button type="button" id="bascule-theme" class="bascule-theme" aria-pressed="false"
+                title="Switch to dark theme" aria-label="Switch to dark theme"></button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="contenu prose" style="max-width:1180px">
+  <h1 class="page" data-fr="Près de chez moi à Vancouver">Near me in Vancouver</h1>
+  <p data-fr="Tapez votre adresse : votre quartier tel que la Ville le définit, les permis de construction et de démolition délivrés autour de vous dans les douze derniers mois, et les chantiers de la Ville tout près. Tout vient des données ouvertes de la Ville de Vancouver.">
+    Type your address: your neighbourhood as the City defines it, the building and demolition permits issued around you in the
+    last twelve months, and the City’s roadwork nearby. Everything comes from the City of Vancouver’s open data.
+  </p>
+  <form class="qui-represente" id="qui-represente" autocomplete="off">
+    <label for="adresse" data-fr="Votre adresse">Your address</label>
+    <div class="ligne">
+      <input id="adresse" type="search" placeholder="E.g. 453 W 12th Avenue" data-fr-placeholder="Ex. 453 W 12th Avenue">
+      <button type="submit" data-fr="Chercher">Search</button>
+    </div>
+    <p class="compte" style="margin:6px 0 0" data-fr="Pas d’idée ? &lt;a href=&quot;#453 W 12th Avenue&quot;&gt;Essayez 453 W 12th Avenue&lt;/a&gt; — l’hôtel de ville.">No idea? <a href="#453 W 12th Avenue">Try 453 W 12th Avenue</a> — City Hall.</p>
+    <div id="resultat-adresse" aria-live="polite"></div>
+    <p class="compte" data-fr="Votre adresse reste dans votre navigateur. Elle n’est envoyée à personne. La recherche couvre la Ville de Vancouver seulement — pas Burnaby, Richmond ni la Rive-Nord.">Your address stays in your browser. It is not sent to anyone. The search covers the City of Vancouver only — not Burnaby, Richmond or the North Shore.</p>
+  </form>
+  <style>
+    .qui-represente { background: var(--carte); border: var(--bordure-carte); border-radius: var(--rayon); padding: 14px 16px; margin: 16px 0 20px; }
+    .qui-represente label { font-weight: 600; display: block; margin-bottom: 6px; }
+    .qui-represente .ligne { display: flex; gap: 8px; }
+    .qui-represente input { flex: 1; min-width: 0; font: inherit; padding: 7px 10px; border: 1px solid var(--ligne-forte); border-radius: var(--rayon); background: var(--fond); color: var(--encre); }
+    .qui-represente button { font: inherit; padding: 7px 14px; border-radius: var(--rayon); border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+    #resultat-adresse { margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; align-items: start; }
+    .bloc-pres { background: var(--fond); border: 1px solid var(--ligne); border-radius: var(--rayon); padding: 12px 14px; }
+    .bloc-pres h3 { margin: 0 0 8px; font-size: 1rem; }
+    .bloc-pres ul { margin: 0; padding-left: 18px; }
+    .bloc-pres li { margin: 4px 0; font-size: .92rem; }
+    .genre-permis { display: inline-block; font-size: .75rem; font-weight: 600; color: #fff; border-radius: 999px; padding: 1px 8px; margin-right: 2px; }
+    .genre-permis.construction { background: var(--pour, #0B8A4B); }
+    .genre-permis.demolition { background: var(--contre, #D23B2C); }
+    .genre-permis.alteration { background: var(--t-transport, #1D4ED8); }
+    .genre-permis.en-cours { background: var(--t-transport, #1D4ED8); }
+    .genre-permis.a-venir { background: var(--t-urbanisme, #7C3AED); }
+    .genre-permis.fermeture { background: var(--contre, #D23B2C); }
+    #resultat-adresse.apercu { opacity: .45; filter: grayscale(1); max-height: 660px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 80%, transparent); mask-image: linear-gradient(#000 80%, transparent); }
+    .lien-carte { display: inline-flex; vertical-align: -2px; color: var(--accent); }
+  </style>
+  <script type="module">
+    // « Près de chez moi » à Vancouver (15 nov. 2026), même mécanique qu'à Québec et à Montréal : l'index des
+    // adresses vient de scrapers/pres-de-chez-moi.js, découpé par lettre ; permis et chantiers par quartier.
+    // Ce qui change : pas de district ni de conseiller — le quartier remplace le district, et le conseil
+    // entier, élu par toute la ville, remplace « votre élu ».
+    import { EN, tr } from './assets/langue.js';
+    const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    // La même normalisation que le scraper : la Ville écrit « W 6TH AV », les gens « West 6th Avenue ».
+    const cle = (nom) => String(nom ?? '').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^A-Z0-9]+/g, ' ').trim()
+      .replace(/\bAVENUE\b/g, 'AV').replace(/\bAVE\b/g, 'AV').replace(/\bSTREET\b/g, 'ST').replace(/\bDRIVE\b/g, 'DR').replace(/\bROAD\b/g, 'RD')
+      .replace(/\bBOULEVARD\b/g, 'BLVD').replace(/\bPLACE\b/g, 'PL').replace(/\bCRESCENT\b/g, 'CRES').replace(/\bCOURT\b/g, 'CRT')
+      .replace(/\bHIGHWAY\b/g, 'HWY').replace(/\bWEST\b/g, 'W').replace(/\bEAST\b/g, 'E').replace(/\bNORTH\b/g, 'N').replace(/\bSOUTH\b/g, 'S')
+      .replace(/\s+/g, ' ');
+    const argent = (n) => (EN ? '$' : '') + new Intl.NumberFormat(EN ? 'en-CA' : 'fr-CA', { maximumFractionDigits: 0 }).format(n) + (EN ? '' : ' $');
+    const jour = (d) => (d ? new Date(d + 'T12:00').toLocaleDateString(EN ? 'en-CA' : 'fr-CA', { day: 'numeric', month: 'short', year: 'numeric' }) : '');
+    const MAISON = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>';
+    const carte = (q) => `<a class="lien-carte" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(q)}" target="_blank" rel="noopener" title="${tr('Voir sur Google Maps', 'See on Google Maps')}">${MAISON}</a>`;
+    const carteCoord = (lat, lon) => (lat && lon ? carte(`${lat},${lon}`) : '');
+    const GENRE = { Construction: ['construction', tr('Nouveau bâtiment', 'New building')], Demolition: ['demolition', tr('Démolition', 'Demolition')], Alteration: ['alteration', tr('Transformation majeure', 'Major alteration')] };
+    const STATUT = { 'en-cours': tr('En cours', 'Under construction'), 'a-venir': tr('À venir', 'Upcoming'), fermeture: tr('Rue fermée', 'Road closure') };
+    const fichiers = new Map();
+    const lire = (f) => { if (!fichiers.has(f)) fichiers.set(f, fetch(`data/adresses/${f}`).then((r) => (r.ok ? r.json() : null)).catch(() => null)); return fichiers.get(f); };
+    let index = null;
+    const formulaire = document.getElementById('qui-represente');
+    formulaire.addEventListener('submit', (e) => { e.preventDefault(); chercher(document.getElementById('adresse').value); });
+    async function chercher(texte, apercu = false) {
+      const zone = document.getElementById('resultat-adresse');
+      zone.classList.toggle('apercu', apercu);
+      const m = texte.trim().match(/^(\d+)[A-Za-z]?\s*[,\- ]*\s*(.+)$/);
+      if (!m) { zone.innerHTML = tr('<p>Tapez le numéro puis la rue, par exemple « 453 W 12th Avenue ».</p>', '<p>Type the number then the street, for example “453 W 12th Avenue”.</p>'); return; }
+      const numero = Number(m[1]);
+      const voie = cle(m[2].replace(/,?\s*Vancouver.*$/i, ''));
+      if (!voie) return;
+      zone.textContent = tr('Recherche…', 'Searching…');
+      index ??= await lire('index.json');
+      if (!index) { zone.innerHTML = tr('<p><strong>Aucune donnée.</strong> Lancez <code>node scripts/refresh.js</code> dans le dossier <code>vancouver/</code>, puis rechargez la page.</p>', '<p><strong>No data.</strong> Run <code>node scripts/refresh.js</code> in the <code>vancouver/</code> folder, then reload this page.</p>'); return; }
+      const voies = (await lire(`${voie[0].replace(/[^A-Z0-9]/, '_')}.json`)) ?? {};
+      const exactes = Object.entries(voies).filter(([k]) => k === voie);
+      const candidates = exactes.length ? exactes : Object.entries(voies).filter(([k]) => k.startsWith(voie) || voie.startsWith(k));
+      const trouvees = [];
+      for (const [, [libelle, adresses]] of candidates) {
+        const exact = adresses.find((x) => numero >= x[0] && numero <= x[1]);
+        if (exact) { trouvees.push({ libelle, qi: exact[2], approx: null }); continue; }
+        // Pas ce numéro exact : la plus proche sur la même rue, à moins de cent numéros — et on le dit.
+        const proche = adresses.reduce((b, x) => (Math.abs(x[0] - numero) < Math.abs((b?.[0] ?? Infinity) - numero) ? x : b), null);
+        if (proche && Math.abs(proche[0] - numero) <= 100) trouvees.push({ libelle, qi: proche[2], approx: proche[0] });
+      }
+      if (!trouvees.length) {
+        zone.innerHTML = tr('<p>Adresse introuvable. Vérifiez le numéro et le nom de la rue. La recherche couvre la Ville de Vancouver seulement.</p>', '<p>Address not found. Check the number and the street name. The search covers the City of Vancouver only.</p>');
+        return;
+      }
+      zone.innerHTML = trouvees.slice(0, 3).map((t) => `<section class="bloc-pres"><h3>${tr('Votre adresse', 'Your address')}</h3><strong>${numero} ${esc(t.libelle)}</strong> ${carte(`${numero} ${t.libelle}, Vancouver, BC`)}
+          ${t.approx ? `<p class="compte" style="margin:4px 0 0">${tr(`Le numéro ${numero} n’est pas dans la liste d’adresses de la Ville ; le plus proche est le ${t.approx}.`, `Number ${numero} is not in the City’s address list; the closest is ${t.approx}.`)}</p>` : ''}
+          <ul>
+            <li>${tr('Quartier', 'Neighbourhood')}&nbsp;: <strong>${esc(index.quartiers[t.qi] ?? '—')}</strong> (${tr('l’un des 22 quartiers de la Ville', 'one of the City’s 22 local areas')})</li>
+            <li>${tr('Votre conseil&nbsp;: <a href="vancouver-city-council">le maire et les dix conseillers</a>, tous élus par l’ensemble de la ville — Vancouver n’a pas de districts.', 'Your council: <a href="vancouver-city-council">the Mayor and ten Councillors</a>, all elected by the whole city — Vancouver has no wards.')}</li>
+            <li>${tr('Pour une demande à la Ville (nid-de-poule, ordures, graffiti, bruit)&nbsp;: <strong>3-1-1</strong>.', 'For a request to the City (pothole, garbage, graffiti, noise): <strong>3-1-1</strong>.')}</li>
+          </ul></section>`).join('');
+      const t = trouvees[0];
+      if (t.qi < 0) return;
+      const [ch, permis] = await Promise.all([
+        fetch('data/chantiers.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
+        fetch(`data/permis/${t.qi}.json`).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+      ]);
+      const chantiers = ch?.parQuartier?.[t.qi] ?? [];
+      const quartier = esc(index.quartiers[t.qi]);
+      if (chantiers.length) zone.insertAdjacentHTML('beforeend', `<section class="bloc-pres"><h3>${tr(`Chantiers de la Ville dans ${quartier}&nbsp;: ${chantiers.length}`, `City roadwork in ${quartier}: ${chantiers.length}`)}</h3><ul>${
+        chantiers.slice(0, 25).map((c) => `<li><span class="genre-permis ${esc(c[1])}">${STATUT[c[1]] ?? c[1]}</span> ${carteCoord(c[4], c[5])} ${c[3] ? `<a href="${esc(c[3])}" target="_blank" rel="noopener">${esc(c[0])}</a>` : esc(c[0])}${c[6] ? ` <span class="compte">(${esc(c[6])})</span>` : ''}${c[2] ? ` <span class="compte">— ${tr('prévu jusqu’au', 'planned to')} ${jour(c[2])}</span>` : ''}</li>`).join('')
+      }</ul>${chantiers.length > 25 ? `<p class="compte">${tr('Les 25 qui finissent le plus tôt.', 'The 25 ending soonest.')}</p>` : ''}<p class="compte">${tr(`En date du ${new Date(ch.extraction).toLocaleDateString('fr-CA', { day: 'numeric', month: 'short', year: 'numeric' })}, d’après les données « Road Ahead » de la Ville.`, `As of ${new Date(ch.extraction).toLocaleDateString('en-CA', { day: 'numeric', month: 'short', year: 'numeric' })}, from the City’s “Road Ahead” data.`)}</p></section>`);
+      if (permis.length) zone.insertAdjacentHTML('beforeend', `<section class="bloc-pres"><h3>${tr(`Près de chez vous&nbsp;: ${permis.length} permis délivrés dans ${quartier} ces 12 derniers mois`, `Near you: ${permis.length} permits issued in ${quartier} in the last 12 months`)}</h3><ul>${
+        permis.slice(0, 15).map((p) => { const g = GENRE[p[2]] ?? ['alteration', p[2]]; return `<li><span class="genre-permis ${g[0]}">${g[1]}</span> <span class="compte">${jour(p[0])}</span> ${carteCoord(p[4], p[5])} ${esc(p[1])}${p[6] ? ` <span class="compte">— ${argent(p[6])} ${tr('déclarés', 'declared')}</span>` : ''}</li>`; }).join('')
+      }</ul>${permis.length > 15 ? `<p class="compte">${tr('Les 15 plus récents.', 'The 15 most recent.')}</p>` : ''}<p class="compte">${tr('Nouveaux bâtiments, démolitions et transformations de 500 000 $ ou plus. D’après les données « Issued building permits » de la Ville.', 'New buildings, demolitions, and alterations of $500,000 or more. From the City’s “Issued building permits” data.')}</p></section>`);
+    }
+    const lancer = () => { const v = decodeURIComponent(location.hash.slice(1)); if (v) { document.getElementById('adresse').value = v; chercher(v); } else chercher('453 W 12th Avenue', true); };
+    window.addEventListener('hashchange', lancer);
+    lancer();
+  </script>
+  <h2 data-fr="Sources">Sources</h2>
+  <ul>
+    <li data-fr="Adresses, limites des quartiers, permis de construction délivrés, et projets et fermetures « Road Ahead » : Ville de Vancouver, &lt;a href=&quot;https://opendata.vancouver.ca/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;portail de données ouvertes&lt;/a&gt;, sous l’&lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt;. Rien n’est envoyé à la Ville ni à personne quand vous cherchez : la recherche se fait dans votre navigateur, dans des fichiers préparés d’avance.">Addresses, local area boundaries, issued building permits, and “Road Ahead” projects and closures: City of Vancouver, <a href="https://opendata.vancouver.ca/" target="_blank" rel="noopener">open data portal</a>, under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>. Nothing is sent to the City or to anyone else when you search: the lookup happens in your browser, in files prepared in advance.</li>
+  </ul>
+</main>
+<footer>
+  <div class="contenu">
+    <p data-fr="Site citoyen indépendant. Aucun lien avec la Ville de Vancouver, aucun caractère officiel. En cas d’écart, le registre de la Ville fait foi. &lt;a href=&quot;sources-of-the-vancouver-data&quot;&gt;Sources&lt;/a&gt;.">Independent citizen site. No connection with the City of Vancouver, no official status. If anything differs, the City’s record prevails. <a href="sources-of-the-vancouver-data">Sources</a>.</p>
+    <p data-fr="Contient de l’information visée par la &lt;a href=&quot;https://opendata.vancouver.ca/pages/licence/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open Government Licence – Vancouver&lt;/a&gt; (licence du gouvernement ouvert de Vancouver).">Contains information licensed under the <a href="https://opendata.vancouver.ca/pages/licence/" target="_blank" rel="noopener">Open Government Licence – Vancouver</a>.</p>
+    <p class="lien-dq-pied" data-fr="&lt;a href=&quot;/&quot;&gt;DossierBC — l’Assemblée législative de la Colombie-Britannique en clair&lt;/a&gt; · &lt;a href=&quot;/regles&quot;&gt;Les règles du site&lt;/a&gt;"><a href="/">DossierBC — the Legislative Assembly of British Columbia in plain language</a> · <a href="/regles">Rules of the site</a></p>
+  </div>
+</footer>
+<script type="module" src="assets/app.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="assets/avis-pause.js" defer></script>
+<script type="module" src="assets/langue.js"></script>
+</body>
+</html>

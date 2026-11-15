@@ -1,0 +1,8 @@
+{
+ "luLe": "2026-11-15T12:11:36.983Z",
+ "url": "https://opendata.vancouver.ca/robots.txt",
+ "texte": "User-agent: Twitterbot\nDisallow:\n\nUser-agent: *\nDisallow: /logout\nDisallow: /login\nDisallow: /publish\nDisallow: /backoffice\nDisallow: /explore/download\nDisallow: /explore/dataset/*/download\nDisallow: /explore/dataset/*/rss/\nDisallow: /explore/dataset/*/atom/\nDisallow: /p-preview/\nDisallow: /explore/form-preview/\nDisallow: /api/\nDisallow: /static/\n\nUser-agent: Googlebot\nDisallow: /logout\nDisallow: /login\nDisallow: /publish\nDisallow: /backoffice\nDisallow: /explore/download\nDisallow: /explore/dataset/*/download\nDisallow: /explore/dataset/*/rss/\nDisallow: /explore/dataset/*/atom/\nDisallow: /p-preview/\nDisallow: /explore/form-preview/\nDisallow: /api/v2/*/exports/\nDisallow: /api/explore/v2*/exports/\n\nSitemap: https://opendata.vancouver.ca/sitemap.xml\n",
+ "interditApi": true,
+ "porteUtilisee": "API Explore v2.1",
+ "note": "Le robots.txt régit l’indexation par les moteurs de recherche. L’API Explore v2.1 est l’interface documentée du portail et la licence autorise l’usage ; la ligne « Disallow: /api/ » est notée ici pour que la décision d’y faire tourner un robot soit prise en connaissance de cause (voir lib/van.js)."
+}
