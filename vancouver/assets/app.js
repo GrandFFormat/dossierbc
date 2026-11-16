@@ -1524,3 +1524,11 @@ document.addEventListener('toggle', async (e) => {
     ${pdf ? `<p class="compte" style="margin:2px 0 0"><a href="${echapper(pdf)}" target="_blank" rel="noopener">${tr('Donnée officielle — portail de la Ville ↗', 'Official record — City of Vancouver open data ↗')}</a></p>` : ''}
   </div>`);
 }, true);
+
+// La mesure maison commune à tous les sites Dossier (16 nov. 2026) : pages vues et clics, sans donnée
+// personnelle, lus dans dossierquebec.ca/admin. Un seul fichier, servi par DQ.
+(function () {
+  if (window.__dqMesure) return; window.__dqMesure = true;
+  var s = document.createElement("script"); s.src = "https://dossierquebec.ca/commun/mesure.js"; s.defer = true;
+  document.head.appendChild(s);
+})();
