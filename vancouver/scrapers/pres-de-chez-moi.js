@@ -3,6 +3,7 @@
 //
 //   node scrapers/pres-de-chez-moi.js
 //   node scrapers/pres-de-chez-moi.js --sans-adresses     (ne relit pas les 99 723 adresses)
+//   node scrapers/pres-de-chez-moi.js --seulement-adresses (les adresses seules, avec leur position)
 //
 // Même mécanique qu'à Québec et à Montréal (scrapers/adresses.js, permis-travaux.js) : point dans
 // polygone ici, petits fichiers pour la page, et aucune adresse tapée par un visiteur n'est envoyée
@@ -90,7 +91,8 @@ if (!args['sans-adresses'] || !existsSync('data/adresses/index.json')) {
     const cle = cleVoie(rue);
     const lettre = (cle[0] || '_').replace(/[^A-Z0-9]/, '_');
     const voie = ((parLettre[lettre] ||= {})[cle] ||= [rue, []]);
-    voie[1].push([numero, numero, qi]);
+    // La position de l'adresse (lat, lon), pour le rayon « − 1 km + » de la page (15 nov. 2026).
+    voie[1].push(p ? [numero, numero, qi, +p[1].toFixed(5), +p[0].toFixed(5)] : [numero, numero, qi]);
     n++;
   }
   await rm('data/adresses', { recursive: true, force: true });
@@ -106,6 +108,13 @@ if (!args['sans-adresses'] || !existsSync('data/adresses/index.json')) {
   console.log(`Adresses : ${n} placées dans un quartier (${hors} hors des 22 quartiers), ${Object.keys(parLettre).length} fichiers.`);
 } else {
   console.log('Adresses : conservées (--sans-adresses).');
+}
+
+// --seulement-adresses : relit les adresses (et les quartiers) sans toucher aux permis ni aux
+// chantiers — utile quand le volet est en pause et que ses données doivent rester figées.
+if (args['seulement-adresses']) {
+  console.log('Permis et chantiers : conservés (--seulement-adresses).');
+  process.exit(0);
 }
 
 // ---------- 3. Les permis de construction des 12 derniers mois ----------

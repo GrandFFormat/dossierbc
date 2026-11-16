@@ -126,6 +126,17 @@
     .genre-permis.fermeture { background: var(--contre, #D23B2C); }
     #resultat-adresse.apercu { opacity: .45; filter: grayscale(1); max-height: 660px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 80%, transparent); mask-image: linear-gradient(#000 80%, transparent); }
     .lien-carte { display: inline-flex; vertical-align: -2px; color: var(--accent); }
+    .zone-rayon { display: contents; }
+    .cadre-rayon, .carte-pres { grid-column: 1 / -1; }
+    .carte-pres { height: 380px; border-radius: var(--rayon); border: var(--bordure-carte); margin: 0 0 6px; z-index: 0; }
+    .carte-pres .leaflet-popup-content { font-size: 13px; line-height: 1.45; }
+    .cadre-rayon { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 14px 0 10px; padding: 10px 14px;
+      background: var(--carte); border: var(--bordure-carte); border-radius: var(--rayon); }
+    .cadre-rayon span { font-weight: 600; margin-right: auto; }
+    .cadre-rayon button { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--accent); background: var(--accent);
+      color: #fff; font-family: inherit; font-weight: 700; font-size: 20px; line-height: 1; cursor: pointer; }
+    .cadre-rayon button:disabled { opacity: .35; cursor: default; }
+    .cadre-rayon strong { min-width: 64px; text-align: center; font-size: 1.1rem; }
     .bulle-carte { display: inline-flex; align-items: center; gap: 4px; text-decoration: none; color: #fff; }
     .bulle-carte svg { width: 13px; height: 13px; }
     .bulle-carte:hover, .bulle-carte:focus-visible { filter: brightness(1.12); text-decoration: underline; }
@@ -187,10 +198,10 @@
       const trouvees = [];
       for (const [, [libelle, adresses]] of candidates) {
         const exact = adresses.find((x) => numero >= x[0] && numero <= x[1]);
-        if (exact) { trouvees.push({ libelle, qi: exact[2], approx: null }); continue; }
+        if (exact) { trouvees.push({ libelle, qi: exact[2], approx: null, lat: exact[3], lon: exact[4] }); continue; }
         // Pas ce numéro exact : la plus proche sur la même rue, à moins de cent numéros — et on le dit.
         const proche = adresses.reduce((b, x) => (Math.abs(x[0] - numero) < Math.abs((b?.[0] ?? Infinity) - numero) ? x : b), null);
-        if (proche && Math.abs(proche[0] - numero) <= 100) trouvees.push({ libelle, qi: proche[2], approx: proche[0] });
+        if (proche && Math.abs(proche[0] - numero) <= 100) trouvees.push({ libelle, qi: proche[2], approx: proche[0], lat: proche[3], lon: proche[4] });
       }
       if (!trouvees.length) {
         zone.innerHTML = tr('<p>Adresse introuvable. Vérifiez le numéro et le nom de la rue. La recherche couvre la Ville de Vancouver seulement.</p>', '<p>Address not found. Check the number and the street name. The search covers the City of Vancouver only.</p>');
@@ -205,18 +216,110 @@
           </ul></section>`).join('');
       const t = trouvees[0];
       if (t.qi < 0) return;
-      const [ch, permis] = await Promise.all([
+      // Le rayon (Martin, 15 nov. 2026) : « − 1 km + ». Selon la distance choisie, les chantiers et
+      // les permis de TOUS les quartiers à portée s'affichent, du plus proche au plus loin. Sans
+      // position (vieille donnée), on retombe sur le quartier, comme avant.
+      const [ch, ...tousPermis] = await Promise.all([
         fetch('data/chantiers.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
-        fetch(`data/permis/${t.qi}.json`).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+        ...index.quartiers.map((_, qi) => fetch(`data/permis/${qi}.json`).then((r) => (r.ok ? r.json() : [])).catch(() => [])),
       ]);
-      const chantiers = ch?.parQuartier?.[t.qi] ?? [];
+      const zoneRayon = document.createElement('div');
+      zoneRayon.className = 'zone-rayon';
+      zone.append(zoneRayon);
+      const rendre = () => rendreRayon(zoneRayon, t, ch, tousPermis);
+      rayonRendu = rendre;
+      rendre();
+    }
+    // ---------- Le rayon « − 1 km + » ----------
+    const RAYONS = [0.25, 0.5, 1, 2, 3, 5];   // km
+    let rayon = 1, rayonRendu = null;
+    try { const r = Number(localStorage.getItem('van:rayon')); if (RAYONS.includes(r)) rayon = r; } catch {}
+    const distanceKm = (a, b, c, d) => {
+      const R = 6371, x = (c - a) * Math.PI / 180, y = (d - b) * Math.PI / 180;
+      const h = Math.sin(x / 2) ** 2 + Math.cos(a * Math.PI / 180) * Math.cos(c * Math.PI / 180) * Math.sin(y / 2) ** 2;
+      return 2 * R * Math.asin(Math.sqrt(h));
+    };
+    const texteKm = (k) => (k < 1 ? `${Math.round(k * 1000)} m` : `${k.toLocaleString(tr('fr-CA', 'en-CA'), { maximumFractionDigits: 1 })} km`);
+    function changerRayon(sens) {
+      const i = RAYONS.indexOf(rayon) + sens;
+      if (i < 0 || i >= RAYONS.length) return;
+      rayon = RAYONS[i];
+      try { localStorage.setItem('van:rayon', String(rayon)); } catch {}
+      rayonRendu?.();
+    }
+    window.changerRayon = changerRayon;
+    function rendreRayon(el, t, ch, tousPermis) {
+      const avecPos = t.lat && t.lon;
       const quartier = esc(index.quartiers[t.qi]);
-      if (chantiers.length) zone.insertAdjacentHTML('beforeend', `<section class="bloc-pres"><h3>${tr(`Chantiers de la Ville dans ${quartier}&nbsp;: ${chantiers.length}`, `City roadwork in ${quartier}: ${chantiers.length}`)}</h3><ul>${
-        chantiers.slice(0, 25).map((c) => `<li>${bulle(c[1], STATUT[c[1]] ?? esc(c[1]), c[4], c[5])} ${c[3] ? `<a href="${esc(c[3])}" target="_blank" rel="noopener">${esc(c[0])}</a>` : esc(c[0])}${c[6] ? ` <span class="compte">(${esc(c[6])})</span>` : ''}${c[2] ? ` <span class="compte">— ${tr('prévu jusqu’au', 'planned to')} ${jour(c[2])}</span>` : ''}</li>`).join('')
-      }</ul>${chantiers.length > 25 ? `<p class="compte">${tr('Les 25 qui finissent le plus tôt.', 'The 25 ending soonest.')}</p>` : ''}<p class="compte">${tr(`En date du ${new Date(ch.extraction).toLocaleDateString('fr-CA', { day: 'numeric', month: 'short', year: 'numeric' })}, d’après les données « Road Ahead » de la Ville.`, `As of ${new Date(ch.extraction).toLocaleDateString('en-CA', { day: 'numeric', month: 'short', year: 'numeric' })}, from the City’s “Road Ahead” data.`)}</p></section>`);
-      if (permis.length) zone.insertAdjacentHTML('beforeend', `<section class="bloc-pres"><h3>${tr(`Près de chez vous&nbsp;: ${permis.length} permis délivrés dans ${quartier} ces 12 derniers mois`, `Near you: ${permis.length} permits issued in ${quartier} in the last 12 months`)}</h3><ul>${
-        permis.slice(0, 15).map((p) => { const g = GENRE[p[2]] ?? ['alteration', p[2]]; return `<li>${bulle(g[0], g[1], p[4], p[5])} <span class="compte">${jour(p[0])}</span> ${esc(p[1])}${p[6] ? ` <span class="compte">— ${argent(p[6])} ${tr('déclarés', 'declared')}</span>` : ''}</li>`; }).join('')
-      }</ul>${permis.length > 15 ? `<p class="compte">${tr('Les 15 plus récents.', 'The 15 most recent.')}</p>` : ''}<p class="compte">${tr('Nouveaux bâtiments, démolitions et transformations de 500 000 $ ou plus. D’après les données « Issued building permits » de la Ville.', 'New buildings, demolitions, and alterations of $500,000 or more. From the City’s “Issued building permits” data.')}</p></section>`);
+      let chantiers, permis;
+      if (avecPos) {
+        chantiers = Object.values(ch?.parQuartier ?? {}).flat()
+          .map((c) => ({ c, d: c[4] && c[5] ? distanceKm(t.lat, t.lon, c[4], c[5]) : Infinity }))
+          .filter((x) => x.d <= rayon).sort((a, b) => a.d - b.d);
+        permis = tousPermis.flat()
+          .map((p) => ({ p, d: p[4] && p[5] ? distanceKm(t.lat, t.lon, p[4], p[5]) : Infinity }))
+          .filter((x) => x.d <= rayon).sort((a, b) => a.d - b.d);
+      } else {
+        chantiers = (ch?.parQuartier?.[t.qi] ?? []).map((c) => ({ c, d: null }));
+        permis = (tousPermis[t.qi] ?? []).map((p) => ({ p, d: null }));
+      }
+      const loin = (d) => (d == null ? '' : ` <span class="compte">· ${texteKm(d)}</span>`);
+      const cadre = avecPos ? `<div class="cadre-rayon" role="group" aria-label="${tr('Distance autour de votre adresse', 'Distance around your address')}">
+          <span>${tr('Autour de votre adresse', 'Around your address')}</span>
+          <button type="button" onclick="changerRayon(-1)" ${rayon === RAYONS[0] ? 'disabled' : ''} aria-label="${tr('Plus près', 'Closer')}">−</button>
+          <strong aria-live="polite">${texteKm(rayon)}</strong>
+          <button type="button" onclick="changerRayon(1)" ${rayon === RAYONS[RAYONS.length - 1] ? 'disabled' : ''} aria-label="${tr('Plus loin', 'Farther')}">+</button>
+        </div>` : '';
+      const ou = avecPos ? tr(`à moins de ${texteKm(rayon)}`, `within ${texteKm(rayon)}`) : tr(`dans ${quartier}`, `in ${quartier}`);
+      el.innerHTML = cadre + (avecPos ? '<div id="carte-pres" class="carte-pres" aria-label="' + tr('Carte des chantiers et des permis', 'Map of roadwork and permits') + '"></div>' : '') +
+        `<section class="bloc-pres"><h3>${tr(`Chantiers de la Ville ${ou}&nbsp;: ${chantiers.length}`, `City roadwork ${ou}: ${chantiers.length}`)}</h3>${chantiers.length ? `<ul>${
+          chantiers.slice(0, 25).map(({ c, d }) => `<li>${bulle(c[1], STATUT[c[1]] ?? esc(c[1]), c[4], c[5])} ${c[3] ? `<a href="${esc(c[3])}" target="_blank" rel="noopener">${esc(c[0])}</a>` : esc(c[0])}${c[6] ? ` <span class="compte">(${esc(c[6])})</span>` : ''}${loin(d)}${c[2] ? ` <span class="compte">— ${tr('prévu jusqu’au', 'planned to')} ${jour(c[2])}</span>` : ''}</li>`).join('')
+        }</ul>` : `<p class="compte">${tr('Aucun. Élargissez la distance avec le +.', 'None. Widen the distance with +.')}</p>`}${chantiers.length > 25 ? `<p class="compte">${tr('Les 25 plus proches.', 'The 25 closest.')}</p>` : ''}${ch ? `<p class="compte">${tr(`En date du ${new Date(ch.extraction).toLocaleDateString('fr-CA', { day: 'numeric', month: 'short', year: 'numeric' })}, d’après les données « Road Ahead » de la Ville.`, `As of ${new Date(ch.extraction).toLocaleDateString('en-CA', { day: 'numeric', month: 'short', year: 'numeric' })}, from the City’s “Road Ahead” data.`)}</p>` : ''}</section>` +
+        `<section class="bloc-pres"><h3>${tr(`Permis délivrés ${ou}, ces 12 derniers mois&nbsp;: ${permis.length}`, `Permits issued ${ou} in the last 12 months: ${permis.length}`)}</h3>${permis.length ? `<ul>${
+          permis.slice(0, 25).map(({ p, d }) => { const g = GENRE[p[2]] ?? ['alteration', p[2]]; return `<li>${bulle(g[0], g[1], p[4], p[5])} <span class="compte">${jour(p[0])}</span> ${esc(p[1])}${loin(d)}${p[6] ? ` <span class="compte">— ${argent(p[6])} ${tr('déclarés', 'declared')}</span>` : ''}</li>`; }).join('')
+        }</ul>` : `<p class="compte">${tr('Aucun. Élargissez la distance avec le +.', 'None. Widen the distance with +.')}</p>`}${permis.length > 25 ? `<p class="compte">${tr('Les 25 plus proches.', 'The 25 closest.')}</p>` : ''}<p class="compte">${tr('Nouveaux bâtiments, démolitions et transformations de 500 000 $ ou plus. D’après les données « Issued building permits » de la Ville.', 'New buildings, demolitions, and alterations of $500,000 or more. From the City’s “Issued building permits” data.')}</p></section>`;
+      if (avecPos) dessinerCarte(t, chantiers, permis);
+    }
+    // ---------- La carte (Martin, 15 nov. 2026) : l'adresse, le cercle du rayon, un marqueur par chantier
+    // et par permis, de la couleur de sa bulle. Leaflet et les tuiles d'OpenStreetMap, avec leur attribution.
+    let leaflet = null;
+    const chargerLeaflet = () => leaflet ??= new Promise((ok, non) => {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet'; css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.append(css);
+      const js = document.createElement('script');
+      js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      js.onload = () => ok(window.L); js.onerror = non;
+      document.head.append(js);
+    });
+    // Chaque marqueur prend la couleur de sa bulle dans la liste (Martin, 15 nov. 2026) : on la lit
+    // dans le CSS, donc le thème clair ou sombre suit tout seul.
+    const couleurs = {};
+    const couleurDe = (classe) => couleurs[classe] ??= (() => {
+      const e = document.createElement('span');
+      e.className = `genre-permis ${classe}`; e.style.display = 'none';
+      document.body.append(e);
+      const c = getComputedStyle(e).backgroundColor; e.remove(); return c;
+    })();
+    async function dessinerCarte(t, chantiers, permis) {
+      const boite = document.getElementById('carte-pres');
+      if (!boite) return;
+      let L;
+      try { L = await chargerLeaflet(); } catch { boite.remove(); return; }
+      if (!document.body.contains(boite)) return;
+      const carte = L.map(boite, { scrollWheelZoom: false }).setView([t.lat, t.lon], 15);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(carte);
+      const cercle = L.circle([t.lat, t.lon], { radius: rayon * 1000, color: '#1f4f8a', weight: 2, fillOpacity: 0.06 }).addTo(carte);
+      L.circleMarker([t.lat, t.lon], { radius: 9, color: '#fff', weight: 3, fillColor: '#1f4f8a', fillOpacity: 1 })
+        .addTo(carte).bindPopup(`<strong>${tr('Votre adresse', 'Your address')}</strong>`);
+      const point = (lat, lon, couleur, html) => L.circleMarker([lat, lon], { radius: 6, color: '#fff', weight: 1.5, fillColor: couleur, fillOpacity: 0.95 }).addTo(carte).bindPopup(html);
+      for (const { c, d } of chantiers) point(c[4], c[5], couleurDe(c[1]),
+        `<strong>${STATUT[c[1]] ?? esc(c[1])}</strong><br>${c[3] ? `<a href="${esc(c[3])}" target="_blank" rel="noopener">${esc(c[0])}</a>` : esc(c[0])}<br>${texteKm(d)}${c[2] ? ` · ${tr('prévu jusqu’au', 'planned to')} ${jour(c[2])}` : ''}`);
+      for (const { p, d } of permis) { const g = GENRE[p[2]] ?? ['alteration', p[2]]; point(p[4], p[5], couleurDe(g[0]),
+        `<strong>${g[1]}</strong><br>${esc(p[1])}<br>${jour(p[0])} · ${texteKm(d)}${p[6] ? `<br>${argent(p[6])} ${tr('déclarés', 'declared')}` : ''}`); }
+      carte.fitBounds(cercle.getBounds(), { padding: [12, 12] });
     }
     const lancer = () => { const v = decodeURIComponent(location.hash.slice(1)); if (v) { document.getElementById('adresse').value = v; chercher(v); } else chercher('453 W 12th Avenue', true); };
     window.addEventListener('hashchange', lancer);
