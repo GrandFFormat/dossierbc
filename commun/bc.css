@@ -1128,3 +1128,9 @@ nav.tabs .villes-menu ul{left:auto; right:0;}
 /* Sur ordinateur, la fenêtre garde au moins sa hauteur du 15 nov. 2026 (Martin), même quand les
    résumés futurs seront plus courts : le cadre ne rapetisse pas d'une semaine à l'autre. */
 @media (min-width:1001px){ #band-comites .com-rail{min-height:470px;} }
+
+/* Mode sombre : l'encadré des pétitions gardait son fond jaune pâle sous un texte devenu pâle,
+   illisible (Martin, 15 nov. 2026). Fond jaune foncé transparent, texte clair, liens dorés. */
+html[data-theme="dark"] .bc-petitions{background:rgba(227,181,40,.14); color:var(--ink);}
+html[data-theme="dark"] .bc-petitions b{color:#F2CC5B;}
+html[data-theme="dark"] .bc-petitions a{color:#F2CC5B;}
