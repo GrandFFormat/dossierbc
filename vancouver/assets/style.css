@@ -946,3 +946,7 @@ html.dvq-fr:not(.dvq-pret) body { visibility: hidden; }
 /* En thème sombre, la ville cochée du menu s'allume en jaune DossierBC (Martin, 15 nov. 2026). */
 :root[data-theme="sombre"] .ab-villes-menu a[aria-current] { background: rgba(227, 181, 40, .18); color: #F2CC5B; }
 :root[data-theme="sombre"] .ab-villes-menu a[aria-current]:hover { background: rgba(227, 181, 40, .26); }
+
+/* Sujets soulignés dans la phrase des cartes En bref, comme Montréal (16 nov. 2026). */
+.eb-mot { text-decoration: underline; text-decoration-color: var(--vedette, var(--accent)); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.eb-mot[class*="t-bord-"] { text-decoration-color: var(--c); }

@@ -82,6 +82,10 @@ function liste(elements, n = 3) {
   if (reste > 0) return `${vus.join(', ')}${et}${EN ? `${reste} more` : `${reste} autre${reste > 1 ? 's' : ''}`}`;
   return vus.length > 1 ? `${vus.slice(0, -1).join(', ')}${et}${vus[vus.length - 1]}` : vus[0] ?? '';
 }
+function souligner(texte) {
+  return echapper(texte).replace(/([^]*)([^]*)/g, (_, t, m) =>
+    `<span class="eb-mot${t ? ` t-bord-${t}` : ''}"${t ? ` title="${echapper(nomTheme(t))}"` : ''}>${m}</span>`);
+}
 function recap(s, decs) {
   const P = points(decs);
   const adoptes = P.filter((p) => p.issue === 'adopte');
@@ -90,23 +94,25 @@ function recap(s, decs) {
   const autres = adoptes.filter((p) => !zonage.includes(p) && !contrats.includes(p));
   const rejetes = P.filter((p) => p.issue === 'rejete');
   const renvoyes = P.filter((p) => p.issue === 'renvoi');
+  // Sujets soulignés de la couleur de leur thème, comme Montréal (Martin, 16 nov. 2026) : marqués ici, rendus par souligner().
+  const sj = (p, t) => `${p.d.theme ?? ''}${t}`;
   const adresse = (t) => couper((t.match(/:\s*(.+)$/)?.[1] ?? t).replace(/^\((?:i|ii)\)\s*/i, ''), 40);
   const quoi = (t) => couper(t.replace(/^Contract Award\s*(?:-|for)\s*/i, ''), 45);
   const qui = s.nom === 'Public Hearing' ? tr('À cette audience publique, le conseil', 'At this public hearing, Council')
     : /Finance|Policy/.test(s.nom) ? tr('Le comité', 'The committee') : tr('Le conseil', 'Council');
   const morceaux = [];
   if (EN) {
-    if (zonage.length) morceaux.push(`approved ${pluriel(zonage.length, 'rezoning', 'rezonings')} (${liste(zonage.map((p) => adresse(p.titre)))})`);
-    if (contrats.length) morceaux.push(`awarded ${pluriel(contrats.length, 'contract', 'contracts')} (${liste(contrats.map((p) => quoi(p.titre)), 2)})`);
-    if (autres.length) morceaux.push(`adopted ${liste(autres.map((p) => cite(p.titre)), 3)}`);
-    if (rejetes.length) morceaux.push(`rejected ${liste(rejetes.map((p) => cite(p.titre)), 2)}`);
-    if (renvoyes.length) morceaux.push(`referred ${liste(renvoyes.map((p) => cite(p.titre)), 2)}`);
+    if (zonage.length) morceaux.push(`approved ${pluriel(zonage.length, 'rezoning', 'rezonings')} (${liste(zonage.map((p) => sj(p, adresse(p.titre))))})`);
+    if (contrats.length) morceaux.push(`awarded ${pluriel(contrats.length, 'contract', 'contracts')} (${liste(contrats.map((p) => sj(p, quoi(p.titre))), 2)})`);
+    if (autres.length) morceaux.push(`adopted ${liste(autres.map((p) => sj(p, cite(p.titre))), 3)}`);
+    if (rejetes.length) morceaux.push(`rejected ${liste(rejetes.map((p) => sj(p, cite(p.titre))), 2)}`);
+    if (renvoyes.length) morceaux.push(`referred ${liste(renvoyes.map((p) => sj(p, cite(p.titre))), 2)}`);
   } else {
-    if (zonage.length) morceaux.push(`a approuvé ${zonage.length} ${zonage.length > 1 ? 'rezonages' : 'rezonage'} (${liste(zonage.map((p) => adresse(p.titre)))})`);
-    if (contrats.length) morceaux.push(`a attribué ${contrats.length} ${contrats.length > 1 ? 'contrats' : 'contrat'} (${liste(contrats.map((p) => quoi(p.titre)), 2)})`);
-    if (autres.length) morceaux.push(`a adopté ${liste(autres.map((p) => cite(p.titre)), 3)}`);
-    if (rejetes.length) morceaux.push(`a rejeté ${liste(rejetes.map((p) => cite(p.titre)), 2)}`);
-    if (renvoyes.length) morceaux.push(`a renvoyé ${liste(renvoyes.map((p) => cite(p.titre)), 2)}`);
+    if (zonage.length) morceaux.push(`a approuvé ${zonage.length} ${zonage.length > 1 ? 'rezonages' : 'rezonage'} (${liste(zonage.map((p) => sj(p, adresse(p.titre))))})`);
+    if (contrats.length) morceaux.push(`a attribué ${contrats.length} ${contrats.length > 1 ? 'contrats' : 'contrat'} (${liste(contrats.map((p) => sj(p, quoi(p.titre))), 2)})`);
+    if (autres.length) morceaux.push(`a adopté ${liste(autres.map((p) => sj(p, cite(p.titre))), 3)}`);
+    if (rejetes.length) morceaux.push(`a rejeté ${liste(rejetes.map((p) => sj(p, cite(p.titre))), 2)}`);
+    if (renvoyes.length) morceaux.push(`a renvoyé ${liste(renvoyes.map((p) => sj(p, cite(p.titre))), 2)}`);
   }
   if (!morceaux.length) return '';
   const et = EN ? (morceaux.length > 2 ? ', and ' : ' and ') : ' et ';
@@ -179,7 +185,7 @@ function carte(s, decs, explication) {
     <span class="eb-sorte eb-sorte-pv">${tr('Registre des votes · décidé', 'Vote record · decided')}</span>
     <header><h3>${echapper(s.nom)}<span class="eb-rythme">/${rythme(s.nom)}</span></h3>
     <span class="eb-date">${tr('Séance du', 'Meeting of')} ${dateLongue(s.date)} · ${pluriel(decs.length, 'motion', 'motions')}</span></header>
-    ${(() => { const r = recap(s, decs); return r ? `<div class="eb-phrase">${echapper(r)}</div><p class="eb-compte">${echapper(phrase(s, decs))}</p>` : `<div class="eb-phrase">${echapper(phrase(s, decs))}</div>`; })()}
+    ${(() => { const r = recap(s, decs); return r ? `<div class="eb-phrase">${souligner(r)}</div><p class="eb-compte">${echapper(phrase(s, decs))}</p>` : `<div class="eb-phrase">${echapper(phrase(s, decs))}</div>`; })()}
     ${explication ? `<p class="eb-attente">${echapper(explication)}</p>` : ''}
     ${points ? `<ul class="eb-points">${points}</ul>` : ''}
     ${blocVotes(decs)}
