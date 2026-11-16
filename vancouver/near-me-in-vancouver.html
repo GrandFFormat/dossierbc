@@ -132,7 +132,28 @@
     .carte-pres .leaflet-popup-content { font-size: 13px; line-height: 1.45; }
     .cadre-rayon { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 14px 0 10px; padding: 10px 14px;
       background: var(--carte); border: var(--bordure-carte); border-radius: var(--rayon); }
-    .cadre-rayon span { font-weight: 600; margin-right: auto; }
+    .cadre-rayon > span { font-weight: 600; }
+    .cadre-rayon .rayon-pm { display: inline-flex; align-items: center; gap: 10px; flex: none; }
+    .cadre-rayon .filtre-groupe { width: auto; height: auto; border-radius: 999px; padding: 5px 12px; font-size: .82rem; font-weight: 700;
+      background: var(--encre); color: var(--fond); border: 1.5px solid var(--encre); }
+    .cadre-rayon .filtre-groupe[aria-pressed="false"] { background: transparent; color: var(--encre); opacity: .5; text-decoration: line-through; }
+    .cadre-rayon .filtre-groupe[aria-pressed="mixed"] { background: transparent; color: var(--encre); }
+    .cadre-rayon .filtre-circulation { width: auto; height: auto; border-radius: 999px; padding: 5px 12px; font-size: .82rem; font-weight: 700;
+      background: transparent; color: var(--encre); border: 1.5px solid #E8742C; }
+    .cadre-rayon .filtre-circulation[aria-pressed="true"] { background: #E8742C; color: #fff; }
+    .cadre-rayon .bouton-filtres { width: auto; height: auto; border-radius: 999px; padding: 5px 12px; font-size: .82rem; font-weight: 700;
+      background: transparent; color: var(--encre); border: 1.5px solid var(--ligne-forte, var(--ligne)); }
+    .cadre-rayon .bouton-filtres[aria-expanded="true"] { background: var(--encre); color: var(--fond); border-color: var(--encre); }
+    .cadre-rayon .bouton-filtres b { font-weight: 700; color: #E8742C; }
+    .filtres-detail { display: none; flex-basis: 100%; flex-wrap: wrap; gap: 6px; order: 9; padding-top: 4px; }
+    .filtres-detail.ouvert { display: flex; }
+    .filtres-rayon { display: flex; flex-wrap: wrap; gap: 6px; margin-right: auto; flex: 1; }
+    .cadre-rayon .filtre-type { width: auto; height: auto; border-radius: 999px; padding: 4px 10px 4px 8px; font-size: .8rem; font-weight: 600;
+      background: transparent; color: var(--encre); border: 1.5px solid var(--ligne-forte); display: inline-flex; align-items: center; gap: 6px; }
+    .cadre-rayon .filtre-type i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .cadre-rayon .filtre-type b { font-weight: 600; opacity: .7; }
+    .cadre-rayon .filtre-type[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
+    .cadre-rayon .filtre-type[aria-pressed="false"] i { background: transparent !important; box-shadow: inset 0 0 0 1.5px currentColor; }
     .cadre-rayon button { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--accent); background: var(--accent);
       color: #fff; font-family: inherit; font-weight: 700; font-size: 20px; line-height: 1; cursor: pointer; }
     .cadre-rayon button:disabled { opacity: .35; cursor: default; }
@@ -233,6 +254,26 @@
     // ---------- Le rayon « − 1 km + » ----------
     const RAYONS = [0.25, 0.5, 1, 2, 3, 5];   // km
     let rayon = 1, rayonRendu = null;
+    let masques = new Set();
+    try { masques = new Set(JSON.parse(localStorage.getItem('van:rayon:masques') ?? '[]')); } catch {}
+    // Un bouton par famille (Martin : « we need a roads button ») : Routes = tous les chantiers de la
+    // Ville, Permis = tous les permis. Il masque ou remontre d'un coup tous les types de sa famille.
+    // « Impact sur la circulation » : seules les fermetures de rue (Road Ahead « current road closures »)
+    // le disent dans les données de la Ville ; les permis n'en disent rien.
+    // Deux boutons seulement dans le cadre (Martin, 15 nov. 2026) : « Filtres », qui déplie les autres (Routes, Permis, les types), et « Impact sur la circulation ».
+    let filtresOuverts = false;
+    window.basculerFiltres = () => { filtresOuverts = !filtresOuverts; rayonRendu?.(); };
+    let seulementCirculation = false;
+    try { seulementCirculation = localStorage.getItem('van:rayon:circulation') === '1'; } catch {}
+    window.basculerCirculation = () => { seulementCirculation = !seulementCirculation; try { localStorage.setItem('van:rayon:circulation', seulementCirculation ? '1' : '0'); } catch {} rayonRendu?.(); };
+    window.basculerGroupe = (liste) => {
+      const classes = liste.split(',');
+      const tousMasques = classes.every((c) => masques.has(c));
+      for (const c of classes) tousMasques ? masques.delete(c) : masques.add(c);
+      try { localStorage.setItem('van:rayon:masques', JSON.stringify([...masques])); } catch {}
+      rayonRendu?.();
+    };
+    window.basculerType = (classe) => { masques.has(classe) ? masques.delete(classe) : masques.add(classe); try { localStorage.setItem('van:rayon:masques', JSON.stringify([...masques])); } catch {} rayonRendu?.(); };
     try { const r = Number(localStorage.getItem('van:rayon')); if (RAYONS.includes(r)) rayon = r; } catch {}
     const distanceKm = (a, b, c, d) => {
       const R = 6371, x = (c - a) * Math.PI / 180, y = (d - b) * Math.PI / 180;
@@ -263,12 +304,30 @@
         chantiers = (ch?.parQuartier?.[t.qi] ?? []).map((c) => ({ c, d: null }));
         permis = (tousPermis[t.qi] ?? []).map((p) => ({ p, d: null }));
       }
+      // Filtres par type (Martin, 15 nov. 2026) : une pastille par genre présent dans le rayon, de la
+      // couleur de sa bulle, avec son nombre ; un clic masque ou remontre ce type, liste et carte.
+      if (avecPos && seulementCirculation) { chantiers = chantiers.filter(({ c }) => c[1] === 'fermeture'); permis = []; }
+      const types = new Map();
+      for (const { c } of chantiers) { const t = types.get(c[1]) ?? { classe: c[1], libelle: STATUT[c[1]] ?? esc(c[1]), n: 0 }; t.n++; types.set(c[1], t); }
+      for (const { p } of permis) { const g = GENRE[p[2]] ?? ['alteration', p[2]]; const t = types.get(g[0]) ?? { classe: g[0], libelle: g[1], n: 0 }; t.n++; types.set(g[0], t); }
+      const etatGroupe = (cl) => (cl.every((c) => masques.has(c)) ? 'false' : cl.some((c) => masques.has(c)) ? 'mixed' : 'true');
+      const groupe = (libelle, cl) => (cl.length ? `<button type="button" class="filtre-groupe" aria-pressed="${etatGroupe(cl)}" onclick="basculerGroupe('${cl.join(',')}')">${libelle}</button>` : '');
+      const clRoutes = [...new Set(chantiers.map(({ c }) => c[1]))], clPermis = [...new Set(permis.map(({ p }) => (GENRE[p[2]] ?? ['alteration'])[0]))];
+      const circ = avecPos ? `<button type="button" class="filtre-circulation" aria-pressed="${seulementCirculation}" onclick="basculerCirculation()">🚧 ${tr('Impact sur la circulation', 'Traffic impact')}</button>` : '';
+      const groupes = (avecPos ? groupe(tr('Routes', 'Roads'), clRoutes) + groupe(tr('Permis', 'Permits'), clPermis) : '');
+      const detail = groupes + (avecPos ? [...types.values()].map((t) => `<button type="button" class="filtre-type" aria-pressed="${!masques.has(t.classe)}" onclick="basculerType('${esc(t.classe)}')"><i style="background:${couleurDe(t.classe)}"></i>${t.libelle} <b>${t.n}</b></button>`).join('') : '');
+      const nbMasques = [...types.keys()].filter((c) => masques.has(c)).length;
+      // Impact sur la circulation actif : seul ce bouton reste, les filtres disparaissent (Martin, 15 nov. 2026).
+      const filtres = avecPos && seulementCirculation ? circ : avecPos ? `<button type="button" class="bouton-filtres" aria-expanded="${filtresOuverts}" onclick="basculerFiltres()">${tr('Filtres', 'Filters')}${nbMasques ? ` <b>${nbMasques}</b>` : ''} ${filtresOuverts ? '▴' : '▾'}</button>${circ}<div class="filtres-detail${filtresOuverts ? ' ouvert' : ''}">${detail}</div>` : '';
+      chantiers = chantiers.filter(({ c }) => !masques.has(c[1]));
+      permis = permis.filter(({ p }) => !masques.has((GENRE[p[2]] ?? ['alteration'])[0]));
       const loin = (d) => (d == null ? '' : ` <span class="compte">· ${texteKm(d)}</span>`);
       const cadre = avecPos ? `<div class="cadre-rayon" role="group" aria-label="${tr('Distance autour de votre adresse', 'Distance around your address')}">
           <span>${tr('Autour de votre adresse', 'Around your address')}</span>
-          <button type="button" onclick="changerRayon(-1)" ${rayon === RAYONS[0] ? 'disabled' : ''} aria-label="${tr('Plus près', 'Closer')}">−</button>
+          <div class="filtres-rayon" role="group" aria-label="${tr('Montrer ou masquer un type', 'Show or hide a type')}">${filtres}</div>
+          <span class="rayon-pm"><button type="button" onclick="changerRayon(-1)" ${rayon === RAYONS[0] ? 'disabled' : ''} aria-label="${tr('Plus près', 'Closer')}">−</button>
           <strong aria-live="polite">${texteKm(rayon)}</strong>
-          <button type="button" onclick="changerRayon(1)" ${rayon === RAYONS[RAYONS.length - 1] ? 'disabled' : ''} aria-label="${tr('Plus loin', 'Farther')}">+</button>
+          <button type="button" onclick="changerRayon(1)" ${rayon === RAYONS[RAYONS.length - 1] ? 'disabled' : ''} aria-label="${tr('Plus loin', 'Farther')}">+</button></span>
         </div>` : '';
       const ou = avecPos ? tr(`à moins de ${texteKm(rayon)}`, `within ${texteKm(rayon)}`) : tr(`dans ${quartier}`, `in ${quartier}`);
       el.innerHTML = cadre + (avecPos ? '<div id="carte-pres" class="carte-pres" aria-label="' + tr('Carte des chantiers et des permis', 'Map of roadwork and permits') + '"></div>' : '') +

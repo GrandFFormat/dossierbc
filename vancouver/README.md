@@ -138,6 +138,16 @@ retiré d'un vote pour conflit d'intérêts, sur dix ans. En échange : pas de t
 | `vancouver-council-glossary.html` | 36 termes, définis par nous, comptés sur le corpus | lexique |
 | `sources-of-the-vancouver-data.html` | provenance, licence, ce que le jeu ne contient pas, robots.txt, état des données | decisions, votes, elus, seances, robots |
 
+**Près de chez moi, devenu le standard (15 nov. 2026)** : le rayon « − 1 km + », la carte Leaflet/OpenStreetMap
+(points de la couleur des bulles) et la bulle-maison de `near-me-in-vancouver.html`, avec la position
+(lat, lon) gardée dans `data/adresses/` par `scrapers/pres-de-chez-moi.js`, sont maintenant le standard de
+toute ville. DossierQuébec les a repris dans `commun/pres-rayon.js` (Québec, Montréal) ; voir la section
+« Près de chez moi » de `dossierquebec/quebec/REPRODUIRE-POUR-UNE-AUTRE-VILLE.md`.
+
+**Filtres (15 nov. 2026), standard aussi** : « Filtres ▾ » (Routes, Permis, un type par bulle, tout actif
+au départ) et « 🚧 Impact sur la circulation » (ici : les « road closures » seulement ; actif, il cache
+les autres boutons). Même dessin que `commun/pres-rayon.js` de DossierQuébec.
+
 ### Ce qui est copié de Montréal, et ce qui change (voir l'en-tête de chaque fichier)
 
 - `assets/style.css` : copié tel quel ; **trois jetons par thème** (accent → bleu héraldique de
