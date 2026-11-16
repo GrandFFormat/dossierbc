@@ -1,0 +1,338 @@
+{
+  "fait": "2026-11-16T00:02:07.809Z",
+  "lundi": "2026-11-09",
+  "dimanche": "2026-11-15",
+  "mode": "dernieres",
+  "cartes": [
+    {
+      "titre": "Hansard — Thursday, May 28, 2026, p.m.",
+      "debut": "2026-05-28T13:00:00",
+      "type": "chambre",
+      "lien": "https://www.leg.bc.ca/hansard-content/Debates/43rd2nd/20260528pm-Hansard-n188.html",
+      "en": [
+        "Bill 20, the K’ómoks Treaty Act, passed third reading on a recorded vote of 53 to 39.",
+        "Bill 9, the Freedom of Information and Protection of Privacy Amendment Act, 2026, a confidence measure, tied 46 to 46 at third reading; the Speaker’s casting vote passed it.",
+        "The House finished estimates for the Office of the Premier. Opposition members asked about antisemitism training, the deputy to the Premier’s pay, PST on security services and the budget’s new taxes.",
+        "Opposition members also asked about emergency room closures, gynecological oncologists in Fraser Health, specialist wait times, the Burnaby Hospital expansion and Delta long-term care. The Premier cited recruitment, surgery numbers and cost issues.",
+        "The House adopted the supply resolutions, about $84.4 billion for operations and $1.45 billion for capital, then passed Bill 22, the Supply Act, through all stages; third reading carried 46 to 45.",
+        "Bills 9, 20, 22 and M217 received royal assent. The Speaker ruled that a remote vote cast on Bill 20 was properly counted and found no breach in a Bill 9 point of order.",
+        "The House adjourned for the summer under a motion letting the Speaker recall it."
+      ],
+      "fr": [
+        "Le projet de loi 20, K’ómoks Treaty Act, a été adopté en troisième lecture par un vote de 53 contre 39.",
+        "Le projet de loi 9, Freedom of Information and Protection of Privacy Amendment Act, 2026, une question de confiance, a obtenu 46 voix contre 46 en troisième lecture; la voix prépondérante du président l’a fait adopter.",
+        "La Chambre a terminé l’étude des crédits du Bureau du premier ministre. L’opposition a posé des questions sur la formation contre l’antisémitisme, le salaire de la sous-ministre du premier ministre, la TVP sur les services de sécurité et les nouvelles taxes du budget.",
+        "L’opposition a aussi questionné les fermetures d’urgences, les gynéco-oncologues à Fraser Health, l’attente pour voir un spécialiste, l’agrandissement de l’hôpital de Burnaby et les soins de longue durée à Delta. Le premier ministre a cité le recrutement, le nombre de chirurgies et les coûts.",
+        "La Chambre a adopté les résolutions de crédits, environ 84,4 milliards $ pour le fonctionnement et 1,45 milliard $ pour les immobilisations, puis le projet de loi 22, Supply Act, à toutes les étapes; la troisième lecture a passé à 46 contre 45.",
+        "Les projets de loi 9, 20, 22 et M217 ont reçu la sanction royale. Le président a jugé valide un vote à distance sur le projet de loi 20 et n’a trouvé aucune infraction dans un rappel au Règlement sur le projet de loi 9.",
+        "La Chambre a ajourné pour l’été par une motion permettant au président de la convoquer de nouveau."
+      ],
+      "joueurs": [
+        {
+          "nom": "Hon. David Eby",
+          "role": "Premier",
+          "sujet": "Office of the Premier estimates",
+          "sujetFr": "Crédits du Bureau du premier ministre"
+        },
+        {
+          "nom": "Trevor Halford",
+          "role": "Leader of the Official Opposition",
+          "sujet": "Deputy's pay, ER closures, hospital projects",
+          "sujetFr": "Salaire de la sous-ministre, urgences, projets d'hôpitaux"
+        },
+        {
+          "nom": "Peter Milobar",
+          "role": "Finance critic",
+          "sujet": "PST on security and new taxes",
+          "sujetFr": "TVP sur la sécurité et nouvelles taxes"
+        },
+        {
+          "nom": "Claire Rattée",
+          "role": "MLA",
+          "sujet": "Antisemitism, decriminalization, DULF",
+          "sujetFr": "Antisémitisme, décriminalisation, DULF"
+        },
+        {
+          "nom": "Anna Kindy",
+          "role": "MLA",
+          "sujet": "Specialist wait times",
+          "sujetFr": "Attente pour les spécialistes"
+        },
+        {
+          "nom": "Sheldon Clare",
+          "role": "MLA",
+          "sujet": "Kersley-Dale Landing Road project cost",
+          "sujetFr": "Coût du chantier de la route Kersley-Dale Landing"
+        },
+        {
+          "nom": "Hon. Brenda Bailey",
+          "role": "Minister of Finance",
+          "sujet": "Supply motions and Bill 22",
+          "sujetFr": "Motions de crédits et projet de loi 22"
+        },
+        {
+          "nom": "Hon. Mike Farnworth",
+          "role": "Government House Leader",
+          "sujet": "Point of order on remote vote, adjournment",
+          "sujetFr": "Rappel au Règlement sur un vote à distance, ajournement"
+        },
+        {
+          "nom": "Á’a:líya Warbus",
+          "role": "House Leader of the official opposition",
+          "sujet": "Point of order process",
+          "sujetFr": "Procédure du rappel au Règlement"
+        },
+        {
+          "nom": "Hon. Spencer Chandra Herbert",
+          "role": "Minister",
+          "sujet": "Third reading of Bill 20",
+          "sujetFr": "Troisième lecture du projet de loi 20"
+        },
+        {
+          "nom": "Hon. Diana Gibson",
+          "role": "Minister",
+          "sujet": "Third reading of Bill 9",
+          "sujetFr": "Troisième lecture du projet de loi 9"
+        }
+      ],
+      "projets": [
+        {
+          "numero": "20",
+          "etape": "third reading"
+        },
+        {
+          "numero": "9",
+          "etape": "third reading"
+        },
+        {
+          "numero": "22",
+          "etape": "third reading"
+        }
+      ],
+      "modele": "apercu-local (sous-agent Claude)",
+      "genre": "House",
+      "jour": "2026-05-28",
+      "fichier": "20260528pm-Hansard-n188.html"
+    },
+    {
+      "titre": "Hansard — Thursday, May 28, 2026, a.m.",
+      "debut": "2026-05-28T10:00:00",
+      "type": "chambre",
+      "lien": "https://www.leg.bc.ca/hansard-content/Debates/43rd2nd/20260528am-Hansard-n187.html",
+      "en": [
+        "Tara Armstrong introduced Bill M 249, the Pharmaceutical Risk Management and Accountability Act, creating a class of experimental drugs with risk agreements, victim compensation and reporting rules. First reading approved.",
+        "In Question Period, the opposition asked how many Crown corporations are affected by DRIPA and the Gitxaała decision. The Premier and the Energy Minister defended ICBC reforms and B.C. Hydro projects.",
+        "Kiel Giddens asked the government to drop its new natural gas royalty structure and emissions cap. The Energy Minister said the new regime starts January 1 and cited recent LNG investments.",
+        "Other questions covered FireSmart and wildfire funding, drug use in public spaces, supervised consumption sites, 200 long-term-care beds lost in a Penticton fire, a school replacement, bail and autism funding.",
+        "Trevor Halford asked the Premier to accept responsibility on health care, DRIPA and costs. The Premier answered on rents, health worker recruitment and major projects.",
+        "Petitions were presented on the Incomappleux Forest Service Road and Stella-Jones pole plant jobs. WorkSafeBC and gaming branch reports were tabled.",
+        "In the study of the estimates of the Office of the Premier, Kiel Giddens asked whether the royalty regime is competitive with Alberta. The Premier cited a 21 percent production rise and shorter permitting times."
+      ],
+      "fr": [
+        "Tara Armstrong a présenté le projet de loi M 249, Pharmaceutical Risk Management and Accountability Act, qui crée une classe de médicaments expérimentaux avec ententes de risque, indemnisation des victimes et obligations de rapport. Première lecture adoptée.",
+        "À la période des questions, l'opposition a demandé combien de sociétés d'État sont touchées par la DRIPA et la décision Gitxaała. Le premier ministre et le ministre de l'Énergie ont défendu la réforme d'ICBC et les projets de B.C. Hydro.",
+        "Kiel Giddens a demandé au gouvernement d'abandonner la nouvelle structure de redevances sur le gaz naturel et le plafond d'émissions. Le ministre de l'Énergie a dit que le nouveau régime commence le 1er janvier et a cité des investissements récents dans le GNL.",
+        "D'autres questions ont porté sur FireSmart et les feux de forêt, la consommation de drogue en public, les sites de consommation supervisée, 200 lits de soins de longue durée perdus dans un incendie à Penticton, le remplacement d'une école, la mise en liberté sous caution et le financement de l'autisme.",
+        "Trevor Halford a demandé au premier ministre d'assumer la responsabilité sur la santé, la DRIPA et les coûts. Le premier ministre a répondu sur les loyers, le recrutement de travailleurs de la santé et les grands projets.",
+        "Des pétitions ont été présentées sur le chemin forestier Incomappleux et les emplois de l'usine de poteaux Stella-Jones. Les rapports de WorkSafeBC et de la direction des jeux ont été déposés.",
+        "À l'étude des crédits du Bureau du premier ministre, Kiel Giddens a demandé si le régime de redevances est concurrentiel avec l'Alberta. Le premier ministre a cité une hausse de 21 % de la production et des délais de permis plus courts."
+      ],
+      "joueurs": [
+        {
+          "nom": "Hon. David Eby",
+          "role": "Premier",
+          "sujet": "ICBC, LNG royalties, government record",
+          "sujetFr": "ICBC, redevances GNL, bilan du gouvernement"
+        },
+        {
+          "nom": "Kiel Giddens",
+          "role": "Opposition member",
+          "sujet": "Natural gas royalties and LNG",
+          "sujetFr": "Redevances sur le gaz naturel et GNL"
+        },
+        {
+          "nom": "Hon. Adrian Dix",
+          "role": "Minister of Energy",
+          "sujet": "Crown corporations, LNG royalties",
+          "sujetFr": "Sociétés d'État, redevances GNL"
+        },
+        {
+          "nom": "Steve Kooner",
+          "role": "Opposition member",
+          "sujet": "DRIPA and Crown corporations",
+          "sujetFr": "DRIPA et sociétés d'État"
+        },
+        {
+          "nom": "Tara Armstrong",
+          "role": "Member",
+          "sujet": "Bill M 249, drug use, consumption sites",
+          "sujetFr": "Projet M 249, drogue, sites de consommation"
+        },
+        {
+          "nom": "Rob Botterell",
+          "role": "Member",
+          "sujet": "Wildfire preparedness",
+          "sujetFr": "Préparation aux feux de forêt"
+        },
+        {
+          "nom": "Hon. Ravi Parmar",
+          "role": "Minister",
+          "sujet": "Wildfire funding",
+          "sujetFr": "Financement contre les feux de forêt"
+        },
+        {
+          "nom": "Amelia Boultbee",
+          "role": "Penticton-Summerland",
+          "sujet": "Fire and long-term-care beds",
+          "sujetFr": "Incendie et lits de soins de longue durée"
+        },
+        {
+          "nom": "Hon. Bowinn Ma",
+          "role": "Minister",
+          "sujet": "Care home project, school replacement",
+          "sujetFr": "Projet de soins, remplacement d'école"
+        },
+        {
+          "nom": "Trevor Halford",
+          "role": "Opposition member",
+          "sujet": "Government accountability",
+          "sujetFr": "Responsabilité du gouvernement"
+        },
+        {
+          "nom": "Hon. Jodie Wickens",
+          "role": "Minister",
+          "sujet": "Autism and family services funding",
+          "sujetFr": "Financement de l'autisme et des services aux familles"
+        },
+        {
+          "nom": "Hon. Niki Sharma",
+          "role": "Minister",
+          "sujet": "Bail reform",
+          "sujetFr": "Réforme de la mise en liberté sous caution"
+        }
+      ],
+      "projets": [
+        {
+          "numero": "M 249",
+          "etape": "first reading"
+        }
+      ],
+      "modele": "apercu-local (sous-agent Claude)",
+      "genre": "House",
+      "jour": "2026-05-28",
+      "fichier": "20260528am-Hansard-n187.html"
+    },
+    {
+      "titre": "Hansard — Wednesday, May 27, 2026, p.m.",
+      "debut": "2026-05-27T13:30:00",
+      "type": "chambre",
+      "lien": "https://www.leg.bc.ca/hansard-content/Debates/43rd2nd/20260527pm-Hansard-n186.html",
+      "en": [
+        "Teresa Wat introduced Bill M248, the Chinese Heritage Month Act, to make February Chinese heritage month each year; it passed first reading.",
+        "Question Period covered maternity ward closures at Peace Arch and Ridge Meadows hospitals, the shortage of ob-gyns, foreign buyers of farmland, poverty among seniors, paused health projects, long-term-care beds, school safety and the new autism funding model.",
+        "The House adopted the Finance and Government Services Committee's interim report on statutory offices. The Government House Leader raised a point of order on comments about the privacy commissioner; the Speaker will rule later.",
+        "In estimates for the Office of the Premier, Third Party Leader Jeremy Valeriote asked about Sea to Sky transit, public service cuts (1,857 jobs so far, 4.5%), energy and the Declaration Act.",
+        "Opposition Leader Trevor Halford and Peter Milobar asked about Declaration Act court cases, plans for amendments by the fall, FIFA World Cup suites and tickets, and the cost of public sector contracts.",
+        "The Premier said the World Cup suite costs $475,000 for seven games and declined to reveal the extra cost of labour deals, citing ongoing negotiations.",
+        "In Committee of the Whole, members asked about the K'ómoks estuary agreement, lands, subsurface resources, fishing, water and taxes. Bill 20, the K'ómoks Treaty Act, was reported complete without amendment."
+      ],
+      "fr": [
+        "Teresa Wat a déposé le projet de loi M248, Chinese Heritage Month Act, pour faire de février le mois du patrimoine chinois chaque année; il a franchi la première lecture.",
+        "La période de questions a porté sur les fermetures de maternités aux hôpitaux Peace Arch et Ridge Meadows, le manque d'obstétriciens-gynécologues, l'achat de terres agricoles par des investisseurs, la pauvreté des aînés, les projets de santé en pause, les lits de soins de longue durée, la sécurité dans les écoles et le nouveau financement de l'autisme.",
+        "La Chambre a adopté le rapport provisoire du comité des finances sur les bureaux statutaires. Le leader du gouvernement a soulevé un rappel au Règlement sur des propos visant le commissaire à la vie privée; le président tranchera plus tard.",
+        "À l'étude des crédits du Bureau du premier ministre, le chef du tiers parti Jeremy Valeriote a questionné le transport collectif Sea to Sky, les coupes dans la fonction publique (1 857 postes jusqu'ici, 4,5 %), l'énergie et la Declaration Act.",
+        "Le chef de l'opposition Trevor Halford et le député Peter Milobar ont questionné les causes judiciaires liées à la Declaration Act, les modifications prévues d'ici l'automne, les loges et billets de la Coupe du monde FIFA et le coût des conventions collectives.",
+        "Le premier ministre a indiqué que la loge de la Coupe du monde coûte 475 000 $ pour sept matchs et a refusé de dévoiler le surcoût des ententes de travail, citant les négociations en cours.",
+        "À l'étude détaillée en comité plénier, les députés ont questionné l'entente sur l'estuaire K'ómoks, les terres, les ressources du sous-sol, la pêche, l'eau et les taxes. Le projet de loi 20, K'ómoks Treaty Act, a été rapporté sans modification."
+      ],
+      "joueurs": [
+        {
+          "nom": "Hon. David Eby",
+          "role": "Premier",
+          "sujet": "Office of the Premier estimates",
+          "sujetFr": "Crédits du Bureau du premier ministre"
+        },
+        {
+          "nom": "Trevor Halford",
+          "role": "Leader of the Opposition",
+          "sujet": "Maternity care, Declaration Act, World Cup tickets",
+          "sujetFr": "Maternités, Declaration Act, billets de la Coupe du monde"
+        },
+        {
+          "nom": "Peter Milobar",
+          "role": "MLA",
+          "sujet": "World Cup suite cost, labour contract costs",
+          "sujetFr": "Coût de la loge de la Coupe du monde, coût des conventions collectives"
+        },
+        {
+          "nom": "Jeremy Valeriote",
+          "role": "Leader of the Third Party",
+          "sujet": "Farmland ownership, Premier's estimates, Bill 20",
+          "sujetFr": "Propriété des terres agricoles, crédits du premier ministre, projet de loi 20"
+        },
+        {
+          "nom": "Hon. Josie Osborne",
+          "role": "Minister of Health",
+          "sujet": "Maternity and ob-gyn services",
+          "sujetFr": "Maternités et obstétriciens-gynécologues"
+        },
+        {
+          "nom": "Anna Kindy",
+          "role": "MLA",
+          "sujet": "Shortage of ob-gyns",
+          "sujetFr": "Manque d'obstétriciens-gynécologues"
+        },
+        {
+          "nom": "Hon. Spencer Chandra Herbert",
+          "role": "Minister responsible for Bill 20",
+          "sujet": "Bill 20, K'ómoks Treaty Act",
+          "sujetFr": "Projet de loi 20, K'ómoks Treaty Act"
+        },
+        {
+          "nom": "John Rustad",
+          "role": "Nechako Lakes",
+          "sujet": "Bill 20: lands, resources, harvesting",
+          "sujetFr": "Projet de loi 20 : terres, ressources, récolte"
+        },
+        {
+          "nom": "Scott McInnis",
+          "role": "Columbia River–Revelstoke",
+          "sujet": "Bill 20: surveys, subsurface rights, taxes",
+          "sujetFr": "Projet de loi 20 : arpentage, sous-sol, taxes"
+        },
+        {
+          "nom": "Brennan Day",
+          "role": "Courtenay-Comox",
+          "sujet": "K'ómoks estuary agreement",
+          "sujetFr": "Entente sur l'estuaire K'ómoks"
+        },
+        {
+          "nom": "Hon. Mike Farnworth",
+          "role": "Government House Leader",
+          "sujet": "Point of order on statutory officers",
+          "sujetFr": "Rappel au Règlement sur les hauts fonctionnaires"
+        },
+        {
+          "nom": "Teresa Wat",
+          "role": "MLA",
+          "sujet": "Bill M248, Chinese Heritage Month Act",
+          "sujetFr": "Projet de loi M248, Chinese Heritage Month Act"
+        }
+      ],
+      "projets": [
+        {
+          "numero": "M248",
+          "etape": "first reading"
+        },
+        {
+          "numero": "20",
+          "etape": "committee"
+        }
+      ],
+      "modele": "apercu-local (sous-agent Claude)",
+      "genre": "House",
+      "jour": "2026-05-27",
+      "fichier": "20260527pm-Hansard-n186.html"
+    }
+  ]
+}

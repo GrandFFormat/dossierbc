@@ -545,6 +545,11 @@ mark, .surligne{
 .com-rail > .ch-card{flex:0 0 calc(100% / var(--par-vue, 3)); box-sizing:border-box; text-decoration:none; color:inherit; cursor:pointer;}
 .bc-signales a.ch-card:hover .ch-title{text-decoration:underline;}
 .com-vide{padding:24px 28px;}
+.com-projets{cursor:default;}
+.com-projets .com-puces a{color:inherit; text-decoration:none;}
+.com-projets .com-puces a:hover{text-decoration:underline;}
+.com-projets .com-puces li{margin-bottom:8px;}
+a.com-note{text-decoration:none; color:var(--bc-bleu-encre); font-weight:600;}
 .com-puces{margin:2px 0 0; padding-left:18px; font:400 13px/1.5 'Barlow',sans-serif;}
 .com-puces li{margin:0 0 4px;}
 .com-note{font:400 11px/1.4 'Barlow',sans-serif; color:var(--bc-estompe); flex:1;}
@@ -1084,3 +1089,35 @@ nav.tabs .villes-menu ul{left:auto; right:0;}
   background:#1E7B45;
   border:2px solid var(--ink);
 }
+
+/* Les pétitions papier (15 nov. 2026) : un encadré sous la bande noire de l'accueil. */
+.bc-petitions{margin:0; padding:14px 20px; background:var(--bc-jaune-fond); border-left:6px solid var(--yellow);
+  font:400 14px/1.55 'Barlow',sans-serif; color:var(--ink);}
+.bc-petitions a{color:var(--bc-bleu-encre); font-weight:600; white-space:nowrap;}
+
+/* Les séances de la Chambre résumées (15 nov. 2026) : résumé, puis « Qui a parlé ». */
+.com-chambre{cursor:default;}
+.com-joueurs-t{font:600 11px/1 'Barlow',sans-serif; letter-spacing:.06em; text-transform:uppercase; color:var(--bc-bleu-fonce); margin-top:4px;}
+.com-joueurs{margin:0; padding:0; list-style:none; font:400 12.5px/1.45 'Barlow',sans-serif;}
+.com-joueurs li{margin:0 0 4px;}
+.com-joueurs span{color:var(--bc-estompe);}
+.com-chambre .com-note a{color:var(--bc-bleu-encre); font-weight:600;}
+
+/* Le « + » jaune des séances de la Chambre : fermée, 3 puces et 3 players ; ouverte, tout. */
+.com-chambre .com-cache{display:none;}
+.com-chambre.com-ouverte .com-cache{display:list-item;}
+.com-chambre .com-cache-bloc{display:none;}
+.com-chambre.com-ouverte .com-cache-bloc{display:block;}
+.com-chambre .com-puces{font-size:12.5px; line-height:1.45;}
+.com-plus{align-self:center; width:34px; height:34px; border-radius:50%; border:0 !important; background:var(--yellow);
+  color:var(--ink); font:700 22px/1 'Barlow',sans-serif; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;}
+.com-plus:hover{filter:brightness(1.05); transform:scale(1.06);}
+
+/* En refermant une séance : la carte s'allume brièvement en jaune pâle, le temps de la remontée. */
+.com-chambre.com-revenue{animation:comRevenue 1.6s ease-out;}
+@keyframes comRevenue{0%,35%{background:var(--bc-jaune-fond);} 100%{background:transparent;}}
+@media (prefers-reduced-motion: reduce){ .com-chambre.com-revenue{animation:none;} }
+
+/* Sur ordinateur, la fenêtre garde au moins sa hauteur du 15 nov. 2026 (Martin), même quand les
+   résumés futurs seront plus courts : le cadre ne rapetisse pas d'une semaine à l'autre. */
+@media (min-width:1001px){ #band-comites .com-rail{min-height:470px;} }

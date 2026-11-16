@@ -57,6 +57,11 @@ const SCRAPERS = [
   // Résumés des séances de comités (15 nov. 2026), à partir des transcriptions FINALES seulement. Cache :
   // une séance déjà résumée ne coûte plus rien. Sans ANTHROPIC_API_KEY, ne fait rien. Doux.
   ['Résumés des séances de comités EN + FR (Claude Sonnet)', ['--env-file-if-exists=api.env', 'scrapers/comites-resumes.js'], { soft: true }],
+  // Résumés des séances de la Chambre (Hansard final), EN + FR, avec les players (15 nov. 2026). HANSARD_LIMIT
+  // séances par passage (3 par défaut). Sans ANTHROPIC_API_KEY, ne fait rien. Doux.
+  ['Résumés des séances de la Chambre EN + FR (Claude Sonnet)', ['--env-file-if-exists=api.env', 'scrapers/hansard-resumes.js'], { soft: true }],
+  // La fenêtre « Cette semaine à l'Assemblée » (15 nov. 2026), APRÈS bills, comités et résumés.
+  ['Build : cette semaine à l\'Assemblée (data/semaine.json)', ['scrapers/build-semaine-data.js'], { soft: true }],
 ];
 
 const failed = [];      // sources critiques → déclenchent l'alerte (run rouge)

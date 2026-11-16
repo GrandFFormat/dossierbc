@@ -316,29 +316,36 @@ function goToFederal(evt){
     <div class="calendar-box nb-etat">
       <div class="status" data-i18n="cal.status">● Legislative Assembly of British Columbia</div>
     </div>
+    <!-- Les pétitions papier (Martin, 15 nov. 2026), sous la bande noire. Faits relus le 15 nov. 2026 sur
+         https://www.leg.bc.ca/parliamentary-business/parliamentary-procedure/petitions : signatures originales, pas de copie ni de scan,
+         dépôt au bon vouloir d'un·e député·e. Comparaison : https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/index.html et https://www.assnat.qc.ca/fr/patrimoine/lexique/petition.html
+         (pétitions électroniques à l'automne 2009) ; https://www.ourcommons.ca/procedure/procedure-and-practice-3/ch_22_4-f.html (« en décembre 2015 »),
+         lues par Hugette le 15 nov. 2026. -->
+    <p class="bc-petitions" data-i18n="petitions.papier"><b>✍️ In B.C., a petition is still signed in ink.</b> No online petitions: every signature must be original, on paper, no photocopies or scans. And a petition only reaches the House if an MLA agrees to present it. Nothing requires them to. Quebec’s <a href="https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/index.html" target="_blank" rel="noopener">National Assembly</a> has accepted online petitions since 2009, the <a href="https://www.ourcommons.ca/procedure/procedure-and-practice-3/ch_22_4-e.html" target="_blank" rel="noopener">House of Commons</a> since 2015. <a href="https://www.leg.bc.ca/parliamentary-business/parliamentary-procedure/petitions" target="_blank" rel="noopener">The official rules ↗</a></p>
 
-    <!-- LES PROJETS SIGNALÉS, d'après le cahier : un cadre de quatre cellules. La première porte le
-         titre, l'avertissement et le pager ; les trois autres sont les projets, écrits par
-         renderChallenged() (commun/dq.js) sous forme de .ch-card. Les classes de DossierQuébec
-         restent : c'est elles que le JavaScript écrit, bc.css les remeuble. -->
-    <div class="bc-signales cadre-plan cadre-encre" id="band-challenged">
+
+    <!-- CETTE SEMAINE À L'ASSEMBLÉE (Martin, 15 nov. 2026) : les étapes des projets de loi de la
+         semaine, puis les séances de comités. data/semaine.json (scrapers/build-semaine-data.js) ;
+         renderComites() (commun/dq.js) en montre 3 à la fois, les flèches tournent en boucle.
+         Semaine vide : les dernières activités, et l'intro le dit. -->
+    <div class="bc-signales cadre-plan cadre-encre" id="band-comites">
       <div class="bc-signales-intro">
-        <div class="kicker"><span data-i18n="signales.sur">Flagged by citizens</span> · <span id="challengedTotal">—</span></div>
-        <div class="section-head" id="sec-challenged">
+        <div class="kicker"><span data-i18n="semaine.kicker">At the Assembly</span> · <span id="comitesTotal">—</span></div>
+        <div class="section-head" id="sec-semaine">
           <div>
-            <h2 id="challengedTitle">Challenge a bill</h2>
-            <div class="sub" id="challengedSub"></div>
+            <h2 id="semaineTitre">This week at the Assembly</h2>
+            <div class="sub" id="semaineSub"></div>
           </div>
         </div>
-        <p class="bc-signales-avis"><span data-i18n="signales.avis"><b>No online petitions in British Columbia.</b> The Assembly only accepts paper petitions, tabled by an MLA. Flagging a bill here has no official value: it is a citizen counter that shows what worries people, and points you to how to act.</span></p>
-        <div class="bc-pager" id="challengedPager" hidden>
-          <button type="button" id="challengedPrev" onclick="pagerChallenged(-1)">&#8249;</button>
-          <button type="button" id="challengedNext" onclick="pagerChallenged(1)">&#8250;</button>
-          <span class="bc-rang" id="challengedRange"></span>
+        <p class="bc-signales-avis" id="comitesAvis"></p>
+        <div class="bc-pager" id="comitesPager" hidden>
+          <button type="button" id="comitesPrev" onclick="pagerComites(-1)">&#8249;</button>
+          <button type="button" id="comitesNext" onclick="pagerComites(1)">&#8250;</button>
+          <span class="bc-rang" id="comitesRange"></span>
         </div>
-        <p class="nb-agir"><span data-i18n="signales.agir">To act officially:</span> <a href="/ministres" data-i18n="signales.depute">write to your MLA</a></p>
+        <p class="nb-agir"><a href="/lexique#vie-projet" data-i18n="semaine.vie">The life of a bill &#8594;</a></p>
       </div>
-      <div id="challengedList"></div>
+      <div id="comitesList"></div>
       <div class="cadre-plan-bas"></div>
     </div>
 
@@ -574,16 +581,6 @@ function goToFederal(evt){
     <div id="billsList"></div>
     <!--PRERENDU:billsList-->
 
-    <!-- Explainer « challenger » : adapté au VRAI mécanisme du site (compte
-         requis, 1 demande par personne, paliers 500/1000) — la maquette disait
-         « pas de compte requis », ce qui ne correspond pas à la réalité.
-         N.-B. (Martin, 7 nov. 2026) : gardée, avec le bouton des cartes. -->
-    <div class="band band-yellow bleed" id="band-challenge-explainer">
-      <h2 data-i18n="chexp.h">✋ What is “challenging”?</h2>
-      <p data-i18n="chexp.p1">One click on “Ask for an explanation” = a citizen request for the bill's sponsor to explain it in plain language, and for us to keep an eye on it together.</p>
-      <p data-i18n="chexp.p2"><b>An account (email) is required</b> — one request per person, no anonymous requests.</p>
-      <p data-i18n="chexp.p3">In British Columbia, these requests lead to nothing official: the Assembly has no online petitions, unlike Quebec or the House of Commons. For now, it is a simple way to see which laws trouble people. Some day, an elected member may find a use for it.</p>
-    </div>
 
     <!-- Reste des projets (3e et suivants) — la bande jaune ci-dessus
          s'intercale ainsi entre le 2e et le 3e projet. -->

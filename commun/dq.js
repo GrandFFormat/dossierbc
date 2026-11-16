@@ -272,6 +272,7 @@ const translations = {
     "lex.1.d": "Le texte qu'un député ou le gouvernement soumet à l'Assemblée pour qu'il devienne une loi. Il devient une vraie loi seulement une fois adopté puis sanctionné.",
     "lex.vie.t": "La vie d’un projet de loi",
     "lex.vie.d": "Six étapes, du dépôt à la loi :<ol style=\"margin:8px 0 0; padding-left:20px;\"><li><b>Dépôt et première lecture</b> : le texte devient public, sans débat.</li><li><b>Deuxième lecture</b> : débat sur le principe en Chambre, puis vote.</li><li><b>Étude en comité</b> : article par article, avec les amendements. En C.-B., presque toujours en <b>Committee of the Whole</b> (tous les député·e·s, dans la Chambre, siégeant en comité) ; plus rarement dans un comité permanent. C’est la grande différence avec le Québec, où les commissions parlementaires font cette étape.</li><li><b>Rapport</b> : le comité rapporte le projet à la Chambre, modifié ou non.</li><li><b>Troisième lecture</b> : vote final sur la version complète.</li><li><b>Sanction royale</b> : la lieutenante-gouverneure signe ; le projet devient loi. Certaines parties peuvent entrer en vigueur plus tard, à une date fixée par le gouvernement.</li></ol><p style=\"margin:8px 0 0;\">Un <b>projet de loi privé</b> (qui touche un organisme ou une personne en particulier) passe par le comité des projets de loi privés. Un projet qui n’a pas fini son parcours <b>meurt au feuilleton</b> quand la session se termine ; il doit alors repartir de zéro.</p>",
+    "petitions.papier": "<b>✍️ En C.-B., une pétition se signe encore à l’encre.</b> Pas de pétition en ligne : chaque signature doit être originale, sur papier, sans photocopie ni scan. Et la pétition n’arrive en Chambre que si une ou un député accepte de la déposer. Rien ne l’y oblige. L’<a href=\"https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/index.html\" target=\"_blank\" rel=\"noopener\">Assemblée nationale du Québec</a> accepte les pétitions en ligne depuis 2009, la <a href=\"https://www.ourcommons.ca/procedure/procedure-and-practice-3/ch_22_4-f.html\" target=\"_blank\" rel=\"noopener\">Chambre des communes</a> depuis 2015. <a href=\"https://www.leg.bc.ca/parliamentary-business/parliamentary-procedure/petitions\" target=\"_blank\" rel=\"noopener\">Les règles officielles ↗</a>",
     "lex.1.t": "Projet de loi",
     "lex.10.d": "Le député responsable d'organiser les travaux de son groupe à l'Assemblée — un peu le chef d'orchestre du calendrier et des débats pour son parti.",
     "lex.10.t": "Leader parlementaire",
@@ -458,6 +459,8 @@ const translations = {
     "signales.agir": "Pour agir officiellement :",
     "signales.sur": "Signalés par les citoyen·ne·s",
     "comites.kicker": "Comités",
+    "semaine.kicker": "À l’Assemblée",
+    "semaine.vie": "La vie d’un projet de loi →",
     "comites.titre": "Dernières séances de comités",
     "comites.sub": "Là où les député·e·s travaillent en petits groupes : un projet de loi, un budget ou une question étudiés à fond.",
     "comites.officiel": "Page officielle des séances de comités ↗",
@@ -493,7 +496,7 @@ const translations = {
   },
   en: {
     'nav.close':"Close",'nav.villes':"Cities",'nav.rtv':"Represent your city",
-    'comites.kicker':"Committees",'comites.titre':"Latest committee sittings",'comites.sub':"Where MLAs work in smaller groups: studying a bill, a budget or a question in depth.",'comites.officiel':"Official committee meetings page ↗",
+    'semaine.kicker':"At the Assembly",'semaine.vie':"The life of a bill →",'comites.kicker':"Committees",'comites.titre':"Latest committee sittings",'comites.sub':"Where MLAs work in smaller groups: studying a bill, a budget or a question in depth.",'comites.officiel':"Official committee meetings page ↗",
     'signales.sur':"Flagged by citizens",'kicker.projets':"Bills",'kicker.journal':"Journal",'promo.courriel':"Your email",
     'signales.avis':"<b>No online petitions in British Columbia.</b> The Assembly only accepts paper petitions, tabled by an MLA. Flagging a bill here has no official value: it is a citizen counter that shows what worries people, and points you to how to act.",
     'signales.agir':"To act officially:",'signales.depute':"write to your MLA",'quoideneuf.fil':"A timeline, newest first.",'nav.apercu':"Overview",'nav.ministres':"Ministers",'nav.projets':"Bills",
@@ -635,6 +638,7 @@ const translations = {
     'cal.p2':"This page outlines the main working periods, not the daily schedule. For a day-by-day view of upcoming sittings and committees, the Assembly's official calendar remains the reference.",
     // Lexicon
     'lex.vie.t':"The life of a bill", 'lex.vie.d':"Six steps, from tabling to law:<ol style=\"margin:8px 0 0; padding-left:20px;\"><li><b>Introduction and first reading</b>: the text becomes public, with no debate.</li><li><b>Second reading</b>: debate on the principle in the House, then a vote.</li><li><b>Committee stage</b>: clause by clause, with amendments. In B.C., almost always in <b>Committee of the Whole</b> (every MLA, in the Chamber, sitting as a committee); more rarely in a standing committee.</li><li><b>Report</b>: the committee reports the bill back to the House, amended or not.</li><li><b>Third reading</b>: the final vote on the complete version.</li><li><b>Royal Assent</b>: the Lieutenant Governor signs; the bill becomes law. Some parts may come into force later, on a date set by the government.</li></ol><p style=\"margin:8px 0 0;\">A <b>private bill</b> (one that affects a particular organization or person) goes through the private bills committee. A bill that has not finished its journey <b>dies on the order paper</b> when the session ends and must start over.</p>",
+    'petitions.papier':"<b>✍️ In B.C., a petition is still signed in ink.</b> No online petitions: every signature must be original, on paper, no photocopies or scans. And a petition only reaches the House if an MLA agrees to present it. Nothing requires them to. Quebec’s <a href=\"https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/index.html\" target=\"_blank\" rel=\"noopener\">National Assembly</a> has accepted online petitions since 2009, the <a href=\"https://www.ourcommons.ca/procedure/procedure-and-practice-3/ch_22_4-e.html\" target=\"_blank\" rel=\"noopener\">House of Commons</a> since 2015. <a href=\"https://www.leg.bc.ca/parliamentary-business/parliamentary-procedure/petitions\" target=\"_blank\" rel=\"noopener\">The official rules ↗</a>",
     'lex.1.t':"Bill", 'lex.1.d':"The text a member or the government submits to the Assembly to become a law. It only becomes a real law once passed and then assented to.",
     'lex.2.t':"Second reading", 'lex.2.d':"The first big step: the Assembly debates the general idea of the bill and votes on whether it accepts it, before studying the details clause by clause.",
     'lex.3.t':"Committee stage", 'lex.3.d':"The step where the bill is gone over clause by clause, most often in Committee of the Whole (the entire Assembly sitting as a committee), sometimes by a standing committee. Amendments can be proposed there.",
@@ -3343,7 +3347,7 @@ const ASSEMBLY = {
   // qu'une date écrite à la main finit toujours par mentir. dissolved reste donc à false : les
   // textes de dissolution du Québec ne doivent jamais s'afficher.
   dissolved: false,
-  challenge: true,     // le bouton « Demander une explication » et la bande jaune restent sur les projets
+  challenge: false,    // Martin, 15 nov. 2026 : plus de bouton « Demander une explication » ni de bloc « Signaler un projet »
   filtreChallenge: false,   // … mais pas de filtre « 🔥 Challengés »
   // Ni « abonnement » ni « cafe » : DossierBC est gratuit, les conditions de l'Assemblée l'exigent
   // (page des règles). Le 9 nov. 2026, l'abonnement de DossierQuébec et ses boutons café sont
@@ -4475,13 +4479,80 @@ function pagerChallenged(dir){
 // Seuls des faits : le comité, la date, les heures, le lieu, et le lien vers sa page officielle.
 let _comites = null, _comitesP = null, comitesDebut = 0, comitesEnCours = false;
 function chargerComites(){
-  if(!_comitesP) _comitesP = fetch('/data/comites.json').then(r => r.ok ? r.json() : null).catch(() => null)
+  if(!_comitesP) _comitesP = fetch('/data/semaine.json').then(r => r.ok ? r.json() : null).catch(() => null)
     .then(d => { _comites = d; if(!d) _comitesP = null; return d; });
   return _comitesP;
 }
 const comitesParVue = () => matchMedia('(max-width:620px)').matches ? 1 : matchMedia('(max-width:1000px)').matches ? 2 : 3;
 // jaune : une séance sur deux porte une barre jaune en haut (Martin, 15 nov. 2026). Le rang
 // vient de la liste entière, pas de la vue : la barre suit sa carte pendant le glissement.
+// Une séance de la Chambre résumée (scrapers/hansard-resumes.js) : le résumé, puis les players.
+function carteChambre(m, isEn, jaune){
+  const loc = isEn ? 'en-CA' : 'fr-CA';
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  const d = new Date(m.debut);
+  const jour = d.toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const moment = d.getHours() < 12 ? (isEn ? 'morning' : 'matin') : (isEn ? 'afternoon' : 'après-midi');
+  const genre = /committee a/i.test(m.genre) ? 'Section A' : /committee c/i.test(m.genre) ? 'Section C' : (isEn ? 'House sitting' : 'Séance de la Chambre');
+  const puces = (isEn ? m.en : m.fr) || [];
+  const j = m.joueurs || [];
+  // Fermée : 2 puces seulement (Martin : « plus petit que ça »). Le « + » jaune ouvre le reste (Martin, 15 nov. 2026) ; chaque
+  // ouverture est comptée (dq_mesures, cible « bc-hansard-plus ») pour juger dans 3 mois si ces
+  // résumés valent leur coût.
+  const joueur = p => `<li><b>${esc(p.nom)}</b> <span>${esc(p.role)}</span> — ${esc(isEn ? p.sujet : p.sujetFr)}</li>`;
+  const reste = puces.length > 2 || j.length > 0;
+  return `<div class="ch-card com-chambre${jaune ? ' com-jaune' : ''}">
+      <div class="ch-top"><span class="ch-num">${esc(jour)}</span></div>
+      <span class="com-etiquette">${esc(genre)} · ${esc(moment)}</span>
+      <ul class="com-puces">${puces.slice(0, 2).map(p => `<li>${esc(p)}</li>`).join('')}${puces.slice(2).map(p => `<li class="com-cache">${esc(p)}</li>`).join('')}</ul>
+      ${j.length ? `<div class="com-joueurs-t com-cache-bloc">${isEn ? 'Who spoke' : 'Qui a parlé'}</div><ul class="com-joueurs com-cache-bloc">${j.map(joueur).join('')}</ul>` : ''}
+      ${reste ? `<button type="button" class="com-plus" aria-expanded="false" onclick="ouvrirSeance(this)" aria-label="${isEn ? 'Read the whole sitting' : 'Lire toute la séance'}">+</button>` : ''}
+      <span class="com-note">${isEn ? 'Summary written by DossierBC from the official Hansard' : 'Résumé écrit par DossierBC à partir du Hansard officiel'} · <a href="${esc(m.lien)}" target="_blank" rel="noopener">${isEn ? 'Transcript' : 'Transcription'} ↗</a></span>
+    </div>`;
+}
+function ouvrirSeance(btn){
+  const carte = btn.closest('.ch-card');
+  // La carte se plie ou se déplie en glissant (hauteur animée), au lieu de sauter d'un coup.
+  const avant = carte.offsetHeight;
+  const ouvert = carte.classList.toggle('com-ouverte');
+  const apres = carte.offsetHeight;
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches && carte.animate){
+    carte.style.overflow = 'hidden';
+    carte.animate([{ height: avant + 'px' }, { height: apres + 'px' }], { duration: ouvert ? 450 : 650, easing: 'cubic-bezier(.22,.61,.36,1)' })
+      .finished.then(() => { carte.style.overflow = ''; }, () => { carte.style.overflow = ''; });
+  }
+  btn.textContent = ouvert ? '−' : '+';
+  btn.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+  // En refermant, on ramène en haut de la fenêtre : la carte ouverte pouvait être très longue.
+  if(!ouvert){
+    const haut = document.getElementById('band-comites') || carte;
+    const y = haut.getBoundingClientRect().top + window.scrollY - 70;   // sous la barre de navigation
+    window.scrollTo({ top: y, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    // Arrivé en haut, la carte refermée s'allume une seconde en jaune : on voit où on est revenu.
+    carte.classList.remove('com-revenue'); void carte.offsetWidth; carte.classList.add('com-revenue');
+    return;
+  }
+  // Une ligne par ouverture, sans rien de personnel (même table que la mesure de DossierQuébec).
+  if(/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) return;
+  try {
+    supabaseClient.from('dq_mesures').insert({ type: 'clic', ville: 'bc', page: (location.pathname || '/').slice(0, 200),
+      titre: 'Séance de la Chambre', cible: 'bc-hansard-plus', langue: currentLang === 'en' ? 'en' : 'fr' }).then(() => {}, () => {});
+  } catch(e) {}
+}
+// Une carte d'étape : un jour, une étape, les projets qui l'ont franchie (3 nommés, puis « et N autres »).
+function carteProjets(g, isEn, jaune){
+  const loc = isEn ? 'en-CA' : 'fr-CA';
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  const jour = new Date(g.jour + 'T12:00:00').toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const n = g.projets.length, vus = g.projets.slice(0, 3);
+  const lien = (p) => p.url ? `${p.url}${typeof paramLangue === 'function' ? paramLangue(false) : ''}` : '/projets-de-loi';
+  return `<div class="ch-card com-projets${jaune ? ' com-jaune' : ''}">
+      <div class="ch-top"><span class="ch-num">${esc(jour)}</span></div>
+      <span class="com-etiquette">${esc(isEn ? g.en : g.fr)}</span>
+      <ul class="com-puces">${vus.map(p => `<li><a href="${esc(lien(p))}"><b>${esc(isEn ? 'Bill ' + p.num : 'PL ' + p.num)}</b> — ${esc(isEn ? p.titreEn : p.titre)}</a></li>`).join('')}</ul>
+      ${n > 3 ? `<a class="com-note" href="/projets-de-loi">${isEn ? `and ${n - 3} more →` : `et ${n - 3} autre${n - 3 > 1 ? 's' : ''} →`}</a>` : ''}
+    </div>`;
+}
 function carteComite(m, isEn, jaune){
   const loc = isEn ? 'en-CA' : 'fr-CA';
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
@@ -4496,7 +4567,7 @@ function carteComite(m, isEn, jaune){
     : `<span class="com-note">${m.transcription
         ? (isEn ? 'Summary coming soon.' : 'Résumé à venir.')
         : (isEn ? 'The official transcript of this sitting is not final yet.' : 'La transcription officielle de cette séance n’est pas encore finale.')}</span>`;
-  return `<a class="ch-card${jaune ? ' com-jaune' : ''}" href="${esc(m.page)}" target="_blank" rel="noopener">
+  return `<a class="ch-card${jaune ? ' com-jaune' : ''}" href="${esc(m.page)}" data-type="${isEn ? 'Committee' : 'Comité'}" target="_blank" rel="noopener">
       <div class="ch-top"><span class="ch-num">${esc(jour)}</span></div>
       <div class="ch-title">${esc(m.comite)}</div>
       ${m.huisClos ? `<span class="com-etiquette">${isEn ? 'In camera' : 'À huis clos'}</span>` : ''}
@@ -4506,9 +4577,9 @@ function carteComite(m, isEn, jaune){
 }
 // Les cartes d'une vue qui commence à debut (en boucle).
 function vueComites(debut){
-  const liste = _comites.seances, n = liste.length, k = Math.min(comitesParVue(), n), isEn = currentLang === 'en';
+  const liste = _comites.cartes, n = liste.length, k = Math.min(comitesParVue(), n), isEn = currentLang === 'en';
   let h = '';
-  for(let i = 0; i < k; i++){ const x = (debut + i) % n; h += carteComite(liste[x], isEn, x % 2 === 1); }
+  for(let i = 0; i < k; i++){ const x = (debut + i) % n; const c = liste[x], j = x % 2 === 1; h += c.type === 'projets' ? carteProjets(c, isEn, j) : c.type === 'chambre' ? carteChambre(c, isEn, j) : carteComite(c, isEn, j); }
   return h;
 }
 async function renderComites(){
@@ -4516,16 +4587,21 @@ async function renderComites(){
   if(!el) return;
   await chargerComites();
   const isEn = currentLang === 'en';
-  const liste = (_comites && _comites.seances) || [];
+  const liste = (_comites && _comites.cartes) || [];
   const total = document.getElementById('comitesTotal');
   if(total) total.textContent = liste.length.toLocaleString(isEn ? 'en-CA' : 'fr-CA');
+  // Le titre dit la vérité : « cette semaine » seulement s'il s'est passé quelque chose cette semaine.
+  const semaine = _comites && _comites.mode === 'semaine';
+  const titre = document.getElementById('semaineTitre');
+  if(titre) titre.textContent = semaine ? (isEn ? 'This week at the Assembly' : 'Cette semaine à l’Assemblée') : (isEn ? 'Latest at the Assembly' : 'Dernières activités à l’Assemblée');
+  const sub = document.getElementById('semaineSub');
+  if(sub) sub.textContent = isEn ? 'Bills moving through the House first, then committee sittings.' : 'Les projets de loi qui avancent en Chambre d’abord, puis les séances de comités.';
   const avis = document.getElementById('comitesAvis');
-  if(avis) avis.textContent = legislatureFinie()
-    ? (isEn ? 'Committees ended with the legislature. They will resume after the 44th Parliament opens; these are the last sittings held.'
-            : 'Les comités ont pris fin avec la législature. Ils reprendront après l’ouverture de la 44e ; voici les dernières séances tenues.')
-    : '';
+  if(avis) avis.textContent = semaine ? '' : (isEn
+    ? 'Nothing at the Assembly this week. The House and its committees will resume after the 44th Parliament opens. Here is the latest activity.'
+    : 'Rien à l’Assemblée cette semaine. La Chambre et ses comités reprendront après l’ouverture de la 44e législature. Voici les dernières activités.');
   if(!liste.length){
-    el.innerHTML = `<div class="com-vide">${isEn ? 'No committee sitting published yet.' : 'Aucune séance de comité publiée pour l’instant.'}</div>`;
+    el.innerHTML = `<div class="com-vide">${isEn ? 'No activity published yet.' : 'Aucune activité publiée pour l’instant.'}</div>`;
     majPagerComites(0, isEn); return;
   }
   comitesDebut = comitesDebut % liste.length;
@@ -4539,7 +4615,7 @@ async function renderComites(){
 }
 function pagerComites(dir){
   const el = document.getElementById('comitesList');
-  const liste = (_comites && _comites.seances) || [];
+  const liste = (_comites && _comites.cartes) || [];
   const k = comitesParVue(), n = liste.length;
   if(!el || n <= k || comitesEnCours) return;
   const ancien = comitesDebut;
