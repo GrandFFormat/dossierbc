@@ -96,6 +96,10 @@ function enteteVancouver() {
       <li class="ab-villes-dq"><a href="/">DossierBC <span>(${tr('provincial', 'B.C. province')})</span></a></li>
     </ul>`;
   ligne.append(d);
+  // Toute la barre d'outils (taille du texte, thème, langue) passe juste à gauche du bouton de la
+  // ville, en haut à droite (Martin, 15 nov. 2026).
+  const outils = document.querySelector('header nav .outils');
+  if (outils) d.before(outils);
   document.addEventListener('click', (e) => { if (d.open && !d.contains(e.target)) d.open = false; });
   d.addEventListener('keydown', (e) => { if (e.key === 'Escape' && d.open) { d.open = false; d.querySelector('summary').focus(); } });
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
