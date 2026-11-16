@@ -1134,3 +1134,7 @@ nav.tabs .villes-menu ul{left:auto; right:0;}
 html[data-theme="dark"] .bc-petitions{background:rgba(227,181,40,.14); color:var(--ink);}
 html[data-theme="dark"] .bc-petitions b{color:#F2CC5B;}
 html[data-theme="dark"] .bc-petitions a{color:#F2CC5B;}
+
+/* Les « + » alignés d'une carte à l'autre (Martin, 16 nov. 2026) : le bouton et la note descendent au bas de la carte. */
+.com-chambre .com-plus{margin-top:auto;}
+.com-chambre .com-note{flex:none;}
