@@ -79,3 +79,29 @@ if (typeof document !== 'undefined' && !document.documentElement.dataset.langueF
   // L'en-tête cache la page le temps de la traduire (script en ligne du <head>) : on la montre.
   document.documentElement.classList.add('dvq-pret');
 }
+
+// L'en-tête comme celui de Montréal (Martin, 15 nov. 2026) : la pastille de DossierBC à côté du
+// logo (lien vers le site provincial), qui se retourne de côté au chargement puis toutes les 20 s,
+// et le menu « Town: Vancouver » à droite. Une seule ville pour l'instant en C.-B.
+function enteteVancouver() {
+  const ligne = document.querySelector('.titre-ligne');
+  if (!ligne || ligne.querySelector('#villes')) return;
+  const d = document.createElement('details');
+  d.className = 'ab-villes';
+  d.id = 'villes';
+  d.innerHTML = `<summary><span class="ab-villes-libelle">${tr('Ville : ', 'Town: ')}</span>Vancouver</summary>
+    <ul class="ab-villes-menu">
+      <li><a href="/vancouver/" aria-current="true">Vancouver</a></li>
+      <li class="ab-villes-rtv"><a href="/represente-ta-ville${EN ? '' : '?lang=fr'}">${tr('+ Représentez votre ville', '+ Represent your city')}</a></li>
+      <li class="ab-villes-dq"><a href="/">DossierBC <span>(${tr('provincial', 'B.C. province')})</span></a></li>
+    </ul>`;
+  ligne.append(d);
+  document.addEventListener('click', (e) => { if (d.open && !d.contains(e.target)) d.open = false; });
+  d.addEventListener('keydown', (e) => { if (e.key === 'Escape' && d.open) { d.open = false; d.querySelector('summary').focus(); } });
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const retourner = () => { for (const f of document.querySelectorAll('.titre-ligne .lien-dq')) f.classList.toggle('retournee'); };
+    setTimeout(retourner, 400);
+    setInterval(retourner, 20000);
+  }
+}
+if (typeof document !== 'undefined') enteteVancouver();

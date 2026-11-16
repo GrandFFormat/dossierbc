@@ -899,3 +899,42 @@ html.dvq-fr:not(.dvq-pret) body { visibility: hidden; }
 
 /* Awaiting the City's permission to read the minutes (15 Nov. 2026): above the page title. */
 .avis-attente { border-left-color: var(--vedette); margin-bottom: 18px; }
+
+/* La pastille de DossierBC à côté du logo (lien vers le site provincial) : elle se retourne de
+   côté au chargement puis toutes les 20 s, comme la fleur de lys des volets du Québec. */
+.titre-ligne .lien-dq {
+  display: inline-block; flex: none; width: 22px; height: 22px; margin-left: -2px;
+  background: #E3B528; border-radius: 50%; font-size: 0; color: transparent;   /* le soleil de DossierBC, juste le cercle (Martin) */
+  transition: transform .7s ease-in-out;
+}
+.titre-ligne .lien-dq.retournee { transform: rotateY(180deg); }
+.titre-ligne .lien-dq:hover, .titre-ligne .lien-dq:focus-visible { transform: scale(1.15); }
+.titre-ligne .lien-dq.retournee:hover, .titre-ligne .lien-dq.retournee:focus-visible { transform: rotateY(180deg) scale(1.15); }
+@media (prefers-reduced-motion: reduce) { .titre-ligne .lien-dq { transition: none; } }
+@media (max-width: 620px) { .titre-ligne .lien-dq { width: 18px; height: 18px; } }
+
+/* Le menu « Town: Vancouver », à droite de la ligne du titre (même dessin que les volets du Québec). */
+.ab-villes { margin: 0 0 0 auto; position: relative; font-size: 13.5px; }
+.ab-villes > summary {
+  list-style: none; cursor: pointer; white-space: nowrap; font-weight: 600; line-height: 1.5;
+  color: var(--encre); background: var(--carte, var(--fond));
+  border: 1px solid var(--ligne-forte); border-radius: 999px; padding: 5px 12px;
+}
+.ab-villes > summary::-webkit-details-marker { display: none; }
+.ab-villes > summary::after { content: " ▾"; color: var(--doux); }
+.ab-villes[open] > summary::after { content: " ▴"; }
+.ab-villes > summary:hover { border-color: var(--accent); }
+.ab-villes > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ab-villes-menu {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; min-width: 220px;
+  list-style: none; margin: 0; padding: 6px; background: var(--carte, var(--fond));
+  border: 1px solid var(--ligne); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+}
+.ab-villes-menu li { margin: 0; }
+.ab-villes-menu a { display: block; padding: 8px 10px; border: 0; border-radius: 6px; font-size: 13.5px; color: var(--encre); text-decoration: none; font-weight: 600; }
+.ab-villes-menu a:hover { background: var(--fond-2); }
+.ab-villes-menu a[aria-current] { color: var(--accent-encre); background: var(--accent-fond); }
+.ab-villes-rtv a { color: var(--accent); font-weight: 700; }
+.ab-villes-dq { border-top: 1px solid var(--ligne); margin-top: 4px; padding-top: 4px; }
+.ab-villes-dq span { color: var(--doux); font-weight: 400; }
+@media (max-width: 620px) { .ab-villes-libelle { display: none; } }
