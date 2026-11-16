@@ -129,18 +129,15 @@ function phrase(s, decs) {
   const sujets = {};
   for (const d of decs) sujets[d.theme] = (sujets[d.theme] ?? 0) + 1;
   const [principal, nP] = Object.entries(sujets).sort((a, b) => b[1] - a[1])[0] ?? [];
-  const conflits = new Set(decs.flatMap((d) => d.conflits ?? []));
   if (!EN) {
     let t = `${decs.length} ${decs.length === 1 ? 'motion mise' : 'motions mises'} aux voix : ${adoptees} ${adoptees > 1 ? 'adoptées' : 'adoptée'}${unanimes ? ` (${unanimes} à l’unanimité)` : ''}${rejetees ? `, ${rejetees} ${rejetees > 1 ? 'rejetées' : 'rejetée'}` : ''}.`;
     t += divisees ? ` ${divisees} ${divisees > 1 ? 'votes ont divisé' : 'vote a divisé'} le conseil.` : ' Aucun vote n’a divisé le conseil.';
     if (principal && nP >= 2 && decs.length >= 3) t += ` Sujet le plus fréquent : ${nomTheme(principal).toLowerCase()} (${nP} points).`;
-    if (conflits.size) t += ` ${conflits.size} ${conflits.size > 1 ? 'membres ont déclaré' : 'membre a déclaré'} un conflit d’intérêts.`;
     return t;
   }
   let t = `${pluriel(decs.length, 'motion was', 'motions were')} put to a vote: ${adoptees} carried${unanimes ? ` (${unanimes} unanimously)` : ''}${rejetees ? `, ${rejetees} lost` : ''}.`;
   t += divisees ? ` ${pluriel(divisees, 'vote split', 'votes split')} Council.` : ' No vote split Council.';
   if (principal && nP >= 2 && decs.length >= 3) t += ` Most items (${nP}) were about ${THEMES[principal]?.toLowerCase() ?? principal}.`;
-  if (conflits.size) t += ` ${pluriel(conflits.size, 'member', 'members')} declared a conflict of interest.`;
   return t;
 }
 
