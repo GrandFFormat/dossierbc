@@ -966,6 +966,13 @@ nav.tabs a:hover:not(.active){
   border-color:var(--bc-bleu-tres-pale) !important;
   color:var(--bc-bleu-fonce);
 }
+/* En thème sombre, le survol était bleu foncé sur bleu foncé, illisible (Martin, 15 nov. 2026) :
+   il s'allume en jaune DossierBC, comme la ville cochée du menu des villes de Vancouver. */
+html[data-theme="dark"] nav.tabs a:hover:not(.active){
+  background:rgba(227,181,40,.18);
+  border-color:rgba(227,181,40,.18) !important;
+  color:#F2CC5B;
+}
 
 
 /* ---------- 7.13 LE MENU « VILLES » DANS LA BARRE ----------

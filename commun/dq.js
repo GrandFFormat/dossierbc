@@ -3558,7 +3558,7 @@ function billCard(b, ctx){
         </div>
         <div class="bill-head-right">
           ${hotBadge}
-          ${b.omnibus ? `<span class="status-pill omnibus-pill" title="${isEn ? 'Changes several laws under one title' : 'Modifie plusieurs lois sous un seul titre'}">Omnibus${b.nbLois ? ` · ${b.nbLois} ${isEn ? 'laws' : 'lois'}` : ''}</span>` : ''}
+          ${estOmnibusBC(b) ? `<span class="status-pill omnibus-pill" title="${isEn ? 'Changes several laws under one title' : 'Modifie plusieurs lois sous un seul titre'}">Omnibus${b.nbLois ? ` · ${b.nbLois} ${isEn ? 'laws' : 'lois'}` : ''}</span>` : ''}
           ${partyBadge}
           <span class="status-pill ${statusClass(b.status)}">${statusLabel(b.status, b.step)}</span>
         </div>
@@ -3575,7 +3575,7 @@ function billCard(b, ctx){
         <div class="bill-open-grid">
           <div>
             <div class="open-label">${isEn ? 'What it does, plainly' : 'Ce que ça fait, en clair'}</div>
-            ${b.omnibus ? `<p class="omnibus-avis">${isEn ? `<strong>Omnibus bill:</strong> it changes ${b.nbLois || 'several'} laws and regulations, and its title names only part of them. The summary below covers them all, law by law.` : `<strong>Projet omnibus :</strong> il modifie ${b.nbLois || 'plusieurs'} lois et règlements, et son titre n’en nomme qu’une partie. Le résumé ci-dessous les couvre toutes, loi par loi.`}</p>` : ''}
+            ${estOmnibusBC(b) ? `<p class="omnibus-avis">${isEn ? '<strong>Omnibus bill:</strong> it changes several laws under a single title.' : '<strong>Projet omnibus :</strong> il modifie plusieurs lois sous un seul titre.'}</p>` : ''}
             <div class="bill-summary-body"></div>
             <p class="src-note">${b.summaryAiGenerated ? (isEn ? '⚙ AI-generated summary of the bill as introduced — may not reflect amendments made since.' : '⚙ Résumé généré par IA à partir du texte tel que présenté — peut ne pas refléter les amendements adoptés depuis.') : srcNote}</p>
           </div>
@@ -3890,6 +3890,9 @@ let billsQuickFilter = 'tous';
 // Challengés et Omnibus se cumulent avec le statut (Tous / Non adoptés / Adoptés) et entre eux
 // (Martin, 25 sept. 2026) : « Adoptés » + « Omnibus » = les omnibus adoptés.
 const BILLS_EXTRAS = ['challenges', 'omnibus'];
+// C.-B. : un projet est omnibus quand son titre le dit (« … Statutes Amendment Act », « Budget
+// Measures Implementation Act »). bills.js pose b.omnibus ; ce repli couvre les données d'avant.
+const estOmnibusBC = (b) => !!b.omnibus || /\bStatutes Amendment Act\b|\bBudget Measures Implementation Act\b/i.test(b.title || '');
 const billsExtras = new Set();
 // On n'affiche pas les 143 projets d'un coup : 10, puis « + 10 » à la demande.
 // ⚠️ Toute action qui change la LISTE (filtre, recherche, tri) doit remettre ce
@@ -3915,7 +3918,7 @@ function renderBillsQuickFilters(){
     ['adoptes', isEn ? 'Passed' : 'Adoptés'],
     ...(ASSEMBLY.filtreChallenge ? [['challenges', isEn ? '🔥 Challenged' : '🔥 Challengés']] : []),   // N.-B. : pas de filtre (Martin, 7 nov. 2026)
     // Omnibus (25 sept. 2026) : un projet qui touche plusieurs lois sous un seul titre.
-    ...((typeof bills !== 'undefined' && bills.some((b) => b.omnibus)) ? [['omnibus', 'Omnibus']] : []),   // N.-B. : le filtre n'apparaît que si un projet est omnibus
+    ...((typeof bills !== 'undefined' && bills.some((b) => estOmnibusBC(b))) ? [['omnibus', 'Omnibus']] : []),   // N.-B. : le filtre n'apparaît que si un projet est omnibus
   ];
   el.innerHTML = defs.map(([k, label]) =>
     `<button class="qf-btn ${(billsQuickFilter===k || billsExtras.has(k))?'active':''}"${BILLS_EXTRAS.includes(k) ? ` aria-pressed="${billsExtras.has(k)}"` : ''} onclick="setBillsQuickFilter('${k}')">${label}</button>`
@@ -3948,7 +3951,7 @@ function renderBills(keyword){
       || (billsQuickFilter === 'encours' && (legislatureFinie() ? b.status !== 'sanctionne' : b.status === 'encours'))
       || (billsQuickFilter === 'adoptes' && b.status === 'sanctionne'))
       && (!billsExtras.has('challenges') || ch.some(c => Number(c.bill_id) === b.id))
-      && (!billsExtras.has('omnibus') || b.omnibus);
+      && (!billsExtras.has('omnibus') || estOmnibusBC(b));
     const summaryText = ((_resumesFr && _resumesFr[b.id]) || '').replace(/<[^>]+>/g, ' ');
     // On cherche dans : le titre, le résumé en clair, la ligne de statut, le nom
     // du parrain, le numéro sous toutes ses écritures, et le PARTI du parrain

@@ -45,6 +45,8 @@ const OUT_PATH = 'data/bills.json';
 
 // Les étapes de l'API, sur l'échelle de DossierQuébec (1 présentation … 5 sanction). La page
 // affiche trois cases (displayStep, commun/dq.js) : 1, puis 2 à 4, puis 5.
+// Les titres qui annoncent plusieurs lois modifiées d'un coup (voir omnibus plus bas).
+const OMNIBUS = /\bStatutes Amendment Act\b|\bBudget Measures Implementation Act\b/i;
 const ETAPES = [
   { champ: 'firstReading', cle: 'premiere', step: 1 },
   { champ: 'secondReading', cle: 'deuxieme', step: 2 },
@@ -206,6 +208,9 @@ async function main() {
       dates,
       chapitre: b.chapterNumber ?? null,
       amende: Boolean(dates.amende),
+      // Omnibus (15 nov. 2026) : la C.-B. ne le dit pas dans ses données, mais ses titres le disent :
+      // « … Statutes Amendment Act » et « Budget Measures Implementation Act » modifient plusieurs lois.
+      omnibus: OMNIBUS.test(b.title ?? ''),
       irrecevable: Boolean(b.ruledOutOfOrder),
       titreChange: Boolean(b.titleChanged),
       retabli: rétabli,

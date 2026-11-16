@@ -942,3 +942,7 @@ html.dvq-fr:not(.dvq-pret) body { visibility: hidden; }
 /* La barre d'outils à gauche du bouton de la ville : c'est elle qui pousse le groupe à droite. */
 .titre-ligne > .outils { margin: 0 0 0 auto; display: flex; align-items: center; gap: 8px; }
 .titre-ligne > .outils + .ab-villes { margin-left: 0; }
+
+/* En thème sombre, la ville cochée du menu s'allume en jaune DossierBC (Martin, 15 nov. 2026). */
+:root[data-theme="sombre"] .ab-villes-menu a[aria-current] { background: rgba(227, 181, 40, .18); color: #F2CC5B; }
+:root[data-theme="sombre"] .ab-villes-menu a[aria-current]:hover { background: rgba(227, 181, 40, .26); }
