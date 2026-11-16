@@ -126,6 +126,18 @@
     .genre-permis.fermeture { background: var(--contre, #D23B2C); }
     #resultat-adresse.apercu { opacity: .45; filter: grayscale(1); max-height: 660px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 80%, transparent); mask-image: linear-gradient(#000 80%, transparent); }
     .lien-carte { display: inline-flex; vertical-align: -2px; color: var(--accent); }
+    .bulle-carte { display: inline-flex; align-items: center; gap: 4px; text-decoration: none; color: #fff; }
+    .bulle-carte svg { width: 13px; height: 13px; }
+    .bulle-carte:hover, .bulle-carte:focus-visible { filter: brightness(1.12); text-decoration: underline; }
+    /* Sur téléphone, la maison était une cible de 14 px : impossible à toucher du doigt (Martin,
+       15 nov. 2026). Une pastille de 36 px, l'icône plus grande, sans déplacer la ligne. */
+    @media (max-width: 720px), (pointer: coarse) {
+      .lien-carte { align-items: center; justify-content: center; min-width: 36px; min-height: 36px;
+        margin: -8px 0; vertical-align: middle; border-radius: 50%; background: var(--accent-fond); }
+      .lien-carte svg { width: 20px; height: 20px; }
+      .bulle-carte { min-height: 32px; padding: 4px 12px; font-size: .8rem; margin: 2px 4px 2px 0; }
+      .bulle-carte svg { width: 16px; height: 16px; }
+    }
   </style>
   <script type="module">
     // « Près de chez moi » à Vancouver (15 nov. 2026), même mécanique qu'à Québec et à Montréal : l'index des
@@ -146,6 +158,11 @@
     const MAISON = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>';
     const carte = (q) => `<a class="lien-carte" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(q)}" target="_blank" rel="noopener" title="${tr('Voir sur Google Maps', 'See on Google Maps')}">${MAISON}</a>`;
     const carteCoord = (lat, lon) => (lat && lon ? carte(`${lat},${lon}`) : '');
+    // La bulle (« À venir », « Nouveau bâtiment »…) devient elle-même le lien vers la carte, avec la
+    // maison dedans (Martin, 15 nov. 2026) : une cible facile au doigt au lieu d'une icône de 15 px.
+    const bulle = (classe, libelle, lat, lon) => lat && lon
+      ? `<a class="genre-permis bulle-carte ${esc(classe)}" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(`${lat},${lon}`)}" target="_blank" rel="noopener" title="${tr('Voir sur Google Maps', 'See on Google Maps')}">${MAISON}${libelle}</a>`
+      : `<span class="genre-permis ${esc(classe)}">${libelle}</span>`;
     const GENRE = { Construction: ['construction', tr('Nouveau bâtiment', 'New building')], Demolition: ['demolition', tr('Démolition', 'Demolition')], Alteration: ['alteration', tr('Transformation majeure', 'Major alteration')] };
     const STATUT = { 'en-cours': tr('En cours', 'Under construction'), 'a-venir': tr('À venir', 'Upcoming'), fermeture: tr('Rue fermée', 'Road closure') };
     const fichiers = new Map();
@@ -195,10 +212,10 @@
       const chantiers = ch?.parQuartier?.[t.qi] ?? [];
       const quartier = esc(index.quartiers[t.qi]);
       if (chantiers.length) zone.insertAdjacentHTML('beforeend', `<section class="bloc-pres"><h3>${tr(`Chantiers de la Ville dans ${quartier}&nbsp;: ${chantiers.length}`, `City roadwork in ${quartier}: ${chantiers.length}`)}</h3><ul>${
-        chantiers.slice(0, 25).map((c) => `<li><span class="genre-permis ${esc(c[1])}">${STATUT[c[1]] ?? c[1]}</span> ${carteCoord(c[4], c[5])} ${c[3] ? `<a href="${esc(c[3])}" target="_blank" rel="noopener">${esc(c[0])}</a>` : esc(c[0])}${c[6] ? ` <span class="compte">(${esc(c[6])})</span>` : ''}${c[2] ? ` <span class="compte">— ${tr('prévu jusqu’au', 'planned to')} ${jour(c[2])}</span>` : ''}</li>`).join('')
+        chantiers.slice(0, 25).map((c) => `<li>${bulle(c[1], STATUT[c[1]] ?? esc(c[1]), c[4], c[5])} ${c[3] ? `<a href="${esc(c[3])}" target="_blank" rel="noopener">${esc(c[0])}</a>` : esc(c[0])}${c[6] ? ` <span class="compte">(${esc(c[6])})</span>` : ''}${c[2] ? ` <span class="compte">— ${tr('prévu jusqu’au', 'planned to')} ${jour(c[2])}</span>` : ''}</li>`).join('')
       }</ul>${chantiers.length > 25 ? `<p class="compte">${tr('Les 25 qui finissent le plus tôt.', 'The 25 ending soonest.')}</p>` : ''}<p class="compte">${tr(`En date du ${new Date(ch.extraction).toLocaleDateString('fr-CA', { day: 'numeric', month: 'short', year: 'numeric' })}, d’après les données « Road Ahead » de la Ville.`, `As of ${new Date(ch.extraction).toLocaleDateString('en-CA', { day: 'numeric', month: 'short', year: 'numeric' })}, from the City’s “Road Ahead” data.`)}</p></section>`);
       if (permis.length) zone.insertAdjacentHTML('beforeend', `<section class="bloc-pres"><h3>${tr(`Près de chez vous&nbsp;: ${permis.length} permis délivrés dans ${quartier} ces 12 derniers mois`, `Near you: ${permis.length} permits issued in ${quartier} in the last 12 months`)}</h3><ul>${
-        permis.slice(0, 15).map((p) => { const g = GENRE[p[2]] ?? ['alteration', p[2]]; return `<li><span class="genre-permis ${g[0]}">${g[1]}</span> <span class="compte">${jour(p[0])}</span> ${carteCoord(p[4], p[5])} ${esc(p[1])}${p[6] ? ` <span class="compte">— ${argent(p[6])} ${tr('déclarés', 'declared')}</span>` : ''}</li>`; }).join('')
+        permis.slice(0, 15).map((p) => { const g = GENRE[p[2]] ?? ['alteration', p[2]]; return `<li>${bulle(g[0], g[1], p[4], p[5])} <span class="compte">${jour(p[0])}</span> ${esc(p[1])}${p[6] ? ` <span class="compte">— ${argent(p[6])} ${tr('déclarés', 'declared')}</span>` : ''}</li>`; }).join('')
       }</ul>${permis.length > 15 ? `<p class="compte">${tr('Les 15 plus récents.', 'The 15 most recent.')}</p>` : ''}<p class="compte">${tr('Nouveaux bâtiments, démolitions et transformations de 500 000 $ ou plus. D’après les données « Issued building permits » de la Ville.', 'New buildings, demolitions, and alterations of $500,000 or more. From the City’s “Issued building permits” data.')}</p></section>`);
     }
     const lancer = () => { const v = decodeURIComponent(location.hash.slice(1)); if (v) { document.getElementById('adresse').value = v; chercher(v); } else chercher('453 W 12th Avenue', true); };
