@@ -407,7 +407,6 @@ function carteDecision(d, ouverte = false) {
       ${d.resultat ? `<span class="resultat ${classeResultat(d.resultat)}">${echapper(lib(d.resultat))}</span>` : ''}
       ${d.voteEnregistre ? `<span class="puce genre-vote">${tr('vote enregistré', 'recorded vote')}</span>` : ''}
       ${d.decomptePour != null ? `<span class="decompte"><span class="d-pour">${d.decomptePour} ${tr('pour', 'for')}</span><span class="d-contre">${d.decompteContre} ${tr('contre', 'against')}</span></span>` : ''}
-      ${d.conflits?.length ? `<span class="puce conflit">${tr('conflit déclaré', 'declared conflict')}&nbsp;: ${d.conflits.map(echapper).join(', ')}</span>` : ''}
     </div>
     <p class="objet">${echapper(objetDe(d) ?? tr('(sans objet)', '(no subject)'))}</p>`;
   // Montréal : le numéro de dossier suit la décision d'une instance à l'autre, et les
@@ -451,7 +450,7 @@ function decisionsFiltrees() {
     // et c'est par son identifiant que le courriel ouvre sa fiche (?q=PV_CA4_OR_…).
     // Vancouver : les noms de qui a voté contre, et des conflits déclarés, entrent dans la recherche —
     // c'est par là que la fiche d'un élu mène aux points qu'il ou elle a refusés.
-    if (q && !((d.objet ?? '') + ' ' + (d.numero ?? '') + ' ' + (d.id ?? '') + ' ' + (d.dissidences ?? []).join(' ') + ' ' + (d.conflits ?? []).join(' ')).toLowerCase().includes(q)) return false;
+    if (q && !((d.objet ?? '') + ' ' + (d.numero ?? '') + ' ' + (d.id ?? '') + ' ' + (d.dissidences ?? []).join(' ') + ' ' + [].join(' ')).toLowerCase().includes(q)) return false;
     return true;
   });
 }
@@ -772,7 +771,6 @@ function carteElu(m) {
         ${puce(v.contre, 'contre', 'opposed')}
         ${puce(v.abstentions, 'abstention(s)', 'abstained')}
         ${puce(v.absents, 'absence(s)', 'absent')}
-        ${puce(v.conflits, 'conflit(s) déclaré(s)', v.conflits > 1 ? 'declared conflicts' : 'declared conflict', 'conflit')}
         ${puce(v.inadmissibles, 'inadmissible(s)', 'ineligible')}
         ${puce(v.sansVote, 'sans vote', 'no vote')}
       </div>
@@ -1086,7 +1084,7 @@ function ligneEvenement(e) {
     </div>
     <p class="objet">${echapper(objetDe(d) ?? tr('(sans objet)', '(no subject)'))}</p>`;
   const corps = `${blocResume(resumePour(d))}
-    ${d.dissidences?.length || d.conflits?.length ? `<p class="compte" style="margin:0 0 8px">${d.dissidences?.length ? `${tr('Contre', 'Against')}&nbsp;: ${d.dissidences.map(echapper).join(', ')}. ` : ''}${d.conflits?.length ? `${tr('Conflit déclaré', 'Declared conflict')}&nbsp;: ${d.conflits.map(echapper).join(', ')}. ` : ''}</p>` : ''}
+    ${d.dissidences?.length ? `<p class="compte" style="margin:0 0 8px">${d.dissidences?.length ? `${tr('Contre', 'Against')}&nbsp;: ${d.dissidences.map(echapper).join(', ')}. ` : ''}</p>` : ''}
     ${d.lienSource ? `<a class="lien-pdf" href="${echapper(d.lienSource)}" target="_blank" rel="noopener">${tr('Donnée officielle — portail de la Ville ↗', 'Official record — City of Vancouver open data ↗')}</a>` : ''}
     <p class="compte" style="margin:6px 0 0"><a href="decisions-of-vancouver-city-council?q=${encodeURIComponent(d.numero ?? '')}">${tr('Voir la fiche et le vote complet', 'See the full card and vote')} →</a></p>
     ${d.pdf ? `<a class="lien-pdf" href="${echapper(d.pdf)}" target="_blank" rel="noopener">${tr('Document officiel (PDF) ↗', 'Official document (PDF, in French) ↗')}</a>` : ''}
@@ -1455,7 +1453,7 @@ init();
   const bouton = document.createElement('button');
   bouton.type = 'button';
   bouton.className = 'haut';
-  bouton.setAttribute('aria-label', tr('Revenir en haut de la page', 'Back to top'));
+  bouton.setAttribute('aria-label', tr('Revenir en haut de la page', 'Go to the top of the page'));
   bouton.textContent = '↑';
   document.body.appendChild(bouton);
   // Le bouton apparaît quand on a descendu d'à peu près un écran, pas après 600 pixels fixes :
@@ -1522,7 +1520,6 @@ document.addEventListener('toggle', async (e) => {
     <p style="margin:0 0 4px"><strong>${tr('Contre', 'Against')}</strong> : ${noms(contre) || '—'}</p>
     ${abstentions.length ? `<p style="margin:0 0 4px"><strong>${tr('Abstention', 'Abstained')}</strong> : ${noms(abstentions)}</p>` : ''}
     ${absents.length ? `<p style="margin:0 0 4px"><strong>${tr('Absent', 'Absent')}</strong> : ${noms(absents)}</p>` : ''}
-    ${conflits.length ? `<p style="margin:0 0 4px"><strong>${tr('Conflit déclaré', 'Declared conflict')}</strong> : ${noms(conflits)}</p>` : ''}
     ${demandeur ? `<p class="compte" style="margin:0">${tr('Vote demandé par', 'Vote called by')} ${echapper(demandeur)}.</p>` : ''}
     ${pdf ? `<p class="compte" style="margin:2px 0 0"><a href="${echapper(pdf)}" target="_blank" rel="noopener">${tr('Donnée officielle — portail de la Ville ↗', 'Official record — City of Vancouver open data ↗')}</a></p>` : ''}
   </div>`);
