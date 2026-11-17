@@ -1,0 +1,130 @@
+{
+  "resumes": {
+    "3745": {
+      "en": [
+        "The committee was to start clause-by-clause review of Bill M226, Motor Vehicle Amendment Act, 2025.",
+        "It went in camera (closed to the public) from 9:09 to 9:40 a.m. to discuss items before starting. That was most of the sitting.",
+        "After returning, the committee agreed to move clause-by-clause consideration of Bill M226 to its next scheduled meeting.",
+        "The Deputy Chair thanked MLA Rotchford for preparing potential amendments and said he would review them with his caucus.",
+        "Bill M232, Long Term Care Access and Transparency Act, will continue at a future meeting. The committee then adjourned."
+      ],
+      "fr": [
+        "Le comité devait commencer l'étude article par article du projet de loi M226, Motor Vehicle Amendment Act, 2025 (loi sur les véhicules automobiles).",
+        "Il a siégé à huis clos de 9 h 09 à 9 h 40 pour discuter de points préalables. Cela a couvert presque toute la séance.",
+        "Au retour, le comité a convenu de reporter l'étude article par article du projet de loi M226 à sa prochaine réunion prévue.",
+        "Le vice-président a remercié la députée Rotchford d'avoir préparé des amendements possibles et dit qu'il les examinerait avec son caucus.",
+        "L'étude du projet de loi M232, Long Term Care Access and Transparency Act (soins de longue durée), se poursuivra à une réunion ultérieure. Le comité a ensuite levé la séance."
+      ],
+      "huisClos": true,
+      "source": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/pbpmb/20260527am-PrivateBills-Victoria-n25.html",
+      "faitLe": "2026-11-17T22:53:54.830Z",
+      "tronque": false,
+      "modele": "claude-sonnet-5-5"
+    },
+    "3781": {
+      "en": [
+        "The committee went in camera for about an hour to plan next steps and review submissions received. No decisions were reported publicly.",
+        "It formally received extra written information from the Ministry of Attorney General and ICBC, following its May 8 briefing meeting, and made it public.",
+        "Sheldon Clare, sponsor of Bill M237, presented the bill. It would let one amputation, instead of two or more, qualify as a catastrophic injury, and reopen claims for two years.",
+        "Clare said the change would apply back to May 1, 2021. He had no cost estimate and said ICBC and actuaries are better placed to answer cost questions.",
+        "Members asked about other provinces, consultation, and benefit differences. Clare said Ontario uses a single-amputation definition and he would not support amending the bill. The committee then adjourned."
+      ],
+      "fr": [
+        "Le comité a siégé à huis clos pendant environ une heure pour planifier la suite de ses travaux et examiner les mémoires reçus. Aucune décision n'a été rendue publique.",
+        "Il a reçu officiellement des renseignements écrits additionnels du ministère du Procureur général et d'ICBC, après sa séance d'information du 8 mai et les a rendus publics.",
+        "Sheldon Clare, parrain du projet de loi M237, l'a présenté. Une seule amputation, plutôt que deux ou plus, suffirait pour une blessure catastrophique et les demandes seraient rouvertes pendant deux ans.",
+        "M. Clare a dit que le changement s'appliquerait à partir du 1er mai 2021. Il n'avait pas d'estimation des coûts et a renvoyé ces questions à ICBC et aux actuaires.",
+        "Les membres ont posé des questions sur les autres provinces, les consultations et les prestations. M. Clare a cité l'Ontario, qui retient une seule amputation et refuse que le projet de loi soit modifié. Le comité a ensuite levé la séance."
+      ],
+      "huisClos": false,
+      "source": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/iva/20260720am-IVAReview-Victoria-n4.html",
+      "faitLe": "2026-11-17T22:53:38.957Z",
+      "tronque": false,
+      "modele": "claude-sonnet-5-5"
+    },
+    "3782": {
+      "en": [
+        "The committee heard presentations on Parts 10 and 11 of the Insurance (Vehicle) Act and Bill M237. Health groups spoke first: Doctors of B.C., occupational therapists, physiotherapists, acupuncture and kinesiology associations.",
+        "Health groups said enhanced care works well for early treatment. They asked for better information-sharing between providers, paid treatment plans, and clearer rules for care after the first 12 weeks.",
+        "Doctors of B.C. and others asked for a broader review of the \"catastrophic injury\" definition. Insurance brokers backed Bill M237 and asked for a review of income top-up, funeral and death benefit limits.",
+        "Trial lawyers and the Canadian Bar Association, B.C. Branch urged restoring the right to sue and independent review. The Crisis Centre of B.C. asked for independent advisers and public service-level targets for ICBC.",
+        "Injured people Julia Kwan and Kim Lockwood described their claims. Ms. Lockwood proposed a voluntary lump-sum option for permanently disabled people. ICBC and the Attorney General appear Thursday."
+      ],
+      "fr": [
+        "Le comité a entendu des exposés sur les parties 10 et 11 de l'Insurance (Vehicle) Act (loi sur l'assurance des véhicules) et sur le projet de loi M237. Des groupes de santé ont parlé en premier : médecins, ergothérapeutes, physiothérapeutes, acupuncteurs et kinésiologues.",
+        "Ces groupes jugent que les soins améliorés fonctionnent bien pour le traitement précoce. Ils demandent un meilleur partage de l'information entre fournisseurs, des plans de traitement payés et des règles plus claires après les 12 premières semaines.",
+        "Doctors of B.C. et d'autres ont demandé un examen plus large de la définition de « blessure catastrophique ». Les courtiers d'assurance appuient le projet de loi M237 et demandent de revoir les plafonds de la protection du revenu et des prestations de décès et de funérailles.",
+        "Les avocats plaideurs et la section de la C.-B. de l'Association du Barreau canadien demandent de rétablir le droit de poursuivre et une révision indépendante. Le Crisis Centre of B.C. demande des conseillers indépendants et des cibles de service publiques pour ICBC.",
+        "Des personnes blessées, Julia Kwan et Kim Lockwood, ont décrit leur dossier. Mme Lockwood propose une option volontaire de somme forfaitaire pour les personnes handicapées en permanence. ICBC et le procureur général comparaissent jeudi."
+      ],
+      "huisClos": false,
+      "source": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/iva/20260921am-IVAReview-Victoria-n5.html",
+      "faitLe": "2026-11-17T22:53:33.230Z",
+      "tronque": true,
+      "modele": "claude-sonnet-5-5"
+    },
+    "3783": {
+      "en": [
+        "The committee heard seven presenters on Parts 10 and 11 of the Insurance (Vehicle) Act and on Bill M237, which extends the catastrophic injury claim window and cuts the amputation threshold from two to one.",
+        "Brain injury groups (B.C. Brain Injury Association, BrainTrust Canada, Fraser Valley Brain Injury Association) asked for permanent, funded navigation support, plain-language letters and help with rural travel costs paid up front.",
+        "Spinal Cord Injury B.C., G.F. Strong and several others said the catastrophic injury definition is too narrow. They asked that it reflect function, not only physical measures. Two also asked for transitional housing.",
+        "Charles He of Fair Roads described his own ICBC claim and recommended an independent investigations unit for ICBC. Nurses and Nurse Practitioners of B.C. asked that nurse practitioners' evidence count and that ICBC give written reasons for decisions.",
+        "The Deputy Chair asked for a follow-up on WorkSafeBC. G.F. Strong was told to hold off on a data request because of the political situation that day, and the sitting adjourned at 11:46 a.m."
+      ],
+      "fr": [
+        "Le comité a entendu sept présentateurs sur les parties 10 et 11 de l'Insurance (Vehicle) Act (loi sur l'assurance des véhicules) et sur le projet de loi M237, qui prolonge le délai de réclamation pour blessure catastrophique et réduit de deux à un le seuil d'amputations.",
+        "Des groupes sur les lésions cérébrales (B.C. Brain Injury Association, BrainTrust Canada, Fraser Valley Brain Injury Association) demandent un soutien à l'orientation permanent et financé, des lettres en langage clair et une aide pour les frais de déplacement en région.",
+        "Spinal Cord Injury B.C., G.F. Strong et d'autres jugent la définition de blessure catastrophique trop étroite. Ils demandent qu'elle tienne compte de la fonction et non des seules mesures physiques. Deux ont aussi demandé du logement de transition.",
+        "Charles He, de Fair Roads, a décrit sa propre réclamation à ICBC et recommandé une unité d'enquête indépendante sur ICBC. Nurses and Nurse Practitioners of B.C. demande que les preuves des infirmières praticiennes comptent et qu'ICBC motive ses décisions par écrit.",
+        "Le vice-président a demandé un suivi sur WorkSafeBC. G.F. Strong a reçu la consigne d'attendre pour sa demande de données à cause de la situation politique du jour et la séance a été levée à 11 h 46."
+      ],
+      "huisClos": false,
+      "source": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/iva/20260922am-IVAReview-Victoria-n6.html",
+      "faitLe": "2026-11-17T22:53:24.798Z",
+      "tronque": false,
+      "modele": "claude-sonnet-5-5"
+    },
+    "3789": {
+      "en": [
+        "The committee met to review correspondence from a member of the public. It went in camera (closed to the public) for about 17 of its 20 minutes.",
+        "The correspondence outlined research on children with high-functioning autism and their risk of mental health issues.",
+        "The Deputy Chair moved that the committee ask the Representative for Children and Youth for a written response on changes to financial supports and services for children and youth with autism, including mental health considerations.",
+        "One member said she would vote no. She said the research and reports already exist and that the committee should guard its boundaries. She suggested critics write to the Representative directly.",
+        "The motion was defeated. The committee then adjourned."
+      ],
+      "fr": [
+        "Le comité s'est réuni pour examiner une lettre d'un membre du public. Il a siégé à huis clos pendant environ 17 de ses 20 minutes.",
+        "La lettre présentait des recherches sur les enfants ayant un autisme à haut niveau de fonctionnement et leur risque de troubles de santé mentale.",
+        "La vice-présidente a proposé que le comité demande à la Representative for Children and Youth (la représentante des enfants et des jeunes) une réponse écrite sur les changements aux aides financières et aux services pour les enfants et les jeunes autistes, y compris la santé mentale.",
+        "Une députée a annoncé qu'elle voterait contre. Selon elle, les recherches et les rapports existent déjà et le comité doit bien protéger les limites de son rôle. Elle a suggéré aux critiques d'écrire directement à la représentante.",
+        "La motion a été rejetée. Le comité a ensuite levé la séance."
+      ],
+      "huisClos": true,
+      "source": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/cay/20260527am-ChildrenYouth-Victoria-n9.html",
+      "faitLe": "2026-11-17T22:53:50.448Z",
+      "tronque": false,
+      "modele": "claude-sonnet-5-5"
+    },
+    "3790": {
+      "en": [
+        "Most of the sitting (1:02 to 1:58 p.m.) was held in camera, so MNP LLP's update on its audit plan was not given on the public record.",
+        "MNP LLP is the firm chosen to audit how randomly selected police complaints and investigations were resolved. The chair said the presentation was private to protect the audit's integrity.",
+        "The chair listed the topics covered: audit objectives, scope, framework and criteria, sampling, engagement approach, timeline, resources and detailed costing.",
+        "The audit criteria have four layers: legislative requirements, OPCC operational guidance, administrative law and public sector principles, and public trust.",
+        "The committee approved a motion to adopt the audit plan as presented. MNP will do the audit over the coming months, and its report is expected by the end of August."
+      ],
+      "fr": [
+        "Presque toute la séance (de 13 h 02 à 13 h 58) s'est déroulée à huis clos. La mise à jour de MNP LLP sur son plan d'audit n'a donc pas été présentée publiquement.",
+        "MNP LLP est la firme choisie pour auditer le règlement de plaintes contre la police et d'enquêtes choisies au hasard. La présidente a dit que l'exposé était privé pour protéger l'intégrité de l'audit.",
+        "La présidente a énuméré les sujets abordés : objectifs, portée, cadre et critères, échantillonnage, approche, échéancier, ressources et coûts détaillés.",
+        "Les critères d'audit comptent quatre niveaux : exigences législatives, directives opérationnelles de l'OPCC, droit administratif et principes du secteur public et confiance du public.",
+        "Le Special Committee on Police Complaints (comité spécial sur les plaintes contre la police) a adopté une motion approuvant le plan d'audit présenté. MNP réalisera l'audit dans les prochains mois et son rapport est attendu d'ici la fin d'août."
+      ],
+      "huisClos": true,
+      "source": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/pc/20260603pm-PoliceComplaints-Victoria-n6.html",
+      "faitLe": "2026-11-17T22:53:44.895Z",
+      "tronque": false,
+      "modele": "claude-sonnet-5-5"
+    }
+  }
+}
