@@ -1,11 +1,11 @@
 {
   "source": "https://api.lims.leg.bc.ca/graphql",
   "repertoire": "https://www.leg.bc.ca/members/find-mla-by-constituency",
-  "scrapedAt": "2026-11-17T22:49:48.650Z",
+  "scrapedAt": "2026-11-18T22:31:14.321Z",
   "legislature": 43,
   "legislatureEnCours": 44,
   "legislatureEnCoursDebut": "2026-10-26",
-  "legislatureEnCoursMembres": 0,
+  "legislatureEnCoursMembres": 8,
   "sieges": 93,
   "vacants": 2,
   "composition": {
