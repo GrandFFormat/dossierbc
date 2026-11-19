@@ -16,3 +16,8 @@ data/textes/
 # Captures d'écran : jamais dans un dépôt public (règle de Martin, 8 nov. 2026).
 *.capture.png
 captures/
+
+# Fichiers de travail privés (retirés du site le 19 nov. 2026)
+/CHARTE-DOSSIER.md
+/courriel-registraire-lobbyistes.md
+/vancouver/courriel-greffe.md
