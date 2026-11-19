@@ -125,6 +125,48 @@
       "faitLe": "2026-11-17T22:53:44.895Z",
       "tronque": false,
       "modele": "claude-sonnet-5-5"
+    },
+    "3791": {
+      "en": [
+        "The committee met to review the draft audit report of police complaints prepared by MNP, the firm hired to audit the complaints process.",
+        "Almost the whole sitting, from 9:01 a.m. to 10:20 a.m., was held in camera (closed to the public).",
+        "The Chair thanked MNP for its work on the audit and the audit report.",
+        "At its next meeting, the committee will deliberate on the recommendations in the audit reports.",
+        "The committee adjourned at 10:20 a.m. after a motion to adjourn was approved."
+      ],
+      "fr": [
+        "Le comité s'est réuni pour examiner l'ébauche du rapport de vérification des plaintes contre la police, préparée par la firme MNP.",
+        "Presque toute la séance, de 9 h 01 à 10 h 20, s'est tenue à huis clos.",
+        "La présidence a remercié MNP pour son travail sur la vérification et le rapport.",
+        "À sa prochaine réunion, le comité délibérera sur les recommandations contenues dans les rapports de vérification.",
+        "Le comité a levé la séance à 10 h 20 après l'adoption d'une motion d'ajournement."
+      ],
+      "huisClos": true,
+      "source": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/pc/20260910am-PoliceComplaints-Victoria-n8.html",
+      "faitLe": "2026-11-19T22:41:00.711Z",
+      "tronque": false,
+      "modele": "claude-sonnet-5-5"
+    },
+    "3833": {
+      "en": [
+        "The committee met virtually to get an update from MNP, the firm hired to audit how randomly selected police complaints and investigations were resolved.",
+        "The audit was set up through a request for proposals issued in February. MNP was selected, and the committee approved its audit plan earlier this summer.",
+        "Most of the sitting, from 11:03 a.m. to 12:09 p.m., was held in camera (closed to the public) to receive MNP's update.",
+        "Back in public session, the Chair thanked MNP for its work so far. MNP is now finalizing the audit.",
+        "The committee expects MNP's draft report by the end of August. The meeting then adjourned."
+      ],
+      "fr": [
+        "Le comité a siégé en mode virtuel pour recevoir une mise à jour de MNP, la firme chargée de vérifier l'issue de plaintes contre la police et d'enquêtes choisies au hasard.",
+        "La vérification découle d'une demande de propositions lancée en février. MNP a été retenue et le comité a approuvé son plan de vérification plus tôt cet été.",
+        "La majeure partie de la séance, de 11 h 03 à 12 h 09, s'est tenue à huis clos pour entendre la mise à jour de MNP.",
+        "De retour en séance publique, la présidente a remercié MNP pour son travail jusqu'ici. MNP est en train de finaliser la vérification.",
+        "Le comité s'attend à recevoir l'ébauche du rapport de MNP d'ici la fin août. La séance a ensuite été levée."
+      ],
+      "huisClos": true,
+      "source": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/pc/20260818am-PoliceComplaints-VirtualMeeting-n7.html",
+      "faitLe": "2026-11-19T22:41:05.755Z",
+      "tronque": false,
+      "modele": "claude-sonnet-5-5"
     }
   }
 }

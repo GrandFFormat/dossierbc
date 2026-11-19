@@ -1,6 +1,6 @@
 {
   "source": "https://api.lims.leg.bc.ca/graphql",
-  "scrapedAt": "2026-11-18T22:31:14.322Z",
+  "scrapedAt": "2026-11-19T22:37:29.642Z",
   "note": "Nombre d'élections gagnées, compté sur le champ electionYears de l'API.",
   "count": 91,
   "mandats": {
