@@ -1,6 +1,253 @@
 {
- "genereLe": "2026-11-20T17:50:34.524Z",
+ "genereLe": "2026-11-20T17:52:51.913Z",
  "modele": "claude-sonnet-5-5",
  "source": "Registre des votes de la Ville de Vancouver (données ouvertes), rien d’autre",
- "seances": {}
+ "seances": {
+  "CO_2026-06-02_18791": {
+   "signature": "27:3121",
+   "phrase": "Le conseil a adopté à l'unanimité (11 pour, 0 contre) des rezonages CD-1, dont 1905 Ogden Avenue et 1188 Cardero Street, ainsi que le plan Villages. Il a adopté le plan de réduction des risques sismiques des bâtiments (9 pour, 0 contre) et un rapport de la commissaire à l'intégrité (6 pour, 4 contre).",
+   "phraseEn": "Council unanimously carried (11 for, 0 against) CD-1 rezonings, including 1905 Ogden Avenue and 1188 Cardero Street, and the Villages plan. It carried the buildings seismic risk reduction action plan (9 for, 0 against) and an Integrity Commissioner report decision (6 for, 4 against).",
+   "motsCles": [
+    "rezonages CD-1",
+    "plan Villages",
+    "risques sismiques"
+   ],
+   "motsClesEn": [
+    "CD-1 rezonings",
+    "Villages plan",
+    "seismic risk reduction"
+   ],
+   "motsThemes": [
+    null,
+    "urbanisme",
+    "administration"
+   ],
+   "genereLe": "2026-11-20T17:52:13.028Z"
+  },
+  "PH_2026-06-02_18810": {
+   "signature": "4:524",
+   "phrase": "À cette audience publique, le conseil a adopté deux votes sur la modification du PDO et le rezonage CD-1 du 1745 West 8th Avenue (7 contre 1, puis 6 contre 2), et deux votes sur la mise à jour du financement de la croissance (8 contre 0, puis 7 contre 1).",
+   "phraseEn": "At this public hearing, Council carried two votes on the ODP amendment and CD-1 rezoning at 1745 West 8th Avenue (7 to 1, then 6 to 2), and two votes on the Financing Growth Update (8 to 0, then 7 to 1).",
+   "motsCles": [
+    "rezonage CD-1",
+    "financement de la croissance"
+   ],
+   "motsClesEn": [
+    "CD-1 rezoning",
+    "Financing Growth Update"
+   ],
+   "motsThemes": [
+    "urbanisme",
+    "urbanisme"
+   ],
+   "genereLe": "2026-11-20T17:52:16.852Z"
+  },
+  "PSP_2026-06-03_18822": {
+   "signature": "13:1772",
+   "phrase": "Le comité a adopté des contrats pour les bacs à déchets et les lampadaires DEL, le rezonage du 1745 West 8th Avenue et une motion sur le laissez-passer de transport à faible revenu. Il a rejeté la motion « More than Zero » (3 contre 7).",
+   "phraseEn": "The committee approved contracts for garbage carts and LED street lights, the rezoning of 1745 West 8th Avenue and a motion on a low income transit pass. It rejected the \"More than Zero\" motion (3 for, 7 against).",
+   "motsCles": [
+    "contrats",
+    "rezonage",
+    "laissez-passer de transport"
+   ],
+   "motsClesEn": [
+    "contracts",
+    "rezoning",
+    "transit pass"
+   ],
+   "motsThemes": [
+    null,
+    "urbanisme",
+    "social"
+   ],
+   "genereLe": "2026-11-20T17:52:20.227Z"
+  },
+  "CO_2026-06-09_18906": {
+   "signature": "16:1563",
+   "phrase": "Le conseil a adopté des rezonages CD-1 (dont 1827 West 5th Avenue et 1668 West Broadway), des modifications au règlement électoral, le plan Vision Zéro, l'impôt sur les logements vacants et des subventions de location de théâtres.",
+   "phraseEn": "Council carried CD-1 rezonings (including 1827 West 5th Avenue and 1668 West Broadway), Election By-law amendments, the Vision Zero plan, the Empty Homes Tax and theatre rental grants.",
+   "motsCles": [
+    "rezonages CD-1",
+    "règlement électoral",
+    "Vision Zéro"
+   ],
+   "motsClesEn": [
+    "CD-1 rezonings",
+    "Election By-law",
+    "Vision Zero"
+   ],
+   "motsThemes": [
+    null,
+    "administration",
+    "transport"
+   ],
+   "genereLe": "2026-11-20T17:52:23.578Z"
+  },
+  "SC_2026-07-02_18908": {
+   "signature": "7:1217",
+   "phrase": "Le conseil a adopté, par 8 voix contre 2, la motion sur la zone piétonne de la rue Granville et les terrasses temporaires, telle que modifiée. Il a rejeté une motion de renvoi, par 2 voix contre 7.",
+   "phraseEn": "Council carried the motion on the Granville Street pedestrian zone pilot and temporary patios, as amended, 8 to 2. It rejected a referral motion, 2 for and 7 against.",
+   "motsCles": [
+    "zone piétonne",
+    "terrasses temporaires",
+    "motion de renvoi"
+   ],
+   "motsClesEn": [
+    "pedestrian zone",
+    "temporary patios",
+    "referral motion"
+   ],
+   "motsThemes": [
+    "transport",
+    "transport",
+    "transport"
+   ],
+   "genereLe": "2026-11-20T17:52:26.432Z"
+  },
+  "CO_2026-07-14_18792": {
+   "signature": "8:1118",
+   "phrase": "Le conseil a adopté la mise à jour des politiques du Plan Broadway pour le campus de l'hôpital général de Vancouver (11 pour, 0 contre), les subventions 2026 et des rezonages CD-1 dont 111 East 5th Avenue et 2060 Quebec Street (8 pour, 2 contre).",
+   "phraseEn": "Council adopted the Broadway Plan policy update for the Vancouver General Hospital campus (11 for, 0 against), the 2026 grants and CD-1 rezonings including 111 East 5th Avenue and 2060 Quebec Street (8 for, 2 against).",
+   "motsCles": [
+    "Plan Broadway",
+    "subventions",
+    "rezonages CD-1"
+   ],
+   "motsClesEn": [
+    "Broadway Plan",
+    "grants",
+    "CD-1 rezonings"
+   ],
+   "motsThemes": [
+    "urbanisme",
+    "social",
+    null
+   ],
+   "genereLe": "2026-11-20T17:52:29.373Z"
+  },
+  "CFS_2026-07-15_18829": {
+   "signature": "29:3465",
+   "phrase": "Le comité a adopté des motions sur la réduction des méfaits (5 contre 3), la garde d'enfants (7 contre 2) et les festivals d'été, ainsi que plusieurs contrats, dont la démolition du centre aquatique (8 contre 2). Il a rejeté la motion sur l'infrastructure numérique (3 contre 7).",
+   "phraseEn": "The committee carried motions on harm reduction (5 to 3), childcare (7 to 2) and summer festivals, plus several contracts, including Vancouver Aquatic Centre demolition (8 to 2). It rejected the motion on digital infrastructure (3 to 7).",
+   "motsCles": [
+    "réduction des méfaits",
+    "garde d'enfants",
+    "festivals d'été"
+   ],
+   "motsClesEn": [
+    "harm reduction",
+    "childcare",
+    "summer festivals"
+   ],
+   "motsThemes": [
+    "social",
+    "social",
+    null
+   ],
+   "genereLe": "2026-11-20T17:52:32.434Z"
+  },
+  "PH_2026-07-21_18813": {
+   "signature": "3:333",
+   "rejets": 1,
+   "phrase": null,
+   "phraseEn": null
+  },
+  "PH_2026-07-23_18904": {
+   "signature": "2:353",
+   "phrase": "À cette audience publique, le conseil a adopté une modification du plan officiel de développement et un rezonage CD-1 pour 500 Dunsmuir Street et 388 Abbott Street (9 pour, 1 contre), puis pour 6333-6369 Yukon Street (7 pour, 1 contre).",
+   "phraseEn": "At this public hearing, Council carried an ODP amendment and CD-1 rezoning for 500 Dunsmuir Street and 388 Abbott Street (9 for, 1 against), then for 6333-6369 Yukon Street (7 for, 1 against).",
+   "motsCles": [
+    "plan officiel de développement",
+    "rezonage CD-1"
+   ],
+   "motsClesEn": [
+    "ODP amendment",
+    "CD-1 rezoning"
+   ],
+   "motsThemes": [
+    "urbanisme",
+    "urbanisme"
+   ],
+   "genereLe": "2026-11-20T17:52:39.280Z"
+  },
+  "PH_2026-07-27_18922": {
+   "signature": "6:916",
+   "phrase": "À cette audience publique, le conseil a adopté des rezonages et modifications au plan officiel pour 6333-6369 Yukon Street, 6525-6577 Oak Street et 2516 Commercial Drive, ainsi qu'une modification de texte pour 2538-2550 Birch Street. Une modification au point 4 a été adoptée 7 contre 3, une autre rejetée 3 contre 7.",
+   "phraseEn": "At this public hearing, Council carried rezonings and official development plan amendments for 6333-6369 Yukon Street, 6525-6577 Oak Street and 2516 Commercial Drive, plus a text amendment for 2538-2550 Birch Street. On item 4, one vote carried 7 to 3 and another was lost 3 to 7.",
+   "motsCles": [
+    "rezonages",
+    "modification de texte"
+   ],
+   "motsClesEn": [
+    "rezonings",
+    "text amendment"
+   ],
+   "motsThemes": [
+    null,
+    "urbanisme"
+   ],
+   "genereLe": "2026-11-20T17:52:42.928Z"
+  },
+  "CO_2026-07-28_18793": {
+   "signature": "32:4077",
+   "phrase": "Le conseil a adopté des rezonages CD-1, dont 904-928 Davie Street et 304-316 East 1st Avenue, ainsi qu'un bail pour le Vancouver Maritime Museum. Il a rejeté la motion sur un bureau des locataires et des modifications au plan des villages.",
+   "phraseEn": "Council carried CD-1 rezonings, including 904-928 Davie Street and 304-316 East 1st Avenue, and a lease for the Vancouver Maritime Museum. It rejected the motion on a renters' office and amendments to the villages plan.",
+   "motsCles": [
+    "rezonages CD-1",
+    "bail",
+    "bureau des locataires"
+   ],
+   "motsClesEn": [
+    "CD-1 rezonings",
+    "lease",
+    "renters' office"
+   ],
+   "motsThemes": [
+    "urbanisme",
+    "immobilier",
+    "honneurs"
+   ],
+   "genereLe": "2026-11-20T17:52:45.573Z"
+  },
+  "PH_2026-07-28_18921": {
+   "signature": "3:535",
+   "phrase": "À cette audience publique, le conseil a adopté à l'unanimité le rezonage CD-1 du 1905 Ogden Avenue (11 contre 0), ainsi que la modification des conditions d'approbation pour 450-496 Prior Street, 550 Malkin Avenue, 1002 Station Street et 1050 Gore Ave (10 contre 0).",
+   "phraseEn": "At this public hearing, Council unanimously carried the CD-1 rezoning of 1905 Ogden Avenue (11 to 0), and the modification to conditions of approval for 450-496 Prior Street, 550 Malkin Avenue, 1002 Station Street and 1050 Gore Ave (10 to 0).",
+   "motsCles": [
+    "rezonage CD-1",
+    "conditions d'approbation"
+   ],
+   "motsClesEn": [
+    "CD-1 rezoning",
+    "conditions of approval"
+   ],
+   "motsThemes": [
+    "urbanisme",
+    "travaux"
+   ],
+   "genereLe": "2026-11-20T17:52:48.919Z"
+  },
+  "CO_2026-07-29_18923": {
+   "signature": "12:1246",
+   "phrase": "Le conseil a adopté une motion sur la fête de l'Émancipation et des rezonages CD-1, dont 5027-5053 Boundary Road et 8427-8483 Cambie Street. Il a aussi adopté la fermeture et l'échange de portions de rue près du 961 West 19th Avenue.",
+   "phraseEn": "Council carried an Emancipation Day motion and CD-1 rezonings, including 5027-5053 Boundary Road and 8427-8483 Cambie Street. It also carried the closure and exchange of road portions adjacent to 961 West 19th Avenue.",
+   "motsCles": [
+    "fête de l'Émancipation",
+    "rezonages CD-1",
+    "fermeture"
+   ],
+   "motsClesEn": [
+    "Emancipation Day",
+    "CD-1 rezonings",
+    "closure"
+   ],
+   "motsThemes": [
+    "honneurs",
+    null,
+    "immobilier"
+   ],
+   "genereLe": "2026-11-20T17:52:51.913Z"
+  }
+ }
 }
