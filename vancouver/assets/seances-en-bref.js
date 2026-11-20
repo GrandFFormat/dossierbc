@@ -170,6 +170,19 @@ function blocVotes(decs) {
   return `<div class="eb-votes"><span class="eb-votes-titre">${tr(`Vote${divises.length > 1 ? 's' : ''} divisé${divises.length > 1 ? 's' : ''} (${divises.length} sur ${decs.length})`, `Split vote${divises.length > 1 ? 's' : ''} (${divises.length} of ${decs.length})`)}</span>${lignes}${reste > 0 ? `<a class="eb-votes-plus" href="${PAGE}?instance=${encodeURIComponent(decs[0].instance)}">${tr(`et ${reste} autre${reste > 1 ? 's' : ''}`, `and ${reste} more`)} →</a>` : ''}</div>`;
 }
 
+let RESUMES_IA = {};
+// La phrase IA, ses mots clés soulignés de la couleur de leur thème (comme dossierquebec/commun/seances-en-bref.js).
+function phraseIA(s) {
+  const r = RESUMES_IA[s.id];
+  const phrase = r && (EN ? r.phraseEn : r.phrase);
+  if (!phrase) return '';
+  let html = echapper(phrase);
+  (EN ? r.motsClesEn : r.motsCles)?.forEach((m, k) => {
+    const e = echapper(m), i = html.indexOf(e), t = r.motsThemes?.[k];
+    if (i >= 0) html = html.slice(0, i) + `<span class="eb-mot${t ? ` t-bord-${t}` : ''}"${t ? ` title="${echapper(nomTheme(t))}"` : ''}>${e}</span>` + html.slice(i + e.length);
+  });
+  return `<div class="eb-phrase">${html}</div><p class="eb-ia">${tr('Résumé écrit par IA à partir du registre des votes seulement.', 'Summary written by AI from the vote record only.')}</p>`;
+}
 function carte(s, decs, explication) {
   const points = marquants(decs).map((d) => {
     const divise = d.decompteContre > 0;
@@ -182,7 +195,7 @@ function carte(s, decs, explication) {
     <span class="eb-sorte eb-sorte-pv">${tr('Registre des votes · décidé', 'Vote record · decided')}</span>
     <header><h3>${echapper(s.nom)}<span class="eb-rythme">/${rythme(s.nom)}</span></h3>
     <span class="eb-date">${tr('Séance du', 'Meeting of')} ${dateLongue(s.date)} · ${pluriel(decs.length, 'motion', 'motions')}</span></header>
-    ${(() => { const r = recap(s, decs); return r ? `<div class="eb-phrase">${souligner(r)}</div><p class="eb-compte">${echapper(phrase(s, decs))}</p>` : `<div class="eb-phrase">${echapper(phrase(s, decs))}</div>`; })()}
+    ${phraseIA(s) ? `${phraseIA(s)}<p class="eb-compte">${echapper(phrase(s, decs))}</p>` : (() => { const r = recap(s, decs); return r ? `<div class="eb-phrase">${souligner(r)}</div><p class="eb-compte">${echapper(phrase(s, decs))}</p>` : `<div class="eb-phrase">${echapper(phrase(s, decs))}</div>`; })()}
     ${explication ? `<p class="eb-attente">${echapper(explication)}</p>` : ''}
     ${points ? `<ul class="eb-points">${points}</ul>` : ''}
     ${blocVotes(decs)}
@@ -200,6 +213,11 @@ async function init() {
     if (!rs.ok || !rd.ok) return;
     [seances, decisions] = await Promise.all([rs.json(), rd.json()]);
   } catch { return; }
+  // La phrase IA de chaque séance et, en français, les lignes traduites (scrapers/ia.js, 20 nov. 2026).
+  const json = async (n) => { try { const r = await fetch(`data/${n}.json`, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch { return null; } };
+  const [ia, fr] = await Promise.all([json('resumes-seances'), EN ? null : json('objets-fr')]);
+  RESUMES_IA = ia?.seances ?? {};
+  if (fr?.objets) for (const d of decisions.decisions ?? []) if (fr.objets[d.objet]) d.objet = fr.objets[d.objet];
   const parSeance = new Map();
   for (const d of decisions.decisions ?? []) (parSeance.get(d.seanceId) ?? parSeance.set(d.seanceId, []).get(d.seanceId)).push(d);
   // The latest meeting of each body, most recent body first; Council always first.
@@ -208,11 +226,12 @@ async function init() {
     .filter((s) => parSeance.has(s.id) && !vues.has(s.nom) && vues.add(s.nom))
     .sort((a, b) => (a.nom === 'Council' ? -1 : b.nom === 'Council' ? 1 : b.date.localeCompare(a.date)));
   if (!dernieres.length) return;
+  const avecIA = dernieres.some((s) => RESUMES_IA[s.id]?.phrase);
   const { depuis, jusqua } = decisions.parametres ?? {};
   const fenetre = depuis && jusqua ? ` ${tr(`du ${dateLongue(depuis)} au ${dateLongue(jusqua)}`, `${dateLongue(depuis)} to ${dateLongue(jusqua)}`)}` : '';
   zone.innerHTML = `<div class="resume eb-gros">
-    <div class="resume-entete"><span>${tr('En bref — la dernière séance de chaque instance du conseil · compté dans le registre des votes de la Ville, pas écrit par IA', 'In brief — the latest meeting of each Council body · counted from the City’s vote record, not written by AI')}</span></div>
-    <div class="eb-note">${EN ? `<strong>From the City’s electronic vote record.</strong> Each card is one meeting: what it decided, item by item, then the counts. The City publishes no text of its decisions, only the agenda line and the result of each vote — so the recap is put together from those two, and the names in quotes are the City’s own wording. Nothing is summarized, nothing is guessed. The official vote record remains the minutes, published separately by the City Clerk.${fenetre ? ` Preview window:${fenetre}.` : ''}` : `<strong>D’après le registre électronique des votes de la Ville.</strong> Chaque carte est une séance : ce qu’elle a décidé, point par point, puis les décomptes. La Ville ne publie aucun texte de ses décisions, seulement la ligne d’ordre du jour et le résultat de chaque vote — le récapitulatif est donc assemblé à partir de ces deux éléments, et les noms entre guillemets sont ceux de la Ville, en anglais. Rien n’est résumé, rien n’est deviné. Le registre officiel des votes reste le procès-verbal, publié à part par le greffe.${fenetre ? ` Fenêtre de l’aperçu :${fenetre}.` : ''}`}</div>
+    <div class="resume-entete"><span>${avecIA ? tr('En bref — la dernière séance de chaque instance du conseil · résumé par IA à partir du registre des votes de la Ville', 'In brief — the latest meeting of each Council body · summarized by AI from the City’s vote record') : tr('En bref — la dernière séance de chaque instance du conseil · compté dans le registre des votes de la Ville, pas écrit par IA', 'In brief — the latest meeting of each Council body · counted from the City’s vote record, not written by AI')}</span></div>
+    <div class="eb-note">${EN ? `<strong>From the City’s electronic vote record.</strong> Each card is one meeting: what it decided, item by item, then the counts. The City publishes no text of its decisions, only the agenda line and the result of each vote — ${avecIA ? 'so the sentence at the top of each card is written by AI from those two alone, checked so that every number comes from the record. ' : 'so the recap is put together from those two, and the names in quotes are the City’s own wording. Nothing is summarized, nothing is guessed. '} The official vote record remains the minutes, published separately by the City Clerk.${fenetre ? ` Preview window:${fenetre}.` : ''}` : `<strong>D’après le registre électronique des votes de la Ville.</strong> Chaque carte est une séance : ce qu’elle a décidé, point par point, puis les décomptes. La Ville ne publie aucun texte de ses décisions, seulement la ligne d’ordre du jour et le résultat de chaque vote — ${avecIA ? 'la phrase en tête de chaque carte est donc écrite par IA à partir de ces deux éléments seulement, et vérifiée : chaque nombre vient du registre. Les lignes de la Ville sont traduites par IA ; l’anglais fait foi. ' : 'le récapitulatif est donc assemblé à partir de ces deux éléments, et les noms entre guillemets sont ceux de la Ville, en anglais. Rien n’est résumé, rien n’est deviné. '} Le registre officiel des votes reste le procès-verbal, publié à part par le greffe.${fenetre ? ` Fenêtre de l’aperçu :${fenetre}.` : ''}`}</div>
     <div class="eb-grille">${dernieres.map((s) => carte(s, parSeance.get(s.id), EN ? seances.instances?.[s.nom] : INSTANCES_FR[s.nom] ?? seances.instances?.[s.nom])).join('')}</div>
     <a class="eb-detail" href="#liste-decisions">${tr('Voir toutes les décisions, séance par séance ↓', 'See every decision, meeting by meeting ↓')}</a>
   </div>`;

@@ -1,0 +1,38 @@
+# Vancouver : traduction française des lignes d'ordre du jour et phrase IA de chaque séance
+# (vancouver/scrapers/ia.js, Martin, 20 nov. 2026). Lancé à la main : le volet est en pause, ses
+# données ne bougent pas ; un passage suffit, et un passage refait ne redemande que ce qui a changé.
+name: Vancouver, IA (à la main)
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-assemblee-bc
+  cancel-in-progress: false
+
+jobs:
+  ia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - run: npm ci --omit=dev
+      - name: Traduire et résumer
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node vancouver/scrapers/ia.js
+      - name: Committer et pousser
+        run: |
+          git config user.name "dossier-bc-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vancouver/data/objets-fr.json vancouver/data/resumes-seances.json
+          if git diff --cached --quiet; then echo "Rien de neuf."; else
+            git commit -m "Vancouver : traduction et resumes IA des seances"
+            for essai in 1 2 3; do git pull --rebase && git push && break; sleep $((essai * 10)); done
+          fi

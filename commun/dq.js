@@ -4538,7 +4538,7 @@ function ouvrirSeance(btn){
   // Une ligne par ouverture, sans rien de personnel (même table que la mesure de DossierQuébec).
   if(/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) return;
   try {
-    supabaseClient.from('dq_mesures').insert({ type: 'clic', ville: 'bc', page: (location.pathname || '/').slice(0, 200),
+    supabaseClient.from('dq_mesures').insert({ type: 'clic', ville: 'bc', page: ('dossierbc.ca' + (location.pathname || '/')).replace(/\.html$/, '').slice(0, 200),
       titre: 'Séance de la Chambre', cible: 'bc-hansard-plus', langue: currentLang === 'en' ? 'en' : 'fr' }).then(() => {}, () => {});
   } catch(e) {}
 }

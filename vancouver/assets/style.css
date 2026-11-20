@@ -950,3 +950,4 @@ html.dvq-fr:not(.dvq-pret) body { visibility: hidden; }
 /* Sujets soulignés dans la phrase des cartes En bref, comme Montréal (16 nov. 2026). */
 .eb-mot { text-decoration: underline; text-decoration-color: var(--vedette, var(--accent)); text-decoration-thickness: 3px; text-underline-offset: 4px; }
 .eb-mot[class*="t-bord-"] { text-decoration-color: var(--c); }
+.eb-ia { font-size: 11px; color: var(--doux); margin: 4px 0 0; font-style: italic; }

@@ -1229,6 +1229,14 @@ async function init() {
       if (o?.en) d.objet = o.en;
     }
   }
+  // En français : la ligne d'ordre du jour traduite par IA (vancouver/scrapers/ia.js, 20 nov. 2026) ;
+  // l'anglais de la Ville reste dans objetEn. Ce qui n'est pas traduit reste en anglais.
+  if (!EN && (etat.decisions || etat.votes)) {
+    const fr = (await charger('objets-fr'))?.objets ?? {};
+    for (const d of [...(etat.decisions?.decisions ?? []), ...(etat.votes?.votes ?? [])]) {
+      if (d.objet && fr[d.objet]) { d.objetEn = d.objet; d.objet = fr[d.objet]; }
+    }
+  }
   if (!EN && page === 'lexique') etat.lexiqueFr = await charger('lexique-fr');
   etat.parId = new Map((etat.resumes?.resumes ?? []).map((r) => [r.id, r]));
   // Le manifeste de l'archive vit dans un sous-dossier ; seule la page des sources le lit,
