@@ -157,7 +157,7 @@ nav a {
   padding: 9px 14px; border-radius: var(--rayon) var(--rayon) 0 0;
   border-bottom: 3px solid transparent;
 }
-nav a:hover { color: var(--entete-encre); }
+nav a:hover { color: var(--entete-encre); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 nav a[aria-current="page"] { color: var(--entete-encre); border-bottom-color: var(--accent); font-weight: 700; }
 
 /* Les outils à droite du menu : Mes dossiers et Abonnement (ajoutés par /commun/abonnes.js),
@@ -687,12 +687,12 @@ h2.page[id], h1.page[id] { scroll-margin-top: 16px; }
 .haut {
   position: fixed; right: 18px; bottom: 18px; z-index: 20;
   width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--ligne-forte);
-  background: var(--carte); color: var(--encre); font-size: 20px; line-height: 1; cursor: pointer;
+  background: var(--encre); color: var(--carte); font-size: 20px; font-weight: 800; line-height: 1; cursor: pointer;
   box-shadow: var(--ombre-forte); opacity: 0; transform: translateY(8px); pointer-events: none;
   transition: opacity .18s, transform .18s;
 }
 .haut.visible { opacity: 1; transform: none; pointer-events: auto; }
-.haut:hover { border-color: var(--accent); color: var(--accent); }
+.haut:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
 /* La légende qui explique l'absence de résumés : elle suit la ligne de comptage, donc elle
    se serre contre elle plutôt que de flotter comme un avis ordinaire. */
@@ -951,3 +951,29 @@ html.dvq-fr:not(.dvq-pret) body { visibility: hidden; }
 .eb-mot { text-decoration: underline; text-decoration-color: var(--vedette, var(--accent)); text-decoration-thickness: 3px; text-underline-offset: 4px; }
 .eb-mot[class*="t-bord-"] { text-decoration-color: var(--c); }
 .eb-ia { font-size: 11px; color: var(--doux); margin: 4px 0 0; font-style: italic; }
+
+/* ============================================================
+   Portés de montreal/assets/style.css (20 nov. 2026)
+   ============================================================ */
+/* Fil de l'accueil : carte fermée qui mène à la page Décisions (19 nov. 2026). */
+.fil-lien { display: block; position: relative; padding-right: 48px; color: inherit; text-decoration: none; }
+.fil-lien::after { content: '→'; position: absolute; right: 18px; top: 13px; font-size: 19px; font-weight: 700; color: var(--accent); }
+.fil-lien:hover .objet { color: var(--accent); }
+.fil-lien .objet { margin-bottom: 0; }
+
+/* Une boîte sur deux seulement (Martin, 16 nov. 2026). */
+.eb-grille > .eb-carte-odj:nth-child(even) { border-top-color: var(--ligne); }
+
+/* « Version officielle » au bout de la note de l'encadré En bref : cellulaire seulement (16 nov. 2026). */
+.eb-vo { display: none; font-weight: 700; color: #16191D; background: var(--vedette, #FFD24D); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+@media (max-width: 700px) { .eb-vo { display: inline; } }
+
+/* Liens PDF des cartes En bref cachés sur cellulaire, gardés sur iPad (16 nov. 2026). */
+@media (max-width: 700px) { .eb-officiel { display: none; } }
+/* Cellulaire : les points de En bref qui ouvrent un PDF ne sont plus cliquables (16 nov. 2026). */
+@media (max-width: 700px) { #en-bref a[href*=".pdf" i] { pointer-events: none; cursor: default; } }
+
+/* Flèche ↑ : petit envol vers le haut au clic (16 nov. 2026). */
+@keyframes haut-envol { 0% { transform: none; opacity: 1; } 15% { transform: translateY(8px) scale(1.1); opacity: 1; } 100% { transform: translateY(var(--envol, -400px)) scale(.6); opacity: 0; } }
+.haut.envol { animation: haut-envol .7s cubic-bezier(.5,0,.2,1) forwards; opacity: 1 !important; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .haut.envol { animation: none; } }
