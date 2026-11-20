@@ -58,7 +58,8 @@
   /* Français choisi (?lang=fr ou dvq:langue) : la page est cachée le temps que assets/langue.js la traduise. */
   (function () { try { var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('dvq:langue'); if (l === 'fr') { document.documentElement.lang = 'fr'; document.documentElement.classList.add('dvq-fr'); } } catch (e) {} })();
 </script>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="/commun/ville/style.css">
+<link rel="stylesheet" href="assets/ville.css">
 </head>
 <body data-page="lexique" data-ville="vancouver">
 <header>

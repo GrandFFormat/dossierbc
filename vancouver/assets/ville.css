@@ -1,0 +1,116 @@
+/* Vancouver : ce qui s'ajoute à la feuille commune des volets (commun/ville/style.css, copiée de dossierquebec
+ * par scripts/synchro-moteur.js ; 20 nov. 2026). La palette du site, puis ce que les villes du Québec n'ont pas. */
+
+:root, :root[data-theme="clair"] {
+  --accent: #1f4f8a;          /* Vancouver : le bleu héraldique de DossierBC */
+  --accent-fond: #e9f0f9;
+  --accent-encre: #193f6e;
+  --vedette: #e3b528;         /* Vancouver : l'or soleil du cahier de DossierBC */
+}
+:root[data-theme="sombre"] {
+  --accent: #7fb0ea;          /* Vancouver, thème sombre */
+  --accent-fond: #17304f;
+  --accent-encre: #a9c9f2;
+  --vedette: #f0c54a;
+}
+
+/* ============================================================
+   VANCOUVER — ce que Montréal n'a pas
+   ============================================================ */
+/* Un membre qui s'est retiré d'un vote pour conflit d'intérêts : la donnée la plus rare du jeu,
+   et la plus parlante. Sur l'or de la vedette, en encre sombre dans les deux thèmes. */
+.puce.conflit { background: var(--vedette); color: #16191D; font-weight: 700; }
+/* Le décompte pour / contre dans l'en-tête d'une fiche de décision, comme sur une fiche de vote. */
+.carte .meta .decompte { margin-left: auto; }
+
+/* Sponsor after-sale block, preview (15 Nov. 2026) : the family's look (DQ commun/apres-vente.js), no payment behind. */
+.apres-vente { margin: -18px 0 28px; font-size: 14px; }
+.apres-vente summary { cursor: pointer; opacity: .85; }
+.apres-vente .av-boutons { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 6px; }
+.apres-vente .av-bouton { display: inline-block; padding: 5px 12px; font-size: 13px; border: 2px solid currentColor; font-weight: 700; text-decoration: none; background: none; color: inherit; font-family: inherit; }
+.apres-vente .av-apercu { opacity: .55; cursor: not-allowed; }
+.apres-vente .av-note { font-size: 13px; opacity: .8; }
+
+/* Français en option (15 nov. 2026) : la page reste cachée le temps que assets/langue.js la traduise,
+   puis la pastille FR / EN au bout des outils de l'en-tête (même dessin que celle de Montréal). */
+html.dvq-fr:not(.dvq-pret) body { visibility: hidden; }
+.ab-langue {
+  display: inline-flex; align-items: center; margin-left: 6px; white-space: nowrap; text-decoration: none;
+  font-size: 13px; font-weight: 800; letter-spacing: .04em; line-height: 1.5;
+  color: var(--encre); background: var(--carte);
+  border: 1px solid var(--ligne-forte, var(--ligne)); border-radius: 999px; padding: 5px 10px;
+}
+.ab-langue:hover { border-color: var(--accent); color: var(--accent); }
+.ab-langue:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* The counts under the In brief recap (15 Nov. 2026). */
+.eb-compte { font-size: 13px; color: var(--doux); margin: -4px 0 0; padding: 0; background: none; }
+
+/* Awaiting the City's permission to read the minutes (15 Nov. 2026): above the page title. */
+.avis-attente { border-left-color: var(--vedette); margin-bottom: 18px; }
+
+/* La pastille de DossierBC à côté du logo (lien vers le site provincial) : elle se retourne de
+   côté au chargement puis toutes les 20 s, comme la fleur de lys des volets du Québec. */
+.titre-ligne .lien-dq {
+  display: inline-block; flex: none; width: 22px; height: 22px; margin-left: -2px;
+  background: #E3B528; border-radius: 50%; font-size: 0; color: transparent;   /* le soleil de DossierBC, juste le cercle (Martin) */
+  transition: transform .7s ease-in-out;
+}
+.titre-ligne .lien-dq.retournee { transform: rotateY(180deg); }
+.titre-ligne .lien-dq:hover, .titre-ligne .lien-dq:focus-visible { transform: scale(1.15); }
+.titre-ligne .lien-dq.retournee:hover, .titre-ligne .lien-dq.retournee:focus-visible { transform: rotateY(180deg) scale(1.15); }
+@media (prefers-reduced-motion: reduce) { .titre-ligne .lien-dq { transition: none; } }
+@media (max-width: 620px) { .titre-ligne .lien-dq { width: 18px; height: 18px; } }
+
+/* Le menu « Town: Vancouver », à droite de la ligne du titre (même dessin que les volets du Québec). */
+.ab-villes { margin: 0 0 0 auto; position: relative; font-size: 13.5px; }
+.ab-villes > summary {
+  list-style: none; cursor: pointer; white-space: nowrap; font-weight: 600; line-height: 1.5;
+  color: var(--encre); background: var(--carte, var(--fond));
+  border: 1px solid var(--ligne-forte); border-radius: 999px; padding: 5px 12px;
+}
+.ab-villes > summary::-webkit-details-marker { display: none; }
+.ab-villes > summary::after { content: " ▾"; color: var(--doux); }
+.ab-villes[open] > summary::after { content: " ▴"; }
+.ab-villes > summary:hover { border-color: var(--accent); }
+.ab-villes > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ab-villes-menu {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; min-width: 220px;
+  list-style: none; margin: 0; padding: 6px; background: var(--carte, var(--fond));
+  border: 1px solid var(--ligne); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+}
+.ab-villes-menu li { margin: 0; }
+.ab-villes-menu a { display: block; padding: 8px 10px; border: 0; border-radius: 6px; font-size: 13.5px; color: var(--encre); text-decoration: none; font-weight: 600; }
+.ab-villes-menu a:hover { background: var(--fond-2); }
+.ab-villes-menu a[aria-current] { color: var(--accent-encre); background: var(--accent-fond); }
+.ab-villes-rtv a { color: var(--accent); font-weight: 700; }
+.ab-villes-dq { border-top: 1px solid var(--ligne); margin-top: 4px; padding-top: 4px; }
+.ab-villes-dq span { color: var(--doux); font-weight: 400; }
+@media (max-width: 620px) { .ab-villes-libelle { display: none; } }
+
+/* La barre d'outils à gauche du bouton de la ville : c'est elle qui pousse le groupe à droite. */
+.titre-ligne > .outils { margin: 0 0 0 auto; display: flex; align-items: center; gap: 8px; }
+.titre-ligne > .outils + .ab-villes { margin-left: 0; }
+
+/* En thème sombre, la ville cochée du menu s'allume en jaune DossierBC (Martin, 15 nov. 2026). */
+:root[data-theme="sombre"] .ab-villes-menu a[aria-current] { background: rgba(227, 181, 40, .18); color: #F2CC5B; }
+:root[data-theme="sombre"] .ab-villes-menu a[aria-current]:hover { background: rgba(227, 181, 40, .26); }
+
+/* Sujets soulignés dans la phrase des cartes En bref, comme Montréal (16 nov. 2026). */
+.eb-mot { text-decoration: underline; text-decoration-color: var(--vedette, var(--accent)); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.eb-mot[class*="t-bord-"] { text-decoration-color: var(--c); }
+.eb-ia { font-size: 11px; color: var(--doux); margin: 4px 0 0; font-style: italic; }
+
+/* « Version officielle » au bout de la note de l'encadré En bref : cellulaire seulement (16 nov. 2026). */
+.eb-vo { display: none; font-weight: 700; color: #16191D; background: var(--vedette, #FFD24D); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+@media (max-width: 700px) { .eb-vo { display: inline; } }
+
+/* Liens PDF des cartes En bref cachés sur cellulaire, gardés sur iPad (16 nov. 2026). */
+@media (max-width: 700px) { .eb-officiel { display: none; } }
+/* Cellulaire : les points de En bref qui ouvrent un PDF ne sont plus cliquables (16 nov. 2026). */
+@media (max-width: 700px) { #en-bref a[href*=".pdf" i] { pointer-events: none; cursor: default; } }
+
+/* Flèche ↑ : petit envol vers le haut au clic (16 nov. 2026). */
+@keyframes haut-envol { 0% { transform: none; opacity: 1; } 15% { transform: translateY(8px) scale(1.1); opacity: 1; } 100% { transform: translateY(var(--envol, -400px)) scale(.6); opacity: 0; } }
+.haut.envol { animation: haut-envol .7s cubic-bezier(.5,0,.2,1) forwards; opacity: 1 !important; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .haut.envol { animation: none; } }
