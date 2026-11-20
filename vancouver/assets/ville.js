@@ -25,7 +25,6 @@ globalThis.VILLE = {
   date1er: true,
   textes: true,
   archives: true,
-  palmaresVotesContre: true,
   fenetre: {
     points: ['points mis aux voix', 'motions put to a vote'],
     affichees: ['décision(s) affichée(s)', 'decision(s) shown'],
