@@ -19,7 +19,7 @@ import { existsSync } from 'node:fs';
 const DRY = process.argv.includes('--dry-run');
 const D = new URL('../data/', import.meta.url);
 const MODELE = 'claude-sonnet-5-5';   // comme le reste de DossierBC (Martin, 20 nov. 2026)
-const TARIF = { entree: 3, sortie: 15 };   // $ US par million de jetons (estimation)
+const TARIF = { entree: 2, sortie: 10 };   // $ US par million de jetons (tarif réel, mémoire du 13 nov.)
 const JUGEMENT = /\b(majeur|majeure|majeurs|majeures|important|importante|importants|importantes|ambitieu|coûteu|controvers|totalisant|au total|environ|historique|major|significant|ambitious|costly|totaling|totalling|approximately|historic)/i;
 const lire = async (n) => (existsSync(new URL(n, D)) ? JSON.parse(await readFile(new URL(n, D), 'utf8')) : null);
 const ecrire = (n, o) => writeFile(new URL(n, D), JSON.stringify(o, null, 1) + '\n', 'utf8');
@@ -33,8 +33,21 @@ const garder = (mots, phrase) => (mots ?? []).map((m) => {
 
 const client = DRY ? null : new Anthropic();
 let entree = 0, sortieJ = 0, appels = 0;
+// Sonnet 5.5 refuse le tool_choice forcé (400) et sa réflexion compte dans max_tokens : outil en
+// « auto », nommé dans le message, strict pour le schéma ; budget large, effort bas.
+let echecsDeSuite = 0, succes = 0;
 async function outil(system, def, contenu, max) {
-  const rep = await client.messages.create({ model: MODELE, max_tokens: max, system, tools: [def], tool_choice: { type: 'tool', name: def.name }, messages: [{ role: 'user', content: contenu }] });
+  let rep;
+  try {
+    rep = await client.messages.create({ model: MODELE, max_tokens: 8000 + max, output_config: { effort: 'low' }, system, tools: [def], tool_choice: { type: 'auto' },
+      messages: [{ role: 'user', content: `${contenu}
+
+Réponds en appelant l'outil ${def.name}.` }] });
+  } catch (e) {
+    if (++echecsDeSuite >= 3 && !succes) { console.error(`::error::3 échecs d'affilée sans succès, arrêt : ${e.message}`); process.exit(1); }
+    throw e;
+  }
+  echecsDeSuite = 0; succes++;
   appels++; entree += rep.usage.input_tokens; sortieJ += rep.usage.output_tokens;
   return rep.content.find((c) => c.type === 'tool_use')?.input ?? {};
 }
@@ -71,7 +84,7 @@ async function titres(decisions) {
       });
     } catch (e) { console.log(`  paquet ${i} : ${e.message}`); }
   }
-  if (!DRY) await ecrire('objets-fr.json', { genereLe: new Date().toISOString(), modele: MODELE, avertissement: 'Traduction automatique (IA) des lignes d’ordre du jour de la Ville ; l’anglais de la Ville fait foi.', objets });
+  if (!DRY && Object.keys(objets).length) await ecrire('objets-fr.json', { genereLe: new Date().toISOString(), modele: MODELE, avertissement: 'Traduction automatique (IA) des lignes d’ordre du jour de la Ville ; l’anglais de la Ville fait foi.', objets });
   return refus;
 }
 
@@ -127,7 +140,7 @@ async function seances(decisions, liste) {
       sortie[s.id] = { signature, phrase, phraseEn, motsCles: mc, motsClesEn: mcEn, motsThemes: mcEn.map(themeDe), genereLe: new Date().toISOString() };
     } catch (e) { console.log(`  ${s.id} : ${e.message}`); }
   }
-  if (!DRY) await ecrire('resumes-seances.json', { genereLe: new Date().toISOString(), modele: MODELE, source: 'Registre des votes de la Ville de Vancouver (données ouvertes), rien d’autre', seances: sortie });
+  if (!DRY && Object.values(sortie).some((v) => v.phrase)) await ecrire('resumes-seances.json', { genereLe: new Date().toISOString(), modele: MODELE, source: 'Registre des votes de la Ville de Vancouver (données ouvertes), rien d’autre', seances: sortie });
   return rejets;
 }
 
