@@ -1,5 +1,8 @@
 // Scraper — le résultat de la dernière élection générale.
 //
+// REMPLACÉ le 21 nov. 2026 : data/election.json porte maintenant les résultats officiels d'Elections BC,
+// copiés à la main. Ne pas relancer ce scraper, il écraserait les chiffres officiels.
+//
 // Pourquoi Wikipédia et pas Elections BC : elections.bc.ca ferme son robots.txt à tout le monde
 // sauf Google, Bing et son propre moteur. On ne contourne pas. L'Assemblée, elle, ne publiera les
 // député·e·s de la nouvelle législature qu'à la réception des résultats certifiés. Entre les deux,

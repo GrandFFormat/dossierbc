@@ -1,9 +1,9 @@
 {
-  "luLe": "2026-11-09T02:35:06.183Z",
+  "luLe": "2026-11-21T00:00:00Z",
   "lueLeJour": "2026-11-09",
-  "source": "https://en.wikipedia.org/wiki/2026_British_Columbia_general_election",
-  "sourceNom": "Wikipedia",
-  "avis": "Résultats lus sur Wikipédia, faute de source officielle lisible : elections.bc.ca interdit la lecture automatisée, et l'Assemblée ne publie ses député·e·s qu'à la réception des résultats certifiés.",
+  "source": "https://elections.bc.ca",
+  "sourceNom": "Elections BC",
+  "avis": "Résultats officiels d'Elections BC, dépouillement final complété le 9 novembre 2026, copiés à la main par Martin depuis le site d'Elections BC (aucun robot n'y a lu quoi que ce soit). Elections BC regroupe les autres partis et les indépendants dans « Other » : leurs pourcentages individuels ne sont pas donnés.",
   "scrutin": "2026-10-24",
   "siegesTotal": 93,
   "majorite": 47,
@@ -16,7 +16,7 @@
       "chef": "Lorne Doerkson",
       "interimaire": true,
       "sieges": 64,
-      "pourcentVote": 48.06
+      "pourcentVote": 47.71
     },
     {
       "nom": "New Democratic",
@@ -24,7 +24,7 @@
       "chef": "David Eby",
       "interimaire": false,
       "sieges": 27,
-      "pourcentVote": 37.37
+      "pourcentVote": 37.58
     },
     {
       "nom": "Green",
@@ -32,31 +32,15 @@
       "chef": "Emily Lowan",
       "interimaire": false,
       "sieges": 2,
-      "pourcentVote": 10.97
+      "pourcentVote": 11.15
     },
     {
-      "nom": "CentreBC",
+      "nom": "Other (Elections BC)",
       "code": null,
-      "chef": "Elenore Sturko",
-      "interimaire": false,
-      "sieges": 0,
-      "pourcentVote": 1.62
-    },
-    {
-      "nom": "OneBC",
-      "code": null,
-      "chef": "Dallas Brodie",
-      "interimaire": true,
-      "sieges": 0,
-      "pourcentVote": 1.51
-    },
-    {
-      "nom": "Independent and No Affiliation",
-      "code": "IND",
       "chef": null,
       "interimaire": false,
       "sieges": 0,
-      "pourcentVote": 0.33
+      "pourcentVote": 3.56
     }
   ]
 }
