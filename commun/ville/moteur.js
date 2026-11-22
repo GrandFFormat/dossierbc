@@ -1,4 +1,4 @@
-// COPIE de commun/ville/moteur.js (dossierquebec 443f2590 2026-11-20). Ne pas modifier ici : corriger dans dossierquebec, puis node scripts/synchro-moteur.js <ce dépôt>.
+// COPIE de commun/ville/moteur.js (dossierquebec fdaea5c7 2026-11-22). Ne pas modifier ici : corriger dans dossierquebec, puis node scripts/synchro-moteur.js <ce dépôt>.
 // MOTEUR COMMUN DES VOLETS DE VILLE (20 nov. 2026). Né de montreal/assets/app.js, le modèle.
 // Tout ce qui change d'une ville à l'autre vient de globalThis.VILLE, posé par <ville>/assets/ville.js
 // (importé avant ce fichier par <ville>/assets/app.js). La liste des clés est en tête de montreal/assets/ville.js.
@@ -2870,4 +2870,10 @@ if (VILLE.mesure && !window.__dqMesure) {
   script.src = VILLE.mesure;
   script.defer = true;
   document.head.appendChild(script);
+}
+
+// ========== RAPPEL DES COURRIELS AU BAS DES PAGES (22 nov. 2026) ==========
+// Allumé par `courriels: true` dans ville.js : les visiteurs de Google n'arrivent pas par l'accueil.
+if (VILLE.courriels && document.body.dataset.page !== 'accueil') {
+  document.querySelector('footer')?.insertAdjacentHTML('beforebegin', `<aside class="rappel-courriels"><p><strong>${tr(`Les décisions de ${echapper(VILLE.nom)} dans vos courriels`, `${echapper(VILLE.nom)} council decisions by email`)}</strong> ${tr('Une fois par mois, gratuit.', 'Once a month, free.')}</p><a data-mesure="rappel-courriels" href="./#infolettre">${tr('M’inscrire', 'Subscribe')}</a></aside>`);
 }
