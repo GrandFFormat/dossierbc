@@ -1,6 +1,6 @@
 {
   "source": "https://www.leg.bc.ca/parliamentary-business/committees/committee-meetings",
-  "lu": "2026-11-24T02:08:45.215Z",
+  "lu": "2026-11-24T23:52:47.227Z",
   "comites": 18,
   "seances": [
     {
@@ -126,8 +126,23 @@
       "fin": "2026-07-30T16:30:00",
       "lieu": "Virtual Meeting, Victoria",
       "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-fgs",
-      "transcription": null,
-      "transcriptionTexte": null
+      "transcription": "https://www.leg.bc.ca/hansard-content/Committees/43rd2nd/fgs/20260730am-Finance-VirtualMeeting-n65.html",
+      "transcriptionTexte": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/fgs/20260730am-Finance-VirtualMeeting-n65.html",
+      "resumeEn": [
+        "The committee met to continue work on its draft report on the Budget 2027 consultation. It spent about 20 minutes of the sitting in camera (closed to the public).",
+        "Back in public, the committee adopted the Report on the Budget 2027 Consultation as amended. The Chair and Deputy Chair may work with staff on final editorial changes to the supporting text.",
+        "The committee also approved a motion for the Chair to deposit the report with the Clerk. The Chair will present it to the Legislative Assembly when the House resumes, or in the next session.",
+        "The Chair expects the report to be deposited in early August, when it will be made public. An email will go to all participants.",
+        "Members thanked staff, the Clerks, Hansard and the people who presented or sent written submissions. The meeting then adjourned."
+      ],
+      "resumeFr": [
+        "Le comité a poursuivi l’étude de son projet de rapport sur la consultation budgétaire 2027. Il a siégé environ 20 minutes à huis clos.",
+        "De retour en séance publique, le comité a adopté le Report on the Budget 2027 Consultation tel que modifié. Le président et la vice-présidente pourront finaliser avec le personnel les changements de forme du texte d’appui.",
+        "Le comité a aussi approuvé une motion demandant au président de déposer le rapport auprès du greffier. Il le présentera à l’Assemblée législative à la reprise des travaux de la Chambre ou à la prochaine session.",
+        "Le président prévoit que le rapport sera déposé au début d’août et sera alors rendu public. Un courriel sera envoyé à tous les participants.",
+        "Les membres ont remercié le personnel, les greffiers, le Hansard et les personnes qui ont présenté des exposés ou envoyé des mémoires. La séance a ensuite été levée."
+      ],
+      "huisClos": false
     },
     {
       "id": 3798,
@@ -137,8 +152,21 @@
       "fin": "2026-07-29T16:30:00",
       "lieu": "Virtual Meeting, Victoria",
       "page": "https://www.leg.bc.ca/parliamentary-business/committees/43rdparliament-2ndsession-fgs",
-      "transcription": null,
-      "transcriptionTexte": null
+      "transcription": "https://www.leg.bc.ca/hansard-content/Committees/43rd2nd/fgs/20260729am-Finance-VirtualMeeting-n64.html",
+      "transcriptionTexte": "https://api.lims.leg.bc.ca/hdms/file/Committees/43rd2nd/fgs/20260729am-Finance-VirtualMeeting-n64.html",
+      "resumeEn": [
+        "The committee met virtually to consider its draft report on the Budget 2027 consultation.",
+        "Almost the whole sitting, from 10:03 a.m. to 12:13 p.m., was held in camera (closed to the public).",
+        "The committee returned to public session only to adjourn. The transcript records no decisions made in public.",
+        "The committee will meet again tomorrow to make final edits to the report."
+      ],
+      "resumeFr": [
+        "Le comité s'est réuni en mode virtuel pour étudier son projet de rapport sur la consultation du Budget 2027.",
+        "Presque toute la séance, de 10 h 03 à 12 h 13, s'est déroulée à huis clos.",
+        "Le comité n'est revenu en séance publique que pour lever la séance. La transcription ne note aucune décision prise en public.",
+        "Le comité se réunira de nouveau demain pour apporter les dernières modifications au rapport."
+      ],
+      "huisClos": true
     },
     {
       "id": 3781,
