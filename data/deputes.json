@@ -1,7 +1,7 @@
 {
   "source": "https://api.lims.leg.bc.ca/graphql",
   "repertoire": "https://www.leg.bc.ca/members/find-mla-by-constituency",
-  "scrapedAt": "2026-11-24T23:49:19.470Z",
+  "scrapedAt": "2026-11-25T23:31:53.607Z",
   "legislature": 43,
   "legislatureEnCours": 44,
   "legislatureEnCoursDebut": "2026-10-26",
@@ -53,7 +53,7 @@
         }
       ],
       "email": "Brittny.Anderson.MLA@leg.bc.ca",
-      "electionYears": "2020, 2024",
+      "electionYears": "2020, 2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -75,7 +75,7 @@
       "titres": [],
       "roles": [],
       "email": "George.Anderson.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -181,7 +181,7 @@
       "titres": [],
       "roles": [],
       "email": "Bruce.Banman.MLA@leg.bc.ca",
-      "electionYears": "2020, 2024",
+      "electionYears": "2020, 2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -275,7 +275,7 @@
       "titres": [],
       "roles": [],
       "email": "Harman.Bhangu.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -341,7 +341,7 @@
       "titres": [],
       "roles": [],
       "email": "Lynne.Block.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -712,7 +712,7 @@
       "titres": [],
       "roles": [],
       "email": "Sheldon.Clare.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -766,7 +766,7 @@
       "titres": [],
       "roles": [],
       "email": "Pete.Davis.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -832,7 +832,7 @@
       "titres": [],
       "roles": [],
       "email": "Mandeep.Dhaliwal.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -1158,7 +1158,7 @@
       "titres": [],
       "roles": [],
       "email": "trevor.halford.MLA@leg.bc.ca",
-      "electionYears": "2020, 2024",
+      "electionYears": "2020, 2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -1180,7 +1180,7 @@
       "titres": [],
       "roles": [],
       "email": "Sharon.Hartwell.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -1378,7 +1378,7 @@
       "titres": [],
       "roles": [],
       "email": "Steve.Kooner.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -1524,7 +1524,7 @@
       "titres": [],
       "roles": [],
       "email": "Tony.Luck.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -1578,7 +1578,7 @@
       "titres": [],
       "roles": [],
       "email": "Heather.Maahs.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -1890,7 +1890,7 @@
       "titres": [],
       "roles": [],
       "email": "Ian.Paton.MLA@leg.bc.ca",
-      "electionYears": "2017, 2020, 2024",
+      "electionYears": "2017, 2020, 2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
