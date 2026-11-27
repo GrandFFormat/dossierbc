@@ -1,7 +1,7 @@
 {
   "source": "https://api.lims.leg.bc.ca/graphql",
   "repertoire": "https://www.leg.bc.ca/members/find-mla-by-constituency",
-  "scrapedAt": "2026-11-26T23:38:59.372Z",
+  "scrapedAt": "2026-11-27T23:19:20.732Z",
   "legislature": 43,
   "legislatureEnCours": 44,
   "legislatureEnCoursDebut": "2026-10-26",
@@ -435,7 +435,7 @@
         }
       ],
       "email": "Christine.Boyle.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -550,8 +550,8 @@
           "fin": null
         }
       ],
-      "email": "s.chandraherbert.mla@leg.bc.ca",
-      "electionYears": "2008, 2009, 2013, 2017, 2020, 2024",
+      "email": "S.ChandraHerbert.MLA@leg.bc.ca",
+      "electionYears": "2008, 2009, 2013, 2017, 2020, 2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -810,7 +810,7 @@
       "titres": [],
       "roles": [],
       "email": "Gavin.Dew.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -1042,7 +1042,7 @@
         }
       ],
       "email": "Diana.Gibson.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
@@ -2440,7 +2440,7 @@
       "titres": [],
       "roles": [],
       "email": "Donegal.Wilson.MLA@leg.bc.ca",
-      "electionYears": "2024",
+      "electionYears": "2024, 2026",
       "fiche": "https://www.leg.bc.ca/members/find-mla-by-constituency",
       "photo": null
     },
